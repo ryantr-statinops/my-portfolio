@@ -1,0 +1,53 @@
+---
+id: "abc-data-analysis-system"
+title: "Hệ thống Phân tích Dữ liệu ABC"
+description: "Nền tảng phân tích dữ liệu tích hợp Machine Learning nhằm tối ưu hóa hiệu suất vận hành và dự báo tài nguyên doanh nghiệp."
+date: "2024-05-12"
+category: "ai-implementation"
+status: "Production"
+priority: 1
+tags: ["Machine Learning", "Data Analysis", "Optimization", "Automation"]
+impact: "Tăng 40% hiệu suất vận hành và giảm 30% sai số trong dự báo tồn kho."
+thumbnail: "/images/background.gif"
+stack: ["Python", "TensorFlow", "React", "PostgreSQL", "FastAPI"]
+---
+
+# Hệ thống Phân tích Dữ liệu ABC
+
+## Context (Bối cảnh)
+
+Trong bối cảnh dữ liệu vận hành ngày càng lớn và phức tạp, các phương pháp thủ công không còn đáp ứng được tốc độ và độ chính xác cần thiết. Dự án này được thiết kế để giải quyết bài toán tối ưu hóa quy trình thông qua việc tự động hóa thu thập và phân tích dữ liệu thô, biến chúng thành các chỉ số có thể hành động (actionable insights).
+
+- **Vấn đề:** Quy trình cũ tốn nhiều thời gian (high latency) và dễ xảy ra sai sót trong dự báo.
+- **Vai trò:** Lead Developer & Data Architect.
+
+## Technical Implementation (Triển khai kỹ thuật)
+
+Hệ thống được xây dựng trên kiến trúc microservices để đảm bảo tính mở rộng (scalability):
+
+1. **Data Pipeline:** Sử dụng Python và Pandas để xử lý ETL (Extract, Transform, Load) từ các nguồn dữ liệu hỗn hợp.
+2. **ML Engine:** Mô hình dự báo được huấn luyện bằng TensorFlow, tập trung vào hồi quy chuỗi thời gian (Time-series Forecasting).
+3. **Frontend:** Dashboard tương tác thời gian thực xây dựng bằng React và Tailwind CSS, hiển thị dữ liệu qua biểu đồ trực quan.
+
+```python
+# Đoạn code xử lý chuẩn hóa dữ liệu tinh túy
+def normalize_data(df):
+    scaler = MinMaxScaler()
+    df['normalized_value'] = scaler.fit_transform(df[['raw_value']])
+    return df
+```
+
+## Challenges & Solutions (Thách thức)
+
+- **Thách thức:** Xử lý dữ liệu nhiễu và thiếu sót từ các hệ thống cũ.
+- **Giải pháp:** Triển khai các thuật toán Imputation thông minh và hệ thống lọc nhiễu (Denoising) trước khi đưa vào mô hình học máy.
+
+## Final Impact (Kết quả & Bài học)
+
+Dự án đã mang lại những thay đổi tích cực cho quy trình vận hành:
+
+- **Tối ưu hóa:** Giảm 2 giờ làm việc mỗi ngày cho bộ phận vận hành.
+- **Chính xác:** Độ chính xác của dự báo đạt 92% (tăng 15% so với mô hình cũ).
+- **Trải nghiệm:** Giao diện Dark Mode hiện đại giúp giảm mỏi mắt và tập trung vào các chỉ số quan trọng.
+
+![Demo dự án](/images/background.gif)

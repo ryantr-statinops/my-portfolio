@@ -1,17 +1,109 @@
 ---
+import MainLayout from "../layouts/MainLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import Button from "../components/ui/Button.astro";
+import { getCollection } from "astro:content";
 
+const projects = await getCollection("projects");
+const sortedProjects = projects.sort((a, b) => a.data.priority - b.data.priority);
+
+const categories = [
+  { id: 'all', label: 'All Projects' },
+  { id: 'finance-quant', label: 'Finance & Quant' },
+  { id: 'ops-automation', label: 'Operations' },
+  { id: 'data-math', label: 'Data & Math' },
+  { id: 'system-ui', label: 'Systems' },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout title="Trần Quốc Khang | Portfolio Intelligence">
+  <!-- Hero Section -->
+  <section class="pt-32 pb-20 px-8 max-w-7xl mx-auto">
+    <div class="max-w-3xl space-y-8">
+      <div class="space-y-2 reveal">
+        <h2 class="text-xs font-mono uppercase tracking-[0.4em] text-accent">Efficiency over Excess</h2>
+        <h1 class="text-4xl md:text-6xl font-bold leading-[1.1] text-gradient">
+          Building Systems for <br /> 
+          Precision & Scale.
+        </h1>
+      </div>
+      
+      <p class="text-muted text-lg md:text-xl leading-relaxed reveal">
+        Applied Statistics Student & Startup Founder. <br />
+        Tập trung vào giải quyết các bài toán vận hành phức tạp thông qua dữ liệu và tự động hóa.
+      </p>
+
+      <div class="flex flex-wrap gap-4 pt-4 reveal">
+        <Button href="#projects" variant="primary">Khám phá dự án</Button>
+        <Button href="/cluster" variant="outline">Intelligence Hub</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <main id="projects" class="max-w-7xl mx-auto py-20 px-8 border-t border-white/[0.05]">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12">
+      <div class="space-y-2">
+        <h2 class="text-2xl font-bold tracking-tight">Portfolio Registry</h2>
+        <p class="text-muted text-sm font-medium">Lưu trữ các giải pháp đã được thực thi và chứng minh hiệu quả.</p>
+      </div>
+
+      <!-- Domain Filter -->
+      <div class="flex flex-wrap gap-2" id="category-filters">
+        {categories.map(cat => (
+          <button 
+            data-filter={cat.id}
+            class:list={[
+              "px-4 py-2 text-[11px] font-bold uppercase tracking-widest border transition-all duration-300 rounded-sm",
+              cat.id === 'all' 
+                ? "bg-white text-black border-white" 
+                : "bg-transparent text-muted border-white/10 hover:border-white/30"
+            ]}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Project Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="project-grid">
+      {sortedProjects.map((project) => (
+        <ProjectCard project={project} />
+      ))}
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  const filterButtons = document.querySelectorAll('#category-filters button');
+  const projectCards = document.querySelectorAll('#project-grid > article');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const filter = button.getAttribute('data-filter');
+
+      // Update button styles
+      filterButtons.forEach(btn => {
+        btn.classList.remove('bg-white', 'text-black', 'border-white');
+        btn.classList.add('bg-transparent', 'text-muted', 'border-white/10');
+      });
+      button.classList.add('bg-white', 'text-black', 'border-white');
+      button.classList.remove('bg-transparent', 'text-muted', 'border-white/10');
+
+      // Filter cards
+      projectCards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filter === 'all' || category === filter) {
+          (card as HTMLElement).style.display = 'flex';
+          setTimeout(() => {
+            card.classList.add('active');
+          }, 50);
+        } else {
+          (card as HTMLElement).style.display = 'none';
+          card.classList.remove('active');
+        }
+      });
+    });
+  });
+</script>

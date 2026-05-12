@@ -1,0 +1,209 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Cluster Intelligence Hub" description="High-performance dashboard for Cluster operational intelligence and startup metrics.">
+  <main class="pt-24 pb-12 px-6 min-h-screen bg-[#020202]">
+    <!-- Header / Terminal Status -->
+    <div class="max-w-[1600px] mx-auto mb-8">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-primary/20 pb-4 gap-4">
+        <div>
+          <h1 class="text-2xl font-bold tracking-tighter text-white flex items-center gap-3">
+            <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+            CLUSTER_INTELLIGENCE_HUB
+          </h1>
+          <p class="text-[10px] font-mono text-muted uppercase tracking-[0.3em] mt-1">
+            System Status: <span class="text-primary">Operational</span> // Latency: 14ms // Security: Level 4
+          </p>
+        </div>
+        <div class="flex gap-4 font-mono text-[10px]">
+          <div class="px-3 py-1 bg-white/5 border border-white/10 rounded">
+            UTC: <span id="utc-clock">08:16:44</span>
+          </div>
+          <div class="px-3 py-1 bg-white/5 border border-white/10 rounded">
+            SESSION_ID: <span class="text-primary">X-9942-B</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="max-w-[1600px] mx-auto grid grid-cols-12 gap-4">
+      
+      <!-- Left Column: Core Metrics -->
+      <div class="col-span-12 lg:col-span-3 space-y-4">
+        <!-- Startup Valuation Card -->
+        <div class="bg-card/30 border border-white/5 p-4 rounded-lg glass">
+          <h3 class="text-[10px] font-mono text-muted uppercase tracking-widest mb-4">Project_Valuation</h3>
+          <div class="flex items-baseline gap-2">
+            <span class="text-3xl font-bold text-white tracking-tighter">$1.2M</span>
+            <span class="text-primary text-[10px] font-mono">+12.4%</span>
+          </div>
+          <div class="mt-4 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+            <div class="h-full bg-primary w-[75%] shadow-[0_0_10px_rgba(0,242,255,0.5)]"></div>
+          </div>
+        </div>
+
+        <!-- Ops Efficiency -->
+        <div class="bg-card/30 border border-white/5 p-4 rounded-lg glass">
+          <h3 class="text-[10px] font-mono text-muted uppercase tracking-widest mb-4">Ops_Efficiency</h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <p class="text-[10px] text-muted mb-1">Automation</p>
+              <p class="text-xl font-bold text-white">85.2%</p>
+            </div>
+            <div>
+              <p class="text-[10px] text-muted mb-1">Cost_Reduction</p>
+              <p class="text-xl font-bold text-primary">42.0%</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Logs / Terminal -->
+        <div class="bg-black border border-white/10 p-4 rounded-lg h-[400px] font-mono text-[11px] overflow-hidden relative">
+          <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(0,242,255,0.03)_0%,transparent_100%)] pointer-events-none"></div>
+          <div class="flex items-center gap-2 mb-3 border-b border-white/10 pb-2">
+            <div class="w-2 h-2 rounded-full bg-red-500/50"></div>
+            <div class="w-2 h-2 rounded-full bg-yellow-500/50"></div>
+            <div class="w-2 h-2 rounded-full bg-green-500/50"></div>
+            <span class="ml-2 text-muted opacity-50 uppercase tracking-widest text-[9px]">live_terminal</span>
+          </div>
+          <div class="space-y-1 text-primary/80">
+            <p><span class="text-muted">[15:16:01]</span> INITIALIZING_CLUSTER_V3...</p>
+            <p><span class="text-muted">[15:16:02]</span> LOADING_NEURAL_NETWORKS: OK</p>
+            <p><span class="text-muted">[15:16:04]</span> FETCHING_MARKET_DATA: 204.12ms</p>
+            <p><span class="text-muted">[15:16:08]</span> ANALYZING_OPS_BOT_TELEMETRY...</p>
+            <p class="text-white"><span class="text-muted">[15:16:12]</span> > SYSTEM_CORE_READY</p>
+            <p class="animate-pulse">_</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle Column: Visual Intelligence -->
+      <div class="col-span-12 lg:col-span-6 space-y-4">
+        <!-- Main Visualization (Mock Chart) -->
+        <div class="bg-card/20 border border-white/5 p-6 rounded-lg glass h-[500px] relative flex flex-col justify-end">
+          <div class="absolute top-6 left-6">
+            <h2 class="text-xl font-bold text-white tracking-tighter">Strategic_Intelligence_Matrix</h2>
+            <p class="text-[10px] font-mono text-muted uppercase mt-1">Cross-domain influence & growth projection</p>
+          </div>
+          
+          <!-- Mock Chart SVG -->
+          <div class="flex-1 flex items-center justify-center p-8 opacity-40">
+             <svg width="100%" height="100%" viewBox="0 0 800 400" class="overflow-visible">
+               <path d="M0,350 L100,300 L200,320 L300,200 L400,250 L500,100 L600,150 L700,50 L800,80" fill="none" stroke="#00f2ff" stroke-width="3" stroke-dasharray="1000" stroke-dashoffset="1000">
+                 <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="3s" fill="freeze" />
+               </path>
+               <path d="M0,380 L150,340 L300,360 L450,280 L600,310 L750,220 L800,240" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.3" stroke-dasharray="5,5" />
+               <circle cx="700" cy="50" r="6" fill="#00f2ff" class="animate-ping" />
+               <circle cx="700" cy="50" r="4" fill="#00f2ff" />
+             </svg>
+          </div>
+
+          <div class="grid grid-cols-4 gap-4 border-t border-white/5 pt-4">
+            <div class="text-center">
+              <p class="text-[9px] font-mono text-muted">ALPHA</p>
+              <p class="text-lg font-bold text-white">0.94</p>
+            </div>
+            <div class="text-center">
+              <p class="text-[9px] font-mono text-muted">BETA</p>
+              <p class="text-lg font-bold text-white">1.12</p>
+            </div>
+            <div class="text-center">
+              <p class="text-[9px] font-mono text-muted">DELTA</p>
+              <p class="text-lg font-bold text-white">0.05</p>
+            </div>
+            <div class="text-center">
+              <p class="text-[9px] font-mono text-muted">THETA</p>
+              <p class="text-lg font-bold text-white">-0.12</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Strategy Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-card/40 border border-white/5 p-4 rounded-lg glass group hover:border-primary/30 transition-colors">
+            <h4 class="text-[10px] font-mono text-primary uppercase mb-2">Q3_Objectives</h4>
+            <ul class="text-[11px] text-muted space-y-2">
+              <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary"></span> Scale Operations to 50+ clients</li>
+              <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary"></span> Integrate Advanced Quant Models</li>
+            </ul>
+          </div>
+          <div class="bg-card/40 border border-white/5 p-4 rounded-lg glass group hover:border-primary/30 transition-colors">
+            <h4 class="text-[10px] font-mono text-primary uppercase mb-2">Risk_Analysis</h4>
+            <ul class="text-[11px] text-muted space-y-2">
+              <li class="flex items-center gap-2"><span class="w-1 h-1 bg-red-500"></span> Market Volatility: High</li>
+              <li class="flex items-center gap-2"><span class="w-1 h-1 bg-green-500"></span> Resource Availability: Optimal</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: System Hierarchy -->
+      <div class="col-span-12 lg:col-span-3 space-y-4">
+        <!-- Node Status -->
+        <div class="bg-card/30 border border-white/5 p-4 rounded-lg glass">
+          <h3 class="text-[10px] font-mono text-muted uppercase tracking-widest mb-4">Cluster_Nodes</h3>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="text-white">QUANT_UNIT_A</span>
+              <span class="text-primary">88%</span>
+            </div>
+            <div class="h-1 bg-white/5 rounded-full overflow-hidden">
+               <div class="h-full bg-primary w-[88%]"></div>
+            </div>
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="text-white">OPS_AUTOMATOR_B</span>
+              <span class="text-primary">94%</span>
+            </div>
+            <div class="h-1 bg-white/5 rounded-full overflow-hidden">
+               <div class="h-full bg-primary w-[94%]"></div>
+            </div>
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="text-white">DATA_VAULT_C</span>
+              <span class="text-primary">42%</span>
+            </div>
+            <div class="h-1 bg-white/5 rounded-full overflow-hidden">
+               <div class="h-full bg-primary w-[42%]"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Events -->
+        <div class="bg-card/20 border border-white/5 p-4 rounded-lg glass">
+          <h3 class="text-[10px] font-mono text-muted uppercase tracking-widest mb-4">Recent_Protocol_Executions</h3>
+          <div class="space-y-4">
+            <div class="border-l-2 border-primary pl-3 py-1">
+              <p class="text-[11px] text-white font-bold">New Client Acquisition</p>
+              <p class="text-[9px] text-muted font-mono uppercase mt-1">2h ago // ID: 882</p>
+            </div>
+            <div class="border-l-2 border-white/20 pl-3 py-1">
+              <p class="text-[11px] text-white opacity-80">Backtest v2.4 Completed</p>
+              <p class="text-[9px] text-muted font-mono uppercase mt-1">5h ago // ID: 881</p>
+            </div>
+            <div class="border-l-2 border-white/20 pl-3 py-1">
+              <p class="text-[11px] text-white opacity-80">Infrastructure Migration</p>
+              <p class="text-[9px] text-muted font-mono uppercase mt-1">12h ago // ID: 880</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <button class="w-full py-4 bg-primary text-black font-bold uppercase tracking-[0.3em] text-[10px] rounded hover:shadow-[0_0_20px_rgba(0,242,255,0.3)] transition-all">
+          Execute_Emergency_Protocol
+        </button>
+      </div>
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  // Simple clock for UTC
+  function updateClock() {
+    const now = new Date();
+    const time = now.toISOString().split('T')[1].split('.')[0];
+    const clockEl = document.getElementById('utc-clock');
+    if (clockEl) clockEl.textContent = time;
+  }
+  setInterval(updateClock, 1000);
+</script>

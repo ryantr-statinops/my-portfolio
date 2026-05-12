@@ -1,0 +1,44 @@
+---
+interface Props {
+  commands?: {
+    input: string;
+    output: string;
+  }[];
+}
+
+const { commands = [
+  { input: "neofetch", output: "OS: ClusterOS x86_64\nHost: Personal Portfolio v2\nKernel: Astro-6.3.1\nUptime: 14ms\nPackages: 331 (npm)\nShell: zsh 5.8\nResolution: 3840x2160\nWM: Sway\nTheme: Minimal-Dark\nTerminal: Alacritty" },
+  { input: "ls -l /projects", output: "drwxr-xr-x  finance-quant\ndrwxr-xr-x  ops-automation\ndrwxr-xr-x  data-math\ndrwxr-xr-x  system-ui" }
+] } = Astro.props;
+---
+
+<div class="bg-black border border-white/10 rounded-lg overflow-hidden font-mono text-[11px] shadow-2xl glass reveal">
+  <!-- Terminal Header -->
+  <div class="bg-white/5 px-4 py-2 flex items-center justify-between border-b border-white/10">
+    <div class="flex gap-1.5">
+      <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+      <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+      <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+    </div>
+    <span class="text-muted text-[10px] uppercase tracking-widest opacity-50">bash — 80x24</span>
+  </div>
+
+  <!-- Terminal Content -->
+  <div class="p-5 space-y-4 min-h-[300px]">
+    {commands.map(cmd => (
+      <div class="space-y-1">
+        <div class="flex gap-2">
+          <span class="text-success font-bold">➜</span>
+          <span class="text-accent">~</span>
+          <span class="text-white">{cmd.input}</span>
+        </div>
+        <pre class="text-muted whitespace-pre-wrap leading-relaxed">{cmd.output}</pre>
+      </div>
+    ))}
+    <div class="flex gap-2">
+      <span class="text-success font-bold">➜</span>
+      <span class="text-accent">~</span>
+      <span class="w-2 h-4 bg-white animate-pulse"></span>
+    </div>
+  </div>
+</div>

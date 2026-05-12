@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+@theme {
+  --color-background: #0a0a0a;
+  --color-foreground: #ffffff;
+  --color-surface: #161616;
+  --color-card: #161616;
+  --color-border: #262626;
+  --color-primary: #ffffff;
+  --color-accent: #00f2ff;
+  --color-success: #10b981;
+  --color-muted: #737373;
+
+  --font-sans: "Inter", "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "MesloLGS NF", "Meslo Nerd Font", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-accent/30;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight text-white;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/[0.02] backdrop-blur-xl border border-white/[0.05];
+  }
+  
+  .reveal {
+    @apply opacity-0 translate-y-4 transition-all duration-700 ease-out;
+  }
+  
+  .reveal.active {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-white to-white/40;
+  }
+}

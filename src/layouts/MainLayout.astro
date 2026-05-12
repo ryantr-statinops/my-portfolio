@@ -1,0 +1,101 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Ryan Tran - Statistic in Operation Portfolio" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Space</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/images/avt.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+      integrity="sha384-nAnRK6S51GVzK9u5C8CShl63I/S2v3q6m78/XU8e84L8p95m18X1d+X02C/S0W1"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="bg-background text-foreground selection:bg-primary/30">
+    <nav class="fixed top-0 left-0 w-full z-50 glass border-b border-white/5 py-4 px-8">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <a href="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <div class="w-10 h-10 rounded-full overflow-hidden bg-white/10 p-0.5 border border-white/10">
+            <img src="/images/avt.png" alt="Ryan Tran" class="w-full h-full object-cover rounded-full" />
+          </div>
+          <span class="font-semibold text-lg tracking-tight hidden sm:inline">Ryan Tran</span>
+        </a>
+        <div class="flex items-center gap-8 text-sm font-medium">
+          <a href="/#projects" class="hover:text-primary transition-colors">Dự án</a>
+          <a href="https://github.com/ryantr-statinops" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">GitHub</a>
+        </div>
+      </div>
+    </nav>
+
+    <slot />
+
+    <footer class="border-t border-white/5 py-12 px-8 mt-20">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between gap-12">
+          <div class="space-y-4">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full overflow-hidden bg-white/10">
+                <img src="/images/avt.png" alt="Ryan Tran" class="w-full h-full object-cover" />
+              </div>
+              <h2 class="text-xl font-bold">Quoc Khang(Ryan) Tran</h2>
+            </div>
+            <p class="text-muted text-sm max-w-xs">
+              Statistic student in Operation since 2025.<br />
+              Ho Chi Minh City | Global Reach
+            </p>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-12">
+            <div class="space-y-4">
+              <h3 class="text-xs uppercase tracking-widest text-muted font-semibold">Contact</h3>
+              <ul class="space-y-2 text-sm">
+                <li><a href="https://www.linkedin.com/in/ryan-tr/" class="hover:text-primary transition-colors">LinkedIn</a></li>
+                <li><a href="mailto:trankhang2856@gmail.com" class="hover:text-primary transition-colors">Email</a></li>
+              </ul>
+            </div>
+            <div class="space-y-4">
+              <h3 class="text-xs uppercase tracking-widest text-muted font-semibold">Legal</h3>
+              <ul class="space-y-2 text-sm">
+                <li><a href="#" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+                <li class="text-muted/50">© 2026 Ryan Tran</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Scroll reveal logic
+      const observerOptions = {
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+  </body>
+</html>
