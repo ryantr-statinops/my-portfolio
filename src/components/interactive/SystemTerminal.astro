@@ -12,9 +12,9 @@ const { commands = [
 ] } = Astro.props;
 ---
 
-<div class="bg-black border border-white/10 rounded-lg overflow-hidden font-mono text-[11px] shadow-2xl glass reveal">
+<div class="bg-black border border-border rounded-lg overflow-hidden font-mono text-[11px] shadow-2xl glass reveal">
   <!-- Terminal Header -->
-  <div class="bg-white/5 px-4 py-2 flex items-center justify-between border-b border-white/10">
+  <div class="bg-white/5 px-4 py-2 flex items-center justify-between border-b border-border">
     <div class="flex gap-1.5">
       <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
       <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
@@ -30,7 +30,7 @@ const { commands = [
         <div class="flex gap-2">
           <span class="text-success font-bold">➜</span>
           <span class="text-accent">~</span>
-          <span class="text-white">{cmd.input}</span>
+          <span class="text-white/90">{cmd.input}</span>
         </div>
         <pre class="text-muted whitespace-pre-wrap leading-relaxed">{cmd.output}</pre>
       </div>
@@ -38,7 +38,7 @@ const { commands = [
     <div class="flex gap-2">
       <span class="text-success font-bold">➜</span>
       <span class="text-accent">~</span>
-      <span class="w-2 h-4 bg-white animate-pulse"></span>
+      <span class="w-2 h-4 bg-primary animate-pulse"></span>
     </div>
   </div>
 </div>

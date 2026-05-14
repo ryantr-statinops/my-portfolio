@@ -2,6 +2,8 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import Button from "../components/ui/Button.astro";
+import IntelligenceHub from "../components/IntelligenceHub.astro";
+import HeatmapBackground from "../components/interactive/HeatmapBackground.astro";
 import { getCollection } from "astro:content";
 
 const projects = await getCollection("projects");
@@ -18,15 +20,20 @@ const categories = [
 
 <MainLayout title="Trần Quốc Khang | Portfolio Intelligence">
   <!-- Hero Section -->
-  <section class="pt-32 pb-20 px-8 max-w-7xl mx-auto">
-    <div class="max-w-3xl space-y-8">
+  <section class="pt-32 pb-20 px-8 md:px-12 w-full relative overflow-hidden">
+    {/* Background */}
+    <HeatmapBackground />
+    
+
+    <div class="relative z-10 max-w-3xl space-y-8">
       <div class="space-y-2 reveal">
         <h2 class="text-xs font-mono uppercase tracking-[0.4em] text-accent">Efficiency over Excess</h2>
         <h1 class="text-4xl md:text-6xl font-bold leading-[1.1] text-gradient">
-          Building Systems for <br /> 
+          Building Systems for <br />
           Precision & Scale.
         </h1>
       </div>
+
       
       <p class="text-muted text-lg md:text-xl leading-relaxed reveal">
         Applied Statistics Student & Startup Founder. <br />
@@ -35,16 +42,21 @@ const categories = [
 
       <div class="flex flex-wrap gap-4 pt-4 reveal">
         <Button href="#projects" variant="primary">Khám phá dự án</Button>
-        <Button href="/cluster" variant="outline">Intelligence Hub</Button>
+        <Button href="#intelligence-hub" variant="outline">Intelligence Hub</Button>
       </div>
     </div>
   </section>
 
+  <!-- Intelligence Hub Section -->
+  <section id="intelligence-hub" class="reveal">
+    <IntelligenceHub />
+  </section>
+
   <!-- Projects Section -->
-  <main id="projects" class="max-w-7xl mx-auto py-20 px-8 border-t border-white/[0.05]">
+  <main id="projects" class="w-full py-20 px-8 md:px-12 border-t border-border">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12">
       <div class="space-y-2">
-        <h2 class="text-2xl font-bold tracking-tight">Portfolio Registry</h2>
+        <h2 class="text-2xl font-bold tracking-tight text-foreground">Portfolio Registry</h2>
         <p class="text-muted text-sm font-medium">Lưu trữ các giải pháp đã được thực thi và chứng minh hiệu quả.</p>
       </div>
 
@@ -56,8 +68,8 @@ const categories = [
             class:list={[
               "px-4 py-2 text-[11px] font-bold uppercase tracking-widest border transition-all duration-300 rounded-sm",
               cat.id === 'all' 
-                ? "bg-white text-black border-white" 
-                : "bg-transparent text-muted border-white/10 hover:border-white/30"
+                ? "bg-foreground text-background border-foreground" 
+                : "bg-transparent text-muted border-border hover:border-foreground/30"
             ]}
           >
             {cat.label}
@@ -85,11 +97,11 @@ const categories = [
 
       // Update button styles
       filterButtons.forEach(btn => {
-        btn.classList.remove('bg-white', 'text-black', 'border-white');
-        btn.classList.add('bg-transparent', 'text-muted', 'border-white/10');
+        btn.classList.remove('bg-foreground', 'text-background', 'border-foreground');
+        btn.classList.add('bg-transparent', 'text-muted', 'border-border');
       });
-      button.classList.add('bg-white', 'text-black', 'border-white');
-      button.classList.remove('bg-transparent', 'text-muted', 'border-white/10');
+      button.classList.add('bg-foreground', 'text-background', 'border-foreground');
+      button.classList.remove('bg-transparent', 'text-muted', 'border-border');
 
       // Filter cards
       projectCards.forEach(card => {

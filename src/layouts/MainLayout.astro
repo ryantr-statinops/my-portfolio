@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import ThemeToggle from "../components/ui/ThemeToggle.astro";
 
 interface Props {
   title: string;
@@ -26,38 +27,62 @@ const { title, description = "Ryan Tran - Statistic in Operation Portfolio" } = 
       integrity="sha384-nAnRK6S51GVzK9u5C8CShl63I/S2v3q6m78/XU8e84L8p95m18X1d+X02C/S0W1"
       crossorigin="anonymous"
     />
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+    
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+      window.localStorage.setItem('theme', theme);
+    </script>
   </head>
-  <body class="bg-background text-foreground selection:bg-primary/30">
-    <nav class="fixed top-0 left-0 w-full z-50 glass border-b border-white/5 py-4 px-8">
-      <div class="max-w-7xl mx-auto flex justify-between items-center">
+  <body class="bg-background text-foreground selection:bg-primary/30 transition-colors duration-300">
+    <nav class="fixed top-0 left-0 w-full z-50 glass border-b border-border py-4 px-8 md:px-12">
+      <div class="w-full flex justify-between items-center">
         <a href="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-          <div class="w-10 h-10 rounded-full overflow-hidden bg-white/10 p-0.5 border border-white/10">
+          <div class="w-10 h-10 rounded-full overflow-hidden bg-muted/10 p-0.5 border border-border">
             <img src="/images/avt.png" alt="Ryan Tran" class="w-full h-full object-cover rounded-full" />
           </div>
-          <span class="font-semibold text-lg tracking-tight hidden sm:inline">Ryan Tran</span>
+          <span class="font-semibold text-lg tracking-tight hidden sm:inline text-foreground">Ryan Tran</span>
         </a>
-        <div class="flex items-center gap-8 text-sm font-medium">
-          <a href="/#projects" class="hover:text-primary transition-colors">Dự án</a>
-          <a href="https://github.com/ryantr-statinops" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">GitHub</a>
+        <div class="flex items-center gap-4 md:gap-8 text-sm font-medium">
+          <div class="hidden sm:flex items-center gap-8">
+            <a href="/#intelligence-hub" class="hover:text-accent transition-colors">Intelligence Hub</a>
+            <a href="/#projects" class="hover:text-accent transition-colors">Dự án</a>
+            <a href="https://github.com/ryantr-statinops" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors">GitHub</a>
+          </div>
+          <div class="pl-4 border-l border-border">
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </nav>
 
     <slot />
 
-    <footer class="border-t border-white/5 py-12 px-8 mt-20">
+    <footer class="border-t border-border py-12 px-8 mt-20">
       <div class="max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row justify-between gap-12">
           <div class="space-y-4">
             <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded-full overflow-hidden bg-white/10">
+              <div class="w-12 h-12 rounded-full overflow-hidden bg-muted/10">
                 <img src="/images/avt.png" alt="Ryan Tran" class="w-full h-full object-cover" />
               </div>
-              <h2 class="text-xl font-bold">Quoc Khang(Ryan) Tran</h2>
+              <h2 class="text-xl font-bold text-foreground tracking-tighter uppercase">Trần Quốc Khang</h2>
             </div>
-            <p class="text-muted text-sm max-w-xs">
-              Statistic student in Operation since 2025.<br />
-              Ho Chi Minh City | Global Reach
+            <p class="text-muted text-sm max-w-xs leading-relaxed">
+              Applied Statistics Student & Operations Specialist.<br />
+              Ho Chi Minh City // Global Reach
             </p>
           </div>
           
