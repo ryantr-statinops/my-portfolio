@@ -1,0 +1,102 @@
+---
+---
+
+<footer class="relative w-full bg-background border-t border-border pt-20 pb-10 overflow-hidden">
+  <!-- Decorative Background Element -->
+  <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-8 md:px-12">
+    <div class="grid grid-cols-12 gap-12 mb-20">
+      <!-- Left: Contact Info -->
+      <div class="col-span-12 lg:col-span-5 space-y-10">
+        <div class="space-y-4">
+          <h2 class="text-6xl md:text-7xl font-bold tracking-tighter text-foreground leading-[0.9] uppercase">
+            Let's <br /> <span class="text-primary italic">Connect.</span>
+          </h2>
+          <div class="flex items-center gap-3 py-2 px-4 bg-success/10 border border-success/20 rounded-full w-fit">
+            <span class="w-2 h-2 bg-success rounded-full animate-pulse"></span>
+            <span class="text-[10px] font-mono font-bold text-success uppercase tracking-widest">Available for new projects</span>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="group cursor-pointer">
+            <p class="text-[10px] font-mono text-muted uppercase tracking-widest mb-1">Direct_Email</p>
+            <a href="mailto:trankhang2856@gmail.com" class="text-xl font-bold hover:text-primary transition-all">trankhang2856@gmail.com</a>
+          </div>
+          
+          <div class="group cursor-pointer">
+            <p class="text-[10px] font-mono text-muted uppercase tracking-widest mb-1">Headquarters</p>
+            <p class="text-xl font-bold">Ho Chi Minh City, VN</p>
+          </div>
+        </div>
+
+        <div class="flex gap-6 pt-4">
+          {[
+            { label: 'LinkedIn', url: 'https://www.linkedin.com/in/ryan-tr/' },
+            { label: 'GitHub', url: 'https://github.com/ryantr-statinops' },
+            { label: 'Behance', url: '#' }
+          ].map(social => (
+            <a href={social.url} target="_blank" class="text-[10px] font-mono font-bold uppercase tracking-widest py-2 px-4 border border-border rounded-lg hover:bg-foreground hover:text-background transition-all">
+              {social.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Right: Contact Form -->
+      <div class="col-span-12 lg:col-span-7">
+        <div class="p-8 md:p-12 bg-card/40 border border-border rounded-3xl glass relative overflow-hidden">
+          <form class="space-y-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="space-y-2">
+                <label class="text-[10px] font-mono text-muted uppercase tracking-widest ml-1">Identity</label>
+                <input type="text" placeholder="Your full name" class="w-full bg-transparent border-b border-border py-3 focus:border-primary focus:outline-none transition-all placeholder:text-muted/30 font-medium" />
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-mono text-muted uppercase tracking-widest ml-1">Connectivity</label>
+                <input type="email" placeholder="Your email address" class="w-full bg-transparent border-b border-border py-3 focus:border-primary focus:outline-none transition-all placeholder:text-muted/30 font-medium" />
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label class="text-[10px] font-mono text-muted uppercase tracking-widest ml-1">Requirement / Context</label>
+              <textarea rows="4" placeholder="Briefly describe your project or inquiry..." class="w-full bg-transparent border-b border-border py-3 focus:border-primary focus:outline-none transition-all placeholder:text-muted/30 font-medium resize-none"></textarea>
+            </div>
+            <button type="submit" class="w-full py-5 bg-primary text-background font-bold uppercase tracking-[0.4em] text-xs rounded-xl hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/20 group relative overflow-hidden">
+               <span class="relative z-10">Transmit_Message</span>
+               <div class="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Footer -->
+    <div class="flex flex-col md:flex-row justify-between items-center pt-10 border-t border-border/50 gap-4">
+      <div class="flex items-center gap-4">
+        <div class="w-8 h-8 rounded-full overflow-hidden bg-muted/10 p-0.5 border border-border">
+          <img src="/images/avt.png" alt="Ryan Tran" class="w-full h-full object-cover rounded-full" />
+        </div>
+        <p class="text-[10px] font-mono text-muted uppercase">© 2026 Ryan Tran — Built with Precision</p>
+      </div>
+      <div class="flex items-center gap-8">
+        <p class="text-[9px] font-mono text-muted uppercase tracking-[0.2em]">Deployment: v4.2.0-Production</p>
+        <button id="scroll-to-top" class="text-[10px] font-mono font-bold uppercase hover:text-primary transition-colors">Back_to_Top ↑</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .glass { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  input:focus, textarea:focus {
+    padding-left: 8px;
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('scroll-to-top');
+  if (btn) {
+    btn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>

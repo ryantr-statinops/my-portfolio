@@ -3,6 +3,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import Button from "../components/ui/Button.astro";
 import IntelligenceHub from "../components/IntelligenceHub.astro";
+import FrameworksHub from "../components/FrameworksHub.astro";
 import HeatmapBackground from "../components/interactive/HeatmapBackground.astro";
 import { getCollection } from "astro:content";
 
@@ -50,6 +51,11 @@ const categories = [
   <!-- Intelligence Hub Section -->
   <section id="intelligence-hub" class="reveal">
     <IntelligenceHub />
+  </section>
+
+  <!-- Governance & Frameworks Hub Section -->
+  <section id="frameworks-hub" class="reveal">
+    <FrameworksHub />
   </section>
 
   <!-- Projects Section -->

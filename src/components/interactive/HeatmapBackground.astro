@@ -1,213 +1,299 @@
 ---
 ---
 
-<div class="heatmap-container absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-40 grayscale-[0.2] contrast-[1.1]">
-  <canvas id="heatmap-canvas"></canvas>
+<div
+    class="heatmap-container absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-40 grayscale-[0.2] contrast-[1.1]"
+>
+    <canvas id="heatmap-canvas"></canvas>
 </div>
 
 <script>
-  (function () {
-    const canvas = document.getElementById('heatmap-canvas') as HTMLCanvasElement;
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    (function () {
+        const canvas = document.getElementById(
+            "heatmap-canvas"
+        ) as HTMLCanvasElement;
+        if (!canvas) return;
 
-    // ── Config (Matched with your original file) ─────────────────────────
-    const CELL = 36;      // grid cell size in px
-    const DECAY = 0.004;  // heat lingers much longer
-    const DIFFUSE = 0.11; // strong neighbour bleed
-    const DIAG = 0.04;    // diagonal bleed
-    const MOUSE_R = 5;    // influence radius
-    const MOUSE_STR = 0.22; // heat added per frame
-    const PEAK = 0.85;    // max heat
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
 
-    let W: number, H: number, cols: number, rows: number;
-    let A: Float32Array, B: Float32Array;
-    let mx = -1, my = -1;
+        // ── Config (Refined for UI/UX Pro Max) ─────────────────────────────
+        const CELL = 32; // Smaller cells for higher resolution
+        const DECAY = 0.003; // Slower decay for more persistent trails
+        const DIFFUSE = 0.12;
+        const DIAG = 0.05;
+        const BASE_MOUSE_R = 4;
+        const BASE_MOUSE_STR = 0.18;
+        const PEAK = 0.95;
 
-    function idx(r: number, c: number) { return r * cols + c; }
-    function clamp(v: number, lo = 0, hi = 1) { return v < lo ? lo : v > hi ? hi : v; }
+        let W: number, H: number, cols: number, rows: number;
+        let A: Float32Array, B: Float32Array;
+        let mx = -1,
+            my = -1,
+            lastX = -1,
+            lastY = -1;
+        let velocity = 0;
+        const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
 
-    const DARK_STOPS = [
-        { h: 0.00, rgb: [6, 10, 14], a: 0.00 },
-        { h: 0.25, rgb: [9, 60, 93], a: 0.30 },
-        { h: 0.50, rgb: [59, 117, 151], a: 0.55 },
-        { h: 0.75, rgb: [111, 209, 215], a: 0.80 },
-        { h: 1.00, rgb: [93, 248, 216], a: 0.95 },
-    ];
-
-    const LIGHT_STOPS = [
-        { h: 0.00, rgb: [255, 255, 255], a: 0.00 },
-        { h: 0.25, rgb: [224, 242, 254], a: 0.30 },
-        { h: 0.50, rgb: [186, 230, 253], a: 0.55 },
-        { h: 0.75, rgb: [125, 211, 252], a: 0.80 },
-        { h: 1.00, rgb: [56, 189, 248], a: 0.95 },
-    ];
-
-    let activeStops = document.documentElement.classList.contains('dark') ? DARK_STOPS : LIGHT_STOPS;
-
-    // Listen for theme changes
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class') {
-          activeStops = document.documentElement.classList.contains('dark') ? DARK_STOPS : LIGHT_STOPS;
+        function idx(r: number, c: number) {
+            return r * cols + c;
         }
-      });
-    });
-    observer.observe(document.documentElement, { attributes: true });
+        function clamp(v: number, lo = 0, hi = 1) {
+            return v < lo ? lo : v > hi ? hi : v;
+        }
 
-    function lerpColor(r1: number, g1: number, b1: number, r2: number, g2: number, b2: number, t: number) {
-        return [
-            Math.round(r1 + (r2 - r1) * t),
-            Math.round(g1 + (g2 - g1) * t),
-            Math.round(b1 + (b2 - b1) * t),
+        const DARK_STOPS = [
+            { h: 0.0, rgb: [6, 10, 14], a: 0.0 },
+            { h: 0.2, rgb: [9, 60, 93], a: 0.25 },
+            { h: 0.45, rgb: [59, 117, 151], a: 0.5 },
+            { h: 0.7, rgb: [111, 209, 215], a: 0.75 },
+            { h: 1.0, rgb: [93, 248, 216], a: 0.95 },
         ];
-    }
 
-    function heatColor(h: number) {
-        if (h < 0.008) return null;
-        let lo = activeStops[0], hi = activeStops[1];
-        for (let i = 1; i < activeStops.length; i++) {
-            if (h <= activeStops[i].h) { lo = activeStops[i - 1]; hi = activeStops[i]; break; }
-            hi = activeStops[i];
-            lo = activeStops[i];
+        const LIGHT_STOPS = [
+            { h: 0.0, rgb: [255, 255, 255], a: 0.0 },
+            { h: 0.2, rgb: [186, 230, 253], a: 0.3 }, // Sky-200
+            { h: 0.45, rgb: [56, 189, 248], a: 0.55 }, // Sky-400
+            { h: 0.7, rgb: [14, 165, 233], a: 0.8 }, // Sky-500
+            { h: 1.0, rgb: [2, 132, 199], a: 0.95 }, // Sky-600
+        ];
+
+        let activeStops = document.documentElement.classList.contains("dark")
+            ? DARK_STOPS
+            : LIGHT_STOPS;
+
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === "class") {
+                    activeStops = document.documentElement.classList.contains(
+                        "dark"
+                    )
+                        ? DARK_STOPS
+                        : LIGHT_STOPS;
+                }
+            });
+        });
+        observer.observe(document.documentElement, { attributes: true });
+
+        function lerpColor(
+            r1: number,
+            g1: number,
+            b1: number,
+            r2: number,
+            g2: number,
+            b2: number,
+            t: number
+        ) {
+            return [r1 + (r2 - r1) * t, g1 + (g2 - g1) * t, b1 + (b2 - b1) * t];
         }
-        const range = hi.h - lo.h;
-        const t = range < 0.0001 ? 1 : (h - lo.h) / range;
-        const [r, g, b] = lerpColor(...(lo.rgb as [number, number, number]), ...(hi.rgb as [number, number, number]), t);
-        const a = lo.a + (hi.a - lo.a) * t;
-        return `rgba(${r},${g},${b},${a.toFixed(3)})`;
-    }
 
-    function bloomColor(h: number) {
-        if (h < 0.15) return null;
-        const t = (h - 0.15) / 0.85;
-        const isDark = document.documentElement.classList.contains('dark');
-        const startRgb = isDark ? [59, 117, 151] : [186, 230, 253];
-        const endRgb = isDark ? [93, 248, 216] : [56, 189, 248];
-        
-        const [r, g, b] = lerpColor(...(startRgb as [number, number, number]), ...(endRgb as [number, number, number]), t);
-        const a = (t * 0.12).toFixed(3);
-        return `rgba(${r},${g},${b},${a})`;
-    }
-
-    function resize() {
-        const parent = canvas.parentElement;
-        if (!parent) return;
-        W = canvas.width = parent.clientWidth;
-        H = canvas.height = parent.clientHeight;
-        cols = Math.ceil(W / CELL) + 2;
-        rows = Math.ceil(H / CELL) + 2;
-        A = new Float32Array(rows * cols);
-        B = new Float32Array(rows * cols);
-    }
-
-    function simulate() {
-        if (!A || !B) return;
-        for (let r = 1; r < rows - 1; r++) {
-            for (let c = 1; c < cols - 1; c++) {
-                const h = A[idx(r, c)];
-                const nb = A[idx(r - 1, c)] + A[idx(r + 1, c)] + A[idx(r, c - 1)] + A[idx(r, c + 1)];
-                const dg = A[idx(r - 1, c - 1)] + A[idx(r - 1, c + 1)] + A[idx(r + 1, c - 1)] + A[idx(r + 1, c + 1)];
-                const v = h * (1 - DIFFUSE * 4 - DIAG * 4) + nb * DIFFUSE + dg * DIAG;
-                B[idx(r, c)] = clamp(v - DECAY);
+        function heatColor(h: number) {
+            if (h < 0.01) return null;
+            let lo = activeStops[0],
+                hi = activeStops[1];
+            for (let i = 1; i < activeStops.length; i++) {
+                if (h <= activeStops[i].h) {
+                    lo = activeStops[i - 1];
+                    hi = activeStops[i];
+                    break;
+                }
+                hi = activeStops[i];
+                lo = activeStops[i];
             }
+            const range = hi.h - lo.h;
+            const t = range < 0.0001 ? 1 : (h - lo.h) / range;
+            const [r, g, b] = lerpColor(
+                ...(lo.rgb as [number, number, number]),
+                ...(hi.rgb as [number, number, number]),
+                t
+            );
+            const a = lo.a + (hi.a - lo.a) * t;
+            return `rgba(${Math.round(r)},${Math.round(g)},${Math.round(
+                b
+            )},${a.toFixed(3)})`;
         }
-        A.set(B);
 
-        if (mouseMoving && mx >= 0 && my >= 0) {
-            const rect = canvas.getBoundingClientRect();
-            const localX = mx - rect.left;
-            const localY = my - rect.top;
-            
-            if (localX >= 0 && localX <= W && localY >= 0 && localY <= H) {
-                const cr = Math.round(localY / CELL);
-                const cc = Math.round(localX / CELL);
-                for (let dr = -MOUSE_R; dr <= MOUSE_R; dr++) {
-                    for (let dc = -MOUSE_R; dc <= MOUSE_R; dc++) {
-                        const dist = Math.hypot(dr, dc);
-                        if (dist > MOUSE_R) continue;
-                        const nr = clamp(cr + dr, 1, rows - 2);
-                        const nc = clamp(cc + dc, 1, cols - 2);
-                        const falloff = (1 - dist / MOUSE_R) ** 2;
-                        A[idx(nr, nc)] = clamp(A[idx(nr, nc)] + MOUSE_STR * falloff, 0, PEAK);
+        function bloomColor(h: number) {
+            if (h < 0.12) return null;
+            const t = (h - 0.12) / 0.88;
+            const isDark = document.documentElement.classList.contains("dark");
+            const startRgb = isDark ? [59, 117, 151] : [125, 211, 252];
+            const endRgb = isDark ? [93, 248, 216] : [14, 165, 233];
+            const [r, g, b] = lerpColor(
+                ...(startRgb as [number, number, number]),
+                ...(endRgb as [number, number, number]),
+                t
+            );
+            return `rgba(${Math.round(r)},${Math.round(g)},${Math.round(b)},${(
+                t * 0.15
+            ).toFixed(3)})`;
+        }
+
+        function resize() {
+            const parent = canvas.parentElement;
+            if (!parent) return;
+            W = canvas.width = parent.clientWidth;
+            H = canvas.height = parent.clientHeight;
+            cols = Math.ceil(W / CELL) + 2;
+            rows = Math.ceil(H / CELL) + 2;
+            A = new Float32Array(rows * cols);
+            B = new Float32Array(rows * cols);
+        }
+
+        function simulate() {
+            if (!A || !B || prefersReducedMotion) return;
+
+            // Grid diffusion and decay
+            for (let r = 1; r < rows - 1; r++) {
+                for (let c = 1; c < cols - 1; c++) {
+                    const i = idx(r, c);
+                    const nb = A[i - cols] + A[i + cols] + A[i - 1] + A[i + 1];
+                    const dg =
+                        A[i - cols - 1] +
+                        A[i - cols + 1] +
+                        A[i + cols - 1] +
+                        A[i + cols + 1];
+                    const v =
+                        A[i] * (1 - DIFFUSE * 4 - DIAG * 4) +
+                        nb * DIFFUSE +
+                        dg * DIAG;
+                    B[i] = clamp(v - DECAY);
+                }
+            }
+            A.set(B);
+
+            // Interaction with velocity
+            if (mx >= 0 && my >= 0) {
+                const rect = canvas.getBoundingClientRect();
+                const lx = mx - rect.left;
+                const ly = my - rect.top;
+
+                if (lx >= 0 && lx <= W && ly >= 0 && ly <= H) {
+                    const cr = Math.round(ly / CELL);
+                    const cc = Math.round(lx / CELL);
+                    const radius = Math.round(
+                        BASE_MOUSE_R * (1 + velocity * 0.5)
+                    );
+                    const strength = BASE_MOUSE_STR * (1 + velocity * 0.8);
+
+                    for (let dr = -radius; dr <= radius; dr++) {
+                        for (let dc = -radius; dc <= radius; dc++) {
+                            const dist = Math.hypot(dr, dc);
+                            if (dist > radius) continue;
+                            const nr = clamp(cr + dr, 1, rows - 2);
+                            const nc = clamp(cc + dc, 1, cols - 2);
+                            const falloff = (1 - dist / radius) ** 2;
+                            const targetIdx = idx(nr, nc);
+                            A[targetIdx] = clamp(
+                                A[targetIdx] + strength * falloff,
+                                0,
+                                PEAK
+                            );
+                        }
                     }
                 }
             }
+            // Decelerate velocity
+            velocity *= 0.92;
         }
-    }
 
-    function draw() {
-        if (!ctx) return;
-        ctx.clearRect(0, 0, W, H);
+        function draw() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, W, H);
+            const cs = CELL;
 
-        const cs = CELL;
+            // Draw Bloom Layer (Ethereal Glow)
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    const h = A[idx(r, c)];
+                    const col = bloomColor(h);
+                    if (!col) continue;
+                    const bloom = cs * (1.2 + h * 2.5);
+                    ctx.fillStyle = col;
+                    ctx.beginPath();
+                    ctx.arc(
+                        c * cs + cs / 2,
+                        r * cs + cs / 2,
+                        bloom / 2,
+                        0,
+                        Math.PI * 2
+                    );
+                    ctx.fill();
+                }
+            }
 
-        for (let r = 0; r < rows; r++) {
-            for (let c = 0; c < cols; c++) {
-                const h = A[idx(r, c)];
-                const col = bloomColor(h);
-                if (!col) continue;
-                const bloom = cs * (0.7 + h * 1.2);
-                ctx.fillStyle = col;
-                ctx.fillRect(c * cs + cs / 2 - bloom / 2, r * cs + cs / 2 - bloom / 2, bloom, bloom);
+            // Draw Heat Cells
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    const h = A[idx(r, c)];
+                    const col = heatColor(h);
+                    if (!col) continue;
+                    ctx.fillStyle = col;
+                    // Subtle rounded cells for organic feel
+                    const size = cs - 2;
+                    ctx.fillRect(c * cs + 1, r * cs + 1, size, size);
+                }
+            }
+
+            // Dynamic Grid Lines
+            const isDark = document.documentElement.classList.contains("dark");
+            for (let c = 0; c <= cols; c++) {
+                ctx.beginPath();
+                ctx.moveTo(c * cs, 0);
+                ctx.lineTo(c * cs, H);
+                const gridH =
+                    A[idx(Math.floor(rows / 2), clamp(c, 0, cols - 1))];
+                ctx.strokeStyle = isDark
+                    ? `rgba(111, 209, 215, ${0.05 + gridH * 0.2})`
+                    : `rgba(0, 0, 0, ${0.03 + gridH * 0.1})`;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+            }
+            for (let r = 0; r <= rows; r++) {
+                ctx.beginPath();
+                ctx.moveTo(0, r * cs);
+                ctx.lineTo(W, r * cs);
+                const gridH =
+                    A[idx(clamp(r, 0, rows - 1), Math.floor(cols / 2))];
+                ctx.strokeStyle = isDark
+                    ? `rgba(111, 209, 215, ${0.05 + gridH * 0.2})`
+                    : `rgba(0, 0, 0, ${0.03 + gridH * 0.1})`;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
             }
         }
 
-        for (let r = 0; r < rows; r++) {
-            for (let c = 0; c < cols; c++) {
-                const h = A[idx(r, c)];
-                const col = heatColor(h);
-                if (!col) continue;
-                ctx.fillStyle = col;
-                ctx.fillRect(c * cs, r * cs, cs - 1, cs - 1);
+        function loop() {
+            simulate();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        window.addEventListener("mousemove", (e) => {
+            if (lastX !== -1) {
+                const dx = e.clientX - lastX;
+                const dy = e.clientY - lastY;
+                const d = Math.hypot(dx, dy);
+                velocity = clamp(d / 15, 0, 3);
             }
-        }
+            mx = e.clientX;
+            my = e.clientY;
+            lastX = mx;
+            lastY = my;
+        });
 
-        ctx.strokeStyle = document.documentElement.classList.contains('dark') 
-            ? 'rgba(18,48,62,0.22)' 
-            : 'rgba(0,0,0,0.05)';
-        ctx.lineWidth = 0.5;
-        for (let c = 0; c <= cols; c++) {
-            ctx.beginPath();
-            ctx.moveTo(c * cs, 0); ctx.lineTo(c * cs, H);
-            ctx.stroke();
-        }
-        for (let r = 0; r <= rows; r++) {
-            ctx.beginPath();
-            ctx.moveTo(0, r * cs); ctx.lineTo(W, r * cs);
-            ctx.stroke();
-        }
-    }
-
-    function loop() {
-        simulate();
-        draw();
+        resize();
+        window.addEventListener("resize", resize);
         requestAnimationFrame(loop);
-    }
-
-    let mouseMoving = false;
-    let mouseSilenceTimer: any = null;
-
-    window.addEventListener('mousemove', e => {
-        mx = e.clientX; 
-        my = e.clientY;
-        mouseMoving = true;
-        clearTimeout(mouseSilenceTimer);
-        mouseSilenceTimer = setTimeout(() => { mouseMoving = false; }, 80);
-    });
-
-    resize();
-    window.addEventListener('resize', resize);
-    requestAnimationFrame(loop);
-  })();
+    })();
 </script>
 
 <style>
-  #heatmap-canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
+    #heatmap-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
 </style>
