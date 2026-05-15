@@ -57,9 +57,9 @@ const mockTechStack = [
     <!-- Header KPI Bar: Scope at a glance -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4 reveal">
       {[
-        { label: 'Active_Operations', val: '08', unit: 'PROJECTS', desc: 'Live system deployment' },
-        { label: 'Tech_Diversity', val: '24', unit: 'STACKS', desc: 'Languages & Frameworks' },
-        { label: 'Domain_Coverage', val: '03', unit: 'SECTORS', desc: 'AI / FinTech / Ops' },
+        { label: 'Active_Operations', val: projects.length.toString().padStart(2, '0'), unit: 'PROJECTS', desc: 'Live system deployment' },
+        { label: 'Tech_Diversity', val: [...new Set(projects.flatMap(p => p.data.stack))].length.toString().padStart(2, '0'), unit: 'STACKS', desc: 'Languages & Frameworks' },
+        { label: 'Domain_Coverage', val: Object.keys(groupedProjects).length.toString().padStart(2, '0'), unit: 'SECTORS', desc: 'AI / FinTech / Ops' },
         { label: 'System_Complexity', val: 'High', unit: 'LEVEL', desc: 'Scale-ready architecture' }
       ].map(kpi => (
         <div class="p-3 bg-card/30 border border-border/80 rounded-2xl glass-premium flex flex-col group hover:border-primary/50 transition-all">
@@ -92,7 +92,7 @@ const mockTechStack = [
                 </div>
                 <div class="pl-5 space-y-1.5 border-l border-border/80">
                   {items.map(p => (
-                    <a href={`/projects/${p.slug}`} class="flex items-center gap-2 cursor-pointer group">
+                    <a href={`/projects/${p.id}`} class="flex items-center gap-2 cursor-pointer group">
                       <div class="w-2.5 h-2.5 border border-primary/50 rounded-sm bg-primary/5 flex items-center justify-center group-hover:bg-primary transition-all">
                         <span class="text-[6px] text-primary group-hover:text-background transition-colors">✓</span>
                       </div>
@@ -213,14 +213,14 @@ const mockTechStack = [
 
       projects.forEach(p => {
         nodes.push({
-          id: p.slug,
+          id: p.id,
           label: p.data.title,
           type: 'project',
           domain: category.includes('ai') ? 'ai' : category.includes('fin') ? 'fin' : 'ops',
           complexity: p.data.priority ? p.data.priority * 2 + 4 : 6,
           desc: p.data.description
         });
-        links.push({ source: category, target: p.slug });
+        links.push({ source: category, target: p.id });
       });
     });
 

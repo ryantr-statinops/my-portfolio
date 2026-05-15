@@ -2,8 +2,8 @@
 import { getCollection } from "astro:content";
 const projects = await getCollection("projects");
 
-const statusColors = {
-  "Production": "text-success bg-success/10 border-success/20",
+const statusColors: Record<string, string> = {
+  "Production": "text-success bg-success bg-success/10 border-success/20",
   "In Progress": "text-primary bg-primary/10 border-primary/20",
   "Beta": "text-accent bg-accent/10 border-accent/20",
 };
@@ -42,7 +42,7 @@ const statusColors = {
             </tr>
           </thead>
           <tbody class="divide-y divide-border/30">
-            {projects.sort((a,b) => b.data.priority - a.data.priority).slice(0, 8).map((project, idx) => (
+            {projects.sort((a,b) => b.data.priority - a.data.priority).map((project, idx) => (
               <tr class="group hover:bg-primary/[0.05] border-b border-border/40 transition-colors cursor-pointer" onclick={`window.location.href='/projects/${project.id}'`}>
                 <td class="px-5 py-3.5">
                   <div class="flex items-center gap-3">

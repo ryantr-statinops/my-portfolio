@@ -9,7 +9,7 @@ interface Props {
       description: string;
       date: string;
       category: string;
-      impact: string;
+      impact?: string;
       thumbnail: string;
       tags: string[];
       status: string;
@@ -18,8 +18,8 @@ interface Props {
 }
 
 const { project } = Astro.props;
-console.log('Project ID:', project.id);
-console.log('Project Data ID:', project.data.id);
+console.log("Project ID:", project.id);
+console.log("Project Data ID:", project.data.id);
 
 const categoryMap: Record<string, string> = {
   "finance-quant": "Quant",
@@ -31,81 +31,116 @@ const categoryMap: Record<string, string> = {
 };
 ---
 
-<article 
+<article
   class="group relative flex flex-col bg-card/30 border border-border/80 rounded-2xl overflow-hidden hover:border-primary transition-all duration-500 hover:-translate-y-2 reveal glass-premium"
   data-category={project.data.category}
 >
   <!-- Thumbnail Overlay -->
-  <div class="aspect-video overflow-hidden relative border-b border-border/80 bg-muted">
-    <img 
-      src={project.data.thumbnail} 
-      alt={project.data.title} 
+  <div
+    class="aspect-video overflow-hidden relative border-b border-border/80 bg-muted"
+  >
+    <img
+      src={project.data.thumbnail}
+      alt={project.data.title}
       class="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 group-hover:scale-110"
     />
     <!-- Glass Overlay for Badge -->
-    <div class="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60"></div>
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60"
+    >
+    </div>
     <div class="absolute top-4 left-4 flex gap-2">
-      <div class="px-3 py-1 bg-background/60 backdrop-blur-md border border-border/80 rounded-full text-[9px] font-mono font-bold text-primary uppercase tracking-widest shadow-xl">
+      <div
+        class="px-3 py-1 bg-background/60 backdrop-blur-md border border-border/80 rounded-full text-[9px] font-mono font-bold text-primary uppercase tracking-widest shadow-xl"
+      >
         {categoryMap[project.data.category] || project.data.category}
       </div>
-      {project.data.status === "In Progress" && (
-        <div class="px-3 py-1 bg-primary/20 backdrop-blur-md border border-primary/30 rounded-full text-[9px] font-mono font-bold text-primary uppercase animate-pulse">
-          WIP
-        </div>
-      )}
+      {
+        project.data.status === "In Progress" && (
+          <div class="px-3 py-1 bg-primary/20 backdrop-blur-md border border-primary/30 rounded-full text-[9px] font-mono font-bold text-primary uppercase animate-pulse">
+            WIP
+          </div>
+        )
+      }
     </div>
   </div>
-  
+
   <!-- Content Body -->
   <div class="p-6 flex-1 flex flex-col space-y-4">
     <div class="space-y-3">
       <div class="flex justify-between items-start">
-        <h3 class="text-xl font-black text-foreground group-hover:text-primary transition-colors duration-300 leading-tight tracking-tighter uppercase">
+        <h3
+          class="text-xl font-black text-foreground group-hover:text-primary transition-colors duration-300 leading-tight tracking-tighter uppercase"
+        >
           {project.data.title}
         </h3>
-        <span class="text-[10px] font-mono text-muted border border-border/80 px-2 py-0.5 rounded bg-foreground/5">
-          {project.data.date.split('-')[0]}
+        <span
+          class="text-[10px] font-mono text-muted border border-border/80 px-2 py-0.5 rounded bg-foreground/5"
+        >
+          {project.data.date.split("-")[0]}
         </span>
       </div>
-      <p class="text-muted text-xs line-clamp-3 leading-relaxed font-medium opacity-80 group-hover:opacity-100 transition-opacity">
+      <p
+        class="text-muted text-xs line-clamp-3 leading-relaxed font-medium opacity-80 group-hover:opacity-100 transition-opacity"
+      >
         {project.data.description}
       </p>
     </div>
 
-    <!-- Impact & Metrics -->
-    <div class="pt-4 mt-auto border-t border-border/80">
-      <div class="flex items-center justify-between mb-3">
-        <div class="flex items-center gap-2">
-          <span class="w-1.5 h-1.5 bg-success rounded-full animate-pulse shadow-[0_0_8px_rgba(var(--success-rgb),0.6)]"></span>
-          <span class="text-[9px] uppercase tracking-[0.2em] text-muted font-mono font-bold">Audit_Impact</span>
+    {project.data.impact && (
+      <!-- Impact & Metrics -->
+      <div class="pt-4 mt-auto border-t border-border/80">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span
+              class="w-1.5 h-1.5 bg-success rounded-full animate-pulse shadow-[0_0_8px_rgba(var(--success-rgb),0.6)]"
+            ></span>
+            <span
+              class="text-[9px] uppercase tracking-[0.2em] text-muted font-mono font-bold"
+              >Audit_Impact</span
+            >
+          </div>
         </div>
+        <p
+          class="text-[11px] text-success font-bold font-mono tracking-tight leading-snug bg-success/5 p-2 rounded-lg border border-success/10"
+        >
+          // {project.data.impact}
+        </p>
       </div>
-      <p class="text-[11px] text-success font-bold font-mono tracking-tight leading-snug bg-success/5 p-2 rounded-lg border border-success/10">
-        // {project.data.impact}
-      </p>
-    </div>
+    )}
 
     <!-- Actions & Tags -->
     <div class="flex justify-between items-center pt-2">
       <div class="flex gap-2">
-        {project.data.tags.slice(0, 3).map(tag => (
-          <span class="text-[8px] text-muted font-mono uppercase px-1.5 py-0.5 bg-foreground/5 rounded border border-border/30">
-            {tag}
-          </span>
-        ))}
+        {
+          project.data.tags
+            .slice(0, 3)
+            .map((tag) => (
+              <span class="text-[8px] text-muted font-mono uppercase px-1.5 py-0.5 bg-foreground/5 rounded border border-border/30">
+                {tag}
+              </span>
+            ))
+        }
       </div>
-      <a 
-        href={`/projects/${project.id}`} 
+      <a
+        href={`/projects/${project.id}`}
         class="group/link flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary hover:text-foreground transition-all"
       >
         <span>DECRYPT_CASE</span>
-        <span class="group-hover/link:translate-x-1 transition-transform">→</span>
+        <span class="group-hover/link:translate-x-1 transition-transform"
+          >→</span
+        >
       </a>
     </div>
   </div>
 
   <!-- Decorative Corner -->
-  <div class="absolute bottom-0 right-0 w-8 h-8 opacity-10 pointer-events-none overflow-hidden">
-    <div class="absolute bottom-[-15px] right-[-15px] w-10 h-10 border border-primary rotate-45"></div>
+  <div
+    class="absolute bottom-0 right-0 w-8 h-8 opacity-10 pointer-events-none overflow-hidden"
+  >
+    <div
+      class="absolute bottom-[-15px] right-[-15px] w-10 h-10 border border-primary rotate-45"
+    >
+    </div>
   </div>
 </article>

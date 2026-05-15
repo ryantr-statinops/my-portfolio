@@ -22,6 +22,8 @@
   --card: #ffffff;
   --border: #d4d4d4;
   --primary: #0a0a0a;
+  --primary-rgb: 10, 10, 10;
+  --background-rgb: 255, 255, 255;
   --accent: #0088cc;
   --success: #10b981;
   --muted: #737373;
@@ -34,6 +36,8 @@
   --card: #161616;
   --border: #404040;
   --primary: #ffffff;
+  --primary-rgb: 255, 255, 255;
+  --background-rgb: 10, 10, 10;
   --accent: #00f2ff;
   --success: #10b981;
   --muted: #a3a3a3;
@@ -64,5 +68,9 @@
 
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-br from-foreground to-foreground/60;
+  }
+
+  .katex-mathml {
+    display: none !important;
   }
 }

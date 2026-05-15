@@ -16,65 +16,179 @@ const { Content } = await render(entry);
 
 <MainLayout title={entry.data.title} description={entry.data.description}>
   <article class="max-w-4xl mx-auto py-32 px-8">
-    <header class="mb-16 space-y-6 border-b border-border pb-12">
-      <div class="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-primary">
+    <header class="mb-20 space-y-6 border-b border-border pb-16">
+      <div
+        class="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-primary"
+      >
         <span class="px-2 py-1 border border-primary/20 rounded">
-          {entry.data.category.replace('-', ' ')}
+          {entry.data.category.replace("-", " ")}
         </span>
         <span class="text-muted">•</span>
         <span class="text-muted font-mono">{entry.data.date}</span>
       </div>
-      
+
       <h1 class="text-4xl md:text-6xl font-bold leading-tight">
         {entry.data.title}
       </h1>
-      
+
       <p class="text-xl text-muted leading-relaxed">
         {entry.data.description}
       </p>
 
-      <div class="flex flex-wrap gap-3 pt-4">
-        {entry.data.stack.map(item => (
-          <span class="px-3 py-1 bg-muted/10 rounded-full text-xs font-medium border border-border">
-            {item}
-          </span>
-        ))}
+      <div class="space-y-4 pt-4">
+        <div class="flex flex-wrap gap-2">
+          <span
+            class="text-[10px] font-bold text-muted uppercase tracking-[0.2em] w-full mb-1"
+            >Stack</span
+          >
+          {
+            entry.data.stack.map((item) => (
+              <span class="px-2 py-0.5 bg-primary/5 text-primary rounded text-[10px] font-bold uppercase tracking-tight border border-primary/10">
+                {item}
+              </span>
+            ))
+          }
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <span
+            class="text-[10px] font-bold text-muted uppercase tracking-[0.2em] w-full mb-1"
+            >Focus Areas</span
+          >
+          {
+            entry.data.tags.map((tag) => (
+              <span class="px-3 py-1 bg-muted/5 rounded-full text-xs font-medium border border-border/50 text-muted">
+                {tag}
+              </span>
+            ))
+          }
+        </div>
       </div>
     </header>
 
-    <div class="prose dark:prose-invert prose-primary max-w-none 
-      prose-headings:font-bold prose-headings:tracking-tight 
-      prose-h2:text-primary prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6
-      prose-p:text-muted prose-p:leading-relaxed prose-p:mb-6
-      prose-li:text-muted
-      prose-code:text-primary prose-code:bg-primary/5 prose-code:px-1 prose-code:rounded
-      prose-img:rounded-xl prose-img:border prose-img:border-border">
+    <div
+      class="prose dark:prose-invert prose-primary max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-h2:text-primary prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6 prose-p:text-muted prose-p:leading-relaxed prose-p:mb-6 prose-li:text-muted prose-code:text-primary prose-code:bg-primary/5 prose-code:px-1 prose-code:rounded prose-img:rounded-xl prose-img:border prose-img:border-border"
+    >
       <Content />
     </div>
 
     <div class="mt-20 pt-12 border-t border-border">
-      <h3 class="text-xs uppercase tracking-widest text-muted font-bold mb-8">Links & Resources</h3>
+      <h3 class="text-xs uppercase tracking-widest text-muted font-bold mb-8">
+        Links & Resources
+      </h3>
       <div class="flex gap-4">
-        {entry.data.github && (
-          <a href={entry.data.github} target="_blank" class="px-6 py-3 bg-muted/10 hover:bg-muted/20 border border-border rounded font-bold transition-all">
-            GitHub Repo
-          </a>
-        )}
-        {entry.data.demo && (
-          <a href={entry.data.demo} target="_blank" class="px-6 py-3 bg-primary text-background hover:opacity-90 rounded font-bold transition-all">
-            Live Demo
-          </a>
-        )}
+        {
+          entry.data.github && (
+            <a
+              href={entry.data.github}
+              target="_blank"
+              class="px-6 py-3 bg-muted/10 hover:bg-muted/20 border border-border rounded font-bold transition-all"
+            >
+              GitHub Repo
+            </a>
+          )
+        }
+        {
+          entry.data.demo && (
+            <a
+              href={entry.data.demo}
+              target="_blank"
+              class="px-6 py-3 bg-primary text-background hover:opacity-90 rounded font-bold transition-all"
+            >
+              Live Demo
+            </a>
+          )
+        }
       </div>
     </div>
   </article>
 </MainLayout>
 
 <style is:global>
-  /* Fix for markdown content images */
-  .prose img {
-    width: 100%;
+  /* Fix for markdown content layout and spacing */
+  .prose {
+    line-height: 1.75;
+    font-size: 1.125rem;
+  }
+
+  .prose p {
+    margin-bottom: 1.5rem;
+  }
+
+  .prose h2 {
+    font-size: 1.875rem;
+    font-weight: 800;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    color: var(--foreground);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+
+  .prose h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+  }
+
+  .prose ul,
+  .prose ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .prose li {
+    margin-bottom: 0.5rem;
+  }
+
+  .prose blockquote {
+    border-left: 4px solid var(--primary);
+    padding-left: 1.5rem;
+    font-style: italic;
+    margin-bottom: 2rem;
+    background: rgba(var(--primary-rgb), 0.05);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+
+  .prose pre {
     margin-top: 2rem;
     margin-bottom: 2rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border);
+    background: #0f172a !important;
+  }
+
+  .prose img {
+    width: 100%;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .prose table {
+    width: 100%;
+    margin-bottom: 2rem;
+    border-collapse: collapse;
+  }
+
+  .prose th {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+  }
+
+  .prose td {
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    font-size: 0.875rem;
   }
 </style>

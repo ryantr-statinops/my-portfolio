@@ -19,7 +19,13 @@ const projects = defineCollection({
       "ai-implementation",
       "software-engineering"
     ]),
-    status: z.enum(["In Progress", "Production", "Archived"]).default("Production"),
+    status: z.enum([
+      "In Progress",
+      "Production",
+      "Archived",
+      "Research & Development",
+      "Audit Pending"
+    ]).default("Production"),
     priority: z.number().int().min(1).max(10),
     tags: z.array(z.string()).max(12).default([]),
     impact: z.string().min(20),
