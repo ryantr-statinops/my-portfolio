@@ -1,0 +1,105 @@
+---
+import { getCollection } from "astro:content";
+const projects = await getCollection("projects");
+
+const statusColors = {
+  "Production": "text-success bg-success/10 border-success/20",
+  "In Progress": "text-primary bg-primary/10 border-primary/20",
+  "Beta": "text-accent bg-accent/10 border-accent/20",
+};
+---
+
+<section id="portfolio-registry" class="w-full min-h-screen flex items-center bg-background relative overflow-hidden py-12">
+  <div class="max-w-[1600px] mx-auto px-6 md:px-10 w-full">
+    <!-- Header -->
+    <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4 reveal">
+      <div class="space-y-2">
+        <div class="flex items-center gap-2">
+          <div class="w-10 h-px bg-primary"></div>
+          <span class="text-[9px] font-mono text-primary uppercase tracking-[0.5em]">Global_Asset_Inventory</span>
+        </div>
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tighter uppercase leading-none">
+          STRATEGIC.<br/><span class="text-primary">REGISTRY_</span>
+        </h2>
+      </div>
+      <div class="flex flex-col items-end gap-1 text-right">
+        <p class="text-[9px] font-mono text-muted uppercase tracking-widest">// Total_Assets: {projects.length}</p>
+        <p class="text-[9px] font-mono text-muted uppercase tracking-widest">// Integrity_Check: PASSED</p>
+      </div>
+    </div>
+
+    <!-- Registry Table -->
+    <div class="bg-card/20 border border-border/80 rounded-2xl glass-premium overflow-hidden reveal">
+      <div class="overflow-x-auto custom-scrollbar">
+        <table class="w-full text-left border-collapse min-w-[900px]">
+          <thead>
+            <tr class="border-b border-border/80 bg-foreground/[0.02]">
+              <th class="px-5 py-4 text-[9px] font-mono text-muted uppercase tracking-widest">ID / Asset_Name</th>
+              <th class="px-5 py-4 text-[9px] font-mono text-muted uppercase tracking-widest">Category</th>
+              <th class="px-5 py-4 text-[9px] font-mono text-muted uppercase tracking-widest">Tech_Ecosystem</th>
+              <th class="px-5 py-4 text-[9px] font-mono text-muted uppercase tracking-widest">Status</th>
+              <th class="px-5 py-4 text-[9px] font-mono text-muted uppercase tracking-widest text-right">Audit_Impact</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/30">
+            {projects.sort((a,b) => b.data.priority - a.data.priority).slice(0, 8).map((project, idx) => (
+              <tr class="group hover:bg-primary/[0.05] border-b border-border/40 transition-colors cursor-pointer" onclick={`window.location.href='/projects/${project.id}'`}>
+                <td class="px-5 py-3.5">
+                  <div class="flex items-center gap-3">
+                    <span class="text-[9px] font-mono text-muted opacity-40">0{idx + 1}</span>
+                    <div class="space-y-0.5">
+                      <div class="text-xs font-black text-foreground group-hover:text-primary transition-colors uppercase tracking-tight">{project.data.title}</div>
+                      <div class="text-[8px] font-mono text-muted opacity-50">UID: {project.id.slice(0, 8)}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-5 py-3.5">
+                  <span class="text-[9px] font-mono text-foreground bg-foreground/5 px-2 py-0.5 rounded border border-border/80 uppercase">
+                    {project.data.category.replace('-', '_')}
+                  </span>
+                </td>
+                <td class="px-5 py-3.5">
+                  <div class="flex flex-wrap gap-1">
+                    {project.data.stack?.slice(0, 3).map(tool => (
+                      <span class="text-[8px] font-mono text-muted border-l border-primary/30 pl-2">
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </td>
+                <td class="px-5 py-3.5">
+                  <span class={`text-[8px] font-mono font-bold px-2 py-0.5 rounded-full border ${statusColors[project.data.status] || 'text-muted border-border'}`}>
+                    {project.data.status.toUpperCase()}
+                  </span>
+                </td>
+                <td class="px-5 py-3.5 text-right">
+                  <div class="text-[10px] font-bold text-success font-mono tracking-tight">
+                     {project.data.impact}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Registry Footer -->
+    <div class="mt-8 flex justify-between items-center text-[9px] font-mono text-muted uppercase tracking-[0.2em] reveal">
+      <div class="flex items-center gap-4">
+        <span>[ SCANNING_COMPLETE ]</span>
+        <span class="animate-pulse">_</span>
+      </div>
+      <div class="flex gap-8">
+        <span>Integrity: 100% Verified</span>
+        <span>Encryption: AES-256</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .custom-scrollbar::-webkit-scrollbar { height: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 242, 255, 0.2); border-radius: 10px; }
+</style>

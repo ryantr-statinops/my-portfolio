@@ -23,5 +23,5 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# hide agent folder
-.agent/
+# hide agents folder
+.agents/

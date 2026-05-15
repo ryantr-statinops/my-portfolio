@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import ThemeToggle from "../components/ui/ThemeToggle.astro";
+import Footer from "../components/Footer.astro";
 
 interface Props {
   title: string;
@@ -8,11 +9,10 @@ interface Props {
 }
 
 const { title, description = "Ryan Tran - Statistic in Operation Portfolio" } = Astro.props;
-import Footer from "../components/Footer.astro";
 ---
 
 <!DOCTYPE html>
-<html lang="vi" class="scroll-smooth">
+<html lang="vi" class="scroll-smooth snap-y snap-mandatory">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -56,11 +56,13 @@ import Footer from "../components/Footer.astro";
           </div>
           <span class="font-semibold text-lg tracking-tight hidden sm:inline text-foreground">Ryan Tran</span>
         </a>
-        <div class="flex items-center gap-4 md:gap-8 text-sm font-medium">
-          <div class="hidden sm:flex items-center gap-8">
-            <a href="/#intelligence-hub" class="hover:text-accent transition-colors">Intelligence Hub</a>
-            <a href="/#projects" class="hover:text-accent transition-colors">Dự án</a>
-            <a href="https://github.com/ryantr-statinops" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors">GitHub</a>
+        <div class="flex items-center gap-4 md:gap-8 text-[9px] font-mono uppercase tracking-widest font-bold">
+          <div class="hidden md:flex items-center gap-6">
+            <a href="/#about-me" class="hover:text-primary transition-colors">[ IDENTITY ]</a>
+            <a href="/#intelligence-hub" class="hover:text-primary transition-colors">[ STRATEGY ]</a>
+            <a href="/#projects" class="hover:text-primary transition-colors">[ PROJECTS ]</a>
+            <a href="/#frameworks-hub" class="hover:text-primary transition-colors">[ GOVERNANCE ]</a>
+            <a href="/#connect" class="hover:text-primary transition-colors">[ CONNECT ]</a>
           </div>
           <div class="pl-4 border-l border-border">
             <ThemeToggle />

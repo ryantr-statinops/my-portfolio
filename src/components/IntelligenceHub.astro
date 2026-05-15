@@ -3,25 +3,28 @@ import { getCollection } from "astro:content";
 
 const projects = await getCollection("projects");
 
-// Mock Data for Categories & Stats (To be linked later)
-const mockCategories = [
-  { id: 'ai', label: 'AI_MODELS', projects: ['ABC_System', 'Neural_Flow', 'GPT_Agent'] },
-  { id: 'fin', label: 'FIN_QUANT', projects: ['Alpha_Bot', 'Market_Analyzer'] },
-  { id: 'ops', label: 'OPS_AUTO', projects: ['ERP_Link', 'Workflow_X'] }
-];
+// Group real projects by category
+const groupedProjects = projects.reduce((acc, project) => {
+  const cat = project.data.category || 'other';
+  if (!acc[cat]) acc[cat] = [];
+  acc[cat].push(project);
+  return acc;
+}, {});
 
+// Strategic Mock Data for Skill Stats
 const mockTechStack = [
-  { label: 'Python', value: 85, color: 'bg-primary' },
-  { label: 'React', value: 72, color: 'bg-accent' },
-  { label: 'TensorFlow', value: 64, color: 'bg-success' },
-  { label: 'Astro', value: 58, color: 'bg-purple-500' }
+  { label: 'Python', value: 95, context: 'Advanced Analytics & Bot Systems' },
+  { label: 'Javascript/TS', value: 88, context: 'Full-stack Dashboards' },
+  { label: 'SQL', value: 82, context: 'Relational Architecture' },
+  { label: 'Astro/React', value: 90, context: 'High-performance UI' },
+  { label: 'Docker/Cloud', value: 75, context: 'Scalable Infrastructure' }
 ];
 ---
 
-<div class="strategic-dashboard-section w-full bg-background py-10 border-y border-border overflow-hidden">
+<div class="strategic-dashboard-section w-full bg-background py-6 border-y border-border overflow-hidden">
   <div class="w-full px-4 md:px-6">
     <!-- Terminal Header -->
-    <div class="flex items-center gap-6 mb-6 px-4 py-2 bg-foreground/[0.03] border border-border rounded-lg text-[10px] font-mono uppercase tracking-widest overflow-hidden glass">
+    <div class="flex items-center gap-6 mb-4 px-4 py-2 bg-foreground/[0.03] border border-border rounded-lg text-[10px] font-mono uppercase tracking-widest overflow-hidden glass">
       <div class="flex items-center gap-2">
         <span class="w-2 h-2 bg-success rounded-full animate-pulse"></span>
         <span class="text-muted">SYSTEM_MODE:</span> <span class="text-foreground">STRATEGIC_VIEW</span>
@@ -37,28 +40,64 @@ const mockTechStack = [
       </div>
     </div>
 
-    <div class="grid grid-cols-12 gap-3 h-[calc(100vh-180px)] min-h-[600px]">
-      <!-- LEFT PANEL: Watchlist & Treemap -->
-      <div class="col-span-12 lg:col-span-3 flex flex-col gap-3 h-full overflow-hidden">
-        <!-- Watchlist Checklist -->
-        <div class="flex-[3] bg-card/40 border border-border rounded-xl glass overflow-hidden flex flex-col">
-          <div class="p-4 border-b border-border bg-foreground/5 flex justify-between items-center">
-            <h3 class="text-[11px] font-bold uppercase tracking-widest opacity-80">Portfolio_Watchlist</h3>
-            <button class="text-[9px] text-primary hover:underline uppercase font-bold">Select_All</button>
+    <!-- Header -->
+    <div class="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4 reveal">
+      <div class="space-y-1">
+        <h2 class="text-3xl font-bold tracking-tighter text-foreground uppercase leading-none">System Management Visulization</h2>
+        <p class="text-[10px] text-muted font-mono uppercase tracking-[0.3em]">một cái nhìn tổng quan và tính liên kết của các dự án</p>
+      </div>
+      <div class="flex gap-3">
+        <div class="flex items-center gap-2 px-3 py-1 bg-success/5 border border-success/20 rounded-full">
+          <span class="w-1 h-1 bg-success rounded-full"></span>
+          <span class="text-[8px] font-mono text-success uppercase font-bold tracking-widest">ISO_Aligned</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header KPI Bar: Scope at a glance -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4 reveal">
+      {[
+        { label: 'Active_Operations', val: '08', unit: 'PROJECTS', desc: 'Live system deployment' },
+        { label: 'Tech_Diversity', val: '24', unit: 'STACKS', desc: 'Languages & Frameworks' },
+        { label: 'Domain_Coverage', val: '03', unit: 'SECTORS', desc: 'AI / FinTech / Ops' },
+        { label: 'System_Complexity', val: 'High', unit: 'LEVEL', desc: 'Scale-ready architecture' }
+      ].map(kpi => (
+        <div class="p-3 bg-card/30 border border-border/80 rounded-2xl glass-premium flex flex-col group hover:border-primary/50 transition-all">
+          <div class="flex justify-between items-start mb-0.5">
+            <span class="text-[8px] font-mono text-muted uppercase tracking-widest">{kpi.label}</span>
+            <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
           </div>
-          <div class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
-            {mockCategories.map(cat => (
+          <div class="flex items-baseline gap-1">
+            <span class="text-2xl font-black font-mono text-foreground leading-none">{kpi.val}</span>
+            <span class="text-[9px] font-bold text-primary">{kpi.unit}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="grid grid-cols-12 gap-3 h-[calc(100vh-280px)] min-h-[450px]">
+      <!-- LEFT PANEL: Watchlist & Registry -->
+      <div class="col-span-12 lg:col-span-3 flex flex-col gap-3 h-full overflow-hidden">
+        <div class="flex-[3] bg-card/40 border border-border/80 rounded-xl glass overflow-hidden flex flex-col">
+          <div class="p-4 border-b border-border/80 bg-foreground/5 flex justify-between items-center">
+            <h3 class="text-[11px] font-bold uppercase tracking-widest opacity-80">Portfolio_Asset_Registry</h3>
+            <button class="text-[9px] text-primary hover:underline uppercase font-bold">Filters</button>
+          </div>
+          <div class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar text-[11px]">
+            {Object.entries(groupedProjects).map(([category, items]) => (
               <div class="space-y-2">
-                <label class="flex items-center gap-2 cursor-pointer group">
-                  <input type="checkbox" class="w-3 h-3 border-border rounded bg-transparent text-primary focus:ring-primary" checked />
-                  <span class="text-[11px] font-bold text-foreground group-hover:text-primary transition-colors">{cat.label}</span>
-                </label>
-                <div class="ml-5 space-y-1 border-l border-border/50 pl-3">
-                  {cat.projects.map(proj => (
-                    <label class="flex items-center gap-2 cursor-pointer group py-1">
-                      <input type="checkbox" class="w-2.5 h-2.5 border-border rounded bg-transparent text-primary/70 focus:ring-primary" checked />
-                      <span class="text-[10px] text-muted group-hover:text-foreground transition-colors">{proj}</span>
-                    </label>
+                <div class="flex items-center gap-2">
+                  <input type="checkbox" checked class="accent-primary w-3 h-3" />
+                  <span class="text-[10px] font-mono font-bold text-muted uppercase">{category.replace('-', '_')}</span>
+                </div>
+                <div class="pl-5 space-y-1.5 border-l border-border/80">
+                  {items.map(p => (
+                    <a href={`/projects/${p.slug}`} class="flex items-center gap-2 cursor-pointer group">
+                      <div class="w-2.5 h-2.5 border border-primary/50 rounded-sm bg-primary/5 flex items-center justify-center group-hover:bg-primary transition-all">
+                        <span class="text-[6px] text-primary group-hover:text-background transition-colors">✓</span>
+                      </div>
+                      <span class="text-muted group-hover:text-foreground transition-colors truncate">{p.data.title}</span>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -66,84 +105,68 @@ const mockTechStack = [
           </div>
         </div>
 
-        <!-- Treemap Visualizer -->
-        <div class="h-48 bg-card/40 border border-border rounded-xl glass p-4">
-          <h4 class="text-[9px] font-mono text-muted uppercase tracking-widest mb-3">Asset_Allocation_Treemap</h4>
-          <div class="grid grid-cols-3 grid-rows-2 gap-1 h-28">
-            <div class="col-span-2 row-span-2 bg-primary/20 border border-primary/30 rounded flex items-center justify-center p-2 group hover:bg-primary/30 transition-all">
-              <span class="text-[8px] font-mono text-primary font-bold">AI_64%</span>
-            </div>
-            <div class="bg-accent/20 border border-accent/30 rounded flex items-center justify-center p-1 group hover:bg-accent/30 transition-all">
-              <span class="text-[8px] font-mono text-accent font-bold">FIN</span>
-            </div>
-            <div class="bg-success/20 border border-success/30 rounded flex items-center justify-center p-1 group hover:bg-success/30 transition-all">
-              <span class="text-[8px] font-mono text-success font-bold">OPS</span>
-            </div>
+        <div class="p-4 bg-card/40 border border-border/80 rounded-xl glass space-y-3">
+          <p class="text-[9px] font-mono text-muted uppercase tracking-widest">Global_Exit_Nodes</p>
+          <div class="grid grid-cols-2 gap-2">
+            <a href="https://github.com/ryantr-statinops" target="_blank" class="flex items-center justify-center gap-2 py-2 bg-foreground/5 border border-border/80 rounded text-[10px] font-bold hover:bg-primary hover:text-background transition-all">GITHUB</a>
+            <a href="https://linkedin.com/in/ryan-tr" target="_blank" class="flex items-center justify-center gap-2 py-2 bg-foreground/5 border border-border/80 rounded text-[10px] font-bold hover:bg-primary hover:text-background transition-all">LINKEDIN</a>
           </div>
         </div>
       </div>
 
-      <!-- CENTER PANEL: 3D Knowledge Graph -->
-      <div class="col-span-12 lg:col-span-6 h-full relative bg-card/20 border border-border rounded-2xl glass overflow-hidden">
-        <div class="absolute top-6 left-6 z-10 pointer-events-none">
-          <h2 class="text-2xl font-bold tracking-tighter text-foreground">KNOWLEDGE_GRAPH_V2</h2>
-          <p class="text-[10px] font-mono text-muted uppercase mt-1">Multi-dimensional Project Relationships</p>
+      <!-- CENTER PANEL: 3D Intelligence Graph -->
+      <div class="col-span-12 lg:col-span-6 bg-card/40 border border-border/80 rounded-xl glass relative overflow-hidden group">
+        <div id="graph-container" class="w-full h-full cursor-move">
+          <!-- Graph Identifier Box -->
+          <div class="absolute top-6 left-6 z-20 pointer-events-none reveal">
+            <div class="px-4 py-2 bg-background/80 backdrop-blur-md border-l-2 border-primary rounded-r-lg shadow-2xl">
+              <div class="text-[8px] font-mono text-primary uppercase tracking-[0.3em] mb-1">Neural_Network_Mapping</div>
+              <div class="text-xs font-black text-foreground uppercase tracking-tighter">PROJECT_INTELLIGENCE_GRAPH_V4</div>
+            </div>
+          </div>
+          <canvas id="graph-canvas" class="w-full h-full"></canvas>
         </div>
-        
-        <div class="absolute inset-0 cursor-move" id="graph-container">
-           <canvas id="graph-canvas" class="w-full h-full"></canvas>
-        </div>
-
-        <!-- Graph Controls Overlay -->
-        <div class="absolute bottom-6 right-6 flex flex-col gap-2 z-10">
-          <button class="p-2 bg-foreground/10 border border-border rounded hover:bg-primary/20 transition-all text-foreground">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          </button>
-          <button class="p-2 bg-foreground/10 border border-border rounded hover:bg-primary/20 transition-all text-foreground">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg>
-          </button>
+        <div id="graph-tooltip" class="absolute hidden p-3 bg-background/90 backdrop-blur-xl border border-primary/50 rounded-xl shadow-2xl pointer-events-none z-50 max-w-[200px]">
+          <div id="tooltip-title" class="text-[10px] font-bold uppercase text-primary mb-1"></div>
+          <div id="tooltip-desc" class="text-[9px] text-muted leading-relaxed"></div>
+          <div class="mt-2 pt-2 border-t border-border/80 flex justify-between items-center text-[8px] font-mono">
+            <span class="text-success uppercase">Comp: <span id="tooltip-comp"></span></span>
+            <span class="text-primary underline">Detail →</span>
+          </div>
         </div>
       </div>
 
-      <!-- RIGHT PANEL: Heatmap & Stats -->
+      <!-- RIGHT PANEL: Proof of Skill & Audit -->
       <div class="col-span-12 lg:col-span-3 flex flex-col gap-3 h-full overflow-hidden">
-        <!-- Property Heatmap -->
-        <div class="flex-[3] bg-card/40 border border-border rounded-xl glass p-4 flex flex-col overflow-hidden">
-          <h4 class="text-[10px] font-mono text-muted uppercase tracking-[0.2em] mb-4">Project_Property_Heatmap</h4>
-          <div class="flex-1 grid grid-cols-7 grid-rows-10 gap-1 overflow-hidden">
-            {Array.from({length: 70}).map((_, i) => (
-              <div class={`rounded-sm transition-all hover:scale-125 cursor-help ${
-                i % 7 === 0 ? 'bg-primary/60' : 
-                i % 11 === 0 ? 'bg-primary/30' : 
-                i % 5 === 0 ? 'bg-primary/10' : 'bg-foreground/[0.03]'
-              }`} title={`Metric_Value: ${Math.random().toFixed(2)}`}></div>
+        <div class="flex-1 bg-card/40 border border-border/80 rounded-xl glass p-5 flex flex-col overflow-hidden">
+          <h4 class="text-[11px] font-mono font-bold text-primary uppercase tracking-[0.2em] mb-6">Technical_Proof_of_Skill</h4>
+          <div class="flex-1 space-y-6 overflow-y-auto custom-scrollbar pr-2">
+            {['Core_Languages', 'Infra_&_Frameworks'].map((section, idx) => (
+              <div class="space-y-3">
+                <span class="text-[9px] font-mono text-muted uppercase tracking-widest border-b border-border/80 w-full block pb-1">{section}</span>
+                {mockTechStack.slice(idx*2, idx*2+3).map(stack => (
+                  <div class="space-y-1.5 group">
+                    <div class="flex justify-between text-[10px] font-mono uppercase font-bold">
+                      <span class="text-foreground">{stack.label}</span>
+                      <span class="text-primary">{stack.value}%</span>
+                    </div>
+                    <div class="h-1 bg-foreground/5 rounded-full overflow-hidden">
+                      <div class="h-full bg-primary transition-all duration-1000" style={{ width: `${stack.value}%` }}></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             ))}
           </div>
-          <div class="mt-4 flex justify-between items-center text-[8px] font-mono text-muted uppercase">
-            <span>Low Impact</span>
-            <div class="flex gap-1">
-              <div class="w-2 h-2 bg-primary/10 rounded-sm"></div>
-              <div class="w-2 h-2 bg-primary/30 rounded-sm"></div>
-              <div class="w-2 h-2 bg-primary/60 rounded-sm"></div>
-            </div>
-            <span>High Impact</span>
-          </div>
         </div>
-
-        <!-- Tech Stack Stats (Bar Chart) -->
-        <div class="flex-[2] bg-card/40 border border-border rounded-xl glass p-4 flex flex-col overflow-hidden">
-          <h4 class="text-[10px] font-mono text-muted uppercase tracking-[0.2em] mb-4">Common_Stack_Analysis</h4>
-          <div class="flex-1 space-y-3 overflow-y-auto custom-scrollbar">
-            {mockTechStack.map(stack => (
-              <div class="space-y-1">
-                <div class="flex justify-between text-[9px] font-mono uppercase">
-                  <span class="text-foreground">{stack.label}</span>
-                  <span class="text-primary">{stack.value}%</span>
-                </div>
-                <div class="h-1.5 w-full bg-foreground/5 rounded-full overflow-hidden">
-                  <div class={`h-full ${stack.color} rounded-full`} style={{ width: `${stack.value}%` }}></div>
-                </div>
-              </div>
+        <div class="h-40 bg-card/40 border border-border/80 rounded-xl glass p-4 flex flex-col overflow-hidden">
+          <div class="flex justify-between items-center mb-3">
+            <h4 class="text-[10px] font-mono text-muted uppercase tracking-[0.2em]">Live_Audit_Log</h4>
+            <span class="text-[8px] text-success animate-pulse">RECORDING...</span>
+          </div>
+          <div class="flex-1 grid grid-cols-12 grid-rows-5 gap-1">
+            {Array.from({length: 60}).map((_, i) => (
+              <div class={`rounded-sm transition-all duration-500 ${Math.random() > 0.8 ? 'bg-primary/60 shadow-[0_0_8px_rgba(var(--primary-rgb),0.5)]' : Math.random() > 0.6 ? 'bg-primary/20' : 'bg-foreground/5'}`}></div>
             ))}
           </div>
         </div>
@@ -152,7 +175,7 @@ const mockTechStack = [
   </div>
 </div>
 
-<script define:vars={{ mockCategories, mockTechStack }}>
+<script define:vars={{ groupedProjects, mockTechStack }}>
   // --- UTILS & CLOCK ---
   function updateClock() {
     const now = new Date();
@@ -162,38 +185,52 @@ const mockTechStack = [
   setInterval(updateClock, 1000);
   updateClock();
 
-  // --- 3D KNOWLEDGE GRAPH LOGIC ---
+  // --- STRATEGIC 3D GRAPH ---
   const canvas = document.getElementById('graph-canvas');
   const container = document.getElementById('graph-container');
+  const tooltip = document.getElementById('graph-tooltip');
+  
   if (canvas && container) {
     const ctx = canvas.getContext('2d');
     let width, height;
     
-    // Construct 3D Nodes for Mock Data
+    // Construct real nodes from grouped projects
     const nodes = [
-      { id: 'core', label: 'CORE_SYSTEM', type: 'core', x: 0, y: 0, z: 0, vx: 0, vy: 0, vz: 0 },
-      ...mockCategories.map(c => ({ 
-        id: c.id, label: c.label, type: 'category', 
-        x: (Math.random()-0.5)*300, y: (Math.random()-0.5)*300, z: (Math.random()-0.5)*300, 
-        vx: 0, vy: 0, vz: 0 
-      })),
-      ...mockCategories.flatMap(c => c.projects.map(p => ({
-        id: p, label: p, type: 'project', 
-        x: (Math.random()-0.5)*500, y: (Math.random()-0.5)*500, z: (Math.random()-0.5)*500,
-        vx: 0, vy: 0, vz: 0, parentId: c.id
-      })))
+      { id: 'core', label: 'SYSTEM_CORE', type: 'core', domain: 'sys', complexity: 10, desc: 'Central governance node for all integrated modules.' }
     ];
+    const links = [];
 
-    const links = [
-      ...mockCategories.map(c => ({ source: 'core', target: c.id })),
-      ...mockCategories.flatMap(c => c.projects.map(p => ({ source: c.id, target: p })))
-    ];
+    Object.entries(groupedProjects).forEach(([category, projects]) => {
+      nodes.push({
+        id: category,
+        label: category.replace('-', '_').toUpperCase(),
+        type: 'category',
+        domain: category.includes('ai') ? 'ai' : category.includes('fin') ? 'fin' : 'ops',
+        complexity: 7,
+        desc: `Strategic cluster for ${category} operations.`
+      });
+      links.push({ source: 'core', target: category });
 
-    let angleX = 0.5, angleY = 0.5;
-    let targetAngleX = 0.5, targetAngleY = 0.5;
-    let zoom = 1.0, targetZoom = 1.0;
-    let isDragging = false;
-    let lastX, lastY;
+      projects.forEach(p => {
+        nodes.push({
+          id: p.slug,
+          label: p.data.title,
+          type: 'project',
+          domain: category.includes('ai') ? 'ai' : category.includes('fin') ? 'fin' : 'ops',
+          complexity: p.data.priority ? p.data.priority * 2 + 4 : 6,
+          desc: p.data.description
+        });
+        links.push({ source: category, target: p.slug });
+      });
+    });
+
+    nodes.forEach(n => {
+      n.x = (Math.random()-0.5)*400; n.y = (Math.random()-0.5)*400; n.z = (Math.random()-0.5)*400;
+      n.vx = 0; n.vy = 0; n.vz = 0;
+    });
+
+    let angleX = 0.5, angleY = 0.5, zoom = 1.0, targetZoom = 1.0;
+    let isDragging = false, lastX, lastY, hoveredNode = null;
 
     function resize() {
       width = canvas.width = container.clientWidth;
@@ -204,135 +241,92 @@ const mockTechStack = [
 
     container.addEventListener('mousedown', e => { isDragging = true; lastX = e.clientX; lastY = e.clientY; });
     window.addEventListener('mousemove', e => {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left, mouseY = e.clientY - rect.top;
       if (isDragging) {
-        targetAngleY += (e.clientX - lastX) * 0.005;
-        targetAngleX += (e.clientY - lastY) * 0.005;
+        angleY += (e.clientX - lastX) * 0.005; angleX += (e.clientY - lastY) * 0.005;
         lastX = e.clientX; lastY = e.clientY;
+      }
+      let found = null;
+      projectedNodes.forEach(n => {
+        const dx = n.px - mouseX, dy = n.py - mouseY;
+        if (Math.sqrt(dx*dx + dy*dy) < n.ps * 15) found = n;
+      });
+      if (found !== hoveredNode) {
+        hoveredNode = found;
+        if (hoveredNode) {
+          tooltip.style.left = `${mouseX + 15}px`; tooltip.style.top = `${mouseY + 15}px`;
+          tooltip.classList.remove('hidden');
+          document.getElementById('tooltip-title').innerText = hoveredNode.label;
+          document.getElementById('tooltip-desc').innerText = hoveredNode.desc;
+          document.getElementById('tooltip-comp').innerText = hoveredNode.complexity;
+        } else tooltip.classList.add('hidden');
       }
     });
     window.addEventListener('mouseup', () => isDragging = false);
-    
-    container.addEventListener('wheel', e => {
-      e.preventDefault();
-      const zoomSpeed = 0.15;
-      if (e.deltaY < 0) targetZoom *= (1 + zoomSpeed);
-      else targetZoom *= (1 - zoomSpeed);
-      targetZoom = Math.min(Math.max(targetZoom, 0.3), 5); // Clamping zoom
-    }, { passive: false });
 
     function rotate(n, ax, ay) {
-      let x = n.x * Math.cos(ay) + n.z * Math.sin(ay);
-      let z = n.z * Math.cos(ay) - n.x * Math.sin(ay);
-      let y = n.y * Math.cos(ax) + z * Math.sin(ax);
-      z = z * Math.cos(ax) - n.y * Math.sin(ax);
+      let x = n.x * Math.cos(ay) + n.z * Math.sin(ay), z = n.z * Math.cos(ay) - n.x * Math.sin(ay);
+      let y = n.y * Math.cos(ax) + z * Math.sin(ax); z = z * Math.cos(ax) - n.y * Math.sin(ax);
       return { x, y, z };
     }
 
+    let projectedNodes = [];
     function loop() {
-      // Physics (Smoother constants)
-      const repulsion = 4000;
-      const springK = 0.04;
-
       nodes.forEach(n => {
         nodes.forEach(n2 => {
           if (n === n2) return;
           const dx = n.x - n2.x, dy = n.y - n2.y, dz = n.z - n2.z;
           const d2 = dx*dx + dy*dy + dz*dz || 1;
-          const d = Math.sqrt(d2);
-          if (d < 400) {
-            const f = repulsion / d2;
-            n.vx += (dx/d)*f; n.vy += (dy/d)*f; n.vz += (dz/d)*f;
-          }
+          const f = 4000 / d2;
+          n.vx += (dx/Math.sqrt(d2))*f; n.vy += (dy/Math.sqrt(d2))*f; n.vz += (dz/Math.sqrt(d2))*f;
         });
-        // Center Gravity
         n.vx -= n.x * 0.005; n.vy -= n.y * 0.005; n.vz -= n.z * 0.005;
-        n.vx *= 0.92; n.vy *= 0.92; n.vz *= 0.92;
-        n.x += n.vx; n.y += n.vy; n.z += n.vz;
+        n.vx *= 0.92; n.vy *= 0.92; n.vz *= 0.92; n.x += n.vx; n.y += n.vy; n.z += n.vz;
       });
-
       links.forEach(l => {
         const s = nodes.find(n => n.id === l.source), t = nodes.find(n => n.id === l.target);
         if (s && t) {
-          const dx = t.x - s.x, dy = t.y - s.y, dz = t.z - s.z;
-          const d = Math.sqrt(dx*dx + dy*dy + dz*dz) || 1;
-          const f = (d - 120) * springK;
-          const fx = (dx/d)*f, fy = (dy/d)*f, fz = (dz/d)*f;
-          s.vx += fx; s.vy += fy; s.vz += fz;
-          t.vx -= fx; t.vy -= fy; t.vz -= fz;
+          const dx = t.x - s.x, dy = t.y - s.y, dz = t.z - s.z, d = Math.sqrt(dx*dx + dy*dy + dz*dz) || 1, f = (d - 120) * 0.04;
+          s.vx += (dx/d)*f; s.vy += (dy/d)*f; s.vz += (dz/d)*f;
+          t.vx -= (dx/d)*f; t.vy -= (dy/d)*f; t.vz -= (dz/d)*f;
         }
       });
-
-      // Render Logic
       ctx.clearRect(0, 0, width, height);
-      angleX += (targetAngleX - angleX) * 0.1;
-      angleY += (targetAngleY - angleY) * 0.1;
-      zoom += (targetZoom - zoom) * 0.15; // Smooth zoom interpolation
-      
-      if (!isDragging) { targetAngleY += 0.001; targetAngleX += 0.0005; }
-
-      const cameraDist = 800; // Constant perspective
-      const projected = nodes.map(n => {
-        const r = rotate(n, angleX, angleY);
-        // Apply zoom to the rotated coordinates for linear scaling
-        const s = cameraDist / (cameraDist + r.z);
-        return { 
-          ...n, 
-          px: r.x * s * zoom + width/2, 
-          py: r.y * s * zoom + height/2, 
-          ps: s * zoom, 
-          pz: r.z 
-        };
+      zoom += (targetZoom - zoom) * 0.15;
+      if (!isDragging) { angleY += 0.001; angleX += 0.0005; }
+      const cameraDist = 800;
+      projectedNodes = nodes.map(n => {
+        const r = rotate(n, angleX, angleY), s = cameraDist / (cameraDist + r.z);
+        return { ...n, px: r.x * s * zoom + width/2, py: r.y * s * zoom + height/2, ps: s * zoom, pz: r.z };
       }).sort((a, b) => b.pz - a.pz);
 
-      // Draw Links with Zoom-aware opacity and thickness
+      // Draw links
+      ctx.lineWidth = 1.5;
       links.forEach(l => {
-        const s = projected.find(n => n.id === l.source), t = projected.find(n => n.id === l.target);
+        const s = projectedNodes.find(n => n.id === l.source), t = projectedNodes.find(n => n.id === l.target);
         if (s && t) {
-          // Increased opacity factor (0.35 instead of 0.15)
-          const op = Math.max(0, (s.ps + t.ps) / 2 * 0.35);
-          const isDark = document.documentElement.classList.contains('dark');
-          
-          ctx.strokeStyle = isDark 
-            ? `rgba(0, 242, 255, ${op})` 
-            : `rgba(14, 165, 233, ${op})`;
-          
-          // Thicker lines (0.8 base instead of 0.5)
-          ctx.lineWidth = 0.8 * zoom * ((s.ps + t.ps) / 2);
-          
+          // Increase link opacity significantly for visibility
+          const opacity = Math.max(0.2, 0.6 * s.ps);
+          ctx.strokeStyle = `rgba(0, 242, 255, ${opacity})`; 
           ctx.beginPath(); 
           ctx.moveTo(s.px, s.py); 
           ctx.lineTo(t.px, t.py); 
           ctx.stroke();
         }
       });
-
-      // Draw Nodes with Perspective
-      projected.forEach(n => {
-        const isDark = document.documentElement.classList.contains('dark');
-        const color = n.type === 'core' ? (isDark ? '#00f2ff' : '#0ea5e9') : 
-                      n.type === 'category' ? (isDark ? '#93f8d8' : '#14b8a6') : 
-                      (isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.5)');
-        
-        const baseR = n.type === 'core' ? 8 : n.type === 'category' ? 5 : 3;
-        const finalR = baseR * n.ps;
-
-        ctx.globalAlpha = Math.min(1, Math.max(0.1, n.ps));
-        ctx.fillStyle = color;
-        ctx.shadowBlur = n.type === 'project' ? 0 : 15 * n.ps;
-        ctx.shadowColor = color;
-        
+      projectedNodes.forEach(n => {
+        const domainColors = { fin: '#00f2ff', ops: '#93f8d8', ai: '#fb7185', sys: '#ffffff' };
+        const color = domainColors[n.domain] || '#ffffff', finalR = (n.complexity || 5) * 1.5 * n.ps;
+        ctx.globalAlpha = Math.min(1, Math.max(0.2, n.ps)); ctx.fillStyle = color;
+        ctx.shadowBlur = (hoveredNode && hoveredNode.id === n.id) ? 20 : 10 * n.ps; ctx.shadowColor = color;
         ctx.beginPath(); ctx.arc(n.px, n.py, finalR, 0, Math.PI * 2); ctx.fill();
-        
-        // Dynamic Label Rendering (Show more as we zoom in)
-        if (n.ps > 0.45 && (n.type !== 'project' || zoom > 1.2)) {
-          ctx.shadowBlur = 0;
-          ctx.font = `${Math.round(10 * n.ps)}px monospace`;
-          ctx.fillStyle = isDark ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.8)';
+        if (n.ps > 0.5 && (n.type !== 'project' || zoom > 1.2)) {
+          ctx.shadowBlur = 0; ctx.font = `${Math.round(9 * n.ps)}px monospace`;
           ctx.fillText(n.label, n.px + (finalR + 5), n.py + 4);
         }
       });
       ctx.globalAlpha = 1;
-
       requestAnimationFrame(loop);
     }
     loop();

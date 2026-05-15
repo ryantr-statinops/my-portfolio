@@ -1,127 +1,129 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import ProjectCard from "../components/ProjectCard.astro";
-import Button from "../components/ui/Button.astro";
 import IntelligenceHub from "../components/IntelligenceHub.astro";
 import FrameworksHub from "../components/FrameworksHub.astro";
+import AboutMe from "../components/AboutMe.astro";
+import ProjectCard from "../components/ProjectCard.astro";
 import HeatmapBackground from "../components/interactive/HeatmapBackground.astro";
 import { getCollection } from "astro:content";
 
 const projects = await getCollection("projects");
-const sortedProjects = projects.sort((a, b) => a.data.priority - b.data.priority);
-
-const categories = [
-  { id: 'all', label: 'All Projects' },
-  { id: 'finance-quant', label: 'Finance & Quant' },
-  { id: 'ops-automation', label: 'Operations' },
-  { id: 'data-math', label: 'Data & Math' },
-  { id: 'system-ui', label: 'Systems' },
-];
 ---
 
-<MainLayout title="Trần Quốc Khang | Portfolio Intelligence">
+<MainLayout title="Ryan Tran | Command Center">
   <!-- Hero Section -->
-  <section class="pt-32 pb-20 px-8 md:px-12 w-full relative overflow-hidden">
-    {/* Background */}
+  <section class="min-h-screen flex items-center pt-20 pb-20 px-8 md:px-12 w-full relative overflow-hidden bg-background snap-start">
     <HeatmapBackground />
     
+    <div class="relative z-10 max-w-5xl w-full">
+      <div class="space-y-10">
+        <div class="space-y-4 reveal">
+          <div class="flex items-center gap-3">
+            <span class="w-2 h-2 bg-primary rounded-full animate-pulse shadow-[0_0_10px_rgba(var(--primary-rgb),0.8)]"></span>
+            <p class="text-[10px] font-mono uppercase tracking-[0.4em] text-primary">System_Initialization_Success</p>
+          </div>
+          <h1 class="text-6xl md:text-8xl font-bold leading-[0.9] tracking-tighter uppercase">
+            SYSTEMS. <br />
+            OPERATIONS. <br />
+            <span class="text-gradient">INTELLIGENCE.</span>
+          </h1>
+          <p class="text-muted text-xl md:text-2xl max-w-2xl font-medium leading-relaxed">
+            Not a portfolio. This is a <span class="text-foreground font-bold">Command Center</span> of an Applied Statistics student specializing in <span class="text-primary italic font-semibold">Quantitative Finance</span> and <span class="text-foreground">System Architecture</span>.
+          </p>
+        </div>
 
-    <div class="relative z-10 max-w-3xl space-y-8">
-      <div class="space-y-2 reveal">
-        <h2 class="text-xs font-mono uppercase tracking-[0.4em] text-accent">Efficiency over Excess</h2>
-        <h1 class="text-4xl md:text-6xl font-bold leading-[1.1] text-gradient">
-          Building Systems for <br />
-          Precision & Scale.
-        </h1>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 reveal">
+          {[
+            { label: 'NETWORK_STATUS', val: 'STABLE', color: 'text-success' },
+            { label: 'ACTIVE_NODES', val: '5 SECTORS', color: 'text-primary' },
+            { label: 'CURRENT_FOCUS', val: 'QUANT & STARTUP OPS', color: 'text-accent' }
+          ].map(stat => (
+            <div class="p-4 bg-foreground/[0.03] border border-border rounded-xl glass flex flex-col gap-1">
+              <span class="text-[9px] font-mono text-muted uppercase tracking-widest">{stat.label}</span>
+              <span class={`text-sm font-bold font-mono ${stat.color}`}>[ {stat.val} ]</span>
+            </div>
+          ))}
+        </div>
+
+        <div class="flex flex-wrap gap-4 pt-6 reveal">
+          <a href="#about-me" class="px-8 py-4 bg-primary text-background font-bold uppercase tracking-[0.2em] text-xs rounded transition-all hover:scale-[1.05] shadow-lg shadow-primary/20">
+            [ EXECUTE_SYSTEM_SCAN ]
+          </a>
+          <a href="#intelligence-hub" class="px-8 py-4 bg-foreground/5 border border-border text-foreground font-bold uppercase tracking-[0.2em] text-xs rounded transition-all hover:bg-foreground hover:text-background">
+            [ ACCESS_HUB ]
+          </a>
+        </div>
       </div>
+    </div>
 
-      
-      <p class="text-muted text-lg md:text-xl leading-relaxed reveal">
-        Applied Statistics Student & Startup Founder. <br />
-        Tập trung vào giải quyết các bài toán vận hành phức tạp thông qua dữ liệu và tự động hóa.
-      </p>
-
-      <div class="flex flex-wrap gap-4 pt-4 reveal">
-        <Button href="#projects" variant="primary">Khám phá dự án</Button>
-        <Button href="#intelligence-hub" variant="outline">Intelligence Hub</Button>
-      </div>
+    <div class="absolute bottom-10 left-12 flex flex-col items-center gap-4 reveal">
+      <div class="h-16 w-px bg-gradient-to-b from-primary to-transparent"></div>
+      <span class="text-[9px] font-mono text-muted uppercase tracking-[0.3em] vertical-text">Scroll_to_Navigate</span>
     </div>
   </section>
 
-  <!-- Intelligence Hub Section -->
-  <section id="intelligence-hub" class="reveal">
-    <IntelligenceHub />
+  <!-- About Me Section -->
+  <section id="about-me" class="min-h-screen flex items-center bg-background border-t border-border/30 snap-start">
+    <AboutMe />
   </section>
 
-  <!-- Governance & Frameworks Hub Section -->
-  <section id="frameworks-hub" class="reveal">
-    <FrameworksHub />
+  <!-- Intelligence Hub Section (3D Graph & Metrics) -->
+  <section id="intelligence-hub" class="min-h-screen flex items-center bg-background border-t border-border/30 overflow-hidden snap-start">
+    <div class="w-full">
+      <IntelligenceHub />
+    </div>
   </section>
 
-  <!-- Projects Section -->
-  <main id="projects" class="w-full py-20 px-8 md:px-12 border-t border-border">
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12">
-      <div class="space-y-2">
-        <h2 class="text-2xl font-bold tracking-tight text-foreground">Portfolio Registry</h2>
-        <p class="text-muted text-sm font-medium">Lưu trữ các giải pháp đã được thực thi và chứng minh hiệu quả.</p>
+  <!-- Project Showcase Section (Visual Cards) -->
+  <section id="projects" class="min-h-screen flex items-center py-20 bg-background/50 border-y border-border px-8 md:px-12 reveal snap-start">
+    <div class="max-w-7xl mx-auto w-full">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        <div class="space-y-4">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-px bg-primary/50"></div>
+            <span class="text-[10px] font-mono text-primary uppercase tracking-[0.4em]">Audit_Asset_Log</span>
+          </div>
+          <h2 class="text-5xl md:text-7xl font-bold tracking-tighter uppercase leading-none">PROJECT. <br/><span class="text-primary">REGISTRY_</span></h2>
+        </div>
+        <div class="flex items-center gap-3">
+           <span class="px-4 py-2 bg-foreground/5 border border-border rounded text-[9px] font-mono text-muted uppercase tracking-widest">Index: BY_PRIORITY</span>
+        </div>
       </div>
-
-      <!-- Domain Filter -->
-      <div class="flex flex-wrap gap-2" id="category-filters">
-        {categories.map(cat => (
-          <button 
-            data-filter={cat.id}
-            class:list={[
-              "px-4 py-2 text-[11px] font-bold uppercase tracking-widest border transition-all duration-300 rounded-sm",
-              cat.id === 'all' 
-                ? "bg-foreground text-background border-foreground" 
-                : "bg-transparent text-muted border-border hover:border-foreground/30"
-            ]}
-          >
-            {cat.label}
-          </button>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {projects.sort((a, b) => b.data.priority - a.data.priority).slice(0, 3).map(project => (
+          <ProjectCard project={project} />
         ))}
       </div>
-    </div>
 
-    <!-- Project Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="project-grid">
-      {sortedProjects.map((project) => (
-        <ProjectCard project={project} />
-      ))}
+      {projects.length > 3 && (
+        <div class="mt-12 flex justify-center">
+          <a href="/projects" class="text-[10px] font-mono text-muted hover:text-primary transition-colors uppercase tracking-[0.4em] border-b border-border hover:border-primary pb-1">
+            [ VIEW_FULL_INVENTORY_{projects.length}_ASSETS ]
+          </a>
+        </div>
+      )}
     </div>
-  </main>
+  </section>
+
+
+  <!-- Governance & Frameworks Hub Section -->
+  <section id="frameworks-hub" class="min-h-screen flex items-center bg-background border-t border-border overflow-hidden snap-start">
+    <FrameworksHub />
+  </section>
 </MainLayout>
 
-<script>
-  const filterButtons = document.querySelectorAll('#category-filters button');
-  const projectCards = document.querySelectorAll('#project-grid > article');
-
-  filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const filter = button.getAttribute('data-filter');
-
-      // Update button styles
-      filterButtons.forEach(btn => {
-        btn.classList.remove('bg-foreground', 'text-background', 'border-foreground');
-        btn.classList.add('bg-transparent', 'text-muted', 'border-border');
-      });
-      button.classList.add('bg-foreground', 'text-background', 'border-foreground');
-      button.classList.remove('bg-transparent', 'text-muted', 'border-border');
-
-      // Filter cards
-      projectCards.forEach(card => {
-        const category = card.getAttribute('data-category');
-        if (filter === 'all' || category === filter) {
-          (card as HTMLElement).style.display = 'flex';
-          setTimeout(() => {
-            card.classList.add('active');
-          }, 50);
-        } else {
-          (card as HTMLElement).style.display = 'none';
-          card.classList.remove('active');
-        }
-      });
-    });
-  });
-</script>
+<style>
+  .text-gradient {
+    background: linear-gradient(to right, #00f2ff, #0ea5e9, #93f8d8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .vertical-text {
+    writing-mode: vertical-rl;
+  }
+  .glass {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+</style>
