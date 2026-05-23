@@ -1,43 +1,39 @@
-# Astro Starter Kit: Minimal
+# Tech Portfolio & AI Workflow
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Chào mừng bạn đến với không gian cá nhân của mình! Đây là nơi mình chia sẻ các dự án công nghệ, tư duy phát triển phần mềm và cách mình ứng dụng AI để tối ưu hóa quy trình làm việc.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+---
 
-## 🚀 Project Structure
+## 🛠 Tech Stack
 
-Inside of your Astro project, you'll see the following folders and files:
+Dự án này được xây dựng trên nền tảng hiện đại, tập trung vào hiệu suất và trải nghiệm người dùng:
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- **Framework:** [Astro](https://astro.build/) - Tối ưu hóa tốc độ tải trang với kiến trúc Island.
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) - Thiết kế giao diện linh hoạt, mạnh mẽ.
+- **Content:** MDX - Kết hợp linh hoạt giữa Markdown và các thành phần UI.
+- **Math/Scientific:** Remark Math & Rehype KaTeX - Hỗ trợ hiển thị công thức toán học/khoa học.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+---
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## 🤖 AI-Powered Workflow
 
-Any static assets, like images, can be placed in the `public/` directory.
+Mình không chỉ sử dụng AI như một công cụ hỗ trợ, mà mình tích hợp AI vào sâu trong quy trình phát triển (AI-native development).
 
-## 🧞 Commands
+- **AI Pair Programming:** Sử dụng các mô hình ngôn ngữ lớn (LLM) để xây dựng kiến trúc component, tối ưu hóa logic xử lý và debug.
+- **Agentic Automation (`/agents`):** Mình xây dựng các `agents` tùy chỉnh nhằm tự động hóa các tác vụ lặp đi lặp lại:
+    - *Content Processing:* Tự động hóa việc xử lý và định dạng dữ liệu đầu vào.
+    - *Workflow Optimization:* Giảm thiểu thời gian setup và triển khai dự án.
+- **Human-in-the-loop:** AI đóng vai trò là "đồng nghiệp" đề xuất giải pháp, mình là người kiểm soát và tinh chỉnh cuối cùng để đảm bảo chất lượng code.
 
-All commands are run from the root of the project, from a terminal:
+---
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## 🌐 Portfolio
 
-## 👀 Want to learn more?
+Bạn muốn tìm hiểu chi tiết hơn về các dự án và hành trình phát triển của mình?
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+👉 **[Truy cập Portfolio chính thức tại đây]** (Đang cập nhật link...)
+
+---
+
+*Dự án này là minh chứng cho việc kết hợp giữa kỹ năng lập trình thủ công và sức mạnh của trí tuệ nhân tạo hiện đại.*
+
