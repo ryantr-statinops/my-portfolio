@@ -43,7 +43,7 @@ const statusColors: Record<string, string> = {
           </thead>
           <tbody class="divide-y divide-border/30">
             {projects.sort((a,b) => b.data.priority - a.data.priority).map((project, idx) => (
-              <tr class="group hover:bg-primary/[0.05] border-b border-border/40 transition-colors cursor-pointer" onclick={`window.location.href='/projects/${project.id}'`}>
+              <tr class="group hover:bg-primary/[0.05] border-b border-border/40 transition-colors cursor-pointer" onclick={`window.location.href='${import.meta.env.BASE_URL}/projects/${project.id}'`}>
                 <td class="px-5 py-3.5">
                   <div class="flex items-center gap-3">
                     <span class="text-[9px] font-mono text-muted opacity-40">0{idx + 1}</span>

@@ -123,7 +123,7 @@ const categoryMap: Record<string, string> = {
         }
       </div>
       <a
-        href={`/projects/${project.id}`}
+        href={import.meta.env.BASE_URL + `/projects/${project.id}`}
         class="group/link flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary hover:text-foreground transition-all"
       >
         <span>DECRYPT_CASE</span>
