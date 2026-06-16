@@ -7,6 +7,9 @@ import rehypeKatex from 'rehype-katex';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://ryantr-statinops.github.io',
+  base: '/my-portfolio',
+
   vite: {
     plugins: [tailwindcss()]
   },
