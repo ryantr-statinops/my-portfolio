@@ -52,17 +52,17 @@
           <form class="space-y-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div class="space-y-2">
-                <label class="text-[9px] font-mono text-muted uppercase tracking-widest ml-1">Identity_Name</label>
-                <input type="text" placeholder="Full Name" class="w-full bg-transparent border-b border-border/30 py-3 focus:border-primary focus:outline-none transition-all placeholder:text-muted/20 font-medium text-base" />
+                <label for="contact-name" class="text-[9px] font-mono text-muted uppercase tracking-widest ml-1">Identity_Name</label>
+                <input id="contact-name" name="name" type="text" placeholder="Full Name" class="w-full bg-transparent border-b border-border/30 py-3 focus:border-primary focus:outline-none transition-all placeholder:text-muted/20 font-medium text-base" />
               </div>
               <div class="space-y-2">
-                <label class="text-[9px] font-mono text-muted uppercase tracking-widest ml-1">Identity_Email</label>
-                <input type="email" placeholder="Email Address" class="w-full bg-transparent border-b border-border/30 py-3 focus:border-primary focus:outline-none transition-all placeholder:text-muted/20 font-medium text-base" />
+                <label for="contact-email" class="text-[9px] font-mono text-muted uppercase tracking-widest ml-1">Identity_Email</label>
+                <input id="contact-email" name="email" type="email" placeholder="Email Address" class="w-full bg-transparent border-b border-border/30 py-3 focus:border-primary focus:outline-none transition-all placeholder:text-muted/20 font-medium text-base" />
               </div>
             </div>
             <div class="space-y-2">
-              <label class="text-[9px] font-mono text-muted uppercase tracking-widest ml-1">Context_Inquiry</label>
-              <textarea rows="2" placeholder="Describe your requirement..." class="w-full bg-transparent border-b border-border/30 py-3 focus:border-primary focus:outline-none transition-all placeholder:text-muted/20 font-medium text-base resize-none"></textarea>
+              <label for="contact-inquiry" class="text-[9px] font-mono text-muted uppercase tracking-widest ml-1">Context_Inquiry</label>
+              <textarea id="contact-inquiry" name="inquiry" rows="2" placeholder="Describe your requirement..." class="w-full bg-transparent border-b border-border/30 py-3 focus:border-primary focus:outline-none transition-all placeholder:text-muted/20 font-medium text-base resize-none"></textarea>
             </div>
             <button type="submit" class="w-full py-5 bg-primary text-background font-bold uppercase tracking-[0.5em] text-xs rounded-xl hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/20 group relative overflow-hidden">
                <span class="relative z-10 font-black">Transmit_Signal</span>
