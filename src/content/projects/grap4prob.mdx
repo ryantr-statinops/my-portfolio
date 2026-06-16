@@ -1,0 +1,100 @@
+---
+id: "grap4prob"
+title: "Grap4Prob — Visualizing & Simulating Probability"
+description: "Website trực quan hóa các khái niệm xác suất và thống kê phức tạp: Luật số lớn, CLT, Monty Hall, Birthday Paradox, Kim Buffon ước tính π, và Bàn Galton."
+date: "2026-06-13"
+category: "data-math"
+status: "Production"
+priority: 2
+tags:
+  - "Probability"
+  - "Statistics"
+  - "Monte Carlo"
+  - "Visualization"
+  - "Chart.js"
+  - "Vanilla JS"
+impact: "8 module mô phỏng xác suất tương tác real-time, từ Luật số lớn đến Monty Hall Paradox, hỗ trợ AI Insights tự động phân tích kết quả — đã deploy tại GitHub Pages."
+thumbnail: "/images/projects/grap4prob/thumbnail.png"
+github: "https://github.com/ryantr-statinops/Grap4Prob"
+demo: "https://ryantr-statinops.github.io/Grap4Prob/"
+stack:
+  - "JavaScript"
+  - "HTML5"
+  - "CSS3"
+  - "Chart.js"
+---
+
+# Grap4Prob | Visualizing & Simulating Probability
+
+**Grap4Prob** là một website được thiết kế để trực quan hóa các khái niệm xác suất và thống kê phức tạp một cách trực quan và sinh động. Dự án tập trung vào việc minh họa **Luật số lớn (Law of Large Numbers)** và **Định lý giới hạn trung tâm (Central Limit Theorem)** thông qua các mô phỏng thời gian thực.
+
+🌐 **[Truy cập Website](https://ryantr-statinops.github.io/Grap4Prob/)**
+
+---
+
+## 01. Tính năng nổi bật
+
+Ứng dụng cung cấp **8 module mô phỏng** đa dạng:
+
+| Module | Mô tả |
+|--------|-------|
+| **🎲 Xúc xắc & Đồng xu** | Minh họa cơ bản về xác suất rời rạc và sự hội tụ tần suất |
+| **🃏 Bộ bài (Cards)** | Mô phỏng rút bài ngẫu nhiên |
+| **🎱 Rút bi (Urn Model)** | Bài toán xác suất có hoàn lại và không hoàn lại |
+| **🚪 Monty Hall Paradox** | Trực quan hóa nghịch lý nổi tiếng trong xác suất điều kiện |
+| **🎂 Birthday Paradox** | Khám phá xác suất trùng lặp trong nhóm người |
+| **🪡 Kim Buffon** | Ước tính số Pi (π) thông qua phương pháp Monte Carlo |
+| **🛝 Bàn Galton** | Minh họa trực quan về Phân phối chuẩn (Normal Distribution) |
+| **🤖 AI Insights** | Tự động đưa ra nhận định và phân tích dữ liệu sau mỗi lần mô phỏng |
+
+---
+
+## 02. Công nghệ sử dụng
+
+| Thành phần | Công nghệ |
+|-----------|-----------|
+| **Frontend** | HTML5 Semantic, CSS3 (Custom Design System, CSS Variables) |
+| **Logic** | Vanilla JavaScript (ES6+ Modules) |
+| **Visualization** | [Chart.js](https://www.chartjs.org/) |
+| **Aesthetics** | Glassmorphism, Smooth Animations, Responsive Design |
+| **Deploy** | GitHub Pages |
+
+---
+
+## 03. Cấu trúc dự án
+
+```text
+Grap4Prob/
+├── web/
+│   ├── index.html      # Giao diện chính
+│   ├── style.css       # Design System & Styles
+│   └── js/
+│       ├── main.js     # Entry point & Điều hướng
+│       ├── simulation.js # Logic tính toán xác suất
+│       └── ui.js       # Xử lý DOM & Biểu đồ Chart.js
+├── agent/              # (Optional) Logic AI Insights
+└── README.md           # Tài liệu dự án
+```
+
+---
+
+## 04. Chạy thử
+
+```bash
+git clone https://github.com/ryantr-statinops/Grap4Prob.git
+cd Grap4Prob
+# Mở bằng Live Server hoặc:
+python -m http.server
+```
+
+Hoặc truy cập trực tiếp:
+
+👉 **[Grap4Prob Live Demo](https://ryantr-statinops.github.io/Grap4Prob/)**
+
+---
+
+## 05. Project Repository
+
+[Grap4Prob Repository](https://github.com/ryantr-statinops/Grap4Prob)
+
+*Phát triển bởi **Quốc Khang (ryantr-statinops)** & **Quốc Thành (ThanhData)***

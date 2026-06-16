@@ -1,0 +1,136 @@
+---
+id: "orbit-system-manager"
+title: "Orbit System Manager — 3D Real-Time System Monitor"
+description: "Desktop application giám sát hệ thống thời gian thực với trực quan hoá 3D CPU topology, boxplot, density plot và time-series cho CPU, RAM, GPU và Network."
+date: "2026-06-15"
+category: "system-ui"
+status: "Production"
+priority: 4
+tags:
+  - "System Monitoring"
+  - "3D Visualization"
+  - "Tauri"
+  - "Rust"
+  - "Three.js"
+  - "Real-time"
+impact: "Ứng dụng desktop real-time monitoring với 3D CPU topology, hỗ trợ 16 lõi CPU, GPU tracking, RAM/Network analytics — build bằng Tauri v2 + Three.js + Python backend."
+thumbnail: "/images/projects/orbit-system-manager/example.png"
+github: "https://github.com/ryantr-statinops/Orbit-System-Manager"
+stack:
+  - "Rust"
+  - "JavaScript"
+  - "Python"
+  - "Three.js"
+  - "Tauri"
+  - "WebSocket"
+---
+
+# 🛸 Orbit System Manager
+
+**Ứng dụng giám sát hệ thống thời gian thực với trực quan hoá 3D CPU, RAM, GPU và Network**
+
+Orbit System Manager là desktop app giám sát hiệu năng hệ thống theo thời gian thực, sử dụng **trực quan hoá 3D** hiển thị tải CPU dưới dạng topology động, kết hợp biểu đồ thống kê (boxplot, density plot, time‑series) và HUD hiển thị thông số chi tiết.
+
+---
+
+## 01. Kiến trúc hệ thống
+
+### Công nghệ sử dụng
+
+| Thành phần | Công nghệ |
+|-----------|-----------|
+| **Desktop shell** | [Tauri v2](https://tauri.app) (Rust) |
+| **Frontend** | Vanilla JS + [Three.js](https://threejs.org) |
+| **Backend** | Python + [websockets](https://websockets.readthedocs.io) |
+| **System metrics** | [psutil](https://github.com/giampaolo/psutil) + [GPUtil](https://github.com/anderskm/gputil) |
+| **Bundler** | [Rollup](https://rollupjs.org) |
+
+<img src={`${import.meta.env.BASE_URL}images/projects/orbit-system-manager/architecture.png`} alt="Architecture Overview" />
+
+---
+
+## 02. Tính năng chính
+
+### Giao diện 3 cột
+
+**Panel trái:**
+- **System Memory** — thanh RAM tổng quan + dung lượng đã dùng
+- **CPU Cores** — 16 lõi CPU với thanh tải % + sparkline 40 mẫu
+- **HUD** — Avg utilization, std dev, variance, kết nối real-time
+
+**Trung tâm (Canvas 3D):**
+- CPU topology 3D — mỗi cột là một lõi CPU, cao/thấp theo tải
+- Boxplot + stripplot phân bố tải 16 lõi
+- RAM time‑series (30 giây)
+- Network chart (Sent / Received)
+
+**Panel phải:**
+- GPU0 / GPU1 — Density plot + Time‑series (load %, VRAM, temperature)
+- RAM Time‑Series — biểu đồ đường RAM 30 giây
+- Network — Sent / Received (KB/s)
+
+### Thao tác tương tác
+
+| Thao tác | Mô tả |
+|---------|-------|
+| **Kéo thả splitter** | Resize 3 cột, kích thước được lưu tự động |
+| **Nút mũi tên trên top bar** | Ẩn/hiện panel trái và phải |
+| **Xoay 3D** | Giữ chuột trái + kéo trên canvas 3D |
+| **Zoom 3D** | Lăn chuột trên canvas 3D |
+| **Pan 3D** | Giữ chuột phải + kéo |
+
+---
+
+## 03. Yêu cầu hệ thống
+
+| Yêu cầu | Tối thiểu |
+|---------|-----------|
+| **Hệ điều hành** | Windows 10 / 11 (64-bit) |
+| **RAM** | 2 GB |
+| **GPU** | Không bắt buộc (có càng tốt để xem GPU charts) |
+
+---
+
+## 04. Cấu trúc thư mục
+
+```text
+Orbit-System-Manager/
+├── src-tauri/         # Tauri (Rust) — desktop app
+├── src/               # Frontend source (JS modules)
+│   ├── index.js       # Entry point
+│   ├── state.js       # Global state
+│   ├── ui.js          # Charts, HUD, layout
+│   ├── threeScene.js  # 3D CPU topology (Three.js)
+│   ├── timeSeries.js  # Time-series data structures
+│   ├── websocket.js   # WebSocket + mock fallback
+│   └── constants.js   # Constants
+├── assets/images/     # Screenshots & assets
+├── app.py             # Python backend
+├── environment.yml    # Conda environment definition
+└── package.json       # npm scripts & dependencies
+```
+
+---
+
+## 05. Cài đặt & Build
+
+```bash
+# Thiết lập Python environment
+conda env create -f environment.yml
+conda activate orbit-system
+
+# Cài npm dependencies & build
+npm install
+npm run build
+
+# Build desktop app (ra .msi / .exe)
+npm run build:app
+```
+
+---
+
+## 06. Project Repository
+
+Toàn bộ mã nguồn và hướng dẫn chi tiết được lưu trữ tại:
+
+[Orbit System Manager Repository](https://github.com/ryantr-statinops/Orbit-System-Manager)
