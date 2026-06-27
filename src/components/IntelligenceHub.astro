@@ -11,14 +11,6 @@ const groupedProjects = projects.reduce((acc, project) => {
   return acc;
 }, {});
 
-// Strategic Mock Data for Skill Stats
-const mockTechStack = [
-  { label: 'Python', value: 95, context: 'Advanced Analytics & Bot Systems' },
-  { label: 'Javascript/TS', value: 88, context: 'Full-stack Dashboards' },
-  { label: 'SQL', value: 82, context: 'Relational Architecture' },
-  { label: 'Astro/React', value: 90, context: 'High-performance UI' },
-  { label: 'Docker/Cloud', value: 75, context: 'Scalable Infrastructure' }
-];
 ---
 
 <div class="strategic-dashboard-section w-full bg-background py-6 border-y border-border overflow-hidden">
@@ -115,7 +107,7 @@ const mockTechStack = [
       </div>
 
       <!-- CENTER PANEL: 3D Intelligence Graph -->
-      <div class="col-span-12 lg:col-span-6 bg-card/40 border border-border/80 rounded-xl glass relative overflow-hidden group">
+      <div class="col-span-12 lg:col-span-9 bg-card/40 border border-border/80 rounded-xl glass relative overflow-hidden group">
         <div id="graph-container" class="w-full h-full cursor-move">
           <!-- Graph Identifier Box -->
           <div class="absolute top-6 left-6 z-20 pointer-events-none reveal">
@@ -136,46 +128,12 @@ const mockTechStack = [
         </div>
       </div>
 
-      <!-- RIGHT PANEL: Proof of Skill & Audit -->
-      <div class="col-span-12 lg:col-span-3 flex flex-col gap-3 h-full overflow-hidden">
-        <div class="flex-1 bg-card/40 border border-border/80 rounded-xl glass p-5 flex flex-col overflow-hidden">
-          <h4 class="text-[11px] font-mono font-bold text-primary uppercase tracking-[0.2em] mb-6">Technical_Proof_of_Skill</h4>
-          <div class="flex-1 space-y-6 overflow-y-auto custom-scrollbar pr-2">
-            {['Core_Languages', 'Infra_&_Frameworks'].map((section, idx) => (
-              <div class="space-y-3">
-                <span class="text-[9px] font-mono text-muted uppercase tracking-widest border-b border-border/80 w-full block pb-1">{section}</span>
-                {mockTechStack.slice(idx*2, idx*2+3).map(stack => (
-                  <div class="space-y-1.5 group">
-                    <div class="flex justify-between text-[10px] font-mono uppercase font-bold">
-                      <span class="text-foreground">{stack.label}</span>
-                      <span class="text-primary">{stack.value}%</span>
-                    </div>
-                    <div class="h-1 bg-foreground/5 rounded-full overflow-hidden">
-                      <div class="h-full bg-primary transition-all duration-1000" style={{ width: `${stack.value}%` }}></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div class="h-40 bg-card/40 border border-border/80 rounded-xl glass p-4 flex flex-col overflow-hidden">
-          <div class="flex justify-between items-center mb-3">
-            <h4 class="text-[10px] font-mono text-muted uppercase tracking-[0.2em]">Live_Audit_Log</h4>
-            <span class="text-[8px] text-success animate-pulse">RECORDING...</span>
-          </div>
-          <div class="flex-1 grid grid-cols-12 grid-rows-5 gap-1">
-            {Array.from({length: 60}).map((_, i) => (
-              <div class={`rounded-sm transition-all duration-500 ${Math.random() > 0.8 ? 'bg-primary/60 shadow-[0_0_8px_rgba(var(--primary-rgb),0.5)]' : Math.random() > 0.6 ? 'bg-primary/20' : 'bg-foreground/5'}`}></div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <!-- RIGHT PANEL: Proof of Skill & Audit (removed) -->
     </div>
   </div>
 </div>
 
-<script define:vars={{ groupedProjects, mockTechStack }}>
+<script define:vars={{ groupedProjects }}>
   // --- UTILS & CLOCK ---
   function updateClock() {
     const now = new Date();
