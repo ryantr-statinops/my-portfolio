@@ -23,5 +23,7 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# hide agents folder
+# hide agents folder (legacy, now docs/)
 .agents/
+# OS
+Thumbs.db
