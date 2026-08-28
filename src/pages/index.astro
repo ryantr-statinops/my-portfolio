@@ -54,15 +54,11 @@ const projects = (await getCollection("projects")).sort(sortByPriority);
         </div>
 
         <div class="flex flex-wrap gap-3 pt-6 reveal">
-          <a href="#about-me" class="group inline-flex items-center gap-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full">
-            <span class="px-2 py-3 bg-primary text-background font-mono font-bold text-xs rounded-l-full border border-primary group-hover:bg-primary/90 transition-colors">[</span>
-            <span class="px-4 py-3 bg-primary text-background font-bold uppercase tracking-[0.2em] text-xs border-y border-primary group-hover:bg-primary/90 transition-colors">VIEW_PROFILE</span>
-            <span class="px-2 py-3 bg-primary text-background font-mono font-bold text-xs rounded-r-full border border-primary group-hover:bg-primary/90 transition-colors">]</span>
+          <a href="#about-me" class="inline-flex items-center justify-center px-6 py-3 bg-primary text-background font-bold uppercase tracking-[0.2em] text-xs rounded-xl transition-colors hover:bg-primary/90 shadow-lg shadow-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+            VIEW_PROFILE
           </a>
-          <a href="#projects" class="group inline-flex items-center gap-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full">
-            <span class="px-2 py-3 bg-card border border-border text-foreground font-mono font-bold text-xs rounded-l-full group-hover:bg-foreground group-hover:text-background group-hover:border-foreground transition-colors">[</span>
-            <span class="px-4 py-3 bg-card border-y border-border text-foreground font-bold uppercase tracking-[0.2em] text-xs group-hover:bg-foreground group-hover:text-background group-hover:border-foreground transition-colors">VIEW_PROJECTS</span>
-            <span class="px-2 py-3 bg-card border border-border text-foreground font-mono font-bold text-xs rounded-r-full group-hover:bg-foreground group-hover:text-background group-hover:border-foreground transition-colors">]</span>
+          <a href="#projects" class="inline-flex items-center justify-center px-6 py-3 bg-card border border-border text-foreground font-bold uppercase tracking-[0.2em] text-xs rounded-xl transition-colors hover:bg-foreground hover:text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+            VIEW_PROJECTS
           </a>
         </div>
       </div>
