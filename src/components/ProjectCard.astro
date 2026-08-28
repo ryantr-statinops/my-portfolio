@@ -1,34 +1,13 @@
 ---
-import Badge from "./ui/Badge.astro";
+import { CATEGORY_MAP } from "../lib/constants";
+import { getBaseUrl, formatYear } from "../lib/utils";
+import type { ProjectEntry } from "../lib/content";
 
 interface Props {
-  project: {
-    id: string;
-    data: {
-      title: string;
-      description: string;
-      date: string;
-      category: string;
-      impact?: string;
-      thumbnail: string;
-      tags: string[];
-      status: string;
-    };
-  };
+  project: ProjectEntry;
 }
 
 const { project } = Astro.props;
-console.log("Project ID:", project.id);
-console.log("Project Data ID:", project.data.id);
-
-const categoryMap: Record<string, string> = {
-  "finance-quant": "Quant",
-  "ops-automation": "Ops",
-  "data-math": "Data",
-  "system-ui": "System",
-  "ai-implementation": "AI",
-  "software-engineering": "Software",
-};
 ---
 
 <article
@@ -40,7 +19,7 @@ const categoryMap: Record<string, string> = {
     class="aspect-video overflow-hidden relative border-b border-border/80 bg-muted"
   >
     <img
-      src={import.meta.env.BASE_URL + project.data.thumbnail}
+      src={getBaseUrl(project.data.thumbnail)}
       alt={project.data.title}
       class="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 group-hover:scale-110"
     />
@@ -53,7 +32,7 @@ const categoryMap: Record<string, string> = {
       <div
         class="px-3 py-1 bg-background/60 backdrop-blur-md border border-border/80 rounded-full text-[9px] font-mono font-bold text-primary uppercase tracking-widest shadow-xl"
       >
-        {categoryMap[project.data.category] || project.data.category}
+        {CATEGORY_MAP[project.data.category] || project.data.category}
       </div>
       {
         project.data.status === "In Progress" && (
@@ -77,7 +56,7 @@ const categoryMap: Record<string, string> = {
         <span
           class="text-[10px] font-mono text-muted border border-border/80 px-2 py-0.5 rounded bg-foreground/5"
         >
-          {project.data.date.split("-")[0]}
+          {formatYear(project.data.date)}
         </span>
       </div>
       <p
@@ -123,7 +102,7 @@ const categoryMap: Record<string, string> = {
         }
       </div>
       <a
-        href={import.meta.env.BASE_URL + `/projects/${project.id}`}
+        href={getBaseUrl(`/projects/${project.id}`)}
         class="group/link flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary hover:text-foreground transition-all"
       >
         <span>DECRYPT_CASE</span>

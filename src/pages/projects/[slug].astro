@@ -14,7 +14,7 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<MainLayout title={entry.data.title} description={entry.data.description}>
+<MainLayout title={entry.data.title} description={entry.data.description} ogImage={entry.data.thumbnail}>
   <article class="max-w-4xl mx-auto py-32 px-8">
     <header class="mb-20 space-y-6 border-b border-border pb-16">
       <div
