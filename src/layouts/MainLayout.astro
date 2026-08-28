@@ -9,11 +9,10 @@ interface Props {
 }
 
 const { title, description = "Ryan Tran - Statistic in Operation Portfolio" } = Astro.props;
-const isHome = Astro.url.pathname === "/";
 ---
 
 <!DOCTYPE html>
-<html lang="vi" class={`scroll-smooth ${isHome ? 'snap-y snap-mandatory' : ''}`}>
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

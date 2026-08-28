@@ -12,7 +12,7 @@ const projects = await getCollection("projects");
 
 <MainLayout title="Ryan Tran | Command Center">
   <!-- Hero Section -->
-  <section class="min-h-screen flex items-center pt-20 pb-20 px-8 md:px-12 w-full relative overflow-hidden bg-background snap-start">
+  <section class="min-h-screen flex items-center pt-20 pb-20 px-8 md:px-12 w-full relative overflow-hidden bg-background">
     <HeatmapBackground />
     
     <div class="relative z-10 max-w-5xl w-full">
@@ -63,19 +63,19 @@ const projects = await getCollection("projects");
   </section>
 
   <!-- About Me Section -->
-  <section id="about-me" class="min-h-screen flex items-center bg-background border-t border-border/30 snap-start">
+  <section id="about-me" class="min-h-screen flex items-center bg-background border-t border-border/30">
     <AboutMe />
   </section>
 
   <!-- Intelligence Hub Section (3D Graph & Metrics) -->
-  <section id="intelligence-hub" class="min-h-screen flex items-center bg-background border-t border-border/30 overflow-hidden snap-start">
+  <section id="intelligence-hub" class="min-h-screen flex items-center bg-background border-t border-border/30 overflow-hidden">
     <div class="w-full">
       <IntelligenceHub />
     </div>
   </section>
 
   <!-- Project Showcase Section (Visual Cards) -->
-  <section id="projects" class="min-h-screen flex items-center py-20 bg-background/50 border-y border-border px-8 md:px-12 reveal snap-start">
+  <section id="projects" class="min-h-screen flex items-center py-20 bg-background/50 border-y border-border px-8 md:px-12 reveal">
     <div class="max-w-7xl mx-auto w-full">
       <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
         <div class="space-y-4">
@@ -108,7 +108,7 @@ const projects = await getCollection("projects");
 
 
   <!-- Governance & Frameworks Hub Section (hidden)
-  <section id="frameworks-hub" class="min-h-screen flex items-center bg-background border-t border-border overflow-hidden snap-start">
+  <section id="frameworks-hub" class="min-h-screen flex items-center bg-background border-t border-border overflow-hidden">
     <FrameworksHub />
   </section>
   -->
