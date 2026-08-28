@@ -44,20 +44,19 @@
             return v < lo ? lo : v > hi ? hi : v;
         }
 
+        // Synced with hero text-gradient #00f2ff -> #0ea5e9 -> #93f8d8
         const DARK_STOPS = [
-            { h: 0.0, rgb: [6, 10, 14], a: 0.0 },
-            { h: 0.2, rgb: [9, 60, 93], a: 0.25 },
-            { h: 0.45, rgb: [59, 117, 151], a: 0.5 },
-            { h: 0.7, rgb: [111, 209, 215], a: 0.75 },
-            { h: 1.0, rgb: [93, 248, 216], a: 0.95 },
+            { h: 0.0, rgb: [10, 10, 10], a: 0.0 },
+            { h: 0.30, rgb: [0, 242, 255], a: 0.35 },   // #00f2ff
+            { h: 0.60, rgb: [14, 165, 233], a: 0.65 },  // #0ea5e9
+            { h: 1.0, rgb: [147, 248, 216], a: 0.95 },  // #93f8d8
         ];
 
         const LIGHT_STOPS = [
             { h: 0.0, rgb: [255, 255, 255], a: 0.0 },
-            { h: 0.2, rgb: [186, 230, 253], a: 0.3 }, // Sky-200
-            { h: 0.45, rgb: [56, 189, 248], a: 0.55 }, // Sky-400
-            { h: 0.7, rgb: [14, 165, 233], a: 0.8 }, // Sky-500
-            { h: 1.0, rgb: [2, 132, 199], a: 0.95 }, // Sky-600
+            { h: 0.35, rgb: [0, 242, 255], a: 0.25 },   // #00f2ff
+            { h: 0.70, rgb: [14, 165, 233], a: 0.55 },  // #0ea5e9
+            { h: 1.0, rgb: [147, 248, 216], a: 0.85 },  // #93f8d8
         ];
 
         let activeStops = document.documentElement.classList.contains("dark")
@@ -118,9 +117,9 @@
         function bloomColor(h: number) {
             if (h < 0.12) return null;
             const t = (h - 0.12) / 0.88;
-            const isDark = document.documentElement.classList.contains("dark");
-            const startRgb = isDark ? [59, 117, 151] : [125, 211, 252];
-            const endRgb = isDark ? [93, 248, 216] : [14, 165, 233];
+            // Bloom synced to hero gradient
+            const startRgb = [0, 242, 255];      // #00f2ff
+            const endRgb = [147, 248, 216];      // #93f8d8
             const [r, g, b] = lerpColor(
                 ...(startRgb as [number, number, number]),
                 ...(endRgb as [number, number, number]),
