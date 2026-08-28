@@ -6,8 +6,9 @@ import AboutMe from "../components/AboutMe.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import HeatmapBackground from "../components/interactive/HeatmapBackground.astro";
 import { getCollection } from "astro:content";
+import { sortByPriority } from "../lib/content";
 
-const projects = await getCollection("projects");
+const projects = (await getCollection("projects")).sort(sortByPriority);
 ---
 
 <MainLayout title="Ryan Tran | Command Center">
@@ -91,7 +92,7 @@ const projects = await getCollection("projects");
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {projects.sort((a, b) => b.data.priority - a.data.priority).slice(0, 6).map(project => (
+        {projects.slice(0, 6).map(project => (
           <ProjectCard project={project} />
         ))}
       </div>
