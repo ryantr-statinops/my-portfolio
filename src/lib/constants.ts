@@ -19,6 +19,6 @@ export const NAV_LINKS = [
   { href: "/#about-me", label: "[ IDENTITY ]" },
   { href: "/#intelligence-hub", label: "[ STRATEGY ]" },
   { href: "/#projects", label: "[ PROJECTS ]" },
-  { href: "/#frameworks-hub", label: "[ GOVERNANCE ]" },
   { href: "/#connect", label: "[ CONNECT ]" },
 ] as const;
+// governance hidden until FrameworksHub re-enabled (see index.astro comment)
