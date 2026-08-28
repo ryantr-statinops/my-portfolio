@@ -31,7 +31,6 @@ const projects = (await getCollection("projects")).sort(sortByPriority);
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 reveal">
           {[
-            { label: 'ACTIVE_NODES', val: '5 SECTORS', color: 'text-primary' },
             { label: 'CURRENT_FOCUS', val: 'QUANT & STARTUP OPS', color: 'text-accent' }
           ].map(stat => (
             <div class="p-4 bg-foreground/[0.03] border border-border rounded-xl glass flex flex-col gap-1">
