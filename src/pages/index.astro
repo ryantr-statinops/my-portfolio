@@ -31,7 +31,6 @@ const projects = (await getCollection("projects")).sort(sortByPriority);
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 reveal">
           {[
-            { label: 'NETWORK_STATUS', val: 'STABLE', color: 'text-success' },
             { label: 'ACTIVE_NODES', val: '5 SECTORS', color: 'text-primary' },
             { label: 'CURRENT_FOCUS', val: 'QUANT & STARTUP OPS', color: 'text-accent' }
           ].map(stat => (
