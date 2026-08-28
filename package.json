@@ -1,9 +1,11 @@
 {
-  "name": "temp-astro",
+  "name": "my-portfolio",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "description": "Ryan Tran — Command Center Portfolio (Astro + Tailwind + MDX)",
+  "private": true,
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "dev": "astro dev",
@@ -14,7 +16,7 @@
   "dependencies": {
     "@astrojs/mdx": "^5.0.4",
     "@tailwindcss/vite": "^4.3.0",
-    "astro": "^6.3.1",
+    "astro": "^6.4.8",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
     "tailwindcss": "^4.3.0"
