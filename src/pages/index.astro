@@ -29,15 +29,27 @@ const projects = (await getCollection("projects")).sort(sortByPriority);
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 reveal">
-          {[
-            { label: 'CURRENT_FOCUS', val: 'QUANT & STARTUP OPS', color: 'text-accent' }
-          ].map(stat => (
-            <div class="p-4 bg-foreground/[0.03] border border-border rounded-xl glass flex flex-col gap-1">
-              <span class="text-[9px] font-mono text-muted uppercase tracking-widest">{stat.label}</span>
-              <span class={`text-sm font-bold font-mono ${stat.color}`}>[ {stat.val} ]</span>
-            </div>
-          ))}
+        <!-- Current Focus — Bento (Option 2) -->
+        <div class="space-y-3 reveal">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-px bg-primary/50"></div>
+            <span class="text-[9px] font-mono text-primary uppercase tracking-[0.3em]">Current_Focus — 6 Domains</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {[
+              { title: "Backend Engineering", desc: "Python, FastAPI, Go, Traefik, APIs & system architecture" },
+              { title: "Data Engineering", desc: "data pipelines, databases & data infrastructure" },
+              { title: "Infrastructure", desc: "Linux, Docker, networking & service orchestration" },
+              { title: "AI Infrastructure", desc: "MCP, agents, harnesses, model routing & developer tooling" },
+              { title: "Quantitative Analytics", desc: "statistical modeling, quantitative research & trading systems" },
+              { title: "Statistics → Engineering", desc: "applying quantitative thinking to software systems" },
+            ].map(item => (
+              <div class="p-4 bg-foreground/[0.03] border border-border rounded-xl glass flex flex-col gap-1.5 hover:border-primary/30 transition-colors">
+                <span class="text-[10px] font-mono font-bold text-foreground uppercase tracking-widest">{item.title}</span>
+                <span class="text-xs font-mono text-muted leading-relaxed">{item.desc}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div class="flex flex-wrap gap-4 pt-6 reveal">
