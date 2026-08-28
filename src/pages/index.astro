@@ -57,10 +57,6 @@ const projects = (await getCollection("projects")).sort(sortByPriority);
       </div>
     </div>
 
-    <div class="absolute bottom-10 left-12 flex flex-col items-center gap-4 reveal">
-      <div class="h-16 w-px bg-gradient-to-b from-primary to-transparent"></div>
-      <span class="text-[9px] font-mono text-muted uppercase tracking-[0.3em] vertical-text">Scroll_to_Navigate</span>
-    </div>
   </section>
 
   <!-- About Me Section -->
@@ -120,9 +116,6 @@ const projects = (await getCollection("projects")).sort(sortByPriority);
     background: linear-gradient(to right, #00f2ff, #0ea5e9, #93f8d8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-  }
-  .vertical-text {
-    writing-mode: vertical-rl;
   }
   .glass {
     backdrop-filter: blur(12px);
