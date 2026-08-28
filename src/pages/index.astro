@@ -53,12 +53,12 @@ const projects = (await getCollection("projects")).sort(sortByPriority);
           </div>
         </div>
 
-        <div class="flex flex-wrap gap-4 pt-6 reveal">
-          <a href="#about-me" class="px-8 py-4 bg-primary text-background font-bold uppercase tracking-[0.2em] text-xs rounded transition-all hover:scale-[1.05] shadow-lg shadow-primary/20">
-            [ EXECUTE_SYSTEM_SCAN ]
+        <div class="flex flex-wrap gap-3 pt-6 reveal">
+          <a href="#about-me" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-background font-bold uppercase tracking-[0.2em] text-xs rounded-full transition-colors hover:bg-primary/90 shadow-lg shadow-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+            <span class="opacity-60">[</span> VIEW_PROFILE <span class="opacity-60">]</span>
           </a>
-          <a href="#intelligence-hub" class="px-8 py-4 bg-foreground/5 border border-border text-foreground font-bold uppercase tracking-[0.2em] text-xs rounded transition-all hover:bg-foreground hover:text-background">
-            [ ACCESS_HUB ]
+          <a href="#projects" class="inline-flex items-center gap-2 px-6 py-3 bg-card border border-border text-foreground font-bold uppercase tracking-[0.2em] text-xs rounded-full transition-colors hover:bg-foreground hover:text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+            <span class="opacity-50">[</span> VIEW_PROJECTS <span class="opacity-50">]</span>
           </a>
         </div>
       </div>
