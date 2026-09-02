@@ -1,0 +1,52 @@
+---
+import { NAV_ITEMS } from "./Navbar.types";
+---
+
+<script define:vars={{ items: NAV_ITEMS.map((i) => ({ sectionId: i.sectionId })) }}>
+  function init() {
+    const links = document.querySelectorAll<HTMLAnchorElement>("[data-nav-section]");
+    if (links.length === 0) return;
+
+    const sections = items
+      .map((i) => document.getElementById(i.sectionId))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (sections.length === 0) return;
+
+    const setActive = (id: string) => {
+      links.forEach((a) => {
+        const isActive = a.dataset.navSection === id;
+        if (isActive) {
+          a.setAttribute("aria-current", "true");
+          a.dataset.active = "true";
+        } else {
+          a.removeAttribute("aria-current");
+          a.deleteAttribute("data-active");
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-40% 0px -40% 0px",
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+</script>
