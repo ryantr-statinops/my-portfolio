@@ -1,7 +1,9 @@
 ---
 import "../styles/global.css";
-import ThemeToggle from "../components/ui/ThemeToggle.astro";
 import Footer from "../components/Footer.astro";
+import Navbar from "../components/layout/Navbar.current.astro";
+import MobileOverlay from "../components/layout/MobileOverlay.astro";
+import ScrollSpy from "../components/layout/ScrollSpy.astro";
 
 interface Props {
   title: string;
@@ -61,31 +63,15 @@ const ogImageURL = ogImage
     </script>
   </head>
   <body class="bg-background text-foreground selection:bg-primary/30 transition-colors duration-300 leading-relaxed antialiased">
-    <nav class="fixed top-0 left-0 w-full z-50 glass border-b border-border py-4 px-8 md:px-12">
-      <div class="w-full flex justify-between items-center">
-        <a href="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-          <div class="w-10 h-10 rounded-full overflow-hidden bg-muted/10 p-0.5 border border-border">
-            <img src={import.meta.env.BASE_URL + '/images/avt.png'} alt="Ryan Tran" class="w-full h-full object-cover rounded-full" />
-          </div>
-          <span class="font-semibold text-lg tracking-tight hidden sm:inline text-foreground">Ryan Tran</span>
-        </a>
-        <div class="flex items-center gap-4 md:gap-8 text-[9px] font-mono uppercase tracking-widest font-bold">
-          <div class="hidden md:flex items-center gap-6">
-            <a href="/#about-me" class="hover:text-primary transition-colors">[ IDENTITY ]</a>
-            <a href="/#intelligence-hub" class="hover:text-primary transition-colors">[ STRATEGY ]</a>
-            <a href="/#projects" class="hover:text-primary transition-colors">[ PROJECTS ]</a>
-            <a href="/#connect" class="hover:text-primary transition-colors">[ CONNECT ]</a>
-          </div>
-          <div class="pl-4 border-l border-border">
-            <ThemeToggle />
-          </div>
-        </div>
-      </div>
-    </nav>
+    <Navbar />
+    <MobileOverlay />
 
-    <slot />
+    <main id="main">
+      <slot />
+    </main>
 
     <Footer />
+    <ScrollSpy />
 
     <script>
       // Scroll reveal logic
