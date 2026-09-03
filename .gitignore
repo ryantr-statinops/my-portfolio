@@ -27,3 +27,6 @@ pnpm-debug.log*
 .agents/
 # OS
 Thumbs.db
+
+# Note
+note.txt
