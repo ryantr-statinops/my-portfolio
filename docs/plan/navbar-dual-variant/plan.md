@@ -213,3 +213,32 @@ gitGraph
 - [ ] User has compared both via `npm run dev` (or Pages preview per §11 answer).
 - [ ] Winning branch merged to `main`; losing branch either closed or improvements cherry-picked.
 - [ ] No regressions to Hero (visual baseline update if Layer 3 tests active).
+
+---
+
+## 14. Retrospective (post-merge, 2026-09-03)
+
+### Final outcome
+- **Winner:** Direction B (iOS 17/18 compact tab bar) — merged via PR #4.
+- **Direction A** (Command Center): `feature/navbar-current` was **closed without merge** per user choice (Cách 3). Branch deleted from remote.
+- **Rename:** After merge, `Navbar.ios.astro` was renamed to `Navbar.astro` (commit `f78dbb2`) since iOS variant is now the only navbar implementation. Cleaner default for any future variants.
+
+### Actual timeline
+| Commit | Branch | Description |
+|--------|--------|-------------|
+| `3ce09b2` | `feature/navbar-ios` | iOS 17/18 compact tab bar variant |
+| `1c2d23f` | `feature/navbar-ios` | Move plan to `docs/plan/navbar-dual-variant/` |
+| `0d2323f` | `feature/navbar-current` | (closed without merge) |
+| `65c4656` | `main` | Merge PR #4 (iOS variant) |
+| `f78dbb2` | `main` | Rename `Navbar.ios.astro` → `Navbar.astro` |
+
+### Lessons learned
+1. **Two branches share identical foundation is wasteful** — `*.types.ts`, `MobileOverlay.astro`, `ScrollSpy.astro` were duplicated in both branches. Future: share via `main` first, then branch off for variant-only changes.
+2. **Squash vs merge vs close** — closing without merge (Cách 3) worked well: clean repo, no contribution to main from loser branch, but PR record preserved on GitHub.
+3. **`git fetch` confusion** — local ref `origin/main` lagged behind after remote merge. Always run `git fetch` + `git ls-remote origin` to verify before assuming state.
+4. **Plan as living doc** — this file is now slightly out of date (refers to `Navbar.ios.astro`). Either keep as historical record (preferred) or update to current names.
+
+### Updated references
+- `Navbar.ios.astro` → `Navbar.astro` (see commit `f78dbb2`)
+- `feature/navbar-current` → closed, branch deleted
+- `feature/navbar-ios` → still exists on remote as archive (can be deleted via `git push origin --delete feature/navbar-ios`)
