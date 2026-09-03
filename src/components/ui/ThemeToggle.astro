@@ -3,7 +3,8 @@
 
 <button
   id="theme-toggle"
-  class="relative inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-muted transition-all hover:bg-white/10 hover:text-primary"
+  type="button"
+  class="relative inline-flex h-9 w-9 items-center justify-center rounded-full text-muted transition-all hover:text-primary hover:bg-foreground/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
   aria-label="Toggle theme"
 >
   <!-- Sun Icon -->
@@ -47,23 +48,9 @@
 </button>
 
 <script>
-  const theme = (() => {
-    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-      return localStorage.getItem('theme');
-    }
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-    return 'light';
-  })();
-
-  if (theme === 'light') {
-    document.documentElement.classList.remove('dark');
-  } else {
-    document.documentElement.classList.add('dark');
-  }
-
-  window.localStorage.setItem('theme', theme || 'light');
+  // Initial theme application is handled by the inline script in MainLayout.astro
+  // (runs synchronously in <head> to prevent FOUC). This component only handles
+  // the click toggle.
 
   const handleToggleClick = () => {
     const element = document.documentElement;
