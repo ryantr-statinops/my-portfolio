@@ -16,9 +16,10 @@ export const CATEGORY_MAP: Record<string, string> = {
 };
 
 export const NAV_LINKS = [
-  { href: "/#about-me", label: "[ IDENTITY ]" },
-  { href: "/#intelligence-hub", label: "[ STRATEGY ]" },
-  { href: "/#projects", label: "[ PROJECTS ]" },
-  { href: "/#connect", label: "[ CONNECT ]" },
+  { href: "/my-portfolio/#about-me", label: "[ IDENTITY ]" },
+  { href: "/my-portfolio/#intelligence-hub", label: "[ STRATEGY ]" },
+  { href: "/my-portfolio/#projects", label: "[ PROJECTS ]" },
+  { href: "/my-portfolio/#connect", label: "[ CONNECT ]" },
 ] as const;
-// governance hidden until FrameworksHub re-enabled (see index.astro comment)
+// NOTE: Navbar SSOT is NAV_ITEMS in components/layout/Navbar.types.ts (has sectionId for ScrollSpy).
+// NAV_LINKS kept for non-nav usages; hrefs include SITE.base for prod.
