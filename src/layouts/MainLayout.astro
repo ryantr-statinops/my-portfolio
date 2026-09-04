@@ -25,16 +25,16 @@ const ogImageURL = ogImage
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://unpkg.com/katex@0.16.11/dist/katex.min.css" />
-    <title>{title.startsWith("Ryan Tran") ? title : `${title} | Ryan Tran`}</title>
+    <title>{title.startsWith("Ryan Tran") || title.endsWith("| Ryan Tran") ? title : `${title} | Ryan Tran`}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={title.startsWith("Ryan Tran") ? title : `${title} | Ryan Tran`} />
+    <meta property="og:title" content={title.startsWith("Ryan Tran") || title.endsWith("| Ryan Tran") ? title : `${title} | Ryan Tran`} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content={title.startsWith("Ryan Tran") ? title : `${title} | Ryan Tran`} />
+    <meta property="twitter:title" content={title.startsWith("Ryan Tran") || title.endsWith("| Ryan Tran") ? title : `${title} | Ryan Tran`} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={ogImageURL} />
     <meta name="robots" content="index, follow" />
