@@ -1,15 +1,19 @@
 ---
-import { getCollection } from "astro:content";
+import type { ProjectEntry } from "../../lib/content";
 
-const projects = await getCollection("projects");
+interface Props {
+  projects: ProjectEntry[];
+}
+
+const { projects = [] } = Astro.props as Props;
 
 // Group real projects by category
-const groupedProjects = projects.reduce((acc, project) => {
+const groupedProjects: Record<string, ProjectEntry[]> = projects.reduce((acc, project) => {
   const cat = project.data.category || 'other';
   if (!acc[cat]) acc[cat] = [];
   acc[cat].push(project);
   return acc;
-}, {});
+}, {} as Record<string, ProjectEntry[]>);
 
 ---
 

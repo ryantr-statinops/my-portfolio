@@ -1,76 +1,17 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import IntelligenceHub from "../components/IntelligenceHub.astro";
+import Hero from "../components/sections/Hero.astro";
+import AboutMe from "../components/sections/AboutMe.astro";
+import IntelligenceHub from "../components/sections/IntelligenceHub.astro";
+import ProjectShowcase from "../components/sections/ProjectShowcase.astro";
 import FrameworksHub from "../components/FrameworksHub.astro";
-import AboutMe from "../components/AboutMe.astro";
-import ProjectCard from "../components/ProjectCard.astro";
-import HeatmapBackground from "../components/interactive/HeatmapBackground.astro";
-import { getCollection } from "astro:content";
-import { sortByPriority } from "../lib/content";
+import { getSortedProjects } from "../lib/content";
 
-const projects = (await getCollection("projects")).sort(sortByPriority);
+const projects = await getSortedProjects();
 ---
 
 <MainLayout title="Ryan Tran | Command Center">
-  <!-- Hero Section -->
-  <section class="min-h-screen flex items-center pt-20 pb-20 px-8 md:px-12 w-full relative overflow-hidden bg-background">
-    <HeatmapBackground />
-    
-    <div class="relative z-10 max-w-5xl w-full">
-      <div class="space-y-10">
-        <div class="space-y-4 reveal">
-          <h1 class="text-6xl md:text-8xl font-bold leading-[0.9] tracking-tighter uppercase">
-            SYSTEMS. <br />
-            OPERATIONS. <br />
-            <span class="text-gradient">INFRASTRUCTURE.</span>
-          </h1>
-          <p class="text-muted text-xl md:text-2xl max-w-2xl font-medium leading-relaxed">
-            An Math - Statistics student building <br />
-            <span class="text-primary italic font-semibold">software</span>, <span class="text-primary italic font-semibold">data systems</span>, and <span class="text-primary italic font-semibold">infrastructure</span> <br />
-            across <span class="text-gradient">quantitative research</span> and <span class="text-primary italic font-semibold">AI-native</span> tooling.
-          </p>
-        </div>
-
-        <!-- Current Focus — Bento (Option 2) -->
-        <div class="space-y-2 reveal">
-          <div class="flex items-center gap-2">
-            <span class="text-[16px] font-bold tracking-tighter uppercase text-primary">CURRENT FOCUS</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {[
-              { title: "Backend Engineering", desc: "Python, FastAPI, Go, Traefik, APIs & system architecture" },
-              { title: "Data Engineering", desc: "data pipelines, databases & data infrastructure" },
-              { title: "Infrastructure", desc: "Linux, Docker, networking & service orchestration" },
-              { title: "AI Infrastructure", desc: "MCP, agents, harnesses, model routing & developer tooling" },
-              { title: "Quantitative Analytics", desc: "statistical modeling, quantitative research & trading systems" },
-              { title: "Statistics → Engineering", desc: "applying quantitative thinking to software systems" },
-            ].map(item => (
-              <div class="p-4 bg-foreground/[0.03] border border-border rounded-xl glass flex flex-col gap-1.5 hover:border-primary/30 transition-colors">
-                <span class="text-[10px] font-mono font-bold text-foreground uppercase tracking-widest">{item.title}</span>
-                <span class="text-xs font-mono text-muted leading-relaxed">{item.desc}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <!-- CTA — with header like CURRENT FOCUS -->
-        <div class="space-y-2 pt-2 reveal">
-          <div class="flex items-center gap-2">
-            <span class="text-[16px] font-bold tracking-tighter uppercase text-primary">EXPLORE</span>
-          </div>
-          <div class="flex flex-wrap gap-3">
-            <a href="#about-me" class="inline-flex items-center justify-center px-6 py-3 bg-foreground/[0.03] border border-border text-foreground font-mono font-black uppercase tracking-[0.2em] text-xs rounded-xl glass transition-colors hover:bg-white hover:text-black hover:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
-              VIEW PROFILE
-            </a>
-            <a href="#projects" class="inline-flex items-center justify-center px-6 py-3 bg-foreground/[0.03] border border-border text-foreground font-mono font-black uppercase tracking-[0.2em] text-xs rounded-xl glass transition-colors hover:bg-white hover:text-black hover:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
-              VIEW PROJECTS
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </section>
+  <Hero />
 
   <!-- About Me Section -->
   <section id="about-me" class="min-h-screen flex items-center bg-background border-t border-border/30">
@@ -80,41 +21,11 @@ const projects = (await getCollection("projects")).sort(sortByPriority);
   <!-- Intelligence Hub Section (3D Graph & Metrics) -->
   <section id="intelligence-hub" class="min-h-screen flex items-center bg-background border-t border-border/30 overflow-hidden">
     <div class="w-full">
-      <IntelligenceHub />
+      <IntelligenceHub projects={projects} />
     </div>
   </section>
 
-  <!-- Project Showcase Section (Visual Cards) -->
-  <section id="projects" class="min-h-screen flex items-center py-20 bg-background/50 border-y border-border px-8 md:px-12 reveal">
-    <div class="max-w-7xl mx-auto w-full">
-      <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-        <div class="space-y-4">
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-px bg-primary/50"></div>
-            <span class="text-[10px] font-mono text-primary uppercase tracking-[0.4em]">Audit_Asset_Log</span>
-          </div>
-          <h2 class="text-5xl md:text-7xl font-bold tracking-tighter uppercase leading-none">PROJECT. <br/><span class="text-primary">REGISTRY_</span></h2>
-        </div>
-        <div class="flex items-center gap-3">
-           <span class="px-4 py-2 bg-foreground/5 border border-border rounded text-[9px] font-mono text-muted uppercase tracking-widest">Index: BY_PRIORITY</span>
-        </div>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {projects.slice(0, 6).map(project => (
-          <ProjectCard project={project} />
-        ))}
-      </div>
-
-      {projects.length > 3 && (
-        <div class="mt-12 flex justify-center">
-          <a href="/projects" class="text-[10px] font-mono text-muted hover:text-primary transition-colors uppercase tracking-[0.4em] border-b border-border hover:border-primary pb-1">
-            [ VIEW_FULL_INVENTORY_{projects.length}_ASSETS ]
-          </a>
-        </div>
-      )}
-    </div>
-  </section>
+  <ProjectShowcase projects={projects} limit={6} />
 
 
   <!-- Governance & Frameworks Hub Section (hidden)
@@ -123,15 +34,3 @@ const projects = (await getCollection("projects")).sort(sortByPriority);
   </section>
   -->
 </MainLayout>
-
-<style>
-  .text-gradient {
-    background: linear-gradient(to right, #00f2ff, #0ea5e9, #93f8d8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .glass {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-</style>
