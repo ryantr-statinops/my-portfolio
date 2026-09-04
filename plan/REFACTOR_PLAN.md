@@ -1,23 +1,25 @@
-# Refactor Plan — Sau Hero Section (Post 57922a9)
+# Refactor Plan — Sau Hero Section (Post 57922a9, update 2026-09-04)
 
-> Trạng thái: `main` tại `57922a9` đã pull mới nhất, `origin/refactor` đã merge ancestor `2f4aa68`, ahead 23 commits hero. Hero coi như xong (gradient + bento + CTA + heatmap sync).
+> Trạng thái (verify 2026-09-04): `main` tại `954dc64` (sau `f78dbb2` rename Navbar.ios → Navbar + merge PR #4 iOS variant).
+> Hero visual coi như xong (gradient + bento + CTA + heatmap sync). Navbar dual-variant đã chốt: Direction B thắng, `src/components/layout/Navbar.astro` + `MobileOverlay` + `ScrollSpy` DONE. Còn lại P1 (Footer move), P2 (sections extract), P3 (ProjectLayout/WebP/CI) CHƯA làm.
 
 ## 0. Mục tiêu V2 nhắc lại
 
 `docs/ARCHITECTURE_V2.md:6` Dependency Rule: `ui <- sections <- pages`, `lib` không import `.astro`, `content` không import gì. `index.astro` cuối cùng chỉ compose sections (~20 dòng).
 
-## 1. Hiện trạng đã verify (read-only check)
+## 1. Hiện trạng đã verify (re-check 2026-09-04, code thực tế)
 
 | Khu vực | File | Tình trạng |
 |---|---|---|
-| Lib | `src/lib/constants.ts:18` `NAV_LINKS`, `content.ts:5` `sortByPriority`, `seo.ts:3`, `utils.ts:3` | Đã tạo nhưng thiếu `validateUniquePriority()` theo `ARCHITECTURE_V2.md:168` |
-| Layout | `src/layouts/MainLayout.astro:64-84` chứa `<nav>` hardcoded avatar+links | Chưa tách `Header.astro` |
-| Hero | `src/pages/index.astro:16-73` inline hero + bento + CTA | Done visual nhưng chưa tách `sections/Hero.astro` |
-| Sections | `src/components/AboutMe.astro:9`, `IntelligenceHub.astro:1`, `PortfolioRegistry.astro:12` nằm ở `components/` root | Phải move vào `components/sections/` |
-| Registry | `index.astro:103` grid `ProjectCard` inline, `PortfolioRegistry.astro` tồn tại nhưng không dùng | Duplicate sort, cần unify |
-| Islands | `HeatmapBackground.astro:11` + `IntelligenceHub.astro:136` script 170 dòng | Chưa đánh `client:*` rõ ràng, vi phạm Islands rule |
-| Config | `astro.config.mjs:11`, `package.json:18` sitemap, `avt.png` đã nén | OK |
-| Docs | `docs/UI_OVERVIEW.md` untracked, `FrameworksHub.astro` hidden `index.astro:120` | Cần quyết định |
+| Lib | `src/lib/constants.ts:18` `NAV_LINKS`, `content.ts:5` `sortByPriority`, `seo.ts:3`, `utils.ts:3` | Đã tạo nhưng thiếu `validateUniquePriority()` theo `ARCHITECTURE_V2.md:168`; `NAV_LINKS` chết (Navbar dùng `NAV_ITEMS` trong `Navbar.types.ts`) |
+| Layout | `src/layouts/MainLayout.astro:3-6` import `Navbar` + `MobileOverlay` + `ScrollSpy`, `Footer` vẫn ở `components/Footer.astro` | Navbar DONE (iOS pill, PR #4), Footer CHƯA move vào `layout/`, spec cũ ghi `Header.astro` đã lỗi thời |
+| Hero | `src/pages/index.astro:16-73` inline hero + bento + CTA (137 dòng) | Done visual nhưng chưa tách `sections/Hero.astro` |
+| Sections | `src/components/AboutMe.astro:9`, `IntelligenceHub.astro:1` (306 dòng), `PortfolioRegistry.astro:12`, `ProjectCard.astro:1` nằm ở `components/` root; `src/components/sections/` RỖNG | Phải move vào `components/sections/` |
+| Registry | `index.astro:103` grid `ProjectCard` inline, `PortfolioRegistry.astro:45` sort inline riêng | Duplicate sort, cần unify (card grid ở `index`, table ở `/cluster`) |
+| Islands | `HeatmapBackground.astro:11` (290 dòng canvas) + `IntelligenceHub.astro:136` script 170 dòng graph, inline `<script>` không `client:*` | Vi phạm Islands rule |
+| Config | `astro.config.mjs:11`, `package.json:18` sitemap, `avt.png` vẫn PNG | OK build, chưa WebP |
+| Docs | `docs/UI_OVERVIEW.md`, `FrameworksHub.astro` hidden `index.astro:120`, `archive/` còn | Cần quyết định (P3 cleanup) |
+| Test/CI | `docs/plan/01-04` mới là spec, `.github/workflows/deploy.yml` chỉ build + verify sitemap | Chưa có L1/L2/L3, chưa `astro check` |
 
 ## 2. Phasing — 3 ưu tiên tuần tự
 
