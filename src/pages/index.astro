@@ -4,7 +4,6 @@ import Hero from "../components/sections/Hero.astro";
 import AboutMe from "../components/sections/AboutMe.astro";
 import IntelligenceHub from "../components/sections/IntelligenceHub.astro";
 import ProjectShowcase from "../components/sections/ProjectShowcase.astro";
-import FrameworksHub from "../components/FrameworksHub.astro";
 import { getSortedProjects } from "../lib/content";
 
 const projects = await getSortedProjects();
@@ -26,11 +25,4 @@ const projects = await getSortedProjects();
   </section>
 
   <ProjectShowcase projects={projects} limit={6} />
-
-
-  <!-- Governance & Frameworks Hub Section (hidden)
-  <section id="frameworks-hub" class="min-h-screen flex items-center bg-background border-t border-border overflow-hidden">
-    <FrameworksHub />
-  </section>
-  -->
 </MainLayout>

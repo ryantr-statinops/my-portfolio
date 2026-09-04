@@ -4,16 +4,16 @@ import { NAV_ITEMS } from "./Navbar.types";
 
 <script define:vars={{ items: NAV_ITEMS.map((i) => ({ sectionId: i.sectionId })) }}>
   function init() {
-    const links = document.querySelectorAll<HTMLAnchorElement>("[data-nav-section]");
+    const links = document.querySelectorAll("[data-nav-section]");
     if (links.length === 0) return;
 
     const sections = items
       .map((i) => document.getElementById(i.sectionId))
-      .filter((el): el is HTMLElement => el !== null);
+      .filter((el) => el !== null);
 
     if (sections.length === 0) return;
 
-    const setActive = (id: string) => {
+    const setActive = (id) => {
       links.forEach((a) => {
         const isActive = a.dataset.navSection === id;
         if (isActive) {
@@ -21,7 +21,7 @@ import { NAV_ITEMS } from "./Navbar.types";
           a.dataset.active = "true";
         } else {
           a.removeAttribute("aria-current");
-          a.deleteAttribute("data-active");
+          a.removeAttribute("data-active");
         }
       });
     };
