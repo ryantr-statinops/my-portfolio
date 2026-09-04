@@ -8,7 +8,7 @@ Professional & Minimalist (Bloomberg/High-end Fintech style). The portfolio func
 
 ## 1. Layout Structure
 
-- **Snap Scroll**: Full-page snap sections (`snap-y snap-mandatory`) for smooth sequential navigation
+- **Scroll**: Smooth anchor navigation (`scroll-smooth` on `html`, see `MainLayout.astro`) — `snap-mandatory` removed per `ARCHITECTURE_V2` (caused scroll trapping)
 - **Grid**: 12-column responsive grid system via Tailwind CSS
 - **Breakpoints**: Mobile-first (1 column) → `md:` (2 columns) → `lg:` (3 columns)
 
