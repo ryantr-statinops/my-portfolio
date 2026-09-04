@@ -30,6 +30,8 @@ jobs:
       - name: Audit (report only)
         run: npm audit --audit-level=moderate || echo "::warning:: audit has vulnerabilities, see report (astro 6.x needs major bump to 7 to fix remaining 4)"
         continue-on-error: true
+      - name: Type check
+        run: npm run check
       - name: Build
         run: npm run build
       - name: Verify sitemap & robots
