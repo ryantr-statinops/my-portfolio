@@ -1,7 +1,9 @@
 # Refactor Plan — Sau Hero Section (Post 57922a9, update 2026-09-04)
 
-> Trạng thái (verify 2026-09-04): `main` tại `954dc64` (sau `f78dbb2` rename Navbar.ios → Navbar + merge PR #4 iOS variant).
-> Hero visual coi như xong (gradient + bento + CTA + heatmap sync). Navbar dual-variant đã chốt: Direction B thắng, `src/components/layout/Navbar.astro` + `MobileOverlay` + `ScrollSpy` DONE. Còn lại P1 (Footer move), P2 (sections extract), P3 (ProjectLayout/WebP/CI) CHƯA làm.
+> Trạng thái (verify 2026-09-04, DONE): P1+P2+P3 hoàn thành trên `main`.
+> - P1: `Footer → layout/`, `NAV_LINKS` sync base, Navbar iOS (PR #4) giữ nguyên.
+> - P2: `sections/{Hero,AboutMe,IntelligenceHub,PortfolioRegistry,ProjectShowcase}.astro`, `index.astro` chỉ compose + `getSortedProjects()`, `validateUniquePriority()` phát hiện duplicate priority 2 (grap4prob vs project-01, warn-only).
+> - P3: `ProjectLayout.astro` (SEO per-project via `lib/seo`), WebP toàn bộ (`/{slug}/thumbnail.webp`, schema strict), CI thêm `astro check` (0 errors), xóa `archive/` (5.2M) + dead `FrameworksHub`, fix `UI_OVERVIEW` snap docs.
 
 ## 0. Mục tiêu V2 nhắc lại
 
