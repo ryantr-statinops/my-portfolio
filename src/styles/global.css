@@ -80,9 +80,14 @@
     scroll-behavior: smooth;
   }
 
-  section[id],
-  footer[id] {
+  section[id] {
     scroll-snap-align: start;
     scroll-margin-top: 5rem;
+  }
+
+  footer[id] {
+    scroll-snap-align: start;
+    scroll-margin-top: 6rem;
+    padding-bottom: 20vh;
   }
 }
