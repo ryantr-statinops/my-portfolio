@@ -73,4 +73,16 @@
   .katex-mathml {
     display: none !important;
   }
+}/* Proximity snap scroll: snap near sections without losing free-scroll feel */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-snap-type: y proximity;
+    scroll-behavior: smooth;
+  }
+
+  section[id],
+  footer[id] {
+    scroll-snap-align: start;
+    scroll-margin-top: 5rem;
+  }
 }
