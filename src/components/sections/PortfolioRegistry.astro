@@ -1,6 +1,7 @@
 ---
 import type { ProjectEntry } from "../../lib/content";
 import { sortByPriority } from "../../lib/content";
+import { getBaseUrl } from "../../lib/utils";
 
 interface Props {
   projects: ProjectEntry[];
@@ -10,9 +11,11 @@ const { projects = [] } = Astro.props as Props;
 const sortedProjects = [...projects].sort(sortByPriority);
 
 const statusColors: Record<string, string> = {
-  "Production": "text-success bg-success bg-success/10 border-success/20",
+  "Production": "text-success bg-success/10 border-success/20",
   "In Progress": "text-primary bg-primary/10 border-primary/20",
-  "Beta": "text-accent bg-accent/10 border-accent/20",
+  "Archived": "text-muted bg-muted/10 border-border",
+  "Research & Development": "text-accent bg-accent/10 border-accent/20",
+  "Audit Pending": "text-accent bg-accent/10 border-accent/20",
 };
 ---
 
@@ -50,15 +53,15 @@ const statusColors: Record<string, string> = {
           </thead>
           <tbody class="divide-y divide-border/30">
             {sortedProjects.map((project, idx) => (
-              <tr class="group hover:bg-primary/[0.05] border-b border-border/40 transition-colors cursor-pointer" onclick={`window.location.href='${import.meta.env.BASE_URL}/projects/${project.id}'`}>
+              <tr class="group hover:bg-primary/[0.05] border-b border-border/40 transition-colors">
                 <td class="px-5 py-3.5">
-                  <div class="flex items-center gap-3">
+                  <a href={getBaseUrl(`/projects/${project.id}`)} class="flex items-center gap-3">
                     <span class="text-[9px] font-mono text-muted opacity-40">0{idx + 1}</span>
                     <div class="space-y-0.5">
                       <div class="text-xs font-black text-foreground group-hover:text-primary transition-colors uppercase tracking-tight">{project.data.title}</div>
                       <div class="text-[8px] font-mono text-muted opacity-50">UID: {project.id.slice(0, 8)}</div>
                     </div>
-                  </div>
+                  </a>
                 </td>
                 <td class="px-5 py-3.5">
                   <span class="text-[9px] font-mono text-foreground bg-foreground/5 px-2 py-0.5 rounded border border-border/80 uppercase">
