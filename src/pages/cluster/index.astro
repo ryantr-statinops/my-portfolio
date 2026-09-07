@@ -1,5 +1,9 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
+import PortfolioRegistry from "../../components/sections/PortfolioRegistry.astro";
+import { getSortedProjects } from "../../lib/content";
+
+const projects = await getSortedProjects();
 ---
 
 <MainLayout title="Cluster Intelligence Hub" description="High-performance dashboard for Cluster operational intelligence and startup metrics.">
@@ -195,6 +199,11 @@ import MainLayout from "../../layouts/MainLayout.astro";
           Execute_Emergency_Protocol
         </button>
       </div>
+    </div>
+
+    <!-- Live Asset Registry (real data) -->
+    <div class="max-w-[1600px] mx-auto mt-4">
+      <PortfolioRegistry projects={projects} />
     </div>
   </main>
 </MainLayout>
