@@ -11,6 +11,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "check": "astro check --minimumSeverity error",
+    "test:unit": "vitest run",
+    "test:watch": "vitest",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -25,6 +27,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "typescript": "^6.0.3"
+    "gray-matter": "^4.0.3",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.0"
   }
 }
