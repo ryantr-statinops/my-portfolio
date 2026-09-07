@@ -1,0 +1,123 @@
+---
+---
+// Smooth section snap controller (homepage only, rendered when MainLayout snap=true).
+// CSS scroll-snap can't set a duration, so this tweens to the nearest section
+// start over ~1000ms after scrolling settles. Direction-aware: prefers the
+// section ahead in the scroll direction. No-op with prefers-reduced-motion.
+
+<script>
+  // @ts-nocheck - vanilla JS island (no framework types needed)
+  (function () {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    var DURATION = 1000;
+    var IDLE_MS = 140;
+    var MIN_DIST = 2;
+    var raf = 0;
+    var tweening = false;
+    var timer = 0;
+    var anchor = window.scrollY || 0;
+
+    function targets() {
+      var els = document.querySelectorAll("section[id], footer[id]");
+      /** @type {number[]} */
+      var out = [];
+      for (var i = 0; i < els.length; i++) {
+        var m = parseFloat(getComputedStyle(els[i]).scrollMarginTop);
+        out.push(Math.max(0, Math.round(els[i].getBoundingClientRect().top + window.scrollY - (isNaN(m) ? 0 : m))));
+      }
+      return out;
+    }
+
+    /**
+     * @param {number} y
+     * @returns {{ pos: number, dist: number } | null}
+     */
+
+    function pick(y) {
+      var list = targets();
+      if (!list.length) return null;
+      var dir = y >= anchor ? 1 : -1;
+      var best = -1;
+      var bestDist = Infinity;
+      list.forEach(function (t) {
+        if ((t - y) * dir >= -MIN_DIST && Math.abs(t - y) < bestDist) {
+          bestDist = Math.abs(t - y);
+          best = t;
+        }
+      });
+      if (best < 0) {
+        list.forEach(function (t) {
+          if (Math.abs(t - y) < bestDist) {
+            bestDist = Math.abs(t - y);
+            best = t;
+          }
+        });
+      }
+      return { pos: best, dist: bestDist };
+    }
+
+    /** @param {number} t @returns {number} */
+    function ease(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function cancel() {
+      tweening = false;
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+    }
+
+    /** @param {number} dest */
+    function tweenTo(dest) {
+      cancel();
+      var from = window.scrollY;
+      if (Math.abs(dest - from) < MIN_DIST) {
+        anchor = dest;
+        return;
+      }
+      tweening = true;
+      anchor = dest;
+      var start = 0;
+      /** @param {number} ts */
+      function frame(ts) {
+        if (!start) start = ts;
+        var p = Math.min(1, (ts - start) / DURATION);
+        window.scrollTo(0, from + (dest - from) * ease(p));
+        if (p < 1 && tweening) {
+          raf = requestAnimationFrame(frame);
+        } else {
+          tweening = false;
+          raf = 0;
+        }
+      }
+      raf = requestAnimationFrame(frame);
+    }
+
+    function schedule() {
+      if (tweening) return;
+      clearTimeout(timer);
+      timer = window.setTimeout(function () {
+        if (tweening) return;
+        var t = pick(window.scrollY);
+        if (t && t.dist > MIN_DIST) tweenTo(t.pos);
+        else if (t) anchor = t.pos;
+      }, IDLE_MS);
+    }
+
+    window.addEventListener("scroll", schedule, { passive: true });
+
+    ["wheel", "touchstart", "keydown"].forEach(function (ev) {
+      window.addEventListener(
+        ev,
+        function () {
+          if (!tweening) return;
+          cancel();
+          clearTimeout(timer);
+          anchor = window.scrollY;
+        },
+        { passive: true }
+      );
+    });
+  })();
+</script>

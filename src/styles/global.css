@@ -82,8 +82,9 @@
   .katex-mathml {
     display: none !important;
   }
-}/* Section snap: mandatory on pages opting in via <html class="snap">
-   (e.g. homepage) so a scroll always lands on the next section.
+}/* Section snap (homepage only, via <html class="snap">):
+   CSS scroll-snap is instant, so this stays `proximity` as a fallback while
+   SmoothSnap.astro tweens to the nearest section over ~1000ms.
    Long-form pages (project articles, cluster) keep free scroll. */
 @media (prefers-reduced-motion: no-preference) {
   html {
@@ -91,7 +92,7 @@
   }
 
   html.snap {
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
   }
 
   html.snap section[id] {
