@@ -82,19 +82,24 @@
   .katex-mathml {
     display: none !important;
   }
-}/* Proximity snap scroll: snap near sections without losing free-scroll feel */
+}/* Section snap: mandatory on pages opting in via <html class="snap">
+   (e.g. homepage) so a scroll always lands on the next section.
+   Long-form pages (project articles, cluster) keep free scroll. */
 @media (prefers-reduced-motion: no-preference) {
   html {
-    scroll-snap-type: y proximity;
     scroll-behavior: smooth;
   }
 
-  section[id] {
+  html.snap {
+    scroll-snap-type: y mandatory;
+  }
+
+  html.snap section[id] {
     scroll-snap-align: start;
     scroll-margin-top: 5rem;
   }
 
-  footer[id] {
+  html.snap footer[id] {
     scroll-snap-align: start;
     scroll-margin-top: 6rem;
     padding-bottom: 20vh;

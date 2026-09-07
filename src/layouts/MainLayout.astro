@@ -10,9 +10,10 @@ interface Props {
   description?: string;
   canonical?: string;
   ogImage?: string;
+  snap?: boolean;
 }
 
-const { title, description = "Ryan Tran - Statistic in Operation Portfolio", canonical, ogImage } = Astro.props;
+const { title, description = "Ryan Tran - Statistic in Operation Portfolio", canonical, ogImage, snap = false } = Astro.props;
 const canonicalURL = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
 const ogImageURL = ogImage
   ? new URL(`${import.meta.env.BASE_URL}${ogImage}`, Astro.site).toString()
@@ -20,7 +21,7 @@ const ogImageURL = ogImage
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class:list={["scroll-smooth", snap && "snap"]}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
