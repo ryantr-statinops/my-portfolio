@@ -70,11 +70,11 @@ flowchart TB
 
 ## 5. Lịch trình triển khai (Roadmap)
 
-### Phase 1 — Quick wins (tuần này)
+### Phase 1 — Quick wins (done 2026-09-07)
 - [x] Viết test plan docs (file này)
-- [ ] Setup Vitest + L1 (content schema)
-- [ ] Thêm L1 vào CI
-- [ ] Smoke test tự động chạy khi push `main`
+- [x] Setup Vitest + L1 (content schema — `tests/content.test.ts`, 14 cases)
+- [x] Thêm L1 vào CI (step `L1 - Content schema validation` trước Build)
+- [ ] Smoke test tự động chạy khi push `main` (L2 — backlog)
 
 ### Phase 2 — Hero guard (tuần sau)
 - [ ] Setup Playwright + Chromium
