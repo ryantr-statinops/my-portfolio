@@ -26,6 +26,7 @@
   --background-rgb: 255, 255, 255;
   --accent: #0088cc;
   --success: #10b981;
+  --success-rgb: 16, 185, 129;
   --muted: #737373;
 }
 
@@ -40,6 +41,7 @@
   --background-rgb: 10, 10, 10;
   --accent: #00f2ff;
   --success: #10b981;
+  --success-rgb: 16, 185, 129;
   --muted: #a3a3a3;
 }
 
@@ -56,6 +58,13 @@
 @layer utilities {
   .glass {
     @apply bg-card/10 backdrop-blur-xl border border-border/50;
+  }
+
+  .glass-premium {
+    background: rgba(255, 255, 255, 0.01);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
   }
   
   .reveal {
