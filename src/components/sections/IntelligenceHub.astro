@@ -53,10 +53,10 @@ const groupedProjects: Record<string, ProjectEntry[]> = projects.reduce((acc, pr
     <!-- Header KPI Bar: Scope at a glance -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4 reveal">
       {[
-        { label: 'Active_Operations', val: projects.length.toString().padStart(2, '0'), unit: 'PROJECTS', desc: 'Live system deployment' },
-        { label: 'Tech_Diversity', val: [...new Set(projects.flatMap(p => p.data.stack))].length.toString().padStart(2, '0'), unit: 'STACKS', desc: 'Languages & Frameworks' },
-        { label: 'Domain_Coverage', val: Object.keys(groupedProjects).length.toString().padStart(2, '0'), unit: 'SECTORS', desc: 'AI / FinTech / Ops' },
-        { label: 'System_Complexity', val: 'High', unit: 'LEVEL', desc: 'Scale-ready architecture' }
+        { label: 'Projects', val: projects.length.toString().padStart(2, '0'), unit: 'SYS', desc: 'Live, documented systems' },
+        { label: 'Technologies', val: [...new Set(projects.flatMap(p => p.data.stack))].length.toString().padStart(2, '0'), unit: 'STK', desc: 'Languages & frameworks' },
+        { label: 'Domains', val: Object.keys(groupedProjects).length.toString().padStart(2, '0'), unit: 'SEC', desc: 'AI / FinTech / Ops' },
+        { label: 'Active', val: projects.filter(p => p.data.status === 'Production' || p.data.status === 'In Progress').length.toString().padStart(2, '0'), unit: 'ACT', desc: 'Systems in operation' }
       ].map(kpi => (
         <div class="p-3 bg-card/30 border border-border/80 rounded-2xl glass-premium flex flex-col group hover:border-primary/50 transition-all">
           <div class="flex justify-between items-start mb-0.5">
