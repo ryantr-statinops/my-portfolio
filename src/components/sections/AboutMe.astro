@@ -1,8 +1,15 @@
 ---
+const journey = [
+  { year: 'Foundation', label: 'Applied Statistics', desc: 'Quantitative thinking as the base layer.' },
+  { year: 'Engineering', label: 'Backend & Data', desc: 'Python, FastAPI, pipelines, databases.' },
+  { year: 'Infrastructure', label: 'Linux & Docker', desc: 'Self-hosted clusters, networking, orchestration.' },
+  { year: 'Intelligence', label: 'AI & Agents', desc: 'MCP, model routing, developer tooling.' },
+];
+
 const corePrinciples = [
-  { title: 'Systems over Isolated Tools', desc: 'Hệ thống quan trọng hơn công cụ rời rạc.' },
-  { title: 'Data-driven Action', desc: 'Dữ liệu chỉ có giá trị khi nó tạo ra hành động.' },
-  { title: 'Minimalist Professionalism', desc: 'Sự tối giản là đỉnh cao của sự phức tạp.' }
+  { title: 'Systems over Tools', desc: 'Isolated tools decay. Connected systems compound.' },
+  { title: 'Data-driven Action', desc: 'Data only matters when it creates movement.' },
+  { title: 'Minimalist by Default', desc: 'Complexity is easy. Simplicity takes discipline.' },
 ];
 ---
 
@@ -18,17 +25,17 @@ const corePrinciples = [
     <div class="col-span-12 lg:col-span-5 flex flex-col justify-center space-y-6 reveal">
 
       <h2 class="text-5xl md:text-6xl font-bold tracking-tighter text-foreground leading-[0.9] uppercase">
-        Xây dựng <br />
-        <span class="text-primary italic">Trật tự</span> từ <br />
-        Dữ liệu.
+        I turn data <br />
+        into <span class="text-primary italic">systems</span> that <br />
+        run themselves.
       </h2>
 
       <div class="space-y-4 text-muted leading-relaxed text-base font-medium border-l border-border pl-6">
         <p>
-          Với nền tảng <span class="text-foreground font-bold">Applied Statistics</span>, tôi không chỉ code — tôi thiết kế các kiến trúc có khả năng <span class="text-foreground">Tự vận hành</span> và <span class="text-foreground">Tối ưu hóa</span>.
+          Applied Statistics student building <span class="text-foreground font-bold">self-operating architectures</span> — from data pipelines to self-hosted clusters to AI-native tooling.
         </p>
         <p class="text-sm opacity-80 leading-relaxed">
-          Từ Dell Precision đến hệ thống Cluster, mục tiêu của tôi là kết nối các node rời rạc thành một bộ máy thống nhất.
+          Everything here is real. Every project runs on production hardware, not slides.
         </p>
       </div>
 
@@ -39,29 +46,35 @@ const corePrinciples = [
       </div>
     </div>
 
-    <!-- Right: Core Principles Grid -->
-    <div class="col-span-12 lg:col-span-7 flex flex-col justify-center gap-3 reveal">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <!-- Right: Journey Timeline + Principles -->
+    <div class="col-span-12 lg:col-span-7 flex flex-col justify-center gap-8 reveal">
+
+      <!-- Journey Timeline -->
+      <div class="space-y-1">
+        <h4 class="text-[9px] font-mono text-muted uppercase tracking-[0.35em] mb-4">Journey</h4>
+        <div class="border-l border-border/60 pl-6 space-y-5">
+          {journey.map((step, i) => (
+            <div class="relative">
+              <span class="absolute -left-[29px] top-1.5 w-2.5 h-2.5 rounded-full bg-primary/30 border border-primary/60"></span>
+              <p class="text-[9px] font-mono text-primary uppercase tracking-widest">{step.year}</p>
+              <h5 class="text-base font-bold uppercase tracking-tight text-foreground">{step.label}</h5>
+              <p class="text-xs text-muted leading-relaxed">{step.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Principles -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
         {corePrinciples.map((p, i) => (
-          <div class={`p-6 rounded-3xl border border-border/80 bg-card/30 glass-premium hover:border-primary/50 transition-all duration-500 group relative overflow-hidden ${i === 0 ? 'md:col-span-2' : ''}`}>
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div class="flex items-center gap-3 mb-3">
+          <div class="p-5 rounded-3xl border border-border/80 bg-card/30 glass-premium hover:border-primary/50 transition-all duration-500 group">
+            <div class="flex items-center gap-2 mb-2">
               <span class="text-[9px] font-mono text-primary bg-primary/10 px-2 py-0.5 rounded">0{i+1}</span>
-              <h4 class="text-lg font-bold uppercase tracking-tight group-hover:text-primary transition-colors">{p.title}</h4>
+              <h5 class="text-sm font-bold uppercase tracking-tight group-hover:text-primary transition-colors">{p.title}</h5>
             </div>
             <p class="text-xs text-muted leading-relaxed group-hover:text-foreground/80 transition-colors">{p.desc}</p>
           </div>
         ))}
-      </div>
-
-      <!-- Operational Motto -->
-      <div class="mt-4 flex items-center gap-4 p-4 bg-foreground/[0.02] border border-border rounded-2xl">
-        <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary text-lg">
-          ◈
-        </div>
-        <p class="text-[10px] font-mono uppercase tracking-widest text-muted leading-relaxed">
-          Designing the bridge between <span class="text-foreground font-bold">Mathematical Logic</span> and <span class="text-foreground font-bold">Operational Excellence</span>.
-        </p>
       </div>
     </div>
   </div>
