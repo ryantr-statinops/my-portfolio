@@ -163,6 +163,7 @@ const projectMeta = projects.map((project) => ({
   
   if (canvas && container) {
     const ctx = canvas.getContext('2d');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let width, height;
     const activeCategories = new Set();
     
@@ -197,8 +198,10 @@ const projectMeta = projects.map((project) => ({
       });
     });
 
-    nodes.forEach(n => {
-      n.x = (Math.random()-0.5)*400; n.y = (Math.random()-0.5)*400; n.z = (Math.random()-0.5)*400;
+    nodes.forEach((n, index) => {
+      const angle = index * 2.399963;
+      const radius = 90 + (index % 5) * 42;
+      n.x = Math.cos(angle) * radius; n.y = Math.sin(angle) * radius; n.z = ((index % 7) - 3) * 55;
       n.vx = 0; n.vy = 0; n.vz = 0;
     });
 
@@ -246,28 +249,30 @@ const projectMeta = projects.map((project) => ({
 
     let projectedNodes = [];
     function loop() {
-      nodes.forEach(n => {
-        nodes.forEach(n2 => {
-          if (n === n2) return;
-          const dx = n.x - n2.x, dy = n.y - n2.y, dz = n.z - n2.z;
-          const d2 = dx*dx + dy*dy + dz*dz || 1;
-          const f = 4000 / d2;
-          n.vx += (dx/Math.sqrt(d2))*f; n.vy += (dy/Math.sqrt(d2))*f; n.vz += (dz/Math.sqrt(d2))*f;
+      if (!prefersReducedMotion) {
+        nodes.forEach(n => {
+          nodes.forEach(n2 => {
+            if (n === n2) return;
+            const dx = n.x - n2.x, dy = n.y - n2.y, dz = n.z - n2.z;
+            const d2 = dx*dx + dy*dy + dz*dz || 1;
+            const f = 4000 / d2;
+            n.vx += (dx/Math.sqrt(d2))*f; n.vy += (dy/Math.sqrt(d2))*f; n.vz += (dz/Math.sqrt(d2))*f;
+          });
+          n.vx -= n.x * 0.005; n.vy -= n.y * 0.005; n.vz -= n.z * 0.005;
+          n.vx *= 0.92; n.vy *= 0.92; n.vz *= 0.92; n.x += n.vx; n.y += n.vy; n.z += n.vz;
         });
-        n.vx -= n.x * 0.005; n.vy -= n.y * 0.005; n.vz -= n.z * 0.005;
-        n.vx *= 0.92; n.vy *= 0.92; n.vz *= 0.92; n.x += n.vx; n.y += n.vy; n.z += n.vz;
-      });
-      links.forEach(l => {
-        const s = nodes.find(n => n.id === l.source), t = nodes.find(n => n.id === l.target);
-        if (s && t) {
-          const dx = t.x - s.x, dy = t.y - s.y, dz = t.z - s.z, d = Math.sqrt(dx*dx + dy*dy + dz*dz) || 1, f = (d - 120) * 0.04;
-          s.vx += (dx/d)*f; s.vy += (dy/d)*f; s.vz += (dz/d)*f;
-          t.vx -= (dx/d)*f; t.vy -= (dy/d)*f; t.vz -= (dz/d)*f;
-        }
-      });
+        links.forEach(l => {
+          const s = nodes.find(n => n.id === l.source), t = nodes.find(n => n.id === l.target);
+          if (s && t) {
+            const dx = t.x - s.x, dy = t.y - s.y, dz = t.z - s.z, d = Math.sqrt(dx*dx + dy*dy + dz*dz) || 1, f = (d - 120) * 0.04;
+            s.vx += (dx/d)*f; s.vy += (dy/d)*f; s.vz += (dz/d)*f;
+            t.vx -= (dx/d)*f; t.vy -= (dy/d)*f; t.vz -= (dz/d)*f;
+          }
+        });
+      }
       ctx.clearRect(0, 0, width, height);
       zoom += (targetZoom - zoom) * 0.15;
-      if (!isDragging) { angleY += 0.001; angleX += 0.0005; }
+      if (!prefersReducedMotion && !isDragging) { angleY += 0.001; angleX += 0.0005; }
       const cameraDist = 800;
       projectedNodes = nodes.filter((n) => {
         if (activeCategories.size === 0 || n.type !== 'project') return true;
@@ -303,12 +308,13 @@ const projectMeta = projects.map((project) => ({
         }
       });
       ctx.globalAlpha = 1;
-      requestAnimationFrame(loop);
+      if (!prefersReducedMotion) requestAnimationFrame(loop);
     }
     document.addEventListener('portfolio:filter', (event) => {
       const categories = event.detail?.categories || [];
       activeCategories.clear();
       categories.forEach((category) => activeCategories.add(category));
+      if (prefersReducedMotion) loop();
     });
     loop();
   }
@@ -345,11 +351,13 @@ const projectMeta = projects.map((project) => ({
   });
 
   // --- HEATMAP RANDOM ANIMATION ---
-  setInterval(() => {
-    const cells = document.querySelectorAll('.strategic-dashboard-section .grid-cols-7 div');
-    const randomCell = cells[Math.floor(Math.random() * cells.length)];
-    if (randomCell) { randomCell.classList.add('scale-150', 'brightness-150'); setTimeout(() => randomCell.classList.remove('scale-150', 'brightness-150'), 500); }
-  }, 1000);
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setInterval(() => {
+      const cells = document.querySelectorAll('.strategic-dashboard-section .grid-cols-7 div');
+      const randomCell = cells[Math.floor(Math.random() * cells.length)];
+      if (randomCell) { randomCell.classList.add('scale-150', 'brightness-150'); setTimeout(() => randomCell.classList.remove('scale-150', 'brightness-150'), 500); }
+    }, 1000);
+  }
 </script>
 
 <style>

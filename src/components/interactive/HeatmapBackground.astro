@@ -285,7 +285,12 @@
 
         resize();
         window.addEventListener("resize", resize);
-        requestAnimationFrame(loop);
+        if (prefersReducedMotion) {
+            // Keep a deterministic static grid when motion is disabled.
+            draw();
+        } else {
+            requestAnimationFrame(loop);
+        }
     })();
 </script>
 
