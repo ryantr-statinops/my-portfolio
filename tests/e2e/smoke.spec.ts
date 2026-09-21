@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import { existsSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
@@ -10,10 +10,10 @@ const projectRoutes = readdirSync(projectOutput, { withFileTypes: true })
   .sort();
 const routes = ["./", "./projects/", ...projectRoutes];
 
-async function expectSuccessfulPage(page, route: string) {
+async function expectSuccessfulPage(page: Page, route: string) {
   const response = await page.goto(route);
   expect(response?.status(), `HTTP status for ${route}`).toBe(200);
-  await expect(page.locator("title")).toHaveText(/.+/);
+  expect(await page.title()).toMatch(/.+/);
   await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /.+/);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",

@@ -8,13 +8,13 @@ interface Props {
 
 const { commands = [
   { input: "neofetch", output: "Runtime: Static Portfolio\nHost: GitHub Pages\nBuild: Astro 6.4.8\nContent: MDX + Zod\nStyle: Tailwind CSS 4\nMode: Static Generation\nTheme: Minimal-Dark\nTerminal: Portfolio Runtime" },
-  { input: "ls -l /projects", output: "drwxr-xr-x  finance-quant\ndrwxr-xr-x  ops-automation\ndrwxr-xr-x  data-math\ndrwxr-xr-x  system-ui" }
+  { input: "ls /projects", output: "finance-quant\nops-automation\ndata-math\nsystem-ui" }
 ] } = Astro.props;
 
 const commandMap = Object.fromEntries(commands.map((command) => [command.input.toLowerCase(), command.output]));
 ---
 
-<div data-terminal class="bg-black border border-border rounded-lg overflow-hidden font-mono text-[11px] shadow-2xl glass reveal">
+<div data-terminal data-command-map={JSON.stringify(commandMap)} class="bg-black border border-border rounded-lg overflow-hidden font-mono text-[11px] shadow-2xl glass reveal">
   <!-- Terminal Header -->
   <div class="bg-white/5 px-4 py-2 flex items-center justify-between border-b border-border">
     <div class="flex gap-1.5">
@@ -62,11 +62,15 @@ const commandMap = Object.fromEntries(commands.map((command) => [command.input.t
   </form>
 </div>
 
-<script define:vars={{ commandMap }}>
+<script>
+  // @ts-nocheck - browser-only terminal controller
+  import { parseTerminalCommand } from "../../lib/terminal";
+
   const terminal = document.querySelector("[data-terminal]");
   const output = terminal?.querySelector("[data-terminal-output]");
   const form = terminal?.querySelector("[data-terminal-form]");
   const input = terminal?.querySelector("[data-terminal-input]");
+  const commandMap = JSON.parse(terminal?.dataset.commandMap ?? "{}");
   const history = [];
   let historyIndex = -1;
 
@@ -90,15 +94,11 @@ const commandMap = Object.fromEntries(commands.map((command) => [command.input.t
       history.unshift(command);
       historyIndex = -1;
 
-      if (command === "clear") {
+      const parsed = parseTerminalCommand(command, commandMap);
+      if (parsed.clear) {
         output.replaceChildren();
       } else {
-        const result = commandMap[command] ?? (command === "help"
-          ? "help\nstatus\nneofetch\nls /projects\nclear"
-          : command === "status"
-            ? "STATUS: READY\nMODE: STATIC_GENERATION\nREGISTRY: AVAILABLE"
-            : "command not found");
-        appendEntry(command, result);
+        appendEntry(command, parsed.output);
       }
 
       input.value = "";
