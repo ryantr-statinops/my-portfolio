@@ -45,6 +45,8 @@ Playwright uses the GitHub Pages base path during local preview. Visual tests co
 
 Do not run `npm audit fix --force` on the release branch. If an audit issue requires an Astro major upgrade, keep the audit step report-only and document the remaining issue. Astro major migration is a separate branch and must pass the complete QA suite before merge.
 
+The 2026-09-21 audit report contains 5 findings: 1 low, 1 moderate, 2 high and 1 critical. The remaining Astro, esbuild and sharp findings require the Astro 7 upgrade path; `smol-toml` is reported transitively. Safe compatible patches applied in this release are `@astrojs/mdx` 5.0.6 and `@astrojs/sitemap` 3.7.4. Tailwind/Vite patch candidates were not applied because they resolve Vite 8 and are incompatible with the Astro 6.4.8 check toolchain.
+
 ## Analytics status
 
 GoatCounter is an optional final phase. `PUBLIC_GOATCOUNTER_URL` must be configured before its script is injected; without it, builds pass and no analytics request is made. No secret or personal form data belongs in the repository.
