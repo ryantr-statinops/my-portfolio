@@ -1,57 +1,50 @@
-# TECHNICAL_INFORMATION.md - System Specifications
+# Technical Information
 
-This document serves as the single source of truth for the technical architecture, stack, and implementation details of the Portfolio Intelligence System.
+> Current implementation reference for the static portfolio. Last updated 2026-09-21.
 
-## 1. Core Technology Stack
+## Runtime
 
-| Layer | Technology | Version | Description |
-| --- | --- | --- | --- |
-| **Framework** | [Astro](https://astro.build/) | v6.3.1 | Zero-JS by default, Content Layer architecture. |
-| **Styling** | [Tailwind CSS](https://tailwindcss.com/) | v4.3.0 | Utility-first, configured via `@tailwindcss/vite`. |
-| **Content** | [MDX](https://mdxjs.com/) | v5.0.4 | Markdown with JSX support for interactive components. |
-| **Typography** | Inter & Meslo NF | - | Professional sans-serif and high-tech monospace fallback. |
-| **Mathematics** | [KaTeX](https://katex.org/) | v0.16.11 | High-performance LaTeX rendering for Quant projects. |
+| Component | Version/configuration |
+|---|---|
+| Node | `>=22.0.0` |
+| Astro | `6.4.8` static output |
+| Tailwind | `4.3.0` via `@tailwindcss/vite` |
+| MDX | `@astrojs/mdx` `5.0.4` |
+| Validation | Astro Content Layer + Zod + Vitest |
+| Browser QA | Playwright `1.63.0`, Chromium |
+| Production | GitHub Pages, base `/my-portfolio` |
 
-## 2. System Architecture
+## Build and deployment
 
-### A. Content Layer (Astro v5+ Standard)
-- **Configuration:** Managed in `src/content.config.ts`.
-- **Loader:** Uses `glob` loader for efficient scanning of `src/content/projects/*.mdx`.
-- **Validation:** Strict Zod schema for project metadata (ID, Title, Category, Impact, Stack).
+`astro.config.mjs` sets `site` to `https://ryantr-statinops.github.io` and `base` to `/my-portfolio`. The workflow runs `npm ci`, a safe dependency update check, report-only `npm audit`, unit tests, `astro check`, static build, exact seven-page assertion, smoke tests, visual tests and sitemap/robots verification before uploading the Pages artifact and deploying.
 
-### B. Directory Mapping
-- `/agents/`: Operational rules, strategy, and frontend skill modules.
-- `/src/content/projects/`: MDX project database.
-- `/src/components/`: Reusable Atomic & Composite components (e.g., `ProjectCard.astro`).
-- `/src/layouts/`: System-wide templates (e.g., `MainLayout.astro` with scroll-reveal logic).
-- `/public/images/`: Centralized optimized assets.
+## Content
 
-## 3. UI/UX Specifications
+Projects live in `src/content/projects/*.mdx` and are loaded through the Astro glob collection. The schema validates the current fields and enforces `priority` uniqueness, date format, category/status allowlists, tag/stack limits and exact thumbnail paths. `src/lib/content.ts` provides the shared ascending-priority ordering used by the homepage and `/projects/`.
 
-- **Design Philosophy:** Professional & Minimalist (Bloomberg/High-end Fintech style).
-- **Key Utilities:**
-    - `.glass`: Glassmorphism effect (blur + subtle border).
-    - `.reveal`: Scroll-triggered entry animations via `IntersectionObserver`.
-    - **Neon Accents:** Primary color `#00f2ff` for high-signal interactive elements.
-- **Dark Mode:** Deep black background (`#050505`) with high-contrast foreground.
+## Portfolio Registry and interaction
 
-## 4. Feature Implementation Details
+`/projects/` is the canonical Project Registry. `ProjectFilter` uses client-only browser state and dispatches the `portfolio:filter` event to update cards, registry rows, Project Graph nodes and KPI counts. No localStorage, API or server state is used.
 
-### A. Mathematical Rendering
-Integrated via `remark-math` and `rehype-katex`. CSS injected globally in `MainLayout.astro`.
-- **Usage:** `$E=mc^2$` for inline or `$$` for block formulas.
+`SystemTerminal` is a read-only showcase. Its whitelist is `help`, `status`, `neofetch`, `ls /projects` and `clear`; unknown input returns `command not found`. It does not invoke a shell, backend, WebSocket or remote execution.
 
-### B. Portfolio Registry (`/projects`)
-A structured inventory page for browsing documented projects and technical metadata.
-- **Tech:** Astro Content Layer, Tailwind Grid and reusable registry components.
-- **Aesthetic:** Monospace-heavy, metadata-rich, operational focus.
+## QA commands
 
-## 5. Development Workflow
+```bash
+npm run test:unit
+npm run check
+npm run build
+npm run test:smoke
+npm run test:visual
+npm run test
+```
 
-1. **Local Server:** `npm run dev` (Port 4321).
-2. **New Project:** Add `.mdx` to `src/content/projects/`. Ensure frontmatter matches the strict Zod schema.
-3. **Asset Management:** Store all images in `public/images/` and reference via absolute paths (`/images/...`).
+Playwright uses the GitHub Pages base path during local preview. Visual tests cover dark/light themes and desktop `1280x800`, tablet `768x1024` and mobile `375x667`; animation, dynamic canvas and clock output are excluded from assertions.
 
----
+## Security and dependency policy
 
-*Last Updated: 2026-05-12*
+Do not run `npm audit fix --force` on the release branch. If an audit issue requires an Astro major upgrade, keep the audit step report-only and document the remaining issue. Astro major migration is a separate branch and must pass the complete QA suite before merge.
+
+## Analytics status
+
+GoatCounter is an optional final phase. `PUBLIC_GOATCOUNTER_URL` must be configured before its script is injected; without it, builds pass and no analytics request is made. No secret or personal form data belongs in the repository.

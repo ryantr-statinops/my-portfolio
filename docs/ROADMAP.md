@@ -1,47 +1,48 @@
-# ROADMAP.md - Implementation Phases
+# Release Roadmap — Portfolio Hardening
 
-## 1. Phase 1: Foundation (Khởi tạo nền tảng)
+> Source of truth for the current portfolio release. Production target: GitHub Pages.
+> Last verified: 2026-09-21.
 
-* [ ] **Framework Setup:** Khởi tạo dự án bằng Astro (hoặc Next.js) tại thư mục gốc.
-* [ ] **Shadcn/ui Integration:** Cài đặt hệ thống component cơ bản (Button, Card, Badge).
-* [ ] **Analytics:** Đăng ký project trên Vercel và bật Vercel Analytics (Free).
-* [ ] **Font & Theme:** Cấu hình Meslo Nerd Font và thiết lập Dark Mode mặc định theo `DESIGN_SYSTEM.md`.
+## Current release model
 
-## 2. Phase 2: Data Architecture (Cấu trúc dữ liệu)
+- `/` is the homepage.
+- `/projects/` is the canonical Project Registry.
+- Five project detail pages are generated from `src/content/projects/*.mdx`.
+- `/cluster/` was removed. A future Cluster startup project will be added as its own MDX entry and route under `/projects/`; no `cluster.mdx` is part of this release.
+- The static build must generate exactly seven pages.
+- Existing project IDs, slugs and public URLs remain unchanged.
 
-* [ ] **Content Collections:** Định nghĩa Schema cho dự án trong file `src/content/config.ts`.
-* [ ] **MDX Setup:** Cấu hình plugin để hỗ trợ $LaTeX$ (Remark-math/Rehype-katex) và syntax highlighting cho code.
-* [ ] **Migration:** Chuyển 5 dự án hiện tại từ repo cũ sang định dạng `.mdx` mới theo đúng `CONTENT_GUIDE.md`.
+## Completed release work
 
-## 3. Phase 3: Core UI Development (Phát triển giao diện)
+- Route migration from the old dashboard to `/projects/`.
+- Neutral portfolio terminology and removal of unverified dashboard metrics.
+- Ascending priority order (`1` is highest) with duplicate-priority build failure.
+- Strict project thumbnail paths and content tests.
+- Base-path-aware navigation for GitHub Pages.
+- Shared multi-select category filter on the homepage and Project Registry.
+- Read-only Portfolio Runtime Terminal with a whitelist of five commands.
+- Reduced-motion fallbacks and deterministic visual-test behavior.
+- L1 unit tests, L2 Chromium smoke tests and L3 responsive visual baselines.
+- CI gates for check, build, seven-page output, smoke, visual, sitemap and robots.
 
-* [ ] **Home Page:** Xây dựng bố cục "Efficient Minimalist".
-* Khu vực giới thiệu (Hero section) cực ngắn gọn.
-* Hệ thống Filter dự án theo Domain (Quant, Ops, System...).
+## Remaining release work
 
+### Phase 1 — Dependency and security maintenance
 
-* [ ] **Project Detail Page:** Tạo template hiển thị nội dung MDX chuyên nghiệp, hỗ trợ ảnh WebP và bảng biểu.
-* [ ] **Responsive:** Đảm bảo giao diện mượt mà trên cả mobile (dành cho HR/Investors xem nhanh).
+- Apply only safe dependency patch updates.
+- Keep `npm audit` report-only when remediation requires an Astro major upgrade.
+- Record remaining vulnerabilities in technical documentation.
+- Evaluate Astro 7 later on a separate branch with the complete test suite.
 
-## 4. Phase 4: Advanced Features (Tính năng nâng cao)
+### Phase 2 — Optional analytics
 
-* [ ] **Interactive Components:** * Build `TradingChart` component (Lightweight Charts).
-* Build `SystemTerminal` giả lập.
+After all feature and QA gates are stable, configure GoatCounter through `PUBLIC_GOATCOUNTER_URL`.
+The build must remain valid and load no analytics script when the variable is absent. Track only page views, project detail views, GitHub/demo clicks and contact clicks; never collect message content or PII.
 
+## Release acceptance criteria
 
-* [ ] **AI Agents Refinement:** Viết các file hướng dẫn (Instructions) trong thư mục `agents/` để AI có thể tự viết bài dựa trên Strategy và Content Guide.
-* [ ] **SEO Optimization:** Cấu hình OpenGraph (để khi gửi link qua LinkedIn/Facebook hiện ảnh thumbnail dự án chuyên nghiệp).
+`npm run test`, `npm run check` and `npm run build` pass; seven pages are generated; all routes and internal links return 200; filters and terminal behavior pass; dark/light responsive baselines pass; sitemap and robots exist; GitHub Pages deploys; documentation contains no obsolete deployment or removed-feature assumptions.
 
-## 5. Phase 5: Deployment & Maintenance (Vận hành)
+## Commit policy
 
-* [ ] **CI/CD:** Kết nối GitHub với Vercel để tự động deploy khi push code.
-* [ ] **Domain:** Trỏ domain cá nhân về Vercel (nếu có).
-* [ ] **Final Review:** Kiểm tra lại toàn bộ nội dung, đảm bảo không có từ ngữ phóng đại.
-
----
-
-## 🛠 Cách sử dụng bộ file quản trị này với AI (VibeCode/Cursor/Copilot)
-
-Để đạt hiệu quả "nâng tầm AI" như bạn muốn, khi bắt đầu làm bất cứ tính năng nào, hãy gửi lệnh cho AI như sau:
-
-> *"Tôi muốn triển khai Phase 1 trong **ROADMAP.md**. Hãy đọc **ARCHITECTURE.md** để biết cấu trúc thư mục và **DESIGN_SYSTEM.md** để biết quy chuẩn UI. Hãy bắt đầu bằng việc khởi tạo project Astro."*
+Changes are delivered as small atomic commits. Every commit must pass its relevant gate, be committed directly to `main`, and be pushed immediately. Do not squash. A failing CI result is fixed by a subsequent commit.

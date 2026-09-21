@@ -1,19 +1,22 @@
-# CONTEXT_SYNC.md - AI Knowledge Base Initialization
+# CONTEXT_SYNC.md — Project Knowledge Base
 
-## 1. Core Identity & Strategy
-- **File:** `agents/STRATEGY.md`
-- **Focus:** Hiểu về phong cách "Professional & Minimalist", định hướng sự nghiệp (Quant/Data/Startup) để điều chỉnh giọng văn và thiết kế.
+Use the repository documents under `docs/` as the source of truth. Former agent-specific paths are not part of this repository.
 
-## 2. Technical Standards
-- **File:** `agents/ARCHITECTURE.md` và `agents/CONTENT_GUIDE.md`
-- **Focus:** Tuân thủ cấu trúc thư mục Astro và cách đặt metadata cho các dự án (MDX).
+## Read first
 
-## 3. Modular Skills (The "How-To")
-- **Thư mục:** `skills/`
-- **Banner Design:** Quy tắc hình ảnh và tỷ lệ.
-- **Brand:** Bộ nhận diện và bảng màu.
-- **UI-UX Pro Max:** Tư duy tối ưu trải nghiệm và tích hợp AI.
-- **UI Styling:** Kỹ thuật CSS/Tailwind nâng cao.
+- `docs/STRATEGY.md` — professional/minimal brand and legitimate project strategy context.
+- `docs/ARCHITECTURE_V2.md` — current Astro boundaries and route model.
+- `docs/CONTENT_GUIDE.md` — MDX content contract and writing standards.
+- `docs/DESIGN_SYSTEM.md` — visual tokens and interaction language.
+- `docs/ROADMAP.md` — release status and remaining work.
+- `docs/plan/README.md` — L1/L2/L3 QA status.
 
-## 4. Instruction
-Mọi phản hồi và code được sinh ra sau này phải là sự giao thoa giữa Framework (Astro) và các tri thức trong các file trên.
+## Implementation facts
+
+- Production is GitHub Pages at `/my-portfolio/`.
+- `/projects/` is the canonical Project Registry; `/cluster/` is removed.
+- The current collection contains five MDX projects and generates seven pages.
+- Portfolio runtime terminology is neutral: Project Registry, Portfolio Runtime, Project Graph and Build System.
+- A future Cluster startup project is content, not infrastructure branding, and is outside the current release.
+
+When changing code, update the relevant document in `docs/` in the same release series and preserve the atomic commit policy.
