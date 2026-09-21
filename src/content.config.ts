@@ -29,7 +29,7 @@ const projects = defineCollection({
     priority: z.number().int().min(1).max(10),
     tags: z.array(z.string()).max(12).default([]),
     impact: z.string().min(20),
-    thumbnail: z.string().refine((v) => v.startsWith("/images/projects/") && v.endsWith(".webp"), {
+    thumbnail: z.string().regex(/^\/images\/projects\/[^/]+\/thumbnail\.webp$/, {
       message: "Thumbnail must be /images/projects/<slug>/thumbnail.webp"
     }),
     github: z.string().url().optional().or(z.literal("")),

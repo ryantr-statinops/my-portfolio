@@ -96,9 +96,10 @@ describe('Content Schema Validation', () => {
     })
   })
 
-  it('4.6 thumbnail is /images/projects/<slug>/thumbnail.webp', () => {
+  it('4.6 thumbnail is /images/projects/<filename-slug>/thumbnail.webp', () => {
     projects.forEach((p) => {
-      expect(p.thumbnail, p.file).toMatch(/^\/images\/projects\/.+\.webp$/)
+      const slug = p.file.replace(/\.mdx$/, '')
+      expect(p.thumbnail, p.file).toBe(`/images/projects/${slug}/thumbnail.webp`)
     })
   })
 
@@ -122,6 +123,11 @@ describe('Content Schema Validation', () => {
   it('4.8 ids are unique', () => {
     const ids = projects.map((p) => p.id)
     expect(new Set(ids).size).toBe(ids.length)
+  })
+
+  it('4.8b priorities are ordered from highest to lowest rank', () => {
+    const priorities = [...projects].map((p) => p.priority).sort((a, b) => a - b)
+    expect(priorities).toEqual([1, 2, 3, 4, 5])
   })
 
   it('4.9 title min length 5', () => {

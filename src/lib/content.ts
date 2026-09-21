@@ -25,7 +25,7 @@ export const getSortedProjects = async (): Promise<ProjectEntry[]> => {
   const projects = await getCollection("projects");
   const duplicates = validateUniquePriority(projects);
   if (duplicates.length > 0) {
-    console.warn("[content] duplicate priorities:", duplicates.join("; "));
+    throw new Error(`[content] duplicate priorities: ${duplicates.join("; ")}`);
   }
   return [...projects].sort(sortByPriority);
 };
