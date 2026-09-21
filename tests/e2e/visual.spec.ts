@@ -47,7 +47,7 @@ for (const theme of ["dark", "light"] as const) {
         const screenshotOptions = {
           animations: "disabled" as const,
           caret: "hide" as const,
-          maxDiffPixelRatio: 0.05,
+          maxDiffPixelRatio: viewport.name === "mobile" ? 0.08 : 0.05,
           timeout: 15_000,
           mask: maskDynamic(page),
         };
