@@ -13,6 +13,7 @@
     "check": "astro check --minimumSeverity error",
     "test:unit": "vitest run",
     "test:smoke": "playwright test tests/e2e/smoke.spec.ts",
+    "test:visual": "playwright test tests/e2e/visual.spec.ts",
     "test:watch": "vitest",
     "preview": "astro preview",
     "astro": "astro"
