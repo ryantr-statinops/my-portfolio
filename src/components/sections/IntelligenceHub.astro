@@ -1,5 +1,6 @@
 ---
 import type { ProjectEntry } from "../../lib/content";
+import ProjectFilter from "../interactive/ProjectFilter.astro";
 
 interface Props {
   projects: ProjectEntry[];
@@ -14,6 +15,13 @@ const groupedProjects: Record<string, ProjectEntry[]> = projects.reduce((acc, pr
   acc[cat].push(project);
   return acc;
 }, {} as Record<string, ProjectEntry[]>);
+
+const projectMeta = projects.map((project) => ({
+  id: project.id,
+  category: project.data.category,
+  status: project.data.status,
+  stack: project.data.stack,
+}));
 
 ---
 
@@ -42,11 +50,12 @@ const groupedProjects: Record<string, ProjectEntry[]> = projects.reduce((acc, pr
         <h2 class="text-3xl font-bold tracking-tighter text-foreground uppercase leading-none">System Management Visualization</h2>
         <p class="text-[10px] text-muted font-mono uppercase tracking-[0.3em]">a systems-level view of my technical work</p>
       </div>
-      <div class="flex gap-3">
+      <div class="flex flex-wrap justify-end gap-3">
         <div class="flex items-center gap-2 px-3 py-1 bg-success/5 border border-success/20 rounded-full">
           <span class="w-1 h-1 bg-success rounded-full"></span>
           <span class="text-[8px] font-mono text-success uppercase font-bold tracking-widest">ISO_Aligned</span>
         </div>
+        <ProjectFilter />
       </div>
     </div>
 
@@ -64,7 +73,7 @@ const groupedProjects: Record<string, ProjectEntry[]> = projects.reduce((acc, pr
             <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
           </div>
           <div class="flex items-baseline gap-1">
-            <span class="text-2xl font-black font-mono text-foreground leading-none">{kpi.val}</span>
+            <span data-kpi={kpi.label.toLowerCase()} class="text-2xl font-black font-mono text-foreground leading-none">{kpi.val}</span>
             <span class="text-[9px] font-bold text-primary">{kpi.unit}</span>
           </div>
         </div>
@@ -81,14 +90,14 @@ const groupedProjects: Record<string, ProjectEntry[]> = projects.reduce((acc, pr
           </div>
           <div class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar text-[11px]">
             {Object.entries(groupedProjects).map(([category, items]) => (
-              <div class="space-y-2">
+              <div class="space-y-2" data-filter-group={category}>
                 <div class="flex items-center gap-2">
-                  <input type="checkbox" checked class="accent-primary w-3 h-3" />
+                  <input type="checkbox" checked aria-label={`Include ${category}`} class="accent-primary w-5 h-5" data-filter-checkbox={category} />
                   <span class="text-[10px] font-mono font-bold text-muted uppercase">{category.replace('-', '_')}</span>
                 </div>
                 <div class="pl-5 space-y-1.5 border-l border-border/80">
                   {items.map(p => (
-                    <a href={import.meta.env.BASE_URL + `/projects/${p.id}`} class="flex items-center gap-2 cursor-pointer group">
+                    <a href={import.meta.env.BASE_URL + `/projects/${p.id}`} data-portfolio-project data-category={category} class="flex items-center gap-2 cursor-pointer group">
                       <div class="w-2.5 h-2.5 border border-primary/50 rounded-sm bg-primary/5 flex items-center justify-center group-hover:bg-primary transition-all">
                         <span class="text-[6px] text-primary group-hover:text-background transition-colors">✓</span>
                       </div>
@@ -137,7 +146,7 @@ const groupedProjects: Record<string, ProjectEntry[]> = projects.reduce((acc, pr
   </div>
 </div>
 
-<script define:vars={{ groupedProjects }}>
+<script define:vars={{ groupedProjects, projectMeta }}>
   // --- UTILS & CLOCK ---
   function updateClock() {
     const now = new Date();
@@ -155,6 +164,7 @@ const groupedProjects: Record<string, ProjectEntry[]> = projects.reduce((acc, pr
   if (canvas && container) {
     const ctx = canvas.getContext('2d');
     let width, height;
+    const activeCategories = new Set();
     
     // Construct real nodes from grouped projects
     const nodes = [
@@ -180,7 +190,8 @@ const groupedProjects: Record<string, ProjectEntry[]> = projects.reduce((acc, pr
           type: 'project',
           domain: category.includes('ai') ? 'ai' : category.includes('fin') ? 'fin' : 'ops',
           complexity: p.data.priority ? p.data.priority * 2 + 4 : 6,
-          desc: p.data.description
+          desc: p.data.description,
+          category
         });
         links.push({ source: category, target: p.id });
       });
@@ -258,7 +269,10 @@ const groupedProjects: Record<string, ProjectEntry[]> = projects.reduce((acc, pr
       zoom += (targetZoom - zoom) * 0.15;
       if (!isDragging) { angleY += 0.001; angleX += 0.0005; }
       const cameraDist = 800;
-      projectedNodes = nodes.map(n => {
+      projectedNodes = nodes.filter((n) => {
+        if (activeCategories.size === 0 || n.type !== 'project') return true;
+        return activeCategories.has(n.category);
+      }).map(n => {
         const r = rotate(n, angleX, angleY), s = cameraDist / (cameraDist + r.z);
         return { ...n, px: r.x * s * zoom + width/2, py: r.y * s * zoom + height/2, ps: s * zoom, pz: r.z };
       }).sort((a, b) => b.pz - a.pz);
@@ -291,8 +305,44 @@ const groupedProjects: Record<string, ProjectEntry[]> = projects.reduce((acc, pr
       ctx.globalAlpha = 1;
       requestAnimationFrame(loop);
     }
+    document.addEventListener('portfolio:filter', (event) => {
+      const categories = event.detail?.categories || [];
+      activeCategories.clear();
+      categories.forEach((category) => activeCategories.add(category));
+    });
     loop();
   }
+
+  function applyPortfolioFilter(categories) {
+    const selected = new Set(categories);
+    document.querySelectorAll('[data-portfolio-project]').forEach((item) => {
+      item.hidden = selected.size > 0 && !selected.has(item.dataset.category);
+    });
+    document.querySelectorAll('[data-filter-group]').forEach((group) => {
+      const items = group.querySelectorAll('[data-portfolio-project]');
+      group.hidden = items.length > 0 && [...items].every((item) => item.hidden);
+    });
+    document.querySelectorAll('[data-filter-empty]').forEach((empty) => {
+      const surface = empty.parentElement;
+      const items = surface?.querySelectorAll('[data-portfolio-project]') ?? [];
+      empty.hidden = items.length === 0 || [...items].some((item) => !item.hidden);
+    });
+
+    const visible = selected.size === 0
+      ? projectMeta
+      : projectMeta.filter((project) => selected.has(project.category));
+    const stacks = new Set(visible.flatMap((project) => project.stack));
+    const domains = new Set(visible.map((project) => project.category));
+    const active = visible.filter((project) => project.status === 'Production' || project.status === 'In Progress');
+    document.querySelector('[data-kpi="projects"]')?.replaceChildren(document.createTextNode(String(visible.length).padStart(2, '0')));
+    document.querySelector('[data-kpi="technologies"]')?.replaceChildren(document.createTextNode(String(stacks.size).padStart(2, '0')));
+    document.querySelector('[data-kpi="domains"]')?.replaceChildren(document.createTextNode(String(domains.size).padStart(2, '0')));
+    document.querySelector('[data-kpi="active"]')?.replaceChildren(document.createTextNode(String(active.length).padStart(2, '0')));
+  }
+
+  document.addEventListener('portfolio:filter', (event) => {
+    applyPortfolioFilter(event.detail?.categories || []);
+  });
 
   // --- HEATMAP RANDOM ANIMATION ---
   setInterval(() => {

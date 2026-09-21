@@ -26,10 +26,13 @@ const visible = projects.slice(0, limit);
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-filter-surface="showcase">
       {visible.map(project => (
         <ProjectCard project={project} />
       ))}
+      <p data-filter-empty hidden class="col-span-full py-12 text-center text-xs font-mono uppercase tracking-widest text-muted">
+        No systems match the active filter.
+      </p>
     </div>
 
     {projects.length > 3 && (

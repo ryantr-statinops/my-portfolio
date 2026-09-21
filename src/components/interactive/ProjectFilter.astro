@@ -1,0 +1,80 @@
+---
+import { CATEGORY_MAP } from "../../lib/constants";
+
+const categories = Object.entries(CATEGORY_MAP);
+---
+
+<div
+  data-project-filter
+  class="flex flex-wrap items-center gap-2"
+  role="group"
+  aria-label="Filter projects by category"
+>
+  <span class="sr-only">Filter projects by category</span>
+  <button
+    type="button"
+    data-filter-category="all"
+    data-active="true"
+    aria-pressed="true"
+    class="min-h-11 rounded-full border border-primary bg-primary px-3 py-2 text-[10px] font-mono font-bold uppercase tracking-widest text-background transition-colors data-[active=false]:border-border data-[active=false]:bg-transparent data-[active=false]:text-muted data-[active=false]:hover:border-primary data-[active=false]:hover:text-primary"
+  >
+    All
+  </button>
+  {categories.map(([category, label]) => (
+    <button
+      type="button"
+      data-filter-category={category}
+      data-active="false"
+      aria-pressed="false"
+      class="min-h-11 rounded-full border border-border bg-transparent px-3 py-2 text-[10px] font-mono font-bold uppercase tracking-widest text-muted transition-colors hover:border-primary hover:text-primary"
+    >
+      {label}
+    </button>
+  ))}
+</div>
+
+<script>
+  const filterGroups = document.querySelectorAll<HTMLElement>("[data-project-filter]");
+
+  if (filterGroups.length > 0) {
+    const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filter-category]");
+    let selected = new Set<string>();
+
+    const syncButtons = () => {
+      const showAll = selected.size === 0;
+      buttons.forEach((button) => {
+        const active = button.dataset.filterCategory === "all"
+          ? showAll
+          : selected.has(button.dataset.filterCategory ?? "");
+        button.dataset.active = String(active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+    };
+
+    const dispatchFilter = () => {
+      syncButtons();
+      document.dispatchEvent(
+        new CustomEvent("portfolio:filter", {
+          detail: { categories: [...selected] },
+        }),
+      );
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const category = button.dataset.filterCategory;
+        if (!category) return;
+        if (category === "all") {
+          selected = new Set();
+        } else if (selected.has(category)) {
+          selected.delete(category);
+        } else {
+          selected.add(category);
+        }
+        dispatchFilter();
+      });
+    });
+
+    dispatchFilter();
+  }
+</script>
