@@ -24,7 +24,7 @@ CI hiện tại chỉ check `test -f dist/index.html` — quá yếu. Không ph�
 | # | Path | Source |
 |---|------|--------|
 | 1 | `/` | `src/pages/index.astro` |
-| 2 | `/cluster/` | `src/pages/cluster/index.astro` |
+| 2 | `/projects/` | `src/pages/projects/index.astro` |
 | 3 | `/projects/grap4prob/` | dynamic `[slug].astro` |
 | 4 | `/projects/mean-reversion-bot/` | dynamic `[slug].astro` |
 | 5 | `/projects/orbit-system-manager/` | dynamic `[slug].astro` |
@@ -43,10 +43,10 @@ test('homepage returns 200', async ({ request }) => {
 })
 ```
 
-### 4.2. Cluster page loads
+### 4.2. Project registry page loads
 ```ts
-test('/cluster/ returns 200', async ({ request }) => {
-  const res = await request.get('/cluster/')
+test('/projects/ returns 200', async ({ request }) => {
+  const res = await request.get('/projects/')
   expect(res.status()).toBe(200)
 })
 ```

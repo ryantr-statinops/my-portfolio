@@ -35,7 +35,7 @@
 ### ✅ In-scope (sẽ test)
 - **Build pipeline** — Astro static generation phải thành công và tạo đúng 7 pages.
 - **Content schema** — 5 file MDX trong `src/content/projects/` phải pass Zod schema.
-- **Routing smoke test** — 7 routes (`/`, `/cluster/`, 5 project pages) phải trả 200 OK.
+- **Routing smoke test** — 7 routes (`/`, `/projects/`, 5 project pages) phải trả 200 OK.
 - **Sitemap & SEO assets** — `sitemap-index.xml`, `sitemap-0.xml`, `robots.txt` phải tồn tại.
 - **Visual regression Hero** — snapshot khu vực Hero (CTA, headings, CURRENT FOCUS) trên `main`.
 - **Metadata integrity** — OG tags, canonical URL, Twitter card trên mỗi page.

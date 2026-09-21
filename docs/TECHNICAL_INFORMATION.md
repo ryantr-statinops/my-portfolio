@@ -41,9 +41,9 @@ This document serves as the single source of truth for the technical architectur
 Integrated via `remark-math` and `rehype-katex`. CSS injected globally in `MainLayout.astro`.
 - **Usage:** `$E=mc^2$` for inline or `$$` for block formulas.
 
-### B. Intelligence Hub (`/cluster`)
-A high-density dashboard simulating an OS/Terminal environment.
-- **Tech:** Tailwind Grid (12-column), SVG-based dynamic visualizations, real-time UTC clock.
+### B. Portfolio Registry (`/projects`)
+A structured inventory page for browsing documented projects and technical metadata.
+- **Tech:** Astro Content Layer, Tailwind Grid and reusable registry components.
 - **Aesthetic:** Monospace-heavy, metadata-rich, operational focus.
 
 ## 5. Development Workflow

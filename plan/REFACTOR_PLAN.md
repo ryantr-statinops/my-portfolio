@@ -17,7 +17,7 @@
 | Layout | `src/layouts/MainLayout.astro:3-6` import `Navbar` + `MobileOverlay` + `ScrollSpy`, `Footer` vẫn ở `components/Footer.astro` | Navbar DONE (iOS pill, PR #4), Footer CHƯA move vào `layout/`, spec cũ ghi `Header.astro` đã lỗi thời |
 | Hero | `src/pages/index.astro:16-73` inline hero + bento + CTA (137 dòng) | Done visual nhưng chưa tách `sections/Hero.astro` |
 | Sections | `src/components/AboutMe.astro:9`, `IntelligenceHub.astro:1` (306 dòng), `PortfolioRegistry.astro:12`, `ProjectCard.astro:1` nằm ở `components/` root; `src/components/sections/` RỖNG | Phải move vào `components/sections/` |
-| Registry | `index.astro:103` grid `ProjectCard` inline, `PortfolioRegistry.astro:45` sort inline riêng | Duplicate sort, cần unify (card grid ở `index`, table ở `/cluster`) |
+| Registry | `ProjectShowcase.astro` card grid và `PortfolioRegistry.astro` table | Dùng chung sorted content; registry table canonical ở `/projects/` |
 | Islands | `HeatmapBackground.astro:11` (290 dòng canvas) + `IntelligenceHub.astro:136` script 170 dòng graph, inline `<script>` không `client:*` | Vi phạm Islands rule |
 | Config | `astro.config.mjs:11`, `package.json:18` sitemap, `avt.png` vẫn PNG | OK build, chưa WebP |
 | Docs | `docs/UI_OVERVIEW.md`, `FrameworksHub.astro` hidden `index.astro:120`, `archive/` còn | Cần quyết định (P3 cleanup) |
@@ -71,7 +71,7 @@
 - Tạo `src/components/sections/PortfolioRegistry.astro` (hoặc refactor file hiện `PortfolioRegistry.astro:12`)
 - Refactor `index.astro:88-117` grid `projects.slice(0,6).map(ProjectCard)` thành component nhận `projects: ProjectEntry[]` prop
 - Dùng `sortByPriority` từ `lib/content.ts:5` thay vì inline `sort((a,b)=>b.data.priority-a.data.priority)` như `PortfolioRegistry.astro:45`
-- Thống nhất 1 pattern: Card grid (Command Center) làm default ở `index.astro`, Table registry (`PortfolioRegistry.astro:33` table `ID/Asset_Name`) expose ở `/cluster` nếu cần — tránh duplicate
+- Thống nhất 1 pattern: Card grid (Command Center) làm default ở `index.astro`, Table registry (`PortfolioRegistry.astro`) expose ở `/projects/` — tránh duplicate
 - `index.astro` cuối cùng chỉ còn:
   ```astro
   import Hero from "components/sections/Hero.astro"
@@ -134,7 +134,7 @@ P3 ProjectLayout + WebP + CI
 | # | Câu hỏi | Recommend | Ảnh hưởng nếu không chốt |
 |---|---|---|---|
 | 1 | Hero tách file ngay hay giữ inline? | Tách ngay (0 visual change) | Vi phạm V2 tree nếu giữ inline |
-| 2 | PortfolioRegistry chọn card grid hay table? | Card grid ở `index`, table ở `/cluster` | Duplicate logic nếu giữ cả 2 inline |
+| 2 | PortfolioRegistry chọn card grid hay table? | Card grid ở `index`, table ở `/projects/` | Duplicate logic nếu giữ cả 2 inline |
 | 3 | FrameworksHub xóa hay re-enable? | Xóa comment, giữ file nhưng không render đến khi có spec | Dead code trong `index.astro:120` |
 | 4 | Mobile hamburger có cần? | Giữ `hidden md:flex` hiện tại, chưa cần island | Thêm scope nếu làm hamburger |
 

@@ -61,7 +61,7 @@
 │   ├── pages/
 │   │   ├── index.astro           # chỉ compose sections
 │   │   ├── projects/[slug].astro # dùng ProjectLayout
-│   │   └── cluster/index.astro
+│   │   └── projects/index.astro      # full portfolio registry
 │   └── styles/
 │       └── global.css            # token + utilities
 ├── public/
@@ -126,7 +126,7 @@ flowchart TB
   subgraph Pages[Page Layer]
     IDX[index.astro\ncompose sections]
     SLUG[projects/[slug].astro]
-    CLUSTER[cluster/index.astro]
+    REG[projects/index.astro]
   end
 
   subgraph Deploy[Deploy]
