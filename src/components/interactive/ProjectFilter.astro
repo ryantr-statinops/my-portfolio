@@ -53,12 +53,29 @@ const categories = Object.entries(CATEGORY_MAP);
 
     const dispatchFilter = () => {
       syncButtons();
+      applyGenericFilter([...selected]);
       document.dispatchEvent(
         new CustomEvent("portfolio:filter", {
           detail: { categories: [...selected] },
         }),
       );
     };
+
+    function applyGenericFilter(categories: string[]) {
+      const selectedCategories = new Set(categories);
+      document.querySelectorAll<HTMLElement>("[data-portfolio-project]").forEach((item) => {
+        item.hidden = selectedCategories.size > 0 && !selectedCategories.has(item.dataset.category ?? "");
+      });
+      document.querySelectorAll<HTMLElement>("[data-filter-group]").forEach((group) => {
+        const items = group.querySelectorAll<HTMLElement>("[data-portfolio-project]");
+        group.hidden = items.length > 0 && [...items].every((item) => item.hidden);
+      });
+      document.querySelectorAll<HTMLElement>("[data-filter-empty]").forEach((empty) => {
+        const surface = empty.parentElement;
+        const items = surface?.querySelectorAll<HTMLElement>("[data-portfolio-project]") ?? [];
+        empty.hidden = items.length === 0 || [...items].some((item) => !item.hidden);
+      });
+    }
 
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
