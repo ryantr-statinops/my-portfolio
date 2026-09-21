@@ -1,0 +1,26 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import PortfolioRegistry from "../../components/sections/PortfolioRegistry.astro";
+import { getSortedProjects } from "../../lib/content";
+
+const projects = await getSortedProjects();
+---
+
+<MainLayout
+  title="Project Registry | Ryan Tran"
+  description="A structured registry of Ryan Tran's documented systems, quantitative work and infrastructure projects."
+>
+  <main class="pt-24 min-h-screen bg-background">
+    <header class="max-w-[1600px] mx-auto px-6 md:px-10 mb-8">
+      <div class="border-b border-primary/20 pb-4">
+        <p class="text-[10px] font-mono text-muted uppercase tracking-[0.3em]">Portfolio_Inventory</p>
+        <h1 class="text-3xl md:text-5xl font-bold tracking-tighter uppercase">Project Registry</h1>
+        <p class="mt-3 max-w-2xl text-sm text-muted leading-relaxed">
+          Browse the documented systems by domain, stack and operational impact.
+        </p>
+      </div>
+    </header>
+
+    <PortfolioRegistry projects={projects} />
+  </main>
+</MainLayout>
