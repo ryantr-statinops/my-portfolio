@@ -2,9 +2,20 @@
 import MainLayout from "../../layouts/MainLayout.astro";
 import PortfolioRegistry from "../../components/sections/PortfolioRegistry.astro";
 import ProjectFilter from "../../components/interactive/ProjectFilter.astro";
+import SystemTerminal from "../../components/interactive/SystemTerminal.astro";
 import { getSortedProjects } from "../../lib/content";
 
 const projects = await getSortedProjects();
+const terminalCommands = [
+  {
+    input: "neofetch",
+    output: "Runtime: Static Portfolio\nHost: GitHub Pages\nBuild: Astro 6.4.8\nContent: MDX + Zod\nStyle: Tailwind CSS 4\nMode: Static Generation",
+  },
+  {
+    input: "ls /projects",
+    output: projects.map((project) => `${project.data.category.padEnd(22, " ")} ${project.id}`).join("\n"),
+  },
+];
 ---
 
 <MainLayout
@@ -24,6 +35,14 @@ const projects = await getSortedProjects();
         </div>
       </div>
     </header>
+
+    <section class="max-w-[1600px] mx-auto px-6 md:px-10 mb-8" aria-labelledby="runtime-terminal-title">
+      <div class="mb-3 flex items-center gap-2">
+        <span class="w-6 h-px bg-primary"></span>
+        <h2 id="runtime-terminal-title" class="text-[10px] font-mono font-bold uppercase tracking-[0.35em] text-primary">Portfolio_Runtime_Terminal</h2>
+      </div>
+      <SystemTerminal commands={terminalCommands} />
+    </section>
 
     <PortfolioRegistry projects={projects} />
   </main>
