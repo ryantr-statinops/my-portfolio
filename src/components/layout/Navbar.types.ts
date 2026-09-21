@@ -5,8 +5,8 @@ export type NavItem = {
 };
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: "ABOUT ME",  href: "/my-portfolio/#about-me",         sectionId: "about-me" },
-  { label: "STRATEGY",  href: "/my-portfolio/#intelligence-hub", sectionId: "intelligence-hub" },
-  { label: "PROJECTS",  href: "/my-portfolio/#projects",         sectionId: "projects" },
-  { label: "CONNECT",   href: "/my-portfolio/#connect",          sectionId: "connect" },
+  { label: "ABOUT ME",  href: "/#about-me",         sectionId: "about-me" },
+  { label: "STRATEGY",  href: "/#intelligence-hub", sectionId: "intelligence-hub" },
+  { label: "PROJECTS",  href: "/#projects",         sectionId: "projects" },
+  { label: "CONNECT",   href: "/#connect",          sectionId: "connect" },
 ];
