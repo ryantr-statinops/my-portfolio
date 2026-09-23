@@ -162,3 +162,46 @@ test("mobile menu keeps background scrolling available", async ({ page }) => {
   await page.mouse.wheel(0, 300);
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(200);
 });
+
+test("homepage keeps one fixed video behind every section", async ({ page }) => {
+  await page.goto("./");
+  const background = page.locator("[data-video-background]");
+  const video = page.locator("[data-background-video]");
+  await expect(background).toHaveCount(1);
+  await expect(video).toHaveCount(1);
+  await expect(video.locator("source")).toHaveAttribute("src", `${basePath}videos/dark-wave.webm`);
+  const firstVideo = await video.elementHandle();
+
+  for (const section of ["#main", "#about-me", "#intelligence-hub", "#projects", "#connect"]) {
+    await page.locator(section).scrollIntoViewIfNeeded();
+    const geometry = await background.evaluate((element) => ({
+      position: getComputedStyle(element).position,
+      top: Math.round(element.getBoundingClientRect().top),
+      height: Math.round(element.getBoundingClientRect().height),
+    }));
+    expect(geometry).toEqual({ position: "fixed", top: 0, height: page.viewportSize()?.height });
+    expect(await page.evaluate((element) => document.querySelector("[data-background-video]") === element, firstVideo)).toBe(true);
+  }
+
+  await page.goto("./projects/");
+  await expect(page.locator("[data-video-background]")).toHaveCount(0);
+  await page.goto(projectRoutes[0]);
+  await expect(page.locator("[data-video-background]")).toHaveCount(0);
+});
+
+test("homepage shows a static poster with reduced motion or unavailable video", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("./");
+  const video = page.locator("[data-background-video]");
+  const poster = page.locator("[data-video-poster]");
+  await expect(video).toBeHidden();
+  await expect(video).toHaveJSProperty("paused", true);
+  await expect(poster).toBeVisible();
+  await expect(poster).toHaveAttribute("src", `${basePath}images/dark-wave-poster.jpg`);
+
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.route("**/videos/dark-wave.webm", (route) => route.abort());
+  await page.reload();
+  await expect(poster).toBeVisible();
+  await expect.poll(() => poster.evaluate((element) => (element as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+});

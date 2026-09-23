@@ -9,6 +9,7 @@ Professional & Minimalist (Bloomberg/High-end Fintech style). The portfolio func
 ## 1. Layout Structure
 
 - **Scroll**: Native page scrolling and immediate anchor navigation; sections do not snap and the mobile menu does not lock background scrolling
+- **Homepage background**: One fixed WebM video and poster sit behind Hero, About Me, Intelligence Hub, Projects and Footer; project pages keep their own background
 - **Grid**: 12-column responsive grid system via Tailwind CSS
 - **Breakpoints**: Mobile-first (1 column) → `md:` (2 columns) → `lg:` (3 columns)
 
@@ -76,7 +77,7 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 ```
 
 - **Full-screen** (`min-h-screen`)
-- **Background**: Interactive heatmap canvas (grid cells glow + follow cursor)
+- **Background**: The shared fixed `dark-wave.webm` video with a light/dark gradient overlay and a static poster fallback
 - **Animated pulse dot** with shadow glow
 - **Heading gradient**: linear-gradient `#00f2ff → #0ea5e9 → #93f8d8`
 - **3 stat cards**: Glassmorphism, border, flex row layout
@@ -224,7 +225,7 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 
 | Element | Technology | Behavior |
 |---|---|---|
-| **Heatmap Background** | Canvas 2D API | Grid diffusion simulation, cursor-reactive with velocity |
+| **Homepage Video Background** | WebM video + poster | One fixed video behind every homepage section; static poster with reduced motion or unavailable video |
 | **3D Graph** | Canvas 2D (simulated 3D) | Force-directed layout, auto-rotate, drag to rotate, hover tooltips |
 | **Scroll Reveal** | IntersectionObserver | Elements fade + translate up on scroll into view |
 | **Theme Toggle** | Vanilla JS + localStorage | Toggles `dark` class on `<html>`, stores preference |
