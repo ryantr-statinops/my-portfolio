@@ -128,3 +128,37 @@ test("theme, skip link, anchor navigation and mobile menu work", async ({ page }
   await page.locator("[data-mobile-close]").click();
   await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "false");
 });
+
+test("homepage scrolls freely and anchors jump without snap", async ({ page }) => {
+  await page.goto("./");
+  const scrollStyle = await page.locator("html").evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { behavior: style.scrollBehavior, snap: style.scrollSnapType };
+  });
+  expect(scrollStyle).toEqual({ behavior: "auto", snap: "none" });
+
+  await page.evaluate(() => window.scrollTo(0, 350));
+  await page.waitForTimeout(450);
+  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(300);
+  expect(await page.evaluate(() => window.scrollY)).toBeLessThan(400);
+
+  await page.locator('a[href="#about-me"]').click();
+  await expect(page).toHaveURL(/#about-me$/);
+  expect(await page.locator("#about-me").evaluate((element) => Math.round(element.getBoundingClientRect().top))).toBe(0);
+
+  await page.locator("#scroll-to-top").click();
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+});
+
+test("mobile menu keeps background scrolling available", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto("./");
+  await page.evaluate(() => window.scrollTo(0, 200));
+  await page.locator("[data-mobile-open]").click();
+  await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "true");
+  expect(await page.locator("html").evaluate((element) => getComputedStyle(element).overflowY)).not.toBe("hidden");
+
+  await page.mouse.move(200, 300);
+  await page.mouse.wheel(0, 300);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(200);
+});

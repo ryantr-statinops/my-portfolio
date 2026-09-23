@@ -8,7 +8,7 @@ Professional & Minimalist (Bloomberg/High-end Fintech style). The portfolio func
 
 ## 1. Layout Structure
 
-- **Scroll**: Smooth anchor navigation (`scroll-smooth` on `html`, see `MainLayout.astro`) — `snap-mandatory` removed per `ARCHITECTURE_V2` (caused scroll trapping)
+- **Scroll**: Native page scrolling and immediate anchor navigation; sections do not snap and the mobile menu does not lock background scrolling
 - **Grid**: 12-column responsive grid system via Tailwind CSS
 - **Breakpoints**: Mobile-first (1 column) → `md:` (2 columns) → `lg:` (3 columns)
 
@@ -230,7 +230,7 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 | **Theme Toggle** | Vanilla JS + localStorage | Toggles `dark` class on `<html>`, stores preference |
 | **UTC Clock** | setInterval | Real-time clock in Intelligence Hub header |
 | **Project Card Hover** | CSS transitions | Grayscale→color, scale, translate, border effects |
-| **Scroll-to-top** | Vanilla JS | Smooth scroll to `window.scrollTo({ top: 0 })` |
+| **Scroll-to-top** | Vanilla JS | Immediate scroll to the top with `window.scrollTo(0, 0)` |
 
 ---
 
