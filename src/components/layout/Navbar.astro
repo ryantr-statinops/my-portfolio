@@ -62,3 +62,14 @@ import { getBaseUrl } from "../../lib/utils";
     </button>
   </nav>
 </div>
+
+<script>
+  import { navigateToSection } from "../../lib/sectionNavigation";
+
+  document.querySelectorAll<HTMLAnchorElement>("[data-nav-section]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const sectionId = link.dataset.navSection;
+      if (sectionId) navigateToSection(event, link, sectionId);
+    });
+  });
+</script>

@@ -150,6 +150,33 @@ test("homepage scrolls freely and anchors jump without snap", async ({ page }) =
   expect(await page.evaluate(() => window.scrollY)).toBe(0);
 });
 
+test("desktop navbar smoothly scrolls between sections and respects reduced motion", async ({ page }) => {
+  await page.goto("./");
+  await page.evaluate(() => {
+    const original = Element.prototype.scrollIntoView;
+    Element.prototype.scrollIntoView = function (options) {
+      document.documentElement.dataset.navScrollBehavior =
+        typeof options === "object" ? options.behavior : "";
+      original.call(this, options);
+    };
+  });
+
+  await page.locator('[data-nav-section="projects"]').click();
+  await expect(page).toHaveURL(/#projects$/);
+  await expect(page.locator("html")).toHaveAttribute("data-nav-scroll-behavior", "smooth");
+  await expect.poll(() => page.locator("#projects").evaluate((el) => Math.abs(Math.round(el.getBoundingClientRect().top)))).toBeLessThanOrEqual(20);
+
+  await page.locator('[data-nav-section="about-me"]').click();
+  await expect(page).toHaveURL(/#about-me$/);
+  await expect.poll(() => page.locator("#about-me").evaluate((el) => Math.abs(Math.round(el.getBoundingClientRect().top)))).toBeLessThanOrEqual(20);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.locator('[data-nav-section="connect"]').click();
+  await expect(page).toHaveURL(/#connect$/);
+  await expect(page.locator("html")).toHaveAttribute("data-nav-scroll-behavior", "instant");
+  await expect.poll(() => page.locator("#connect").evaluate((el) => Math.abs(Math.round(el.getBoundingClientRect().top)))).toBeLessThanOrEqual(20);
+});
+
 test("mobile menu keeps background scrolling available", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 667 });
   await page.goto("./");
