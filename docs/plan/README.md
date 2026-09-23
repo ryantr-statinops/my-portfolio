@@ -1,6 +1,6 @@
 # QA Plan — Current Status
 
-Project: Ryan Tran portfolio · Production: GitHub Pages · Stack: Astro 6.4.8, Tailwind 4.3, MDX.
+Project: Ryan Tran portfolio · Production: GitHub Pages · Stack: Astro 7.3.4, Tailwind 4.3, MDX.
 
 ## Source of truth
 

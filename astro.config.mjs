@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
+import { unified } from '@astrojs/markdown-remark';
 import sitemap from '@astrojs/sitemap';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -15,8 +16,12 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [mdx({
-    remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex],
-  }), sitemap()]
+  markdown: {
+    processor: unified({
+      remarkPlugins: [remarkMath],
+      rehypePlugins: [rehypeKatex],
+    }),
+  },
+
+  integrations: [mdx(), sitemap()]
 });

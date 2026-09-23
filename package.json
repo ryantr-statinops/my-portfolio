@@ -5,7 +5,7 @@
   "description": "Ryan Tran — Command Center Portfolio (Astro + Tailwind + MDX)",
   "private": true,
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22.12.0"
   },
   "scripts": {
     "dev": "astro dev",
@@ -20,10 +20,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "5.0.6",
+    "@astrojs/markdown-remark": "^7.3.1",
+    "@astrojs/mdx": "^8.0.2",
     "@astrojs/sitemap": "3.7.4",
     "@tailwindcss/vite": "^4.3.0",
-    "astro": "^6.4.8",
+    "astro": "^7.3.4",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
     "tailwindcss": "^4.3.0"

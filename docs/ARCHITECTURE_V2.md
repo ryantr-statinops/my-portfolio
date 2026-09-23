@@ -1,6 +1,6 @@
 # Architecture — Portfolio Runtime
 
-> Current architecture and migration status. Verified 2026-09-21.
+> Current architecture and migration status. Verified 2026-09-23.
 
 ## Source of truth
 
@@ -10,8 +10,8 @@ The runtime is a static Astro portfolio. MDX content is validated by Zod, render
 
 | Layer | Current implementation |
 |---|---|
-| Framework | Astro 6.4.8, static output |
-| Content | `@astrojs/mdx` 5.0.4, glob collection, Zod schema |
+| Framework | Astro 7.3.4, static output |
+| Content | `@astrojs/mdx` 8.0.2, glob collection, Zod schema |
 | Styling | Tailwind CSS 4.3 with `@tailwindcss/vite` |
 | Math | `remark-math`, `rehype-katex`, KaTeX 0.16.11 |
 | Tests | Vitest 5.0.0 and Playwright 1.63.0/Chromium |
@@ -65,4 +65,4 @@ The filter uses `{ categories: string[] }`; an empty array means `All`. The term
 
 ## Future work
 
-Astro major upgrade evaluation is a separate post-release branch. It must run the full unit, smoke, visual, check and build suite before merge.
+Astro 7 was migrated on `dev` and must pass the full unit, smoke, visual, check and build suite before promotion to `main`.

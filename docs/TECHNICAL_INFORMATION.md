@@ -1,15 +1,15 @@
 # Technical Information
 
-> Current implementation reference for the static portfolio. Last updated 2026-09-21.
+> Current implementation reference for the static portfolio. Last updated 2026-09-23.
 
 ## Runtime
 
 | Component | Version/configuration |
 |---|---|
-| Node | `>=22.0.0` |
-| Astro | `6.4.8` static output |
+| Node | `>=22.12.0` |
+| Astro | `7.3.4` static output |
 | Tailwind | `4.3.0` via `@tailwindcss/vite` |
-| MDX | `@astrojs/mdx` `5.0.4` |
+| MDX | `@astrojs/mdx` `8.0.2`; unified processor for remark/rehype plugins |
 | Validation | Astro Content Layer + Zod + Vitest |
 | Browser QA | Playwright `1.63.0`, Chromium |
 | Production | GitHub Pages, base `/my-portfolio` |
@@ -43,9 +43,9 @@ Playwright uses the GitHub Pages base path during local preview. Visual tests co
 
 ## Security and dependency policy
 
-Do not run `npm audit fix --force` on the release branch. If an audit issue requires an Astro major upgrade, keep the audit step report-only and document the remaining issue. Astro major migration is a separate branch and must pass the complete QA suite before merge.
+Apply dependency remediation on `dev`; never run `npm audit fix --force`. Changes requiring an architectural decision belong on `refactor`, then return to `dev` and pass the complete QA suite before promotion to `main`.
 
-The 2026-09-21 audit report contains 5 findings: 1 low, 1 moderate, 2 high and 1 critical. The remaining Astro, esbuild and sharp findings require the Astro 7 upgrade path; `smol-toml` is reported transitively. Safe compatible patches applied in this release are `@astrojs/mdx` 5.0.6 and `@astrojs/sitemap` 3.7.4. Tailwind/Vite patch candidates were not applied because they resolve Vite 8 and are incompatible with the Astro 6.4.8 check toolchain.
+The 2026-09-23 Astro 7 migration upgraded Astro to 7.3.4, `@astrojs/mdx` to 8.0.2 and the Node floor to 22.12.0. The math pipeline now uses `@astrojs/markdown-remark` explicitly because Astro 7's default Sätteri processor does not run remark/rehype plugins. `npm audit` reports zero vulnerabilities after the migration.
 
 ## Analytics status
 
