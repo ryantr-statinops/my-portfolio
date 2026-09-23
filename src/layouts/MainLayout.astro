@@ -4,15 +4,17 @@ import Footer from "../components/layout/Footer.astro";
 import Navbar from "../components/layout/Navbar.astro";
 import MobileOverlay from "../components/layout/MobileOverlay.astro";
 import ScrollSpy from "../components/layout/ScrollSpy.astro";
+import VideoBackground from "../components/interactive/VideoBackground.astro";
 
 interface Props {
   title: string;
   description?: string;
   canonical?: string;
   ogImage?: string;
+  backgroundVideo?: boolean;
 }
 
-const { title, description = "Ryan Tran - Statistic in Operation Portfolio", canonical, ogImage } = Astro.props;
+const { title, description = "Ryan Tran - Statistic in Operation Portfolio", canonical, ogImage, backgroundVideo = false } = Astro.props;
 const canonicalURL = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
 const ogImageURL = ogImage
   ? new URL(`${import.meta.env.BASE_URL}${ogImage}`, Astro.site).toString()
@@ -60,14 +62,17 @@ const ogImageURL = ogImage
     </script>
   </head>
   <body class="bg-background text-foreground selection:bg-primary/30 transition-colors duration-300 leading-relaxed antialiased">
+    {backgroundVideo && <VideoBackground />}
     <Navbar />
     <MobileOverlay />
 
-    <main id="main-content" tabindex="-1">
-      <slot />
-    </main>
+    <div class:list={backgroundVideo && "relative z-10"}>
+      <main id="main-content" tabindex="-1">
+        <slot />
+      </main>
 
-    <Footer />
+      <Footer />
+    </div>
     <ScrollSpy />
 
     <script>
