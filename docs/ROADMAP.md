@@ -1,7 +1,7 @@
 # Release Roadmap — Portfolio Hardening
 
 > Source of truth for the current portfolio release. Production target: GitHub Pages.
-> Last verified: 2026-09-21.
+> Last verified: 2026-09-23.
 
 ## Current release model
 
@@ -11,6 +11,8 @@
 - `/cluster/` was removed. A future Cluster startup project will be added as its own MDX entry and route under `/projects/`; no `cluster.mdx` is part of this release.
 - The static build must generate exactly seven pages.
 - Existing project IDs, slugs and public URLs remain unchanged.
+- `dev` is the integration branch for project work; completed changes reach `main` through pull requests.
+- `refactor` remains reserved for major architectural decisions.
 
 ## Completed release work
 
@@ -27,12 +29,12 @@
 
 ## Remaining release work
 
-### Phase 1 — Dependency and security maintenance
+### Phase 1 — Dependency and security maintenance (completed 2026-09-23)
 
-- Apply only safe dependency patch updates.
-- Keep `npm audit` report-only when remediation requires an Astro major upgrade.
-- Record remaining vulnerabilities in technical documentation.
-- Evaluate Astro 7 later on a separate branch with the complete test suite.
+- Upgraded Astro to 7.3.4 and `@astrojs/mdx` to 8.0.2.
+- Migrated the math pipeline to the explicit unified Markdown processor.
+- Raised the supported Node floor to 22.12.0.
+- Confirmed `npm audit` reports zero vulnerabilities.
 
 ### Phase 2 — Optional analytics
 

@@ -16,9 +16,9 @@ Status: implemented in `.github/workflows/deploy.yml`.
 10. `npm run test:visual`
 11. Verify sitemap and robots
 12. Upload Playwright artifacts on failure
-13. Upload Pages artifact and deploy
+13. Upload the Pages artifact and deploy only from `main`
 
-Deploy is blocked by schema/unit, type, build, route/metadata/link smoke or visual failure. The workflow runs on pushes to `main` and manual dispatches. Node 22 is the supported CI runtime.
+Schema/unit, type, build, route/metadata/link smoke and visual checks run for pull requests into `main`, pushes to `main` and manual dispatches. Only `main` can upload and deploy the Pages artifact. Node 22 is the supported CI runtime.
 
 ## Scripts
 
