@@ -45,13 +45,11 @@ import { getBaseUrl } from "../../lib/utils";
     if (open) {
       overlay.classList.remove("hidden");
       overlay.classList.add("flex");
-      document.documentElement.classList.add("overflow-hidden");
       const firstLink = overlay.querySelector<HTMLElement>("a");
       firstLink?.focus();
     } else {
       overlay.classList.add("hidden");
       overlay.classList.remove("flex");
-      document.documentElement.classList.remove("overflow-hidden");
     }
   }
 
