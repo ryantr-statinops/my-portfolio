@@ -190,6 +190,39 @@ test("mobile menu keeps background scrolling available", async ({ page }) => {
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(200);
 });
 
+test("mobile menu smoothly navigates home sections and keeps cross-page links", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto("./");
+  await page.evaluate(() => {
+    const original = Element.prototype.scrollIntoView;
+    Element.prototype.scrollIntoView = function (options) {
+      document.documentElement.dataset.navScrollBehavior =
+        typeof options === "object" ? options.behavior : "";
+      original.call(this, options);
+    };
+  });
+
+  await page.locator("[data-mobile-open]").click();
+  await page.locator('[data-mobile-link="projects"]').click();
+  await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "false");
+  await expect(page.locator("html")).toHaveAttribute("data-nav-scroll-behavior", "smooth");
+  await expect(page).toHaveURL(/#projects$/);
+  await expect.poll(() => page.locator("#projects").evaluate((el) => Math.abs(Math.round(el.getBoundingClientRect().top)))).toBeLessThanOrEqual(20);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.locator("[data-mobile-open]").click();
+  await page.locator('[data-mobile-link="about-me"]').click();
+  await expect(page.locator("html")).toHaveAttribute("data-nav-scroll-behavior", "instant");
+  await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "false");
+  await expect(page).toHaveURL(/#about-me$/);
+
+  await page.goto(projectRoutes[0]);
+  await page.locator("[data-mobile-open]").click();
+  await page.locator('[data-mobile-link="about-me"]').click();
+  await expect(page).toHaveURL(/\/my-portfolio\/#about-me$/);
+  await expect(page.locator("[data-video-background]")).toHaveCount(1);
+});
+
 test("homepage keeps one fixed video behind every section", async ({ page }) => {
   await page.goto("./");
   const background = page.locator("[data-video-background]");

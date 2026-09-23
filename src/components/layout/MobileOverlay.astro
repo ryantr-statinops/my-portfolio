@@ -34,6 +34,8 @@ import { getBaseUrl } from "../../lib/utils";
 </div>
 
 <script>
+  import { navigateToSection } from "../../lib/sectionNavigation";
+
   const overlay = document.getElementById("mobile-nav-overlay");
   const openers = document.querySelectorAll<HTMLElement>("[data-mobile-open]");
   const closers = document.querySelectorAll<HTMLElement>("[data-mobile-close]");
@@ -63,6 +65,10 @@ import { getBaseUrl } from "../../lib/utils";
   });
 
   document.querySelectorAll<HTMLAnchorElement>("[data-mobile-link]").forEach((a) => {
-    a.addEventListener("click", () => setOpen(false));
+    a.addEventListener("click", (event) => {
+      setOpen(false);
+      const sectionId = a.dataset.mobileLink;
+      if (sectionId) navigateToSection(event, a, sectionId);
+    });
   });
 </script>
