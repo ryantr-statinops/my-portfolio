@@ -28,6 +28,26 @@ async function stabilize(page: Page) {
   });
 }
 
+async function screenshotSectionViewport(
+  page: Page,
+  selector: string,
+  name: string,
+  options: {
+    animations: "disabled";
+    caret: "hide";
+    maxDiffPixelRatio: number;
+    timeout: number;
+    mask: ReturnType<typeof maskDynamic>;
+    maskColor: string;
+  },
+) {
+  await page.evaluate((sectionSelector) => {
+    const section = document.querySelector(sectionSelector);
+    if (section) window.scrollTo(0, section.getBoundingClientRect().top + window.scrollY);
+  }, selector);
+  await expect(page).toHaveScreenshot(name, options);
+}
+
 for (const theme of ["dark", "light"] as const) {
   for (const viewport of viewports) {
     test.describe(`${theme} ${viewport.name}`, () => {
@@ -50,10 +70,14 @@ for (const theme of ["dark", "light"] as const) {
           maxDiffPixelRatio: viewport.name === "mobile" ? 0.08 : 0.05,
           timeout: 15_000,
           mask: maskDynamic(page),
+          maskColor: theme === "dark" ? "#111111" : "#e5e5e5",
         };
 
-        await expect(page.locator("section#main")).toHaveScreenshot(`${theme}-${viewport.name}-home-hero.png`, screenshotOptions);
-        await expect(page.locator("section#projects")).toHaveScreenshot(`${theme}-${viewport.name}-home-project-showcase.png`, screenshotOptions);
+        await screenshotSectionViewport(page, "section#main", `${theme}-${viewport.name}-home-hero.png`, screenshotOptions);
+        await screenshotSectionViewport(page, "section#about-me", `${theme}-${viewport.name}-home-about.png`, screenshotOptions);
+        await screenshotSectionViewport(page, "section#intelligence-hub", `${theme}-${viewport.name}-home-intelligence-hub.png`, screenshotOptions);
+        await screenshotSectionViewport(page, "section#projects", `${theme}-${viewport.name}-home-project-showcase.png`, screenshotOptions);
+        await screenshotSectionViewport(page, "footer#connect", `${theme}-${viewport.name}-home-footer.png`, screenshotOptions);
 
         await page.goto("./projects/");
         await stabilize(page);

@@ -44,6 +44,10 @@
   --muted: #a3a3a3;
 }
 
+:root.homepage-video:not(.dark) {
+  --muted: #4a4a4a;
+}
+
 @layer base {
   body {
     @apply bg-background text-foreground font-mono antialiased selection:bg-accent/30;
