@@ -1,0 +1,53 @@
+---
+const videoSrc = `${import.meta.env.BASE_URL}/videos/dark-wave.webm`;
+const posterSrc = `${import.meta.env.BASE_URL}/images/dark-wave-poster.jpg`;
+---
+
+<div class="video-background absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+  <video
+    class="background-video absolute inset-0 h-full w-full object-cover"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="none"
+    poster={posterSrc}
+    tabindex="-1"
+  >
+    <source src={videoSrc} type="video/webm" />
+  </video>
+  <div class="video-overlay absolute inset-0"></div>
+</div>
+
+<script>
+  const video = document.querySelector<HTMLVideoElement>(".background-video");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function syncVideoMotionPreference() {
+    if (!video) return;
+    if (reducedMotion.matches) {
+      video.pause();
+    } else {
+      void video.play().catch(() => {
+        // Keep the poster visible when autoplay is unavailable.
+      });
+    }
+  }
+
+  syncVideoMotionPreference();
+  reducedMotion.addEventListener("change", syncVideoMotionPreference);
+</script>
+
+<style>
+  .background-video {
+    filter: saturate(0.8);
+  }
+
+  .video-overlay {
+    background: linear-gradient(90deg, rgb(255 255 255 / 88%), rgb(255 255 255 / 55%));
+  }
+
+  :global(.dark) .video-overlay {
+    background: linear-gradient(90deg, rgb(10 10 10 / 78%), rgb(10 10 10 / 38%));
+  }
+</style>
