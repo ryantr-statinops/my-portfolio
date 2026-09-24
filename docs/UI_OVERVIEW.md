@@ -77,7 +77,7 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 ```
 
 - **Full-screen** (`min-h-screen`)
-- **Background**: The shared fixed `dark-wave.webm` video with a light/dark gradient overlay and a static poster fallback; light mode uses a stronger overlay and darker muted text for readability
+- **Background**: The shared fixed `black-hole.webm` video with a light/dark gradient overlay and a static poster fallback; light mode uses a stronger overlay and darker muted text for readability
 - **Animated pulse dot** with shadow glow
 - **Heading gradient**: linear-gradient `#00f2ff → #0ea5e9 → #93f8d8`
 - **3 stat cards**: Glassmorphism, border, flex row layout
