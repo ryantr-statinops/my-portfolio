@@ -20,7 +20,7 @@
     "astro": "astro",
     "dev:react": "react-router dev",
     "build:react": "react-router build",
-    "preview:react": "vite preview --host 127.0.0.1",
+    "preview:react": "node scripts/static-preview.mjs",
     "check:react": "react-router typegen && tsc --noEmit"
   },
   "dependencies": {

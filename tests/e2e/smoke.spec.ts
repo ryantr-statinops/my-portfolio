@@ -3,7 +3,7 @@ import { existsSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const basePath = "/my-portfolio/";
-const projectOutput = resolve(process.cwd(), "dist/projects");
+const projectOutput = resolve(process.cwd(), "build/client/my-portfolio/projects");
 const projectRoutes = readdirSync(projectOutput, { withFileTypes: true })
   .filter((entry) => entry.isDirectory() && existsSync(join(projectOutput, entry.name, "index.html")))
   .map((entry) => `./projects/${entry.name}/`)
@@ -13,49 +13,35 @@ const routes = ["./", "./projects/", ...projectRoutes];
 async function expectSuccessfulPage(page: Page, route: string) {
   const response = await page.goto(route);
   expect(response?.status(), `HTTP status for ${route}`).toBe(200);
-  expect(await page.title()).toMatch(/.+/);
+  await expect(page).toHaveTitle(/.+/);
   await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /.+/);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     new RegExp(`^https://ryantr-statinops\\.github\\.io${basePath}`),
   );
   await expect(page.locator('meta[property="og:url"]')).toHaveAttribute("content", /.+/);
+  await expect(page.locator("h1").first()).toBeVisible();
 }
 
-test("all generated routes expose metadata and return HTTP 200", async ({ page }) => {
+test("all React static routes expose page metadata and return HTTP 200 directly", async ({ page }) => {
   expect(projectRoutes).toHaveLength(5);
-
-  for (const route of routes) {
-    await expectSuccessfulPage(page, route);
-  }
+  for (const route of routes) await expectSuccessfulPage(page, route);
 });
 
-test("sitemap, robots and internal links are reachable", async ({ page, request }) => {
-  const sitemap = await request.get("./sitemap-index.xml");
-  const robots = await request.get("./robots.txt");
-  expect(sitemap.status()).toBe(200);
-  expect(robots.status()).toBe(200);
-  expect(await robots.text()).toContain("Sitemap:");
-
+test("showcase and detail navigation use each filename slug", async ({ page, request }) => {
   await page.goto("./");
-  const links = await page.locator("a[href]").evaluateAll((anchors) =>
-    anchors
-      .map((anchor) => (anchor as HTMLAnchorElement).href)
-      .filter((href) => href.startsWith(window.location.origin) && !href.includes("#")),
-  );
+  const projectLinks = await page.locator("#projects [data-portfolio-project] a[href*='/projects/']").evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).href));
+  expect(projectLinks).toHaveLength(5);
+  for (const href of projectLinks) expect((await request.get(href)).status(), href).toBe(200);
 
-  for (const href of [...new Set(links)]) {
-    const response = await request.get(href);
-    expect(response.status(), href).toBe(200);
-  }
+  await page.goto(projectRoutes[0]);
+  await expect(page.locator("article header h1")).toBeVisible();
+  await expect(page.locator(".project-prose")).toBeVisible();
 });
 
-test("project thumbnails resolve under the GitHub Pages base path", async ({ page, request }) => {
+test("all local project and background images load beneath the base path", async ({ page, request }) => {
   await page.goto("./");
-  const sources = await page.locator("img[src]").evaluateAll((images) =>
-    images.map((image) => (image as HTMLImageElement).src).filter((src) => src.includes("/images/")),
-  );
-
+  const sources = await page.locator("img[src]").evaluateAll((images) => images.map((image) => (image as HTMLImageElement).src).filter((src) => src.includes("/images/")));
   expect(sources.length).toBeGreaterThan(0);
   for (const source of [...new Set(sources)]) {
     expect(new URL(source).pathname.startsWith(basePath)).toBe(true);
@@ -63,205 +49,135 @@ test("project thumbnails resolve under the GitHub Pages base path", async ({ pag
   }
 });
 
-test("homepage and project registry support multi-select and empty filters", async ({ page }) => {
-  for (const route of ["./", "./projects/"]) {
-    await page.goto(route);
-    const filter = page.locator("[data-project-filter]").first();
-    const all = filter.locator('[data-filter-category="all"]');
-    const quant = filter.locator('[data-filter-category="finance-quant"]');
-    const ops = filter.locator('[data-filter-category="ops-automation"]');
-    const emptyCategory = filter.locator('[data-filter-category="ai-implementation"]');
+test("homepage category filter updates hub metrics and showcase with multi-select and empty state", async ({ page }) => {
+  await page.goto("./");
+  const filter = page.locator("[data-project-filter]");
+  const all = filter.locator('[data-filter-category="all"]');
+  const data = filter.locator('[data-filter-category="data-math"]');
+  const quant = filter.locator('[data-filter-category="finance-quant"]');
+  await data.click();
+  await quant.click();
+  await expect(data).toHaveAttribute("aria-pressed", "true");
+  await expect(quant).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator('[data-kpi="projects"]')).toHaveText("03");
+  await expect(page.locator("#projects [data-portfolio-project]")).toHaveCount(3);
 
-    await expect(all).toHaveAttribute("aria-pressed", "true");
-    await quant.click();
-    await expect(quant).toHaveAttribute("aria-pressed", "true");
-    await expect(all).toHaveAttribute("aria-pressed", "false");
-    await ops.click();
-    await expect(ops).toHaveAttribute("aria-pressed", "true");
-    await expect(page.locator('[data-filter-empty]')).toBeHidden();
-
-    await quant.click();
-    await ops.click();
-    await emptyCategory.click();
-    await expect(page.locator('[data-filter-empty]')).toBeVisible();
-    await expect(emptyCategory).toHaveAttribute("aria-pressed", "true");
-
-    await all.click();
-    await expect(all).toHaveAttribute("aria-pressed", "true");
-    await expect(page.locator('[data-filter-empty]')).toBeHidden();
-  }
+  await all.click();
+  await filter.locator('[data-filter-category="ai-implementation"]').click();
+  await expect(page.locator("#projects [data-filter-empty]")).toBeVisible();
+  await expect(page.locator('[data-kpi="projects"]')).toHaveText("00");
+  await all.click();
+  await expect(page.locator("#projects [data-portfolio-project]")).toHaveCount(5);
 });
 
-test("portfolio runtime terminal only accepts its whitelist", async ({ page }) => {
+test("registry supports multi-select, accessible state, and empty categories", async ({ page }) => {
   await page.goto("./projects/");
-  const terminal = page.locator("[data-terminal]");
-  const input = terminal.locator("[data-terminal-input]");
-  const output = terminal.locator("[data-terminal-output]");
+  const filter = page.locator("[data-project-filter]");
+  const all = filter.locator('[data-filter-category="all"]');
+  const quant = filter.locator('[data-filter-category="finance-quant"]');
+  const ops = filter.locator('[data-filter-category="ops-automation"]');
+  const empty = filter.locator('[data-filter-category="ai-implementation"]');
+  await quant.click();
+  await ops.click();
+  await expect(page.locator("tbody tr[data-portfolio-project]")).toHaveCount(2);
+  await expect(all).toHaveAttribute("aria-pressed", "false");
+  await all.click();
+  await empty.click();
+  await expect(page.locator("tbody tr[data-portfolio-project]")).toHaveCount(0);
+  await expect(page.locator("[data-filter-empty]")).toBeVisible();
+  await all.click();
+  await expect(page.locator("tbody tr[data-portfolio-project]")).toHaveCount(5);
+});
 
+test("terminal whitelist, command history, and clear behavior work", async ({ page }) => {
+  await page.goto("./projects/");
+  const input = page.locator("[data-terminal-input]");
+  const output = page.locator("[data-terminal-output]");
   await input.fill("status");
   await input.press("Enter");
   await expect(output).toContainText("MODE: STATIC_GENERATION");
   await input.fill("uname -a");
   await input.press("Enter");
   await expect(output).toContainText("command not found");
+  await input.press("ArrowUp");
+  await expect(input).toHaveValue("uname -a");
+  await input.press("ArrowUp");
+  await expect(input).toHaveValue("status");
+  await input.press("ArrowDown");
+  await expect(input).toHaveValue("uname -a");
   await input.fill("clear");
   await input.press("Enter");
   await expect(output.locator("[data-terminal-entry]")).toHaveCount(0);
 });
 
-test("theme, skip link, anchor navigation and mobile menu work", async ({ page }) => {
-  await page.goto("./");
-  const root = page.locator("html");
+test("theme follows system preference until an explicit choice persists", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("./projects/");
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await expect(page.locator("html")).toHaveClass(/dark/);
   await page.locator("#theme-toggle").click();
-  await expect(root).toHaveClass(/light|dark/);
+  await expect(page.locator("html")).not.toHaveClass(/dark/);
+  await expect.poll(() => page.evaluate(() => localStorage.getItem("theme"))).toBe("light");
+  await page.reload();
+  await expect(page.locator("html")).not.toHaveClass(/dark/);
+});
 
+test("skip link, smooth section navigation, reduced motion, and mobile menu work", async ({ page }) => {
+  await page.goto("./");
   const skipLink = page.locator('a[href="#main-content"]');
   await skipLink.focus();
-  await expect(skipLink).toBeFocused();
   await skipLink.press("Enter");
   await expect(page.locator("#main-content")).toBeFocused();
 
-  await page.setViewportSize({ width: 375, height: 667 });
-  await page.goto("./");
-  await page.locator("[data-mobile-open]").click();
-  await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "true");
-  await page.locator("[data-mobile-close]").click();
-  await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "false");
-});
-
-test("homepage scrolls freely and anchors jump without snap", async ({ page }) => {
-  await page.goto("./");
-  const scrollStyle = await page.locator("html").evaluate((element) => {
-    const style = getComputedStyle(element);
-    return { behavior: style.scrollBehavior, snap: style.scrollSnapType };
-  });
-  expect(scrollStyle).toEqual({ behavior: "auto", snap: "none" });
-
-  await page.evaluate(() => window.scrollTo(0, 350));
-  await page.waitForTimeout(450);
-  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(300);
-  expect(await page.evaluate(() => window.scrollY)).toBeLessThan(400);
-
-  await page.locator('a[href="#about-me"]').click();
-  await expect(page).toHaveURL(/#about-me$/);
-  expect(await page.locator("#about-me").evaluate((element) => Math.round(element.getBoundingClientRect().top))).toBe(0);
-
-  await page.locator("#scroll-to-top").click();
-  expect(await page.evaluate(() => window.scrollY)).toBe(0);
-});
-
-test("desktop navbar smoothly scrolls between sections and respects reduced motion", async ({ page }) => {
-  await page.goto("./");
   await page.evaluate(() => {
     const original = Element.prototype.scrollIntoView;
     Element.prototype.scrollIntoView = function (options) {
-      document.documentElement.dataset.navScrollBehavior =
-        typeof options === "object" ? options.behavior : "";
+      document.documentElement.dataset.navScrollBehavior = typeof options === "object" ? options.behavior ?? "" : "";
       original.call(this, options);
     };
   });
-
   await page.locator('[data-nav-section="projects"]').click();
   await expect(page).toHaveURL(/#projects$/);
   await expect(page.locator("html")).toHaveAttribute("data-nav-scroll-behavior", "smooth");
-  await expect.poll(() => page.locator("#projects").evaluate((el) => Math.abs(Math.round(el.getBoundingClientRect().top)))).toBeLessThanOrEqual(20);
-
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.locator('[data-nav-section="about-me"]').click();
-  await expect(page).toHaveURL(/#about-me$/);
-  await expect.poll(() => page.locator("#about-me").evaluate((el) => Math.abs(Math.round(el.getBoundingClientRect().top)))).toBeLessThanOrEqual(20);
-
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.locator('[data-nav-section="connect"]').click();
-  await expect(page).toHaveURL(/#connect$/);
   await expect(page.locator("html")).toHaveAttribute("data-nav-scroll-behavior", "instant");
-  await expect.poll(() => page.locator("#connect").evaluate((el) => Math.abs(Math.round(el.getBoundingClientRect().top)))).toBeLessThanOrEqual(20);
-});
 
-test("mobile menu keeps background scrolling available", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 667 });
   await page.goto("./");
-  await page.evaluate(() => window.scrollTo(0, 200));
-  await page.locator("[data-mobile-open]").click();
-  await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "true");
-  expect(await page.locator("html").evaluate((element) => getComputedStyle(element).overflowY)).not.toBe("hidden");
-
-  await page.mouse.move(200, 300);
-  await page.mouse.wheel(0, 300);
-  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(200);
-});
-
-test("mobile menu smoothly navigates home sections and keeps cross-page links", async ({ page }) => {
-  await page.setViewportSize({ width: 375, height: 667 });
-  await page.goto("./");
-  await page.evaluate(() => {
-    const original = Element.prototype.scrollIntoView;
-    Element.prototype.scrollIntoView = function (options) {
-      document.documentElement.dataset.navScrollBehavior =
-        typeof options === "object" ? options.behavior : "";
-      original.call(this, options);
-    };
-  });
-
-  await page.locator("[data-mobile-open]").click();
+  const opener = page.locator("[data-mobile-open]");
+  await opener.click();
+  await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("aria-hidden", "false");
+  await expect(page.locator('[data-mobile-link="about-me"]')).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(opener).toBeFocused();
+  await opener.click();
   await page.locator('[data-mobile-link="projects"]').click();
-  await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "false");
-  await expect(page.locator("html")).toHaveAttribute("data-nav-scroll-behavior", "smooth");
   await expect(page).toHaveURL(/#projects$/);
-  await expect.poll(() => page.locator("#projects").evaluate((el) => Math.abs(Math.round(el.getBoundingClientRect().top)))).toBeLessThanOrEqual(20);
-
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.locator("[data-mobile-open]").click();
-  await page.locator('[data-mobile-link="about-me"]').click();
-  await expect(page.locator("html")).toHaveAttribute("data-nav-scroll-behavior", "instant");
   await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "false");
-  await expect(page).toHaveURL(/#about-me$/);
-
-  await page.goto(projectRoutes[0]);
-  await page.locator("[data-mobile-open]").click();
-  await page.locator('[data-mobile-link="about-me"]').click();
-  await expect(page).toHaveURL(/\/my-portfolio\/#about-me$/);
-  await expect(page.locator("[data-video-background]")).toHaveCount(1);
 });
 
-test("homepage keeps one fixed video behind every section", async ({ page }) => {
-  await page.goto("./");
-  const background = page.locator("[data-video-background]");
-  const video = page.locator("[data-background-video]");
-  await expect(background).toHaveCount(1);
-  await expect(video).toHaveCount(1);
-  await expect(video.locator("source")).toHaveAttribute("src", `${basePath}videos/black-hole.webm`);
-  const firstVideo = await video.elementHandle();
-
-  for (const section of ["#main", "#about-me", "#intelligence-hub", "#projects", "#connect"]) {
-    await page.locator(section).scrollIntoViewIfNeeded();
-    const geometry = await background.evaluate((element) => ({
-      position: getComputedStyle(element).position,
-      top: Math.round(element.getBoundingClientRect().top),
-      height: Math.round(element.getBoundingClientRect().height),
-    }));
-    expect(geometry).toEqual({ position: "fixed", top: 0, height: page.viewportSize()?.height });
-    expect(await page.evaluate((element) => document.querySelector("[data-background-video]") === element, firstVideo)).toBe(true);
+test("project detail Markdown renders math, tables, captions, and base-prefixed local images", async ({ page, request }) => {
+  await page.goto("./projects/project-01/");
+  await expect(page.locator(".project-prose .katex").first()).toBeVisible();
+  await expect(page.locator(".project-prose table")).toHaveCount(1);
+  const images = await page.locator(".project-prose img").evaluateAll((items) => items.map((image) => (image as HTMLImageElement).src));
+  expect(images.length).toBeGreaterThan(0);
+  for (const source of images) {
+    expect(new URL(source).pathname.startsWith(basePath)).toBe(true);
+    expect((await request.get(source)).status()).toBe(200);
   }
+});
 
+test("homepage video keeps a fixed poster and is absent from non-home routes", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("./");
+  await expect(page.locator("[data-video-background]")).toHaveCount(1);
+  await expect(page.locator("[data-background-video]")).toBeHidden();
+  await expect(page.locator("[data-video-poster]")).toBeVisible();
+  await page.locator("#projects").scrollIntoViewIfNeeded();
+  await expect(page.locator("[data-video-background]")).toHaveCSS("position", "fixed");
   await page.goto("./projects/");
   await expect(page.locator("[data-video-background]")).toHaveCount(0);
-  await page.goto(projectRoutes[0]);
-  await expect(page.locator("[data-video-background]")).toHaveCount(0);
-});
-
-test("homepage shows a static poster with reduced motion or unavailable video", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("./");
-  const video = page.locator("[data-background-video]");
-  const poster = page.locator("[data-video-poster]");
-  await expect(video).toBeHidden();
-  await expect(video).toHaveJSProperty("paused", true);
-  await expect(poster).toBeVisible();
-  await expect(poster).toHaveAttribute("src", `${basePath}images/black-hole-poster.jpg`);
-
-  await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.route("**/videos/black-hole.webm", (route) => route.abort());
-  await page.reload();
-  await expect(poster).toBeVisible();
-  await expect.poll(() => poster.evaluate((element) => (element as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
 });

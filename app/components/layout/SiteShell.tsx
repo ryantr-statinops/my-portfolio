@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { useLocation } from "react-router";
+import { navigateToSection } from "../../../src/lib/sectionNavigation";
 import Footer from "./Footer";
 import MobileOverlay from "./MobileOverlay";
 import Navbar from "./Navbar";
@@ -69,15 +70,20 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
     return () => observer.disconnect();
   }, [location.pathname]);
 
+  function navigateToHomeSection(event: MouseEvent<HTMLAnchorElement>, sectionId: string) {
+    navigateToSection(event.nativeEvent, event.currentTarget, sectionId);
+    if (event.nativeEvent.defaultPrevented) event.preventDefault();
+  }
+
   return (
     <>
       {isHomePage && <VideoBackground />}
       <a href="#main-content" className="sr-only fixed left-2 top-2 z-[60] rounded-full bg-foreground px-3 py-1 text-background focus:not-sr-only">Skip to content</a>
-      <Navbar menuOpen={menuOpen} menuButtonRef={menuButton} onOpenMenu={() => setMenuOpen(true)} />
+      <Navbar menuOpen={menuOpen} menuButtonRef={menuButton} onOpenMenu={() => setMenuOpen(true)} onNavigateToSection={navigateToHomeSection} />
       <MobileOverlay open={menuOpen} onClose={(restoreFocus = true) => {
         setMenuOpen(false);
         if (restoreFocus) menuButton.current?.focus();
-      }} />
+      }} onNavigateToSection={navigateToHomeSection} />
       <main id="main-content" tabIndex={-1} className={isHomePage ? "relative z-10" : undefined}>{children}</main>
       <Footer transparentBackground={isHomePage} />
     </>
