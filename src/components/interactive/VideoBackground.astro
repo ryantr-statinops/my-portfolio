@@ -23,7 +23,6 @@ const posterSrc = `${import.meta.env.BASE_URL}/images/black-hole-poster.jpg`;
   >
     <source src={videoSrc} type="video/webm" />
   </video>
-  <div data-video-overlay class="video-overlay absolute inset-0"></div>
 </div>
 
 <script>
@@ -56,21 +55,9 @@ const posterSrc = `${import.meta.env.BASE_URL}/images/black-hole-poster.jpg`;
     }
   }
 
-  .background-video {
-    filter: saturate(0.8);
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .background-video {
       display: none;
     }
-  }
-
-  .video-overlay {
-    background: linear-gradient(90deg, rgb(255 255 255 / 90%), rgb(255 255 255 / 78%));
-  }
-
-  :global(.dark) .video-overlay {
-    background: linear-gradient(90deg, rgb(10 10 10 / 78%), rgb(10 10 10 / 38%));
   }
 </style>

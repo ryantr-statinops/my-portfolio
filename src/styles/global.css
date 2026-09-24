@@ -45,7 +45,15 @@
 }
 
 :root.homepage-video:not(.dark) {
-  --muted: #4a4a4a;
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --surface: #161616;
+  --card: #161616;
+  --border: #404040;
+  --primary: #ffffff;
+  --primary-rgb: 255, 255, 255;
+  --background-rgb: 10, 10, 10;
+  --muted: #a3a3a3;
 }
 
 @layer base {
