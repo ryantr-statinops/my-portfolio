@@ -4,10 +4,12 @@ import SiteShell from "./components/layout/SiteShell";
 import stylesheet from "../src/styles/global.css?url";
 import "katex/dist/katex.min.css";
 
+const siteBase = import.meta.env.BASE_URL;
+
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
-  { rel: "icon", type: "image/webp", href: `${import.meta.env.BASE_URL}images/avt.webp` },
-  { rel: "sitemap", href: `${import.meta.env.BASE_URL}sitemap-index.xml` },
+  { rel: "icon", type: "image/webp", href: `${siteBase}images/avt.webp` },
+  { rel: "sitemap", href: `${siteBase}sitemap-index.xml` },
 ];
 
 export const meta: MetaFunction = () => [
@@ -28,7 +30,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        <script dangerouslySetInnerHTML={{ __html: `(() => { const saved = localStorage.getItem("theme"); const theme = saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); document.documentElement.classList.toggle("dark", theme === "dark"); })();` }} />
+        <script dangerouslySetInnerHTML={{ __html: `(() => { const saved = localStorage.getItem("theme"); const theme = saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); document.documentElement.classList.toggle("dark", theme === "dark"); document.documentElement.classList.toggle("homepage-video", location.pathname === "${siteBase}" || location.pathname === "${siteBase.slice(0, -1)}"); })();` }} />
       </head>
       <body className="bg-background text-foreground selection:bg-primary/30 transition-colors duration-300 leading-relaxed antialiased">
         {children}

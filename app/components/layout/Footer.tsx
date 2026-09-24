@@ -1,10 +1,14 @@
-import { useRef } from "react";
+type Props = {
+  transparentBackground?: boolean;
+};
 
-export default function Footer() {
-  const topButton = useRef<HTMLButtonElement>(null);
+export default function Footer({ transparentBackground = false }: Props) {
+  const background = transparentBackground ? "bg-transparent" : "bg-background";
+  const layer = transparentBackground ? "z-10" : "";
+  const spacing = transparentBackground ? "pt-24 pb-12" : "py-12";
   return (
-    <footer id="connect" className="relative flex min-h-screen w-full flex-col overflow-hidden border-t border-border bg-background">
-      <div className="flex flex-1 items-center justify-center px-8 py-12 md:px-12">
+    <footer id="connect" className={`relative flex min-h-screen w-full flex-col overflow-hidden border-t border-border ${background} ${layer}`}>
+      <div className={`flex flex-1 items-center justify-center px-8 md:px-12 ${spacing}`}>
         <div className="mx-auto grid w-full max-w-7xl grid-cols-12 gap-y-10 lg:gap-10">
           <div className="col-span-12 flex flex-col justify-center space-y-10 reveal lg:col-span-5">
             <div className="space-y-4">
@@ -42,7 +46,7 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-8">
             <div className="flex flex-col items-end"><p className="mb-1 font-mono text-[8px] uppercase tracking-[0.2em] text-muted">Deployment: v4.2.0-Production</p><p className="font-mono text-[8px] font-bold uppercase text-success">Protocol_Secure</p></div>
-            <button ref={topButton} id="scroll-to-top" type="button" onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" })} aria-label="Scroll to top" className="group flex h-10 w-10 items-center justify-center rounded-full border border-border/50 transition-all duration-300 hover:border-primary hover:bg-primary hover:text-background"><span className="text-lg transition-transform group-hover:-translate-y-1" aria-hidden="true">↑</span></button>
+            <button id="scroll-to-top" type="button" onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" })} aria-label="Scroll to top" className="group flex h-10 w-10 items-center justify-center rounded-full border border-border/50 transition-all duration-300 hover:border-primary hover:bg-primary hover:text-background"><span className="text-lg transition-transform group-hover:-translate-y-1" aria-hidden="true">↑</span></button>
           </div>
         </div>
       </div>
