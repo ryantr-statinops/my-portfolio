@@ -1,7 +1,9 @@
 # build output
 dist/
+build/
 # generated types
 .astro/
+.react-router/
 
 # dependencies
 node_modules/
@@ -15,7 +17,6 @@ pnpm-debug.log*
 # test artifacts
 test-results/
 playwright-report/
-
 
 # environment variables
 .env
