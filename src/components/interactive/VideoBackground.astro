@@ -8,11 +8,11 @@ const posterSrc = `${import.meta.env.BASE_URL}/images/black-hole-poster.jpg`;
     data-video-poster
     src={posterSrc}
     alt=""
-    class="absolute inset-0 h-full w-full object-cover"
+    class="background-media absolute inset-0 h-full w-full object-cover"
   />
   <video
     data-background-video
-    class="background-video absolute inset-0 h-full w-full object-cover"
+    class="background-media background-video absolute inset-0 h-full w-full object-cover"
     autoplay
     muted
     loop
@@ -46,6 +46,16 @@ const posterSrc = `${import.meta.env.BASE_URL}/images/black-hole-poster.jpg`;
 </script>
 
 <style>
+  .background-media {
+    transform: translateX(2%) scale(1.08);
+  }
+
+  @media (max-width: 767px) {
+    .background-media {
+      transform: translateX(1%) scale(1.05);
+    }
+  }
+
   .background-video {
     filter: saturate(0.8);
   }
