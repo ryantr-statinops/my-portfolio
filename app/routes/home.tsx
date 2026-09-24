@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { MetaFunction } from "react-router";
+import { SITE } from "../../src/lib/constants";
 import AboutMe from "../components/sections/AboutMe";
 import Hero from "../components/sections/Hero";
 import IntelligenceHub from "../components/sections/IntelligenceHub";
@@ -8,13 +9,15 @@ import ProjectFilter from "../components/interactive/ProjectFilter";
 import { filterProjects } from "../data/project-filter";
 import { orderedProjects } from "../data/projects";
 
+const canonical = `${SITE.site}${SITE.base}/`;
+
 export const meta: MetaFunction = () => [
-  { title: "Ryan Tran | Command Center" },
-  { name: "description", content: "Applied Statistics student — Quantitative Finance & System Architecture" },
-  { tagName: "link", rel: "canonical", href: "https://ryantr-statinops.github.io/my-portfolio/" },
-  { property: "og:url", content: "https://ryantr-statinops.github.io/my-portfolio/" },
-  { property: "og:image", content: "https://ryantr-statinops.github.io/my-portfolio/images/avt.webp" },
-  { name: "twitter:image", content: "https://ryantr-statinops.github.io/my-portfolio/images/avt.webp" },
+  { title: SITE.title },
+  { name: "description", content: SITE.description },
+  { tagName: "link", rel: "canonical", href: canonical },
+  { property: "og:url", content: canonical },
+  { property: "og:image", content: `${SITE.site}${SITE.base}/images/avt.webp` },
+  { name: "twitter:image", content: `${SITE.site}${SITE.base}/images/avt.webp` },
 ];
 
 export default function Home() {

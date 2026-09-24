@@ -51,7 +51,7 @@ export default function SystemTerminal({ commands = defaultCommands }: Props) {
 
   return (
     <div data-terminal className="glass overflow-hidden rounded-lg border border-border bg-black font-mono text-[11px] shadow-2xl">
-      <div className="flex items-center justify-between border-b border-border bg-white/5 px-4 py-2"><div className="flex gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" /><span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" /><span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" /></div><span className="text-[10px] uppercase tracking-widest text-muted opacity-50">bash — 80x24</span></div>
+      <div className="flex items-center justify-between border-b border-border bg-white/5 px-4 py-2"><div className="flex gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" /><span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" /><span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" /></div><span className="text-[10px] uppercase tracking-widest text-muted">bash — 80x24</span></div>
       <div data-terminal-output aria-live="polite" className="min-h-[300px] max-h-[420px] space-y-4 overflow-y-auto p-5">
         {entries.map((entry, index) => <div key={`${index}-${entry.input}`} data-terminal-entry className="space-y-1"><div className="flex gap-2"><span className="font-bold text-success">➜</span><span className="text-accent">~</span><span className="text-white/90">{entry.input}</span></div><pre className="whitespace-pre-wrap leading-relaxed text-muted">{entry.output}</pre></div>)}
         {entries.length > 0 && <div className="flex gap-2"><span className="font-bold text-success">➜</span><span className="text-accent">~</span><span className="h-4 w-2 animate-pulse bg-primary" /></div>}

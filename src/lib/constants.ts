@@ -1,4 +1,3 @@
-/** Central constants - single source, no .astro imports */
 export const SITE = {
   title: "Ryan Tran | Command Center",
   description: "Applied Statistics student — Quantitative Finance & System Architecture",
@@ -14,5 +13,3 @@ export const CATEGORY_MAP: Record<string, string> = {
   "ai-implementation": "AI",
   "software-engineering": "Software",
 };
-
-// NOTE: Navbar SSOT is NAV_ITEMS in components/layout/Navbar.types.ts (has sectionId for ScrollSpy).

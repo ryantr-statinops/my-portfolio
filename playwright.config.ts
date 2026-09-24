@@ -18,14 +18,9 @@ export default defineConfig({
     screenshot: "only-on-failure",
     video: "retain-on-failure",
   },
-  projects: [
-    {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
-    },
-  ],
+  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
-    command: "npm run build:react && npm run preview:react",
+    command: "npm run build && npm run preview",
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

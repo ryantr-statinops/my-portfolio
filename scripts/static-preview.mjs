@@ -3,8 +3,7 @@ import { existsSync, statSync, createReadStream } from "node:fs";
 import { extname, resolve, sep } from "node:path";
 
 const basePath = "/my-portfolio";
-const clientDirectory = resolve("build/client");
-const siteDirectory = resolve(clientDirectory, "my-portfolio");
+const siteDirectory = resolve("build/client/my-portfolio");
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
   ".data": "application/json; charset=utf-8",
@@ -27,18 +26,11 @@ const contentTypes = {
 function resolveFile(pathname) {
   const relativePath = decodeURIComponent(pathname.slice(basePath.length)).replace(/^\/+/, "");
   const normalizedPath = relativePath || "index.html";
-  const siteFile = resolve(siteDirectory, normalizedPath);
-  if (siteFile !== siteDirectory && !siteFile.startsWith(`${siteDirectory}${sep}`)) return null;
-  if (existsSync(siteFile)) {
-    const stat = statSync(siteFile);
-    if (stat.isDirectory()) return resolve(siteFile, "index.html");
-    return siteFile;
-  }
-
-  const rootAssetPath = resolve(clientDirectory, normalizedPath);
-  if (rootAssetPath !== clientDirectory && !rootAssetPath.startsWith(`${clientDirectory}${sep}`)) return null;
-  if (existsSync(rootAssetPath) && statSync(rootAssetPath).isFile()) return rootAssetPath;
-  return null;
+  const file = resolve(siteDirectory, normalizedPath);
+  if (file !== siteDirectory && !file.startsWith(`${siteDirectory}${sep}`)) return null;
+  if (!existsSync(file)) return null;
+  if (statSync(file).isDirectory()) return resolve(file, "index.html");
+  return file;
 }
 
 const server = createServer((request, response) => {
@@ -49,12 +41,17 @@ const server = createServer((request, response) => {
   }
 
   const file = resolveFile(url.pathname);
-  if (!file || !existsSync(file) || !statSync(file).isFile()) {
-    response.writeHead(404).end("Not Found");
+  if (file && existsSync(file) && statSync(file).isFile()) {
+    response.setHeader("Content-Type", contentTypes[extname(file)] ?? "application/octet-stream");
+    createReadStream(file).pipe(response);
     return;
   }
-  response.setHeader("Content-Type", contentTypes[extname(file)] ?? "application/octet-stream");
-  createReadStream(file).pipe(response);
+
+  const notFound = resolve(siteDirectory, "404.html");
+  response.statusCode = 404;
+  response.setHeader("Content-Type", "text/html; charset=utf-8");
+  if (existsSync(notFound)) createReadStream(notFound).pipe(response);
+  else response.end("Not Found");
 });
 
 const port = Number(process.env.PORT ?? 4173);

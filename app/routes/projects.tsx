@@ -1,17 +1,20 @@
 import { useState } from "react";
 import type { MetaFunction } from "react-router";
+import { SITE } from "../../src/lib/constants";
 import ProjectFilter from "../components/interactive/ProjectFilter";
 import SystemTerminal from "../components/interactive/SystemTerminal";
 import PortfolioRegistry from "../components/sections/PortfolioRegistry";
 import { filterProjects } from "../data/project-filter";
 import { orderedProjects } from "../data/projects";
 
+const canonical = `${SITE.site}${SITE.base}/projects/`;
+
 export const meta: MetaFunction = () => [
   { title: "Project Registry | Ryan Tran" },
   { name: "description", content: "A structured registry of Ryan Tran's documented systems, quantitative work and infrastructure projects." },
-  { tagName: "link", rel: "canonical", href: "https://ryantr-statinops.github.io/my-portfolio/projects/" },
+  { tagName: "link", rel: "canonical", href: canonical },
   { property: "og:type", content: "website" },
-  { property: "og:url", content: "https://ryantr-statinops.github.io/my-portfolio/projects/" },
+  { property: "og:url", content: canonical },
   { property: "og:title", content: "Project Registry | Ryan Tran" },
   { name: "twitter:title", content: "Project Registry | Ryan Tran" },
 ];

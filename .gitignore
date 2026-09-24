@@ -2,7 +2,6 @@
 dist/
 build/
 # generated types
-.astro/
 .react-router/
 
 # dependencies
