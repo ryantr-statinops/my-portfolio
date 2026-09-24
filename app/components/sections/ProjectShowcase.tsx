@@ -17,7 +17,7 @@ export default function ProjectShowcase({ projects, limit = 6 }: Props) {
         </div>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3" data-filter-surface="showcase">
           {visible.map((project) => <ProjectCard key={project.routeSlug} project={project} />)}
-          <p data-filter-empty hidden className="col-span-full py-12 text-center font-mono text-xs uppercase tracking-widest text-muted">No systems match the active filter.</p>
+          <p data-filter-empty hidden={visible.length > 0} className="col-span-full py-12 text-center font-mono text-xs uppercase tracking-widest text-muted">No systems match the active filter.</p>
         </div>
         {projects.length > 3 && <div className="mt-12 flex justify-center"><a href="#projects" className="border-b border-border pb-1 font-mono text-[10px] uppercase tracking-[0.4em] text-muted transition-colors hover:border-primary hover:text-primary">[ VIEW_SELECTED_SYSTEMS ]</a></div>}
       </div>
