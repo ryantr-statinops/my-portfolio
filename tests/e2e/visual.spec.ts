@@ -20,8 +20,14 @@ const maskDynamic = (page: Page) => [
 ];
 
 async function stabilize(page: Page) {
+  await page.evaluate(() => {
+    document.querySelectorAll<HTMLVideoElement>("video").forEach((video) => {
+      video.pause();
+      video.currentTime = 0;
+    });
+  });
   await page.addStyleTag({
-    content: "*, *::before, *::after { animation: none !important; transition: none !important; caret-color: transparent !important; } @media (max-width: 480px) { article header { height: 677px !important; overflow: hidden !important; } }",
+    content: "*, *::before, *::after { animation: none !important; transition: none !important; caret-color: transparent !important; } video { visibility: hidden !important; } @media (max-width: 480px) { article header { height: 677px !important; overflow: hidden !important; } }",
   });
   await page.evaluate(() => {
     document.querySelectorAll(".reveal").forEach((element) => element.classList.add("active"));
