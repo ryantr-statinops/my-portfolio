@@ -1,5 +1,8 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+  "compilerOptions": {
+    "rootDirs": [".", ".react-router/types"]
+  },
+  "include": [".astro/types.d.ts", ".react-router/types/**/*", "**/*"],
+  "exclude": ["dist", "build", "node_modules"]
 }

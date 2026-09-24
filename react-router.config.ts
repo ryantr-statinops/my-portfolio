@@ -1,7 +1,12 @@
+import { projectRouteSlugs } from "./app/data/projects";
 import type { Config } from "@react-router/dev/config";
 
 export default {
-  basename: "/my-portfolio",
+  basename: "/my-portfolio/",
   ssr: false,
-  prerender: ["/", "/projects/"],
+  prerender: [
+    "/",
+    "/projects",
+    ...projectRouteSlugs.map((slug) => `/projects/${slug}`),
+  ],
 } satisfies Config;
