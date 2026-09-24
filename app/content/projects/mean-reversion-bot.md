@@ -1,0 +1,102 @@
+# Mean Reversion Trading Bot – Multi-Symbol (MT5)
+
+Một algorithmic trading bot chuyên nghiệp xây dựng trên nền tảng **MetaTrader 5 (MT5)**, thực thi chiến lược **Mean Reversion** trên đa dạng công cụ tài chính bao gồm FX pairs, Vàng (XAUUSD), và Indices (S&P 500).
+
+
+## 01. Chiến lược giao dịch
+
+Bot xác định các biến động giá quá mức và giao dịch theo hướng giá quay về giá trị trung bình, sử dụng kết hợp các bộ lọc biến động, động lượng và xu hướng.
+
+### Core Indicators
+
+| Chỉ báo | Vai trò |
+|---------|---------|
+| **Bollinger Bands (BB)** | Định nghĩa "mean" và ranh giới độ lệch chuẩn |
+| **RSI** | Xác nhận điều kiện quá mua/quá bán |
+| **ADX** | Bộ lọc regime — chỉ giao dịch trong môi trường ít xu hướng (sideways) |
+| **ATR** | Tính toán Stop Loss động dựa trên biến động |
+
+### Entry Conditions
+
+$$
+\text{BUY: Price} \uparrow \text{Lower BB} \quad \land \quad \text{RSI} < 30 \quad \land \quad \text{ADX} < 18
+$$
+
+$$
+\text{SELL: Price} \downarrow \text{Upper BB} \quad \land \quad \text{RSI} > 70 \quad \land \quad \text{ADX} < 18
+$$
+
+### Risk Management
+
+- **Dynamic SL:** 1.5x ATR distance from entry
+- **Risk/Reward (RR):** Default 0.9 (configurable)
+- **Time Filter:** Giao dịch strictly trong khung **13:00 – 17:00 (GMT+7)** — capture specific liquidity windows
+
+---
+
+## 02. Cấu trúc dự án
+
+```text
+mean_reversion_analytics/
+├── config/
+│   └── strategy_config.json   # Bot parameters & symbol list
+├── src/
+│   ├── indicators.py           # Technical indicator logic (BB, RSI, ADX, ATR)
+│   ├── mt5_connector.py        # MT5 API bridge & order execution
+│   └── strategy.py             # Signal generation logic
+├── scripts/
+│   ├── run_bot.py              # Main execution loop
+│   └── export_history.py       # Trade history exporter
+├── data/                       # Historical data & exports
+├── notebooks/                  # Performance analysis & backtesting
+└── requirements.txt            # Project dependencies
+```
+
+---
+
+## 03. Cấu hình
+
+```json
+{
+  "symbols": ["EURUSDm", "GBPUSDm", "XAUUSDm"],
+  "timeframe": "M1",
+  "bb_period": 10,
+  "bb_std": 1.8,
+  "rsi_period": 8,
+  "adx_threshold": 18,
+  "risk_reward": 0.9
+}
+```
+
+---
+
+## 04. Cài đặt
+
+```bash
+# Clone & setup
+git clone https://github.com/ryantr-statinops/mean_reversion_analytics.git
+cd mean_reversion_analytics
+python -m venv .venv
+.venv\\Scripts\\activate
+pip install -r requirements.txt
+
+# Kiểm tra kết nối MT5
+python test_connection.py
+
+# Chạy bot
+python scripts/run_bot.py
+```
+
+---
+
+## 05. Disclaimer
+
+> ⚠️ **Trading financial instruments involves significant risk.** This bot is for educational and research purposes only. Past performance does not guarantee future results.
+
+---
+
+## 06. Project Repository
+
+[Mean Reversion Trading Bot Repository](https://github.com/ryantr-statinops/mean_reversion_analytics)
+
+[You have received this identical output 3 times. Re-reading 'src/content/projects/mean-reversion-bot.mdx' will not change it — use a narrower selector (path:A-B), or proceed with the edit.]
