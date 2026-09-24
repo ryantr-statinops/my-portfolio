@@ -2,7 +2,7 @@
   "name": "my-portfolio",
   "type": "module",
   "version": "0.1.0",
-  "description": "Ryan Tran — Command Center Portfolio (Astro + Tailwind + MDX)",
+  "description": "Ryan Tran — Command Center Portfolio (Astro + React + Tailwind)",
   "private": true,
   "engines": {
     "node": ">=22.12.0"
@@ -17,23 +17,37 @@
     "test:visual": "playwright test tests/e2e/visual.spec.ts",
     "test:watch": "vitest",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "dev:react": "react-router dev",
+    "build:react": "react-router build",
+    "preview:react": "vite preview --host 127.0.0.1",
+    "check:react": "tsc --noEmit"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.1",
     "@astrojs/mdx": "^8.0.2",
     "@astrojs/sitemap": "3.7.4",
+    "@react-router/dev": "^7.18.4",
+    "@react-router/node": "^7.18.4",
     "@tailwindcss/vite": "^4.3.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^4.7.0",
     "astro": "^7.3.4",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router": "^7.18.4",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
-    "tailwindcss": "^4.3.0"
+    "tailwindcss": "^4.3.0",
+    "vite": "^6.4.3",
+    "isbot": "^5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@playwright/test": "^1.63.0",
     "gray-matter": "^4.0.3",
-    "typescript": "^6.0.3",
+    "typescript": "^5.9.3",
     "vitest": "^5.0.0"
   }
 }
