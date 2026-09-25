@@ -111,8 +111,8 @@ export default function IntelligenceHub({ projects }: Props) {
           {kpis.map((kpi) => <article key={kpi.label} className="glass-premium group flex flex-col rounded-2xl border border-border/80 bg-card/30 p-3 transition-all hover:border-primary/50"><div className="mb-0.5 flex items-start justify-between"><span className="font-mono text-[8px] uppercase tracking-widest text-muted">{kpi.label}</span><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" /></div><div className="flex items-baseline gap-1"><span data-kpi={kpi.label.toLowerCase()} className="font-mono text-2xl font-black leading-none text-foreground">{String(kpi.value).padStart(2, "0")}</span><span className="text-[9px] font-bold text-primary">{kpi.unit}</span></div><span className="mt-2 text-[8px] text-muted">{kpi.description}</span></article>)}
         </div>
 
-        <div className="grid h-[calc(100vh-280px)] min-h-[450px] grid-cols-12 gap-3">
-          <aside className="col-span-12 flex h-full flex-col gap-3 overflow-hidden lg:col-span-3">
+        <div className="grid grid-cols-12 gap-3 lg:h-[calc(100vh-280px)] lg:min-h-[450px]">
+          <aside className="col-span-12 flex min-h-[260px] flex-col gap-3 overflow-hidden lg:col-span-3 lg:h-full">
             <section className="glass flex flex-[3] flex-col overflow-hidden rounded-xl border border-border/80 bg-card/40">
               <header className="flex items-center justify-between border-b border-border/80 bg-foreground/5 p-4"><h3 className="text-[11px] font-bold uppercase tracking-widest opacity-80">Portfolio_Asset_Registry</h3><span className="text-[9px] font-bold uppercase text-primary">{projects.length} systems</span></header>
               <div className="custom-scrollbar flex-1 space-y-4 overflow-y-auto p-4 font-mono text-[11px]">
@@ -122,7 +122,7 @@ export default function IntelligenceHub({ projects }: Props) {
             <section className="glass space-y-3 rounded-xl border border-border/80 bg-card/40 p-4"><h3 className="font-mono text-[9px] uppercase tracking-widest text-muted">Global_Exit_Nodes</h3><div className="grid grid-cols-2 gap-2"><a href="https://github.com/ryantr-statinops" target="_blank" rel="noreferrer" className="rounded border border-border/80 bg-foreground/5 py-2 text-center text-[10px] font-bold transition-all hover:bg-primary hover:text-background">GITHUB</a><a href="https://linkedin.com/in/ryan-tr" target="_blank" rel="noreferrer" className="rounded border border-border/80 bg-foreground/5 py-2 text-center text-[10px] font-bold transition-all hover:bg-primary hover:text-background">LINKEDIN</a></div></section>
           </aside>
 
-          <section ref={graphContainer} className="glass group relative col-span-12 overflow-hidden rounded-xl border border-border/80 bg-card/40 lg:col-span-9" aria-label="Interactive project intelligence graph">
+          <section ref={graphContainer} className="glass group relative col-span-12 min-h-[420px] overflow-hidden rounded-xl border border-border/80 bg-card/40 lg:col-span-9 lg:min-h-0" aria-label="Interactive project intelligence graph">
             <div className="pointer-events-none absolute left-6 top-6 z-20 reveal"><div className="rounded-r-lg border-l-2 border-primary bg-background/80 px-4 py-2 shadow-2xl backdrop-blur-md"><p className="mb-1 font-mono text-[8px] uppercase tracking-[0.3em] text-primary">Neural_Network_Mapping</p><p className="text-xs font-black uppercase tracking-tighter text-foreground">PROJECT_INTELLIGENCE_GRAPH_V4</p></div></div>
             <div className="absolute bottom-4 right-4 z-20 font-mono text-[8px] uppercase tracking-widest text-muted">Drag to rotate · Scroll to zoom</div>
             <ProjectGraph3DLazy projects={projects} onAvailabilityChange={setWebglAvailable} onHoverNode={showHoveredNode} />

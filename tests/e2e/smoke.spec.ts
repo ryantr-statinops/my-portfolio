@@ -101,6 +101,23 @@ test("project graph mounts WebGL when available and retains its accessible fallb
   await expect(page.locator('ul[aria-label="Projects represented in the 3D graph"] a')).toHaveCount(5);
 });
 
+test("mobile graph keeps a usable viewport in WebGL and reduced-motion modes", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto("./");
+  const graph = page.locator('section[aria-label="Interactive project intelligence graph"]');
+  await graph.scrollIntoViewIfNeeded();
+  await expect.poll(async () => (await graph.boundingBox())?.height ?? 0).toBeGreaterThan(400);
+  const canvas = graph.locator("canvas[data-3d-graph]");
+  const fallback = graph.locator('svg[role="group"]');
+  await expect.poll(async () => (await canvas.isVisible()) || (await fallback.isVisible())).toBe(true);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload();
+  await graph.scrollIntoViewIfNeeded();
+  await expect(fallback).toBeVisible();
+  await expect.poll(async () => (await graph.boundingBox())?.height ?? 0).toBeGreaterThan(400);
+});
+
 test("WebGL graph responds to drag and zoom, shows project details on hover, and opens a project on click", async ({ page }) => {
   await page.goto("./");
   const canvas = page.locator("canvas[data-3d-graph]");

@@ -252,6 +252,8 @@ export default function ProjectGraph3D({ projects, onAvailabilityChange, onHover
       const resize = () => {
         const width = Math.max(container.clientWidth, 1);
         const height = Math.max(container.clientHeight, 1);
+        if (width < 600 && camera.position.z < 20) camera.position.z = 20;
+        camera.fov = width < 600 ? 52 : 42;
         renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
         renderer.setSize(width, height, false);
         camera.aspect = width / height;
@@ -327,7 +329,7 @@ export default function ProjectGraph3D({ projects, onAvailabilityChange, onHover
       };
       const wheel = (event: WheelEvent) => {
         event.preventDefault();
-        camera.position.z = Math.max(8, Math.min(19, camera.position.z + event.deltaY * 0.012));
+        camera.position.z = Math.max(8, Math.min(30, camera.position.z + event.deltaY * 0.012));
         draw();
       };
       const keydown = (event: KeyboardEvent) => {
@@ -337,7 +339,7 @@ export default function ProjectGraph3D({ projects, onAvailabilityChange, onHover
         else if (event.key === "ArrowUp") root.rotation.x = Math.max(-0.75, root.rotation.x - step);
         else if (event.key === "ArrowDown") root.rotation.x = Math.min(0.75, root.rotation.x + step);
         else if (event.key === "+" || event.key === "=") camera.position.z = Math.max(8, camera.position.z - 0.8);
-        else if (event.key === "-") camera.position.z = Math.min(19, camera.position.z + 0.8);
+        else if (event.key === "-") camera.position.z = Math.min(30, camera.position.z + 0.8);
         else return;
         event.preventDefault();
         draw();
