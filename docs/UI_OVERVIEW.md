@@ -1,3 +1,4 @@
+> Historical UI design record. File names and framework-specific implementation details below describe the prior design, not the current React runtime. See `docs/ARCHITECTURE_V2.md` for current component boundaries.
 # UI_OVERVIEW.md — Portfolio Interface Description
 
 ## Design Philosophy

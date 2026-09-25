@@ -1,3 +1,4 @@
+> Archived design experiment. The alternate navbar branch plan below is historical and is not active implementation guidance; current navigation lives in `app/components/layout/`.
 # Navbar Dual-Variant Plan
 
 > **Goal:** Refactor inline navbar in `MainLayout.astro` into two parallel components, each on its own branch. Direction A preserves the current Command Center look; Direction B adopts iOS 17/18 compact tab bar style. Both share mobile hamburger overlay + accessibility baseline.

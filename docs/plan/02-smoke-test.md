@@ -1,25 +1,15 @@
-# L2 — Playwright Smoke Tests
+# L2 — Static Route and Interaction Smoke Tests
 
-Status: complete. Chromium smoke tests run against `astro preview` with the `/my-portfolio/` base path.
+Status: Playwright runs against the prepared `dist/` artifact served by `npm run preview` under `/my-portfolio/`.
 
 ## Route source
 
-The test reads `dist/projects/*/index.html` after build and derives the five project routes. Together with `/` and `/projects/`, this yields exactly seven pages without hardcoding project names.
+Smoke coverage derives project routes from `dist/projects/<slug>/index.html`; it verifies the homepage, registry and all five detail pages by direct navigation. Every route must return HTTP 200 and include a page title, description and canonical URL under the GitHub Pages base path.
 
-## Coverage
+## Interaction coverage
 
-- HTTP 200 and title/description/canonical/OG metadata for every generated route.
-- Sitemap and robots availability.
-- Internal homepage links and project thumbnail requests.
-- Multi-select `All`, single-category, multi-category and empty filter states on `/` and `/projects/`.
-- Read-only terminal whitelist, unknown command handling and clear behavior.
-- Theme toggle, skip link, anchors and mobile menu open/close.
+The suite verifies homepage-to-detail navigation, reload on project details, local image requests, multi-select filter transitions and empty-state behavior, terminal whitelist/output/history, theme persistence, skip navigation, section navigation, reduced motion, mobile overlay Escape/focus restoration, Markdown math/tables/images, and homepage-only background video/poster.
 
-Run locally with:
+Static artifact checks verify seven sitemap URLs, sitemap index, robots URL, real unknown-path 404 behavior and no SPA fallback.
 
-```bash
-npm run build
-npm run test:smoke
-```
-
-The test server and base URL are defined in `playwright.config.ts`; CI installs Chromium with `--with-deps`.
+Run `npm run test:smoke`. If local `test-results/` contains preserved user evidence, direct Playwright output to a temporary directory with `--output=/tmp/<run-name>`; never remove user evidence to make a test run.

@@ -30,6 +30,10 @@ npm run preview
 
 ---
 
+## Release and branch flow
+
+The React migration is complete on `refactor/react-completion`; local parity QA passes and the branch is ready for a pull request to `dev`. `dev` is the integration branch; production promotion remains a separate `dev -> main` pull request. Pull requests to `dev` and `main` run validation only; GitHub Pages deploys only from `main`.
+
 ## AI-Powered Workflow
 
 Mình không chỉ sử dụng AI như một công cụ hỗ trợ, mà mình tích hợp AI vào sâu trong quy trình phát triển (AI-native development).
