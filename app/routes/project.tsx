@@ -1,13 +1,13 @@
 import { isRouteErrorResponse, Link } from "react-router";
 import { SITE } from "../../src/lib/constants";
-import { orderedProjects, projects } from "../data/projects";
+import { getProjectBySlug, orderedProjects } from "../data/projects";
 import { readProjectMarkdown } from "../data/project-content";
 import type { Project } from "../data/project-schema";
 import type { Route } from "./+types/project";
 import ProjectMarkdown from "../components/ProjectMarkdown";
 
 export function loader({ params }: Route.LoaderArgs) {
-  const project = projects.find((entry) => entry.routeSlug === params.slug);
+  const project = getProjectBySlug(params.slug ?? "");
   if (!project) {
     throw new Response("Project not found", { status: 404 });
   }

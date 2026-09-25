@@ -99,4 +99,3 @@ python scripts/run_bot.py
 
 [Mean Reversion Trading Bot Repository](https://github.com/ryantr-statinops/mean_reversion_analytics)
 
-[You have received this identical output 3 times. Re-reading 'src/content/projects/mean-reversion-bot.mdx' will not change it — use a narrower selector (path:A-B), or proceed with the edit.]

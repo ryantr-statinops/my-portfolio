@@ -1,5 +1,6 @@
 [
   {
+    "id": "grap4prob",
     "routeSlug": "grap4prob",
     "title": "Grap4Prob — Visualizing & Simulating Probability",
     "description": "Website trực quan hóa các khái niệm xác suất và thống kê phức tạp: Luật số lớn, CLT, Monty Hall, Birthday Paradox, Kim Buffon ước tính π, và Bàn Galton.",
@@ -14,6 +15,7 @@
     "stack": ["JavaScript", "HTML5", "CSS3", "Chart.js"]
   },
   {
+    "id": "factory-stochastic-order-flow",
     "routeSlug": "project-01",
     "title": "Statistical Analytics for Poisson Process Time Series Data",
     "description": "Hệ thống mô hình hóa dòng chảy đơn hàng dưới dạng quá trình ngẫu nhiên (Stochastic Process) nhằm tối ưu hóa năng lực vận hành cho mạng lưới 3 nhà máy sản xuất.",
@@ -28,6 +30,7 @@
     "stack": ["Python", "Pandas", "SciPy", "Matplotlib", "NumPy"]
   },
   {
+    "id": "mean-reversion-trading-bot",
     "routeSlug": "mean-reversion-bot",
     "title": "Mean Reversion Trading Bot — Multi-Symbol (MT5)",
     "description": "Professional algorithmic trading bot cho MetaTrader 5 implementing Mean Reversion strategy với Bollinger Bands, RSI, ADX filters trên đa tài sản (FX, XAUUSD, Indices).",
@@ -42,6 +45,7 @@
     "stack": ["Python", "MetaTrader 5", "Pandas", "NumPy", "Jupyter"]
   },
   {
+    "id": "orbit-system-manager",
     "routeSlug": "orbit-system-manager",
     "title": "Orbit System Manager — 3D Real-Time System Monitor",
     "description": "Desktop application giám sát hệ thống thời gian thực với trực quan hoá 3D CPU topology, boxplot, density plot và time-series cho CPU, RAM, GPU và Network.",
@@ -56,6 +60,7 @@
     "stack": ["Rust", "JavaScript", "Python", "Three.js", "Tauri", "WebSocket"]
   },
   {
+    "id": "mean-function-simulator",
     "routeSlug": "project-02",
     "title": "Monte Carlo Mean Function Simulator",
     "description": "Hệ thống mô phỏng Monte Carlo quy mô lớn (10,000 kịch bản) nhằm ước lượng hàm trung bình của quá trình ngẫu nhiên trong bài toán tăng trưởng tài chính.",

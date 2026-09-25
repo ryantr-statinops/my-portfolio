@@ -1,13 +1,20 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { projectCatalogSchema } from "../app/data/project-schema";
-import { orderedProjects, projects } from "../app/data/projects";
+import { getProjectBySlug, orderedProjects, projects } from "../app/data/projects";
 
 const validProject = projects[0];
 
- describe("project catalog", () => {
+describe("project catalog", () => {
   it("validates all five route slugs and retains priority order", () => {
+    expect(projects.map((project) => project.id)).toEqual([
+      "grap4prob",
+      "factory-stochastic-order-flow",
+      "mean-reversion-trading-bot",
+      "orbit-system-manager",
+      "mean-function-simulator",
+    ]);
     expect(projects).toHaveLength(5);
     expect(orderedProjects.map((project) => project.routeSlug)).toEqual([
       "grap4prob",
@@ -18,7 +25,11 @@ const validProject = projects[0];
     ]);
 
     for (const project of projects) {
-      expect(existsSync(fileURLToPath(new URL(`../public${project.thumbnail}`, import.meta.url)))).toBe(true);
+      expect(existsSync(fileURLToPath(new URL("../public" + project.thumbnail, import.meta.url)))).toBe(true);
+      const markdown = readFileSync(fileURLToPath(new URL("../app/content/projects/" + project.routeSlug + ".md", import.meta.url)), "utf8");
+      for (const [, imagePath] of markdown.matchAll(/!\[[^\]]*\]\((\/images\/[^)\s]+)(?:\s+[^)]*)?\)/g)) {
+        expect(existsSync(fileURLToPath(new URL("../public" + imagePath, import.meta.url)))).toBe(true);
+      }
     }
   });
 
@@ -30,7 +41,12 @@ const validProject = projects[0];
     if (!result.success) {
       expect(result.error.issues.map((issue) => issue.message)).toContain("Duplicate route slug: grap4prob");
       expect(result.error.issues.map((issue) => issue.message)).toContain("Duplicate priority: 1");
+      expect(result.error.issues.map((issue) => issue.message)).toContain("Duplicate project ID: " + validProject.id);
     }
+  });
+  it("looks up projects by their public route slug", () => {
+    expect(getProjectBySlug("mean-reversion-bot")?.id).toBe("mean-reversion-trading-bot");
+    expect(getProjectBySlug("not-a-project")).toBeUndefined();
   });
 
   it("rejects missing editorial fields and malformed asset paths", () => {

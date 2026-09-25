@@ -10,6 +10,7 @@ export const projectCategorySchema = z.enum([
 ]);
 
 export const projectSchema = z.object({
+  id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   routeSlug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   title: z.string().min(5),
   description: z.string().min(10),
@@ -34,16 +35,21 @@ export const projectSchema = z.object({
 });
 
 export const projectCatalogSchema = z.array(projectSchema).superRefine((projects, context) => {
+  const ids = new Set<string>();
   const slugs = new Set<string>();
   const priorities = new Set<number>();
 
   projects.forEach((project, index) => {
+    if (ids.has(project.id)) {
+      context.addIssue({ code: "custom", path: [index, "id"], message: "Duplicate project ID: " + project.id });
+    }
     if (slugs.has(project.routeSlug)) {
-      context.addIssue({ code: "custom", path: [index, "routeSlug"], message: `Duplicate route slug: ${project.routeSlug}` });
+      context.addIssue({ code: "custom", path: [index, "routeSlug"], message: "Duplicate route slug: " + project.routeSlug });
     }
     if (priorities.has(project.priority)) {
-      context.addIssue({ code: "custom", path: [index, "priority"], message: `Duplicate priority: ${project.priority}` });
+      context.addIssue({ code: "custom", path: [index, "priority"], message: "Duplicate priority: " + project.priority });
     }
+    ids.add(project.id);
     slugs.add(project.routeSlug);
     priorities.add(project.priority);
   });
