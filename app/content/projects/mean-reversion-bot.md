@@ -98,4 +98,3 @@ python scripts/run_bot.py
 ## 06. Project Repository
 
 [Mean Reversion Trading Bot Repository](https://github.com/ryantr-statinops/mean_reversion_analytics)
-
