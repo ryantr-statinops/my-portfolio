@@ -3,7 +3,7 @@ import { existsSync, statSync, createReadStream } from "node:fs";
 import { extname, resolve, sep } from "node:path";
 
 const basePath = "/my-portfolio";
-const siteDirectory = resolve("build/client/my-portfolio");
+const siteDirectory = resolve("dist");
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
   ".data": "application/json; charset=utf-8",

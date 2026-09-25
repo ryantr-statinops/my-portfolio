@@ -1,4 +1,5 @@
-# build output
+# Build output
+.astro/
 dist/
 build/
 # generated types

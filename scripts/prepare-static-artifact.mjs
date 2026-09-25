@@ -1,10 +1,11 @@
-import { cpSync, existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const siteOrigin = "https://ryantr-statinops.github.io";
 const basePath = "/my-portfolio";
 const clientDirectory = resolve("build/client");
 const siteDirectory = resolve(clientDirectory, "my-portfolio");
+const artifactDirectory = resolve("dist");
 const homePage = join(siteDirectory, "index.html");
 
 if (!existsSync(homePage)) {
@@ -30,7 +31,11 @@ const globalStyles = readdirSync(join(siteDirectory, "assets")).find((file) => f
 if (!globalStyles) throw new Error("React static artifact is missing the global stylesheet");
 writeFileSync(join(siteDirectory, "404.html"), `<!doctype html>\n<html lang="en" class="dark">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta name="robots" content="noindex">\n<title>Page Not Found | Ryan Tran</title>\n<link rel="stylesheet" href="${basePath}/assets/${globalStyles}">\n<link rel="icon" type="image/webp" href="${basePath}/images/avt.webp">\n</head>\n<body class="bg-background text-foreground antialiased">\n<main class="mx-auto flex min-h-screen max-w-3xl flex-col justify-center px-6 py-24">\n<p class="font-mono text-xs uppercase tracking-[0.3em] text-primary">404 · Route_Not_Found</p>\n<h1 class="mt-4 text-4xl font-bold tracking-tight">Project not found</h1>\n<p class="mt-4 text-muted">This path is not part of the published portfolio.</p>\n<a class="mt-8 w-fit rounded border border-border px-4 py-3 font-mono text-xs uppercase tracking-widest hover:border-primary hover:text-primary" href="${basePath}/projects/">Return to Project Registry</a>\n</main>\n</body>\n</html>\n`);
 
-for (const routePath of ["index.html", "projects/index.html", ...projects.map((project) => `projects/${project.routeSlug}/index.html`), "404.html", "robots.txt", "sitemap-index.xml", "sitemap-0.xml"]) {
-  if (!existsSync(join(siteDirectory, routePath))) throw new Error(`Static Pages artifact is incomplete: ${routePath}`);
+const routePaths = ["index.html", "projects/index.html", ...projects.map((project) => "projects/" + project.routeSlug + "/index.html"), "404.html", "robots.txt", "sitemap-index.xml", "sitemap-0.xml"];
+for (const routePath of routePaths) {
+  if (!existsSync(join(siteDirectory, routePath))) throw new Error("Static Pages artifact is incomplete: " + routePath);
 }
-console.log(`Prepared GitHub Pages artifact: ${publicUrls.length} route pages in ${siteDirectory}`);
+if (publicUrls.length !== 7) throw new Error("Expected exactly seven public route URLs");
+rmSync(artifactDirectory, { recursive: true, force: true });
+renameSync(siteDirectory, artifactDirectory);
+console.log("Prepared GitHub Pages artifact: " + publicUrls.length + " route pages in " + artifactDirectory);

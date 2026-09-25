@@ -2,7 +2,7 @@ import { test, expect, type Page } from "@playwright/test";
 import { existsSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-const projectOutput = resolve(process.cwd(), "build/client/my-portfolio/projects");
+const projectOutput = resolve(process.cwd(), "dist/projects");
 const projectRoutes = readdirSync(projectOutput, { withFileTypes: true })
   .filter((entry) => entry.isDirectory() && existsSync(join(projectOutput, entry.name, "index.html")))
   .map((entry) => `./projects/${entry.name}/`)
