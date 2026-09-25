@@ -33,7 +33,7 @@ npm run preview
 
 ## Release and branch flow
 
-The React migration is integrated into `dev` via PR #7. This follow-up restores the cyan hero text gradient and adds a lazy-loaded Three.js graph; it is on `feat/threejs-intelligence-graph` and needs a separate PR to `dev`. Production promotion remains a separate `dev -> main` PR; PRs validate only and Pages deploys only from `main`.
+The React migration (PR #7), cyan hero gradient and lazy Three.js graph (PR #8), and graph interaction tests (PR #9) are integrated into `dev`. Further architecture and parity work starts on `refactor` and merges into `dev` through a pull request. Production promotion remains a separate `dev -> main` PR; PRs validate only and Pages deploys only from `main`.
 
 ## AI-Powered Workflow
 

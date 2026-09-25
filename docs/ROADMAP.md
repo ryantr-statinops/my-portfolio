@@ -8,7 +8,7 @@
 - Seven static pages: `/`, `/projects/` and five `/projects/<slug>/` detail pages.
 - Existing project IDs, slugs, route URLs, Markdown bodies, thumbnails and public asset paths are immutable.
 - `dev` is the integration branch; major architecture decisions remain on `refactor`.
-- React migration and QA merged into `dev` via PR #7. This follow-up restores the original cyan hero gradient and adds the lazy-loaded Three.js WebGL graph with an accessible SVG fallback; a separate PR to `dev` is pending.
+- React migration and QA (PR #7), cyan hero gradient and lazy Three.js graph (PR #8), and graph interaction tests (PR #9) are merged into `dev`. Additional parity work is developed on `refactor` for integration into `dev`.
 - Pull requests to `dev` and `main` validate only. `main` promotion remains a separate `dev -> main` pull request; Pages deploys only from `main` pushes or manual dispatch from `main`.
 
 ## Migration status
@@ -17,14 +17,15 @@
 - Historic project IDs are preserved separately from route slugs.
 - Content and asset references have been compared against the `dev` source; inline images use Markdown syntax and retain their original assets.
 - Static artifact output is flattened to `dist/`; the build verifies the seven route pages, 404, robots and sitemap files.
-- Local parity QA is complete; the branch is ready for the PR to `dev`. The workflow must pass before integration merge.
+- The React cutover is integrated into `dev`; subsequent parity changes are validated on `refactor` before their PR to `dev`.
 
 ## Completed behavior contracts
 
 - Ascending priority order (`1` is highest); duplicate IDs, slugs and priorities fail schema validation.
 - Base-path-aware navigation and canonical metadata.
 - Shared multi-select category filter; empty selection means All.
-- Read-only terminal whitelist, theme persistence, mobile overlay focus/escape handling, active-section navigation, reduced motion and graph/heatmap fallbacks.
+- Read-only terminal whitelist, theme persistence, mobile overlay focus/escape handling, active-section navigation, reduced motion and an SVG graph fallback when WebGL is unavailable.
+- Three.js graph force layout, idle rotation, hover glow and pointer-following tooltip; project detail pages display focus-area tags.
 - Vitest data/filter/terminal contracts and Playwright route, interaction and visual coverage.
 
 ## Release acceptance criteria
