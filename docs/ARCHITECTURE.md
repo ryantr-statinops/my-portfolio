@@ -7,7 +7,7 @@ The original blueprint described an exploratory Astro/MDX portfolio with a gener
 Current replacements:
 
 - Read `docs/ARCHITECTURE_V2.md` for runtime boundaries and routes.
-- Read `docs/CONTENT_GUIDE.md` for the MDX contract.
+- Read `docs/CONTENT_GUIDE.md` for the project JSON and Markdown authoring contract.
 - Read `docs/ROADMAP.md` for release work.
 - Read `docs/plan/README.md` for test status and CI behavior.
 

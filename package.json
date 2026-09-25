@@ -2,38 +2,46 @@
   "name": "my-portfolio",
   "type": "module",
   "version": "0.1.0",
-  "description": "Ryan Tran — Command Center Portfolio (Astro + Tailwind + MDX)",
+  "description": "Ryan Tran — Command Center Portfolio (React + TypeScript + Tailwind)",
   "private": true,
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "check": "astro check --minimumSeverity error",
+    "dev": "react-router dev",
+    "build": "react-router build && node scripts/prepare-static-artifact.mjs",
+    "check": "react-router typegen && tsc --noEmit",
     "test": "npm run test:unit && npm run test:smoke && npm run test:visual",
     "test:unit": "vitest run",
-    "test:smoke": "playwright test tests/e2e/smoke.spec.ts",
+    "test:smoke": "playwright test tests/e2e/smoke.spec.ts tests/e2e/static-artifact.spec.ts",
     "test:visual": "playwright test tests/e2e/visual.spec.ts",
     "test:watch": "vitest",
-    "preview": "astro preview",
-    "astro": "astro"
+    "preview": "node scripts/static-preview.mjs"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^7.3.1",
-    "@astrojs/mdx": "^8.0.2",
-    "@astrojs/sitemap": "3.7.4",
+    "@react-router/dev": "^7.18.4",
+    "@react-router/node": "^7.18.4",
     "@tailwindcss/vite": "^4.3.0",
-    "astro": "^7.3.4",
+    "isbot": "^5",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-markdown": "^10.1.0",
+    "react-router": "^7.18.4",
     "rehype-katex": "^7.0.1",
+    "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
-    "tailwindcss": "^4.3.0"
+    "tailwindcss": "^4.3.0",
+    "three": "^0.186.1",
+    "vite": "^6.4.3",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.10",
     "@playwright/test": "^1.63.0",
-    "gray-matter": "^4.0.3",
-    "typescript": "^6.0.3",
+    "@types/node": "^24.13.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.186.0",
+    "typescript": "^5.9.3",
     "vitest": "^5.0.0"
   }
 }

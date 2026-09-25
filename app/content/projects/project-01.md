@@ -1,0 +1,93 @@
+## 01. Tổng quan dự án
+
+**Mục tiêu:** Sử dụng các phương pháp thống kê để mô tả và phân tích dữ liệu dòng đơn hàng theo **Poisson process** (quá trình ngẫu nhiên), từ đó trực quan hóa sự khác biệt về số đơn theo thời gian và giữa các nhà máy.
+
+**Bối cảnh:** Hệ thống gồm **n nhà máy** (mặc định `n = 3`). Số lượng và tham số sinh dữ liệu có thể tinh chỉnh tại `data_gen.py`. Mục tiêu là mô hình hóa việc xuất hiện ngẫu nhiên của đơn hàng theo **đơn/giờ**, sau đó so sánh sự khác biệt giữa các nhà máy dựa trên thống kê chuỗi thời gian.
+
+
+## 02. Các thành phần trọng tâm
+
+### A. Data Modeling (Thiết kế dữ liệu)
+
+Thay vì sử dụng dữ liệu tĩnh, dự án xây dựng `data_gen.py` để tự động tạo dữ liệu cho các nhà máy, tối ưu hiệu suất và tăng tính linh động khi cần kiểm tra các kịch bản vận hành khác nhau.
+
+*   **Dữ liệu nguồn:** 3 tệp CSV riêng biệt tương ứng với Factory A, B, C.
+*   **Biến số chính:** `timestamp`, `order_id`, và `factory_id`.
+*   **Logic:** Chuyển đổi từ "Sự kiện rời rạc" (Discrete Events) sang "Tần suất theo giờ" (Hourly Aggregation).
+
+### B. Statistics (Thống kê chuyên sâu)
+
+Dự án áp dụng khung lý thuyết xác suất để kiểm định tính ổn định của dòng chảy:
+
+*   **Poisson Distribution Modeling:** Kiểm định mức độ phù hợp của dữ liệu thực tế với phân phối lý thuyết thông qua công thức:
+    $$
+    P(X=k) = \frac{\lambda^k e^{-\lambda}}{k!}
+    $$
+    Trong đó $\lambda$ là tốc độ đơn hàng trung bình mỗi giờ.
+*   **Chỉ số phân tán (Dispersion Index):** Xác định hiện tượng **Overdispersion** (khi $Var > Mean$) để điều chỉnh mô hình dự báo.
+*   **Kiểm định Chi-square:** So sánh tần suất quan sát thực tế với tần suất kỳ vọng Poisson.
+
+### C. Vận hành & Kỹ thuật (Stack)
+
+> [!NOTE]
+> Dự án được module hóa hoàn toàn để đảm bảo tính **Scalability** và **Maintainability**.
+
+*   **Python Engine:** Phối hợp pipeline từ `data_gen` → `data_loader` → `stats_engine` → `visualizer`.
+*   **Library:** `pandas` (Xử lý chuỗi thời gian), `scipy` (Kiểm định thống kê), `seaborn` (Trực quan hóa).
+
+---
+
+## 03. Key Insights & Analytics Report
+
+Đây là kết quả thu được sau khi thực hiện chạy Pipeline trên bộ dữ liệu giả lập 2016 - 2018.
+
+### Bảng so sánh chỉ số vận hành (Summary Stats)
+
+| Factory | Mean ($\lambda$) | Variance | Dispersion Index | Poisson Fit (p-value) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Factory A** | 4.52 | 4.68 | 1.03 | 0.85 (Pass) |
+| **Factory B** | 8.10 | 12.45 | 1.53 | 0.02 (Fail) |
+| **Factory C** | 2.15 | 2.10 | 0.98 | 0.91 (Pass) |
+
+### Trực quan hóa dữ liệu
+
+![Rolling Mean Analysis](/images/projects/project-01/thumbnail.webp)
+*Hình 1: Biểu đồ trung bình trượt (Rolling Mean 24h) nhận diện xu hướng biến động theo mùa vụ.*
+
+![Distribution Comparison](/images/projects/project-01/figure-2.webp)
+*Hình 2: So sánh hình dạng phân phối thực tế của số đơn hàng mỗi giờ giữa 3 nhà máy.*
+
+---
+
+## 04. Cấu trúc thư mục dự án
+
+```plaintext
+    project_stochastic/
+    ├── data/              # Chứa dữ liệu thô và kết quả xử lý
+    │   ├── raw/           # Dữ liệu gốc CSV
+    │   └── processed/     # Dữ liệu Master đã tổng hợp
+    ├── src/               # Module chức năng
+    │   ├── data_loader.py # Tải và chuẩn hóa dữ liệu
+    │   ├── stats_engine.py# Tính toán Poisson & Thống kê
+    │   └── visualizer.py  # Trực quan hóa kết quả
+    ├── main.py            # Script thực thi chính
+    ├── data_gen.py        # Script sinh dữ liệu Poisson
+    └── requirements.txt   # Danh sách thư viện
+```
+
+---
+
+## 05. Hướng dẫn triển khai
+
+1.  **Môi trường:** Kích hoạt Virtual Env `.venv\Scripts\Activate.ps1`.
+2.  **Khởi tạo:** Chạy `python data_gen.py` để tạo dữ liệu nền.
+3.  **Thực thi:** Chạy `python main.py` để tính toán và xuất báo cáo.
+4.  **Kiểm tra:** Xem báo cáo chi tiết tại `final_report.md` và các biểu đồ trong thư mục output.
+
+---
+
+## 06. Project Repository
+
+Toàn bộ mã nguồn và tài liệu hướng dẫn được lưu trữ tại:
+
+[Project Stochastic Repository](https://github.com/ryantr-statinops/Stochastic-OrderFlow-Analysis)

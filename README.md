@@ -6,14 +6,34 @@ Chào mừng bạn đến với không gian cá nhân của mình! Đây là nơ
 
 ## Tech Stack
 
-Dự án này được xây dựng trên nền tảng hiện đại, tập trung vào hiệu suất và trải nghiệm người dùng:
+Website portfolio là ứng dụng React/TypeScript tĩnh, được prerender cho GitHub Pages dưới `/my-portfolio/`:
 
-- **Framework:** [Astro](https://astro.build/) - Tối ưu hóa tốc độ tải trang với kiến trúc Island.
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/) - Thiết kế giao diện linh hoạt, mạnh mẽ.
-- **Content:** MDX - Kết hợp linh hoạt giữa Markdown và các thành phần UI.
-- **Math/Scientific:** Remark Math & Rehype KaTeX - Hỗ trợ hiển thị công thức toán học/khoa học.
+- **Framework:** React 19, TypeScript và React Router 7 Framework Mode.
+- **Build:** Vite với route HTML tĩnh cho trang chủ, registry và năm trang project; không dùng SPA fallback.
+- **Styling:** Tailwind CSS 4 qua Vite.
+- **Content:** Catalog project đã validate bằng Zod; nội dung detail viết bằng Markdown.
+- **Math/Scientific:** Remark Math, Rehype KaTeX và stylesheet/font KaTeX đóng gói local.
+- **3D visualization:** Three.js WebGL project graph, lazy-loaded near the graph viewport with an accessible SVG fallback for reduced motion or unavailable WebGL.
+- **Tests:** Vitest và Playwright trên static artifact.
+
+### Local development
+
+Requires Node.js `>=22.12.0`.
+
+```sh
+npm ci
+npm run dev
+npm run check
+npm test
+npm run build
+npm run preview
+```
 
 ---
+
+## Release and branch flow
+
+The React migration (PR #7), cyan hero gradient and lazy Three.js graph (PR #8), and graph interaction tests (PR #9) are integrated into `dev`. Further architecture and parity work starts on `refactor` and merges into `dev` through a pull request. Production promotion remains a separate `dev -> main` PR; PRs validate only and Pages deploys only from `main`.
 
 ## AI-Powered Workflow
 
@@ -37,4 +57,3 @@ Bạn muốn tìm hiểu chi tiết hơn về các dự án và hành trình ph�
 ---
 
 *Dự án này là minh chứng cho việc kết hợp giữa kỹ năng lập trình thủ công và sức mạnh của trí tuệ nhân tạo hiện đại.*
-

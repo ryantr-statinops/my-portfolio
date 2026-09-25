@@ -1,3 +1,4 @@
+> Visual design reference for the current React runtime. See `docs/ARCHITECTURE_V2.md` for component boundaries.
 # UI_OVERVIEW.md — Portfolio Interface Description
 
 ## Design Philosophy
@@ -40,7 +41,7 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 
 ---
 
-## 4. Navigation (`MainLayout.astro`)
+## 4. Navigation (`Navbar.tsx`)
 
 - **Fixed top bar** with glassmorphism effect
 - **Left**: Circular avatar + "Ryan Tran" name
@@ -51,7 +52,7 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 
 ## 5. Sections Breakdown
 
-### A. Hero Section (`index.astro`)
+### A. Hero Section (`Hero.tsx`)
 
 ```
 ┌──────────────────────────────────────────┐
@@ -83,7 +84,7 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 - **3 stat cards**: Glassmorphism, border, flex row layout
 - **CTA buttons**: Primary (solid) + Secondary (border/ghost)
 
-### B. About Me Section (`AboutMe.astro`)
+### B. About Me Section (`AboutMe.tsx`)
 
 ```
 ┌──────────────────────────────────────────┐
@@ -109,7 +110,7 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 - **Background**: Decorative blur blobs (`animate-pulse`)
 - **Card styling**: Glass-premium, `rounded-3xl`, border, hover effect
 
-### C. Intelligence Hub (`IntelligenceHub.astro`)
+### C. Intelligence Hub (`IntelligenceHub.tsx`)
 
 ```
 ┌──────────────────────────────────────────┐
@@ -141,11 +142,12 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 - **Terminal header bar**: Status indicators, version, UTC clock
 - **4 KPI cards**: Large monospace numbers, domain labels
 - **Left panel**: Project registry with checkboxes, categorized list with links
-- **Center panel**: Interactive 3D force-directed graph (Canvas API)
+- **Center panel**: Three.js WebGL graph with a settling force layout and SVG fallback
   - 3 layers: System Core → Categories → Projects
   - Nodes colored by domain: fin (cyan), ops (green), ai (pink), sys (white)
-  - Auto-rotates, draggable, hover tooltips
-  - Bloom/glow effects on hover
+  - Auto-rotates while idle; supports drag, wheel and keyboard navigation, plus click-through to project details
+  - Node size follows complexity; glow appears on hover and tooltips follow the pointer
+  - Reduced motion and unavailable WebGL use the interactive SVG fallback
 - **Bottom**: GitHub + LinkedIn exit node buttons
 
 ### D. Project Registry (Project Cards Grid)
@@ -185,7 +187,7 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 - **Card hover**: `-translate-y-2`, border transition primary, 500ms duration
 - **Decorative corner**: Bottom-right rotated border accent
 
-### E. Footer / Connect Section (`Footer.astro`)
+### E. Footer / Connect Section (`Footer.tsx`)
 
 ```
 ┌──────────────────────────────────────────┐
@@ -226,12 +228,12 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 | Element | Technology | Behavior |
 |---|---|---|
 | **Homepage Video Background** | WebM video + poster | One fixed video behind every homepage section; static poster with reduced motion or unavailable video |
-| **3D Graph** | Canvas 2D (simulated 3D) | Force-directed layout, auto-rotate, drag to rotate, hover tooltips |
+| **3D Graph** | Three.js WebGL + SVG fallback | Settling force layout, idle rotation, drag/zoom, hover glow and tooltip, project click navigation |
 | **Scroll Reveal** | IntersectionObserver | Elements fade + translate up on scroll into view |
-| **Theme Toggle** | Vanilla JS + localStorage | Toggles `dark` class on `<html>`, stores preference |
+| **Theme Toggle** | React + localStorage | Toggles `dark` class on `<html>`, stores preference |
 | **UTC Clock** | setInterval | Real-time clock in Intelligence Hub header |
 | **Project Card Hover** | CSS transitions | Grayscale→color, scale, translate, border effects |
-| **Scroll-to-top** | Vanilla JS | Immediate scroll to the top with `window.scrollTo(0, 0)` |
+| **Scroll-to-top** | React | Smooth scroll to the top; immediate with reduced motion |
 
 ---
 

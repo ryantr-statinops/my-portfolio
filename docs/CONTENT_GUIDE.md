@@ -1,63 +1,30 @@
-# CONTENT_GUIDE.md - Project Documentation Standards
+# Project Content Guide
 
-## 1. The "Power User" Writing Style
+## Project metadata
 
-* **Tone:** Chuyên nghiệp, khách quan, tập trung vào giải pháp và kết quả (Problem-Solution-Impact).
-* **Diction:** Sử dụng các thuật ngữ chuyên ngành (ví dụ: *backtesting, latency, scalability, operational efficiency*) nhưng phải giải thích đơn giản ở phần mô tả tổng quan.
-* **Banned Phrases:** Tránh các từ sáo rỗng như "rất nhanh", "cực kỳ tốt", "giao diện đẹp". Hãy thay bằng: "tối ưu 20% latency", "đạt 95 điểm Lighthouse", "giảm 2 giờ vận hành/ngày".
+Project metadata is stored in `app/data/projects.json`; project detail Markdown has no frontmatter. Add one JSON record with these fields:
 
-## 2. Project Schema (The Metadata)
+- `id`: immutable historic identifier.
+- `routeSlug`: immutable public route slug and matching Markdown filename.
+- `title`, `description`, `date`, `category`, `status`, `priority`, `tags`, `impact`, `thumbnail`, `links`, `stack`.
 
-Mọi dự án khi đẩy lên hệ thống phải có phần Header (Frontmatter) như sau để hệ thống tự động phân loại:
+`app/data/project-schema.ts` is the single validation contract. Keep IDs, route slugs and priorities unique; priority `1` is highest. Use the existing category and status allowlists, ISO `YYYY-MM-DD` dates, public thumbnail path `/images/projects/<slug>/thumbnail.webp`, and HTTP(S) URLs for optional GitHub/demo links.
 
-```markdown
----
-id: "unique-slug-01"
-title: "Tên dự án rõ ràng"
-category: "finance-quant" # [finance-quant, ops-automation, data-math, system-ui]
-status: "Completed" # [In Progress, Production, Archived]
-priority: 1 # 1 là cao nhất (đưa lên đầu trang)
-stack: ["Python", "Pandas", "React"]
-impact: "Mô tả ngắn gọn kết quả (Ví dụ: Tự động hóa 80% quy trình)"
-thumbnail: "/images/projects/thumb-01.webp"
-github: "https://github.com/..."
-demo: "https://..."
----
+## Detail body
 
-```
+Write project detail text in `app/content/projects/<routeSlug>.md`. Preserve the full project context, technical implementation, challenge/solution, impact claims and source/demo links. Use GitHub Flavored Markdown tables/lists, fenced code blocks, `$...$` inline math and `$$...$$` display math. Markdown images use `/images/...` paths and meaningful alt text; `ProjectMarkdown` prefixes local image URLs with the GitHub Pages base path.
 
-## 3. Content Structure (Cấu trúc nội dung chi tiết)
+Use objective, specific language. Do not strengthen claims, invent metrics, remove citations or alter public links during format conversion.
 
-Một bài viết chi tiết cho dự án nên đi theo lộ trình:
+## Media
 
-### A. Context (Bối cảnh)
+- Keep existing public image filenames and paths stable.
+- Verify each thumbnail and inline image exists under `public/images/`.
+- Provide concise descriptive alt text. Prefer a diagram or image with useful project context over decorative captures.
 
-* Dự án này giải quyết vấn đề gì? (Ví dụ: "XAUUSD trading thường bị nhiễu bởi tin tức, cần một bot lọc tín hiệu dựa trên Statistical Arbitrage").
-* Vai trò của bạn: (Ví dụ: Founder & Lead Developer).
+## Authoring workflow
 
-### B. Technical Implementation (Triển khai kỹ thuật)
-
-* Sử dụng công nghệ gì và **tại sao**?
-* Đoạn code "tinh túy" nhất (Code Snippet).
-* Nếu là dự án Math/Quant: Chèn các công thức chứng minh bằng $LaTeX$.
-
-### C. Challenges & Solutions (Thách thức)
-
-* Bạn đã gặp khó khăn gì (ví dụ: lỗi tràn bộ nhớ, dữ liệu thiếu) và bạn đã xử lý nó như thế nào? (Đây là phần HR và Investors đánh giá cao nhất).
-
-### D. Final Impact (Kết quả cuối cùng)
-
-* Showcase hình ảnh/video demo.
-* Các con số biết nói (Performance metrics).
-
-## 4. Media Standards (Quy chuẩn hình ảnh)
-
-* **Screenshot:** Phải là ảnh Dark Mode để đồng bộ với website.
-* **Diagrams:** Ưu tiên dùng Mermaid.js hoặc SVG để sơ đồ hóa kiến trúc (Architecture) thay vì chụp ảnh vẽ tay.
-* **Alt-text:** Luôn có mô tả ảnh để hỗ trợ SEO và Accessibility.
-
-## 5. AI Prompting Workflow (Dành cho thư mục `/agents`)
-
-Khi muốn AI viết nội dung cho một dự án mới, hãy dùng lệnh:
-
-> "Dựa trên log GitHub/File README này, hãy soạn thảo một file .mdx theo tiêu chuẩn của CONTENT_GUIDE.md. Tập trung vào mục Impact và Technical Implementation."
+1. Add/update metadata in `app/data/projects.json`.
+2. Add/update the matching `app/content/projects/<routeSlug>.md` body.
+3. Add images under `public/images/` without changing existing public asset URLs.
+4. Run `npm run test:unit`, `npm run check` and `npm run build`; browser QA must verify direct route and asset loading.
