@@ -89,7 +89,11 @@
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-br from-foreground to-foreground/60;
+    background: linear-gradient(to right, #00f2ff, #0ea5e9, #93f8d8);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
   }
 
   .katex-mathml {

@@ -11,7 +11,7 @@ The release has seven static pages: `/`, `/projects/` and five project detail ro
 | Layer | Purpose | Implementation | Status |
 |---|---|---|---|
 | L1 | Data/schema/filter/terminal contracts | Vitest | 9 tests passed locally |
-| L2 | Routes and interactions | Playwright on flattened `dist/` artifact | Complete — 12 smoke/artifact tests passed locally |
+| L2 | Routes and interactions | Playwright on flattened `dist/` artifact | 14 tests passed locally, including WebGL availability and reduced-motion fallback |
 | L3 | Visual regression | Chromium, light/dark responsive snapshots | Complete — 6 tests passed across desktop/tablet/mobile |
 | A11y | Name/role/value, keyboard, contrast and motion audit | axe on static preview | Complete — 0 confirmed violations on 3 routes; contrast cases marked incomplete on image/transparent backgrounds and manually reviewed |
 

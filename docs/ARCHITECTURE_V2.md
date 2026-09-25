@@ -15,6 +15,7 @@ Static HTML is prerendered for the homepage, Project Registry and five project-d
 | Content | `app/data/projects.json`, validated by the single Zod schema in `app/data/project-schema.ts` |
 | Detail bodies | `app/content/projects/<routeSlug>.md`, rendered by `react-markdown`, `remark-gfm`, `remark-math` and `rehype-katex` |
 | Styling | Tailwind CSS 4 through `@tailwindcss/vite` |
+| 3D graph | Three.js WebGL scene, loaded only near the graph viewport; existing interactive SVG is the reduced-motion/WebGL fallback |
 | Tests | Vitest and Playwright against the prepared static artifact |
 | Hosting | GitHub Pages at `https://ryantr-statinops.github.io/my-portfolio/` |
 
@@ -40,7 +41,7 @@ Static HTML is prerendered for the homepage, Project Registry and five project-d
 
 ## Interaction and motion
 
-The shared shell provides responsive navigation, mobile overlay focus/escape handling, active-section navigation, theme persistence and the homepage video/poster. Category selection is multi-select; an empty selection means All. The read-only terminal accepts only its documented whitelist and returns `command not found` for unknown input. Reduced-motion preference disables motion/autoplay. Project graph and heatmap surfaces retain their fallback behavior.
+The shared shell provides responsive navigation, mobile overlay focus/escape handling, active-section navigation, theme persistence and the homepage video/poster. Category selection is multi-select; an empty selection means All. The read-only terminal accepts only its documented whitelist and returns `command not found` for unknown input. The project graph uses lazy-loaded Three.js with an accessible SVG fallback when reduced motion is preferred or WebGL is unavailable. The heatmap retains its static fallback.
 
 ## Verification
 

@@ -2,25 +2,20 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
 import { CATEGORY_MAP } from "../../../src/lib/constants";
 import type { Project } from "../../data/project-schema";
+import ProjectGraph3DLazy, { type ProjectGraphNode } from "../interactive/ProjectGraph3DLazy";
 
 type Props = {
   projects: Project[];
 };
 
-type GraphNode = {
-  id: string;
-  label: string;
-  x: number;
-  y: number;
-  category: string;
-  project?: Project;
-};
+type GraphNode = ProjectGraphNode;
 
 export default function IntelligenceHub({ projects }: Props) {
   const [utcTime, setUtcTime] = useState("00:00:00");
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [hoveredNode, setHoveredNode] = useState<GraphNode | null>(null);
+  const [webglAvailable, setWebglAvailable] = useState(false);
   const drag = useRef<{ x: number; y: number } | null>(null);
   const categories = useMemo(() => [...new Set(projects.map((project) => project.category))], [projects]);
   const technologies = useMemo(() => new Set(projects.flatMap((project) => project.stack)).size, [projects]);
@@ -110,6 +105,8 @@ export default function IntelligenceHub({ projects }: Props) {
           <section className="glass group relative col-span-12 overflow-hidden rounded-xl border border-border/80 bg-card/40 lg:col-span-9" aria-label="Interactive project intelligence graph">
             <div className="pointer-events-none absolute left-6 top-6 z-20 reveal"><div className="rounded-r-lg border-l-2 border-primary bg-background/80 px-4 py-2 shadow-2xl backdrop-blur-md"><p className="mb-1 font-mono text-[8px] uppercase tracking-[0.3em] text-primary">Neural_Network_Mapping</p><p className="text-xs font-black uppercase tracking-tighter text-foreground">PROJECT_INTELLIGENCE_GRAPH_V4</p></div></div>
             <div className="absolute bottom-4 right-4 z-20 font-mono text-[8px] uppercase tracking-widest text-muted">Drag to rotate · Scroll to zoom</div>
+            <ProjectGraph3DLazy projects={projects} onAvailabilityChange={setWebglAvailable} onHoverNode={setHoveredNode} />
+            {!webglAvailable && (
             <svg viewBox="0 0 1000 600" role="group" aria-label={`Graph connecting ${projects.length} projects across ${categories.length} technical domains`} className="h-full w-full touch-none cursor-move" onPointerDown={beginDrag} onPointerMove={moveGraph} onPointerUp={() => { drag.current = null; }} onPointerCancel={() => { drag.current = null; }} onWheel={(event) => { event.preventDefault(); setZoom((current) => Math.max(0.65, Math.min(1.8, current + (event.deltaY < 0 ? 0.08 : -0.08)))); }}>
               <g style={{ transform: `perspective(900px) rotateX(${rotation.y}deg) rotateY(${rotation.x}deg) scale(${zoom})`, transformOrigin: "50% 50%", transition: drag.current ? "none" : "transform 120ms ease-out" }}>
                 {graph.categoryNodes.map((node) => <line key={`core-${node.id}`} x1={graph.center.x} y1={graph.center.y} x2={node.x} y2={node.y} className="stroke-accent/70" strokeWidth="2" />)}
@@ -119,6 +116,10 @@ export default function IntelligenceHub({ projects }: Props) {
                 {graph.projectNodes.map((node) => <Link key={node.id} to={`/projects/${node.id}/`} aria-label={`Open ${node.label}`} onMouseEnter={() => setHoveredNode(node)} onMouseLeave={() => setHoveredNode(null)}><circle cx={node.x} cy={node.y} r="10" fill={node.category.includes("finance") ? "#00f2ff" : node.category.includes("ai") ? "#fb7185" : "#93f8d8"} stroke="var(--background)" strokeWidth="2" /><title>{node.label}</title></Link>)}
               </g>
             </svg>
+            )}
+            <ul className="sr-only" aria-label="Projects represented in the 3D graph">
+              {projects.map((project) => <li key={project.routeSlug}><Link to={`/projects/${project.routeSlug}/`}>{project.title} — {CATEGORY_MAP[project.category] ?? project.category}</Link></li>)}
+            </ul>
             {hoveredNode && <div role="tooltip" className="absolute bottom-12 left-4 z-30 max-w-[240px] rounded-xl border border-primary/50 bg-background/90 p-3 shadow-2xl backdrop-blur-xl"><p className="mb-1 text-[10px] font-bold uppercase text-primary">{hoveredNode.label}</p><p className="text-[9px] leading-relaxed text-muted">{hoveredNode.project?.description ?? `Technical system layer for ${hoveredNode.category} projects.`}</p><p className="mt-2 border-t border-border/80 pt-2 font-mono text-[8px] uppercase text-success">Complexity: {hoveredNode.project?.priority ? hoveredNode.project.priority * 2 + 4 : 7}</p></div>}
           </section>
         </div>

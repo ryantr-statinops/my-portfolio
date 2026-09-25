@@ -13,6 +13,7 @@ Website portfolio là ứng dụng React/TypeScript tĩnh, được prerender ch
 - **Styling:** Tailwind CSS 4 qua Vite.
 - **Content:** Catalog project đã validate bằng Zod; nội dung detail viết bằng Markdown.
 - **Math/Scientific:** Remark Math, Rehype KaTeX và stylesheet/font KaTeX đóng gói local.
+- **3D visualization:** Three.js WebGL project graph, lazy-loaded near the graph viewport with an accessible SVG fallback for reduced motion or unavailable WebGL.
 - **Tests:** Vitest và Playwright trên static artifact.
 
 ### Local development
@@ -32,7 +33,7 @@ npm run preview
 
 ## Release and branch flow
 
-The React migration is complete on `refactor/react-completion`; local parity QA passes and the branch is ready for a pull request to `dev`. `dev` is the integration branch; production promotion remains a separate `dev -> main` pull request. Pull requests to `dev` and `main` run validation only; GitHub Pages deploys only from `main`.
+The React migration is integrated into `dev` via PR #7. This follow-up restores the cyan hero text gradient and adds a lazy-loaded Three.js graph; it is on `feat/threejs-intelligence-graph` and needs a separate PR to `dev`. Production promotion remains a separate `dev -> main` PR; PRs validate only and Pages deploys only from `main`.
 
 ## AI-Powered Workflow
 

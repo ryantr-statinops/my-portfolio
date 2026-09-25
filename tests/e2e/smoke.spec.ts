@@ -49,6 +49,28 @@ test("all local project and background images load beneath the base path", async
   }
 });
 
+test("project graph retains an accessible reduced-motion fallback", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("./");
+  const fallback = page.locator('section[aria-label="Interactive project intelligence graph"] svg[role="group"]');
+  await expect(fallback).toBeVisible();
+  await expect(fallback).toHaveAttribute("aria-label", /Graph connecting 5 projects across/);
+  await expect(page.locator('ul[aria-label="Projects represented in the 3D graph"] a')).toHaveCount(5);
+});
+test("project graph mounts WebGL when available and retains its accessible fallback", async ({ page }) => {
+  await page.goto("./");
+  await page.locator(".strategic-dashboard-section").scrollIntoViewIfNeeded();
+  const canvas = page.locator("canvas[data-3d-graph]");
+  const fallback = page.locator('section[aria-label="Interactive project intelligence graph"] svg[role="group"]');
+  await expect.poll(async () => await canvas.isVisible() || await fallback.isVisible()).toBe(true);
+
+  if (await canvas.isVisible()) {
+    expect(await canvas.evaluate((element) => Boolean((element as HTMLCanvasElement).getContext("webgl2")))).toBe(true);
+  } else {
+    await expect(fallback).toBeVisible();
+  }
+  await expect(page.locator('ul[aria-label="Projects represented in the 3D graph"] a')).toHaveCount(5);
+});
 test("homepage category filter updates hub metrics and showcase with multi-select and empty state", async ({ page }) => {
   await page.goto("./");
   const filter = page.locator("[data-project-filter]");

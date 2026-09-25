@@ -8,7 +8,7 @@
 - Seven static pages: `/`, `/projects/` and five `/projects/<slug>/` detail pages.
 - Existing project IDs, slugs, route URLs, Markdown bodies, thumbnails and public asset paths are immutable.
 - `dev` is the integration branch; major architecture decisions remain on `refactor`.
-- React migration and local parity QA are complete on `refactor/react-completion`; the remaining step is the PR to `dev` and its CI validation.
+- React migration and QA merged into `dev` via PR #7. This follow-up restores the original cyan hero gradient and adds the lazy-loaded Three.js WebGL graph with an accessible SVG fallback; a separate PR to `dev` is pending.
 - Pull requests to `dev` and `main` validate only. `main` promotion remains a separate `dev -> main` pull request; Pages deploys only from `main` pushes or manual dispatch from `main`.
 
 ## Migration status

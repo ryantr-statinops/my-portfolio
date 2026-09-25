@@ -11,6 +11,7 @@
 | CSS | Tailwind CSS 4 through `@tailwindcss/vite` |
 | Project metadata | JSON catalog, Zod schema and unique ID/slug/priority checks |
 | Detail content | Markdown, `react-markdown`, GFM, math and KaTeX |
+| 3D visualization | Three.js WebGL graph, loaded on viewport proximity; accessible SVG fallback for reduced motion or unavailable WebGL |
 | Browser QA | Playwright 1.63.0, Chromium |
 | Unit QA | Vitest 5 |
 | Production | GitHub Pages, `/my-portfolio/` |
@@ -49,4 +50,4 @@ Dependency audit is report-only in CI; review any reported advisory before merge
 
 ## Cutover status
 
-The React migration, local parity QA, accessibility audit and production-like manual checks are complete on `refactor/react-completion`. `npm ci`, audit, check, build, unit, smoke and visual gates pass locally; the next gate is the PR to `dev` and its CI run. Build output includes non-fatal Rollup annotation and React Router future-flag warnings.
+The React migration is merged into `dev` through PR #7. This follow-up restores the hero cyan gradient and adds a lazy-loaded Three.js graph on `feat/threejs-intelligence-graph`; it awaits a separate PR to `dev`. CI and local tests cover the SVG/reduced-motion fallback and the WebGL scene when supported. The lazy Three.js chunk is about 537 KB raw (135 KB gzip); Vite reports a non-fatal 500 KB chunk warning. Rollup annotation and React Router future-flag warnings also remain non-fatal.
