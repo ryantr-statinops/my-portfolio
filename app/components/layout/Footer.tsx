@@ -19,8 +19,8 @@ export default function Footer({ transparentBackground = false }: Props) {
               </div>
             </div>
             <div className="space-y-6">
-              <div className="group cursor-pointer"><p className="mb-1 font-mono text-[9px] uppercase tracking-[0.3em] text-muted opacity-60">Communication_Channel</p><a href="mailto:trankhang2856@gmail.com" className="text-xl font-bold transition-all duration-300 hover:text-primary">trankhang2856@gmail.com</a></div>
-              <div className="group cursor-pointer"><p className="mb-1 font-mono text-[9px] uppercase tracking-[0.3em] text-muted opacity-60">Global_Base</p><p className="text-xl font-bold">Ho Chi Minh City, Vietnam</p></div>
+              <div className="group cursor-pointer"><p className="mb-1 font-mono text-[9px] uppercase tracking-[0.3em] text-muted">Communication_Channel</p><a href="mailto:trankhang2856@gmail.com" className="text-xl font-bold transition-all duration-300 hover:text-primary">trankhang2856@gmail.com</a></div>
+              <div className="group cursor-pointer"><p className="mb-1 font-mono text-[9px] uppercase tracking-[0.3em] text-muted">Global_Base</p><p className="text-xl font-bold">Ho Chi Minh City, Vietnam</p></div>
             </div>
             <div className="flex flex-wrap gap-3 pt-2">
               <a href="https://www.linkedin.com/in/ryan-tr/" target="_blank" rel="noreferrer" className="rounded-xl border border-border/50 px-5 py-2.5 font-mono text-[10px] font-bold uppercase tracking-widest transition-all duration-500 hover:border-primary hover:bg-primary hover:text-background">LinkedIn</a>
@@ -31,8 +31,8 @@ export default function Footer({ transparentBackground = false }: Props) {
             <div className="glass-premium relative w-full overflow-hidden rounded-[2rem] border border-border/40 bg-card/10 p-8 md:p-10">
               <div className="relative z-10 space-y-6">
                 <div className="space-y-2"><p className="font-mono text-[9px] uppercase tracking-[0.3em] text-muted">For_Systems_Data_Infra</p><p className="text-sm leading-relaxed text-muted">Statistics-trained systems builder — open to quantitative finance, data engineering and infrastructure work.</p></div>
-                <div className="group"><p className="mb-1 font-mono text-[9px] uppercase tracking-[0.3em] text-muted opacity-60">Direct_Channel</p><a href="mailto:trankhang2856@gmail.com" className="text-xl font-bold transition-all duration-300 hover:text-primary">trankhang2856@gmail.com</a></div>
-                <div><p className="mb-1 font-mono text-[9px] uppercase tracking-[0.3em] text-muted opacity-60">Global_Base</p><p className="text-xl font-bold">Ho Chi Minh City, Vietnam</p></div>
+                <div className="group"><p className="mb-1 font-mono text-[9px] uppercase tracking-[0.3em] text-muted">Direct_Channel</p><a href="mailto:trankhang2856@gmail.com" className="text-xl font-bold transition-all duration-300 hover:text-primary">trankhang2856@gmail.com</a></div>
+                <div><p className="mb-1 font-mono text-[9px] uppercase tracking-[0.3em] text-muted">Global_Base</p><p className="text-xl font-bold">Ho Chi Minh City, Vietnam</p></div>
               </div>
             </div>
           </div>

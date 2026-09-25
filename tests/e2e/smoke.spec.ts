@@ -3,7 +3,7 @@ import { existsSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const basePath = "/my-portfolio/";
-const projectOutput = resolve(process.cwd(), "build/client/my-portfolio/projects");
+const projectOutput = resolve(process.cwd(), "dist/projects");
 const projectRoutes = readdirSync(projectOutput, { withFileTypes: true })
   .filter((entry) => entry.isDirectory() && existsSync(join(projectOutput, entry.name, "index.html")))
   .map((entry) => `./projects/${entry.name}/`)
@@ -121,6 +121,11 @@ test("theme follows system preference until an explicit choice persists", async 
   await expect.poll(() => page.evaluate(() => localStorage.getItem("theme"))).toBe("light");
   await page.reload();
   await expect(page.locator("html")).not.toHaveClass(/dark/);
+  await page.locator("#theme-toggle").click();
+  await expect(page.locator("html")).toHaveClass(/dark/);
+  await expect.poll(() => page.evaluate(() => localStorage.getItem("theme"))).toBe("dark");
+  await page.reload();
+  await expect(page.locator("html")).toHaveClass(/dark/);
 });
 
 test("skip link, smooth section navigation, reduced motion, and mobile menu work", async ({ page }) => {

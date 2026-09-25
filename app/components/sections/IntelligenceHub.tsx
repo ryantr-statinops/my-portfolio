@@ -17,7 +17,7 @@ type GraphNode = {
 };
 
 export default function IntelligenceHub({ projects }: Props) {
-  const [utcTime, setUtcTime] = useState(() => new Date().toISOString().slice(11, 19));
+  const [utcTime, setUtcTime] = useState("00:00:00");
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [hoveredNode, setHoveredNode] = useState<GraphNode | null>(null);
@@ -27,7 +27,9 @@ export default function IntelligenceHub({ projects }: Props) {
   const activeProjects = projects.filter((project) => project.status === "Production" || project.status === "In Progress").length;
 
   useEffect(() => {
-    const interval = window.setInterval(() => setUtcTime(new Date().toISOString().slice(11, 19)), 1_000);
+    const updateTime = () => setUtcTime(new Date().toISOString().slice(11, 19));
+    updateTime();
+    const interval = window.setInterval(updateTime, 1_000);
     return () => window.clearInterval(interval);
   }, []);
 
