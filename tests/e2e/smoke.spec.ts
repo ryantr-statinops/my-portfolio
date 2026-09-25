@@ -57,20 +57,92 @@ test("project graph retains an accessible reduced-motion fallback", async ({ pag
   await expect(fallback).toHaveAttribute("aria-label", /Graph connecting 5 projects across/);
   await expect(page.locator('ul[aria-label="Projects represented in the 3D graph"] a')).toHaveCount(5);
 });
+
+test("SVG graph fallback responds to drag, zoom, hover, and project clicks", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("./");
+  const graph = page.locator('section[aria-label="Interactive project intelligence graph"] svg[role="group"]');
+  await graph.scrollIntoViewIfNeeded();
+  const nodes = graph.locator("g").first();
+  const initialTransform = await nodes.getAttribute("style");
+  const bounds = await graph.boundingBox();
+  expect(bounds).not.toBeNull();
+  const centerX = bounds!.x + bounds!.width / 2;
+  const centerY = bounds!.y + bounds!.height / 2;
+
+  await page.mouse.move(centerX, centerY);
+  await page.mouse.down();
+  await page.mouse.move(centerX + 100, centerY + 30, { steps: 5 });
+  await page.mouse.up();
+  await expect(nodes).not.toHaveAttribute("style", initialTransform!);
+
+  const rotatedTransform = await nodes.getAttribute("style");
+  await graph.hover({ position: { x: bounds!.width / 2, y: bounds!.height / 2 } });
+  await page.mouse.wheel(0, -300);
+  await expect(nodes).not.toHaveAttribute("style", rotatedTransform!);
+
+  const project = graph.getByRole("link", { name: /Open Grap4Prob/ });
+  await project.hover();
+  await expect(page.getByRole("tooltip")).toContainText("Grap4Prob");
+  await project.click();
+  await expect(page).toHaveURL(/\/my-portfolio\/projects\/grap4prob\/$/);
+});
+
 test("project graph mounts WebGL when available and retains its accessible fallback", async ({ page }) => {
   await page.goto("./");
   await page.locator(".strategic-dashboard-section").scrollIntoViewIfNeeded();
   const canvas = page.locator("canvas[data-3d-graph]");
   const fallback = page.locator('section[aria-label="Interactive project intelligence graph"] svg[role="group"]');
-  await expect.poll(async () => await canvas.isVisible() || await fallback.isVisible()).toBe(true);
-
-  if (await canvas.isVisible()) {
-    expect(await canvas.evaluate((element) => Boolean((element as HTMLCanvasElement).getContext("webgl2")))).toBe(true);
-  } else {
-    await expect(fallback).toBeVisible();
-  }
+  await expect.poll(async () => {
+    if (await canvas.isVisible()) return canvas.evaluate((element) => Boolean((element as HTMLCanvasElement).getContext("webgl2")));
+    return fallback.isVisible();
+  }).toBe(true);
   await expect(page.locator('ul[aria-label="Projects represented in the 3D graph"] a')).toHaveCount(5);
 });
+
+test("WebGL graph responds to drag and zoom, shows project details on hover, and opens a project on click", async ({ page }) => {
+  await page.goto("./");
+  const canvas = page.locator("canvas[data-3d-graph]");
+  await page.locator(".strategic-dashboard-section").scrollIntoViewIfNeeded();
+  await canvas.waitFor({ state: "visible", timeout: 8_000 }).catch(() => {});
+  test.skip(!(await canvas.isVisible()), "WebGL is unavailable in this browser; SVG interactions are tested separately");
+  await page.locator("video").evaluateAll((videos) => videos.forEach((video) => (video as HTMLVideoElement).pause()));
+
+  const bounds = await canvas.boundingBox();
+  expect(bounds).not.toBeNull();
+  const centerX = bounds!.x + bounds!.width / 2;
+  const centerY = bounds!.y + bounds!.height / 2;
+  const initial = await canvas.screenshot({ animations: "disabled" });
+
+  await page.mouse.move(centerX, centerY);
+  await page.mouse.down();
+  await page.mouse.move(centerX + 100, centerY + 35, { steps: 8 });
+  await page.mouse.up();
+  const rotated = await canvas.screenshot({ animations: "disabled" });
+  expect(rotated.equals(initial), "drag should redraw the graph at a new angle").toBe(false);
+
+  await page.mouse.wheel(0, -300);
+  const zoomed = await canvas.screenshot({ animations: "disabled" });
+  expect(zoomed.equals(rotated), "wheel input should redraw the graph at a new zoom level").toBe(false);
+
+  await page.reload();
+  await page.locator(".strategic-dashboard-section").scrollIntoViewIfNeeded();
+  await expect(canvas).toBeVisible();
+  const resetBounds = await canvas.boundingBox();
+  expect(resetBounds).not.toBeNull();
+
+  // The first project sits one unit to the right of the first category in the initial scene.
+  // Project its fixed world position through the 42° camera to target the rendered sphere.
+  const focalLength = resetBounds!.height / (2 * Math.tan((42 * Math.PI) / 360));
+  const projectX = resetBounds!.x + resetBounds!.width / 2 + (1.25 / 15.7) * focalLength;
+  const projectY = resetBounds!.y + resetBounds!.height / 2 - (1.2 / 15.7) * focalLength;
+  await page.mouse.move(projectX, projectY);
+  await expect(page.getByRole("tooltip")).toContainText("Grap4Prob");
+  expect(await page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.matches("canvas[data-3d-graph]"), { x: projectX, y: projectY })).toBe(true);
+  await page.mouse.click(projectX, projectY);
+  await expect(page).toHaveURL(/\/my-portfolio\/projects\/grap4prob\/$/);
+});
+
 test("homepage category filter updates hub metrics and showcase with multi-select and empty state", async ({ page }) => {
   await page.goto("./");
   const filter = page.locator("[data-project-filter]");

@@ -60,6 +60,7 @@ export default function IntelligenceHub({ projects }: Props) {
   ];
 
   function beginDrag(event: React.PointerEvent<SVGSVGElement>) {
+    if ((event.target as Element).closest("a")) return;
     drag.current = { x: event.clientX, y: event.clientY };
     event.currentTarget.setPointerCapture(event.pointerId);
   }
