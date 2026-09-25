@@ -1,50 +1,36 @@
-# Release Roadmap — Portfolio Hardening
+# Release Roadmap — React Cutover
 
-> Source of truth for the current portfolio release. Production target: GitHub Pages.
-> Last verified: 2026-09-23.
+> Current runtime source of truth. Production target: GitHub Pages under `/my-portfolio/`.
 
 ## Current release model
 
-- `/` is the homepage.
-- `/projects/` is the canonical Project Registry.
-- Five project detail pages are generated from `src/content/projects/*.mdx`.
-- `/cluster/` was removed. A future Cluster startup project will be added as its own MDX entry and route under `/projects/`; no `cluster.mdx` is part of this release.
-- The static build must generate exactly seven pages.
-- Existing project IDs, slugs and public URLs remain unchanged.
-- `dev` is the integration branch for project work; completed changes reach `main` through pull requests.
-- `refactor` remains reserved for major architectural decisions.
+- React 19 + React Router 7 Framework Mode + Vite; the seven production pages are prerendered as static route HTML.
+- Seven static pages: `/`, `/projects/` and five `/projects/<slug>/` detail pages.
+- Existing project IDs, slugs, route URLs, Markdown bodies, thumbnails and public asset paths are immutable.
+- `dev` is the integration branch; major architecture decisions remain on `refactor`.
+- React migration and local parity QA are complete on `refactor/react-completion`; the remaining step is the PR to `dev` and its CI validation.
+- Pull requests to `dev` and `main` validate only. `main` promotion remains a separate `dev -> main` pull request; Pages deploys only from `main` pushes or manual dispatch from `main`.
 
-## Completed release work
+## Migration status
 
-- Route migration from the old dashboard to `/projects/`.
-- Neutral portfolio terminology and removal of unverified dashboard metrics.
-- Ascending priority order (`1` is highest) with duplicate-priority build failure.
-- Strict project thumbnail paths and content tests.
-- Base-path-aware navigation for GitHub Pages.
-- Shared multi-select category filter on the homepage and Project Registry.
-- Read-only Portfolio Runtime Terminal with a whitelist of five commands.
-- Reduced-motion fallbacks and deterministic visual-test behavior.
-- L1 unit tests, L2 Chromium smoke tests and L3 responsive visual baselines.
-- CI gates for check, build, seven-page output, smoke, visual, sitemap and robots.
+- React routes, shell, content catalog, project Markdown renderer and static artifact preparation are in place.
+- Historic project IDs are preserved separately from route slugs.
+- Content and asset references have been compared against the `dev` source; inline images use Markdown syntax and retain their original assets.
+- Static artifact output is flattened to `dist/`; the build verifies the seven route pages, 404, robots and sitemap files.
+- Local parity QA is complete; the branch is ready for the PR to `dev`. The workflow must pass before integration merge.
 
-## Remaining release work
+## Completed behavior contracts
 
-### Phase 1 — Dependency and security maintenance (completed 2026-09-23)
-
-- Upgraded Astro to 7.3.4 and `@astrojs/mdx` to 8.0.2.
-- Migrated the math pipeline to the explicit unified Markdown processor.
-- Raised the supported Node floor to 22.12.0.
-- Confirmed `npm audit` reports zero vulnerabilities.
-
-### Phase 2 — Optional analytics
-
-After all feature and QA gates are stable, configure GoatCounter through `PUBLIC_GOATCOUNTER_URL`.
-The build must remain valid and load no analytics script when the variable is absent. Track only page views, project detail views, GitHub/demo clicks and contact clicks; never collect message content or PII.
+- Ascending priority order (`1` is highest); duplicate IDs, slugs and priorities fail schema validation.
+- Base-path-aware navigation and canonical metadata.
+- Shared multi-select category filter; empty selection means All.
+- Read-only terminal whitelist, theme persistence, mobile overlay focus/escape handling, active-section navigation, reduced motion and graph/heatmap fallbacks.
+- Vitest data/filter/terminal contracts and Playwright route, interaction and visual coverage.
 
 ## Release acceptance criteria
 
-`npm run test`, `npm run check` and `npm run build` pass; seven pages are generated; all routes and internal links return 200; filters and terminal behavior pass; dark/light responsive baselines pass; sitemap and robots exist; GitHub Pages deploys; documentation contains no obsolete deployment or removed-feature assumptions.
+`npm ci`, `npm run check`, `npm run build`, unit, smoke and visual gates pass; exactly seven route HTML files exist; sitemap and robots URLs use `/my-portfolio/`; direct route reloads work; critical/serious axe violations and keyboard traps are absent; production-like navigation, theme, filter, terminal and mobile-menu behavior are manually verified.
 
-## Commit policy
+## Future work
 
-Changes are delivered as small atomic commits. Every commit must pass its relevant gate, be committed directly to `main`, and be pushed immediately. Do not squash. A failing CI result is fixed by a subsequent commit.
+Optional analytics remain deferred until a public endpoint and privacy requirements are explicitly approved. No analytics request is included in this cutover.

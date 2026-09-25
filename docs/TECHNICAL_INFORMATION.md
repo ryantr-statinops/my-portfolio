@@ -1,52 +1,52 @@
 # Technical Information
 
-> Current implementation reference for the static portfolio. Last updated 2026-09-23.
+> Current React production implementation. Node floor: `>=22.12.0`.
 
 ## Runtime
 
 | Component | Version/configuration |
 |---|---|
-| Node | `>=22.12.0` |
-| Astro | `7.3.4` static output |
-| Tailwind | `4.3.0` via `@tailwindcss/vite` |
-| MDX | `@astrojs/mdx` `8.0.2`; unified processor for remark/rehype plugins |
-| Validation | Astro Content Layer + Zod + Vitest |
-| Browser QA | Playwright `1.63.0`, Chromium |
-| Production | GitHub Pages, base `/my-portfolio` |
+| UI | React 19, React DOM 19, TypeScript |
+| Routing/build | React Router 7 Framework Mode, Vite 6, `ssr: false` |
+| CSS | Tailwind CSS 4 through `@tailwindcss/vite` |
+| Project metadata | JSON catalog, Zod schema and unique ID/slug/priority checks |
+| Detail content | Markdown, `react-markdown`, GFM, math and KaTeX |
+| Browser QA | Playwright 1.63.0, Chromium |
+| Unit QA | Vitest 5 |
+| Production | GitHub Pages, `/my-portfolio/` |
 
-## Build and deployment
+## Routes and build
 
-`astro.config.mjs` sets `site` to `https://ryantr-statinops.github.io` and `base` to `/my-portfolio`. The workflow runs `npm ci`, a safe dependency update check, report-only `npm audit`, unit tests, `astro check`, static build, exact seven-page assertion, smoke tests, visual tests and sitemap/robots verification before uploading the Pages artifact and deploying.
+`react-router.config.ts` defines the `/my-portfolio/` basename and explicit prerender list: homepage, registry and five project routes. `npm run build` runs the React Router build and `scripts/prepare-static-artifact.mjs`; the prepared root is `dist/`, the Pages upload path. It contains seven route `index.html` files, `404.html`, `robots.txt`, `sitemap-index.xml`, `sitemap-0.xml`, bundled assets and public images. No SPA fallback is used for direct loads.
 
-## Content
+`npm run preview` serves the exact `dist/` artifact below `/my-portfolio/`; it is the Playwright and manual production-like preview.
 
-Projects live in `src/content/projects/*.mdx` and are loaded through the Astro glob collection. The schema validates the current fields and enforces `priority` uniqueness, date format, category/status allowlists, tag/stack limits and exact thumbnail paths. `src/lib/content.ts` provides the shared ascending-priority ordering used by the homepage and `/projects/`.
+## Content and behavior
 
-## Portfolio Registry and interaction
+`app/data/project-schema.ts` is the sole Zod contract. `app/data/projects.json` preserves historic `id` values separately from public `routeSlug` values and includes title, description, date, category, status, priority, tags, impact, thumbnail, links and stack. `app/data/projects.ts` owns validation, ordering, route slugs and lookup. Detail Markdown lives in `app/content/projects/<routeSlug>.md`; inline `/images/...` paths are prefixed with Vite `BASE_URL` at render time.
 
-`/projects/` is the canonical Project Registry. `ProjectFilter` uses client-only browser state and dispatches the `portfolio:filter` event to update cards, registry rows, Project Graph nodes and KPI counts. No localStorage, API or server state is used.
-
-`SystemTerminal` is a read-only showcase. Its whitelist is `help`, `status`, `neofetch`, `ls /projects` and `clear`; unknown input returns `command not found`. It does not invoke a shell, backend, WebSocket or remote execution.
+`/projects/` is the canonical registry. Filters are multi-select and an empty category set means All. The portfolio terminal is read-only and only accepts its allowlisted commands. Theme persistence, mobile menu focus/escape handling, section navigation, reduced-motion behavior and graph/heatmap fallbacks remain in browser-facing components.
 
 ## QA commands
 
 ```bash
-npm run test:unit
+npm ci
 npm run check
+npm run test:unit
 npm run build
 npm run test:smoke
 npm run test:visual
-npm run test
+npm run preview
 ```
 
-Playwright uses the GitHub Pages base path during local preview. Visual tests cover dark/light themes and desktop `1280x800`, tablet `768x1024` and mobile `375x667`; animation, dynamic canvas and clock output are excluded from assertions.
+Visual snapshots cover light/dark themes at desktop `1280x800`, tablet `768x1024` and mobile `375x667`. The workflow pins `mcr.microsoft.com/playwright:v1.63.0-noble` and Node `22.12.0`.
 
-## Security and dependency policy
+## Branch and deployment policy
 
-Apply dependency remediation on `dev`; never run `npm audit fix --force`. Changes requiring an architectural decision belong on `refactor`, then return to `dev` and pass the complete QA suite before promotion to `main`.
+Architecture work is on `refactor`; integration targets `dev` through a pull request; promotion targets `main` through a separate `dev -> main` pull request. Pull requests to `dev` and `main` run validation without Pages upload/deploy. Upload and deployment conditions require `refs/heads/main` and a non-PR event.
 
-The 2026-09-23 Astro 7 migration upgraded Astro to 7.3.4, `@astrojs/mdx` to 8.0.2 and the Node floor to 22.12.0. The math pipeline now uses `@astrojs/markdown-remark` explicitly because Astro 7's default Sätteri processor does not run remark/rehype plugins. `npm audit` reports zero vulnerabilities after the migration.
+Dependency audit is report-only in CI; review any reported advisory before merge. Do not use `npm audit fix --force`.
 
-## Analytics status
+## Cutover status
 
-GoatCounter is an optional final phase. `PUBLIC_GOATCOUNTER_URL` must be configured before its script is injected; without it, builds pass and no analytics request is made. No secret or personal form data belongs in the repository.
+The React migration, local parity QA, accessibility audit and production-like manual checks are complete on `refactor/react-completion`. `npm ci`, audit, check, build, unit, smoke and visual gates pass locally; the next gate is the PR to `dev` and its CI run. Build output includes non-fatal Rollup annotation and React Router future-flag warnings.

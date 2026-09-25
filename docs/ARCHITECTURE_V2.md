@@ -1,68 +1,56 @@
 # Architecture — Portfolio Runtime
 
-> Current architecture and migration status. Verified 2026-09-23.
+> Canonical implementation: React 19, React Router 7 Framework Mode, Vite and TypeScript. GitHub Pages base: `/my-portfolio/`.
 
 ## Source of truth
 
-The runtime is a static Astro portfolio. MDX content is validated by Zod, rendered at build time and published to GitHub Pages under `/my-portfolio`.
+Static HTML is prerendered for the homepage, Project Registry and five project-detail routes. Direct load and reload are served by route-specific HTML; deployment does not use an SPA fallback.
 
-## Stack
+## Stack and boundaries
 
-| Layer | Current implementation |
+| Layer | Implementation |
 |---|---|
-| Framework | Astro 7.3.4, static output |
-| Content | `@astrojs/mdx` 8.0.2, glob collection, Zod schema |
-| Styling | Tailwind CSS 4.3 with `@tailwindcss/vite` |
-| Math | `remark-math`, `rehype-katex`, KaTeX 0.16.11 |
-| Tests | Vitest 5.0.0 and Playwright 1.63.0/Chromium |
-| Deployment | GitHub Pages via `actions/deploy-pages@v4` |
+| Framework | React 19, TypeScript, React Router 7 Framework Mode |
+| Build | Vite, `ssr: false`, explicit prerender routes |
+| Content | `app/data/projects.json`, validated by the single Zod schema in `app/data/project-schema.ts` |
+| Detail bodies | `app/content/projects/<routeSlug>.md`, rendered by `react-markdown`, `remark-gfm`, `remark-math` and `rehype-katex` |
+| Styling | Tailwind CSS 4 through `@tailwindcss/vite` |
+| Tests | Vitest and Playwright against the prepared static artifact |
+| Hosting | GitHub Pages at `https://ryantr-statinops.github.io/my-portfolio/` |
 
-## Routes
+`app/root.tsx` owns global CSS, KaTeX CSS, favicon, sitemap metadata, site metadata and the `SiteShell`, `Outlet`, `Scripts` and `ScrollRestoration` boundary. Layout/navigation/theme/footer live in `app/components/layout/`; homepage sections in `app/components/sections/`; browser state in `app/components/interactive/`; project Markdown rendering in `app/components/ProjectMarkdown.tsx`.
 
-```text
-src/pages/index.astro              -> /
-src/pages/projects/index.astro     -> /projects/
-src/pages/projects/[slug].astro    -> /projects/<project-slug>/ (5 pages)
-```
+## Routes and artifact
 
-The old `/cluster/` dashboard is removed. The word Cluster is reserved for future project content or strategy context, not the portfolio runtime. A future Cluster project will be a normal MDX entry; this release creates no `cluster.mdx`.
+| Public route | Generated HTML |
+|---|---|
+| `/my-portfolio/` | `dist/index.html` |
+| `/my-portfolio/projects/` | `dist/projects/index.html` |
+| `/my-portfolio/projects/<slug>/` | `dist/projects/<slug>/index.html` (five routes) |
 
-## Boundaries
+`react-router.config.ts` sets `basename: "/my-portfolio/"`, `ssr: false` and prerenders `/`, `/projects` and `projectRouteSlugs`. `npm run build` runs React Router and then `scripts/prepare-static-artifact.mjs`, which flattens `build/client/my-portfolio/` into the deployable `dist/` root and verifies all seven pages, `404.html`, `robots.txt`, sitemap files and the stylesheet. `scripts/static-preview.mjs` serves `dist/` beneath the GitHub Pages base path and returns an actual 404 for unknown paths.
 
-```text
-pages       -> layouts, sections, interactive, lib, content
-sections    -> ui, interactive, lib
-interactive -> lib and browser APIs only
-layouts     -> layout/ui/lib
-lib         -> no Astro components
-content     -> data only
-```
+## Data and content contracts
 
-Important runtime modules:
-
-- `src/lib/content.ts`: sorted project collection and duplicate-priority validation.
-- `src/lib/project-filter.ts`: pure multi-select filter state and matching logic.
-- `src/components/interactive/ProjectFilter.astro`: accessible filter UI and event bridge.
-- `src/components/interactive/SystemTerminal.astro`: read-only command simulator; never executes shell commands.
-- `src/components/sections/IntelligenceHub.astro`: Project Graph, registry list and derived counts.
-- `src/components/sections/PortfolioRegistry.astro`: Project Registry table used by `/projects/`.
-
-## Content contract
-
-The five current projects retain their IDs and routes. Required fields are `id`, `title`, `description`, `date`, `category`, `status`, `priority`, `tags`, `impact`, `thumbnail`, `github`, `demo` and `stack`. Priority `1` is highest; duplicate priorities fail the build. Thumbnails must match `/images/projects/<filename-slug>/thumbnail.webp` and the file must exist.
+- `id` preserves each historic project identifier; `routeSlug` preserves its public route and Markdown filename. These are separate fields.
+- `app/data/projects.ts` exports validated data, ascending-priority ordering, prerender slugs and slug lookup. Priority `1` is highest; duplicate IDs, route slugs or priorities fail validation.
+- `app/data/project-content.ts` loads the corresponding Markdown body at build time; no content network request runs in the browser.
+- Markdown images under `/images/` are resolved against Vite's `BASE_URL`; asset checks ensure every thumbnail and inline image exists under `public/images`.
+- Internal navigation uses React Router links beneath the configured basename; metadata canonical URLs and sitemap entries include `/my-portfolio/`.
 
 ## Interaction and motion
 
-The filter uses `{ categories: string[] }`; an empty array means `All`. The terminal accepts only `help`, `status`, `neofetch`, `ls /projects` and `clear`. Heatmap and Project Graph canvases render deterministic static fallbacks under `prefers-reduced-motion: reduce`; SmoothSnap is disabled in that mode.
+The shared shell provides responsive navigation, mobile overlay focus/escape handling, active-section navigation, theme persistence and the homepage video/poster. Category selection is multi-select; an empty selection means All. The read-only terminal accepts only its documented whitelist and returns `command not found` for unknown input. Reduced-motion preference disables motion/autoplay. Project graph and heatmap surfaces retain their fallback behavior.
 
-## Migration status
+## Verification
 
-- P1 shell/navigation: complete.
-- P2 sections/content boundaries: complete.
-- P3 project layout, schema strictness and GitHub Pages deployment: complete.
-- Release hardening and route migration: complete through CI/visual gates.
-- Optional GoatCounter: intentionally pending until a site endpoint is supplied.
+- `npm run check`: React Router type generation and TypeScript.
+- `npm run test:unit`: data schema/order/lookup, filter and terminal contracts.
+- `npm run build`: route prerender plus Pages artifact assembly.
+- `npm run test:smoke`: direct static route and interaction checks.
+- `npm run test:visual`: light/dark desktop, tablet and mobile snapshots.
+- `npm run preview`: serve the actual flattened artifact with direct-route and 404 behavior.
 
-## Future work
+## Branch and deployment boundary
 
-Astro 7 was migrated on `dev` and must pass the full unit, smoke, visual, check and build suite before promotion to `main`.
+`dev` is the integration branch; major architecture decisions are developed on `refactor` and prepared for `dev` through a pull request. `main` receives a separate promotion pull request from `dev`. Pull requests to `dev` and `main` run validation only. Pages artifact upload and deployment are restricted to pushes to `main` or manual dispatch from `main`.

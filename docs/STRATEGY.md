@@ -43,7 +43,7 @@ Thay vì chỉ là trang web "đọc", portfolio sẽ có các điểm chạm:
 
 * Tốc độ tải trang (Lighthouse Score > 90).
 * Tỷ lệ chuyển đổi (Click vào nút "Contact" hoặc "GitHub" từ các nhóm đối tượng mục tiêu).
-* Sự tinh gọn trong quản lý: Thêm 1 dự án mới chỉ mất tối đa 5 phút thông qua file `.mdx`.
+* Sự tinh gọn trong quản lý: Thêm dự án bằng metadata trong `app/data/projects.json` và body tương ứng trong `app/content/projects/<routeSlug>.md`.
 
 ---
 

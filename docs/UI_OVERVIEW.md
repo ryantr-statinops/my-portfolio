@@ -1,3 +1,4 @@
+> Historical UI design record. File names and framework-specific implementation details below describe the prior design, not the current React runtime. See `docs/ARCHITECTURE_V2.md` for current component boundaries.
 # UI_OVERVIEW.md — Portfolio Interface Description
 
 ## Design Philosophy
@@ -8,7 +9,8 @@ Professional & Minimalist (Bloomberg/High-end Fintech style). The portfolio func
 
 ## 1. Layout Structure
 
-- **Scroll**: Smooth anchor navigation (`scroll-smooth` on `html`, see `MainLayout.astro`) — `snap-mandatory` removed per `ARCHITECTURE_V2` (caused scroll trapping)
+- **Scroll**: Native page scrolling and immediate anchor navigation; sections do not snap and the mobile menu does not lock background scrolling
+- **Homepage background**: One fixed WebM video and poster sit behind Hero, About Me, Intelligence Hub, Projects and Footer; project pages keep their own background
 - **Grid**: 12-column responsive grid system via Tailwind CSS
 - **Breakpoints**: Mobile-first (1 column) → `md:` (2 columns) → `lg:` (3 columns)
 
@@ -76,7 +78,7 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 ```
 
 - **Full-screen** (`min-h-screen`)
-- **Background**: Interactive heatmap canvas (grid cells glow + follow cursor)
+- **Background**: The shared fixed `black-hole.webm` video retains its original colors, with a static poster fallback for reduced motion or unavailable playback; homepage text and surfaces use light-on-dark colors for readability in both themes
 - **Animated pulse dot** with shadow glow
 - **Heading gradient**: linear-gradient `#00f2ff → #0ea5e9 → #93f8d8`
 - **3 stat cards**: Glassmorphism, border, flex row layout
@@ -224,13 +226,13 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 
 | Element | Technology | Behavior |
 |---|---|---|
-| **Heatmap Background** | Canvas 2D API | Grid diffusion simulation, cursor-reactive with velocity |
+| **Homepage Video Background** | WebM video + poster | One fixed video behind every homepage section; static poster with reduced motion or unavailable video |
 | **3D Graph** | Canvas 2D (simulated 3D) | Force-directed layout, auto-rotate, drag to rotate, hover tooltips |
 | **Scroll Reveal** | IntersectionObserver | Elements fade + translate up on scroll into view |
 | **Theme Toggle** | Vanilla JS + localStorage | Toggles `dark` class on `<html>`, stores preference |
 | **UTC Clock** | setInterval | Real-time clock in Intelligence Hub header |
 | **Project Card Hover** | CSS transitions | Grayscale→color, scale, translate, border effects |
-| **Scroll-to-top** | Vanilla JS | Smooth scroll to `window.scrollTo({ top: 0 })` |
+| **Scroll-to-top** | Vanilla JS | Immediate scroll to the top with `window.scrollTo(0, 0)` |
 
 ---
 

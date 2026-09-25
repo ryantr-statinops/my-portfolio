@@ -1,25 +1,17 @@
-# L1 — Content and Unit Tests
+# L1 — Catalog and Unit Tests
 
-Status: complete. `npm run test:unit` currently passes 22 tests.
+Status: implemented with Vitest. The catalog has five records and the public site generates seven static routes.
 
-## Contract
+## Catalog contract
 
-There are exactly five MDX projects. Each project must contain `id`, `title`, `description`, `date`, `category`, `status`, `priority`, `tags`, `impact`, `thumbnail`, `github`, `demo` and `stack`. Categories and statuses are allowlisted; IDs and priorities are unique; dates use `YYYY-MM-DD`; URLs are HTTP(S); tags and stack remain within schema limits.
+- `app/data/project-schema.ts` validates the project JSON contract: historic `id`, public `routeSlug`, title, description, ISO date, category, status, unique priority, tags, impact, thumbnail, optional GitHub/demo links and stack.
+- IDs, route slugs and priorities must be unique. Priority `1` is highest and route ordering is ascending.
+- Thumbnail paths must match `/images/projects/<slug>/thumbnail.webp`; thumbnails and every Markdown inline image must exist under `public/images/`.
+- `app/data/projects.ts` provides validated records, ordering, prerender slugs and route-slug lookup.
+- Each `app/content/projects/<routeSlug>.md` preserves its full detail body; image paths resolve below `/my-portfolio/` in the built artifact.
 
-Priority `1` is highest. Tests and `getSortedProjects()` both enforce ascending order. Duplicate priority fails with the project/file context.
+## Behavior coverage
 
-Thumbnails must match exactly:
+Unit contracts cover required/malformed metadata, duplicate IDs/slugs/priorities, ordering, slug lookup, image assets, multi-select filters (including empty = All), and terminal allowlist/unknown command behavior.
 
-```text
-/images/projects/<filename-slug>/thumbnail.webp
-```
-
-The test compares the MDX filename slug, checks the corresponding folder and verifies that the file exists under `public/`.
-
-## Logic coverage
-
-Vitest covers the project count, required fields, allowlists, date/URL formats, ID/priority uniqueness and ordering, thumbnail path/existence, tag/stack limits, multi-select filter state and terminal command parsing.
-
-## Maintenance
-
-When a new project or schema field is introduced, update the schema and its focused test in the same commit. A future Cluster project must be introduced in a separate content commit with an explicitly chosen priority; it is not part of the current five-project assertion.
+Run with `npm run test:unit`. Keep tests deterministic and check externally visible behavior or invariants, not source text or forwarding.
