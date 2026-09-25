@@ -41,7 +41,7 @@ Static HTML is prerendered for the homepage, Project Registry and five project-d
 
 ## Interaction and motion
 
-The shared shell provides responsive navigation, mobile overlay focus/escape handling, active-section navigation, theme persistence and the homepage video/poster. Category selection is multi-select; an empty selection means All. The read-only terminal accepts only its documented whitelist and returns `command not found` for unknown input. The project graph uses lazy-loaded Three.js with an accessible SVG fallback when reduced motion is preferred or WebGL is unavailable. The heatmap retains its static fallback.
+The shared shell provides responsive navigation, mobile overlay focus/escape handling, active-section navigation, theme persistence and the homepage video/poster. Category selection is multi-select; an empty selection means All. The read-only terminal accepts only its documented whitelist and returns `command not found` for unknown input. The project graph uses lazy-loaded Three.js with an accessible SVG fallback when reduced motion is preferred or WebGL is unavailable.
 
 ## Verification
 

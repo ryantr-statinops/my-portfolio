@@ -26,7 +26,7 @@
 
 `app/data/project-schema.ts` is the sole Zod contract. `app/data/projects.json` preserves historic `id` values separately from public `routeSlug` values and includes title, description, date, category, status, priority, tags, impact, thumbnail, links and stack. `app/data/projects.ts` owns validation, ordering, route slugs and lookup. Detail Markdown lives in `app/content/projects/<routeSlug>.md`; inline `/images/...` paths are prefixed with Vite `BASE_URL` at render time.
 
-`/projects/` is the canonical registry. Filters are multi-select and an empty category set means All. The portfolio terminal is read-only and only accepts its allowlisted commands. Theme persistence, mobile menu focus/escape handling, section navigation, reduced-motion behavior and graph/heatmap fallbacks remain in browser-facing components.
+`/projects/` is the canonical registry. Filters are multi-select and an empty category set means All. The portfolio terminal is read-only and only accepts its allowlisted commands. Theme persistence, mobile menu focus/escape handling, section navigation, reduced-motion behavior and the SVG graph fallback remain in browser-facing components. Detail pages display each project's `tags` as Focus Areas.
 
 ## QA commands
 
@@ -50,4 +50,4 @@ Dependency audit is report-only in CI; review any reported advisory before merge
 
 ## Cutover status
 
-The React migration is merged into `dev` through PR #7. This follow-up restores the hero cyan gradient and adds a lazy-loaded Three.js graph on `feat/threejs-intelligence-graph`; it awaits a separate PR to `dev`. CI and local tests cover the SVG/reduced-motion fallback and the WebGL scene when supported. The lazy Three.js chunk is about 537 KB raw (135 KB gzip); Vite reports a non-fatal 500 KB chunk warning. Rollup annotation and React Router future-flag warnings also remain non-fatal.
+The React migration (PR #7), hero cyan gradient and lazy Three.js graph (PR #8), and graph interaction tests (PR #9) are merged into `dev`. Parity additions are developed on `refactor` and merged into `dev` through a separate PR. The WebGL graph uses a settling force layout, idle rotation, complexity-based node size, hover glow and pointer-following tooltips; its SVG fallback covers reduced motion and unavailable WebGL. CI and local tests cover both graph paths when supported. Vite's 500 KB chunk warning and Rollup annotation warnings remain non-fatal.
