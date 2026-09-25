@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const basePath = "/my-portfolio/";
@@ -9,6 +9,7 @@ const projectRoutes = readdirSync(projectOutput, { withFileTypes: true })
   .map((entry) => `./projects/${entry.name}/`)
   .sort();
 const routes = ["./", "./projects/", ...projectRoutes];
+const projectCatalog = JSON.parse(readFileSync(resolve(process.cwd(), "app/data/projects.json"), "utf8")) as Array<{ routeSlug: string; tags: string[] }>;
 
 async function expectSuccessfulPage(page: Page, route: string) {
   const response = await page.goto(route);
@@ -113,6 +114,9 @@ test("WebGL graph responds to drag and zoom, shows project details on hover, and
   const centerX = bounds!.x + bounds!.width / 2;
   const centerY = bounds!.y + bounds!.height / 2;
   const initial = await canvas.screenshot({ animations: "disabled" });
+  await page.waitForTimeout(350);
+  const animated = await canvas.screenshot({ animations: "disabled" });
+  expect(animated.equals(initial), "the idle graph should animate").toBe(false);
 
   await page.mouse.move(centerX, centerY);
   await page.mouse.down();
@@ -131,16 +135,41 @@ test("WebGL graph responds to drag and zoom, shows project details on hover, and
   const resetBounds = await canvas.boundingBox();
   expect(resetBounds).not.toBeNull();
 
-  // The first project sits one unit to the right of the first category in the initial scene.
-  // Project its fixed world position through the 42° camera to target the rendered sphere.
-  const focalLength = resetBounds!.height / (2 * Math.tan((42 * Math.PI) / 360));
-  const projectX = resetBounds!.x + resetBounds!.width / 2 + (1.25 / 15.7) * focalLength;
-  const projectY = resetBounds!.y + resetBounds!.height / 2 - (1.2 / 15.7) * focalLength;
-  await page.mouse.move(projectX, projectY);
-  await expect(page.getByRole("tooltip")).toContainText("Grap4Prob");
-  expect(await page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.matches("canvas[data-3d-graph]"), { x: projectX, y: projectY })).toBe(true);
-  await page.mouse.click(projectX, projectY);
-  await expect(page).toHaveURL(/\/my-portfolio\/projects\/grap4prob\/$/);
+  // Raycast through pointer events to find a rendered project after the force layout has moved.
+  const projectPoint = await canvas.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    for (let y = 8; y < rect.height - 8; y += 8) {
+      for (let x = 8; x < rect.width - 8; x += 8) {
+        element.dispatchEvent(new PointerEvent("pointermove", { bubbles: true, clientX: rect.left + x, clientY: rect.top + y }));
+        if ((element as HTMLCanvasElement).style.cursor === "pointer") return { x: rect.left + x, y: rect.top + y };
+      }
+    }
+    return null;
+  });
+  expect(projectPoint, "a project sphere should be raycastable").not.toBeNull();
+  await page.mouse.move(projectPoint!.x, projectPoint!.y);
+  await expect(page.getByRole("tooltip")).toContainText("Complexity:");
+  const firstTooltip = await page.getByRole("tooltip").boundingBox();
+  await page.mouse.move(projectPoint!.x + 2, projectPoint!.y);
+  const movedTooltip = await page.getByRole("tooltip").boundingBox();
+  expect(movedTooltip?.x).toBeGreaterThan(firstTooltip!.x);
+  await page.waitForTimeout(300);
+  await expect(canvas).toHaveCSS("cursor", "pointer");
+  await expect(page.getByRole("tooltip")).toBeVisible();
+  await page.mouse.click(projectPoint!.x + 2, projectPoint!.y);
+  await expect(page).toHaveURL(/\/my-portfolio\/projects\/(grap4prob|project-01|mean-reversion-bot|orbit-system-manager|project-02)\/$/);
+});
+
+test("every project detail shows its focus areas", async ({ page }) => {
+  for (const route of projectRoutes) {
+    await page.goto(route);
+    const focusAreas = page.locator("article header").getByText("Focus Areas");
+    await expect(focusAreas).toBeVisible();
+    const slug = route.split("/").filter(Boolean).at(-1);
+    const project = projectCatalog.find((entry) => entry.routeSlug === slug);
+    expect(project).toBeDefined();
+    expect((await focusAreas.locator("..").locator("span").allTextContents()).slice(1)).toEqual(project!.tags);
+  }
 });
 
 test("homepage category filter updates hub metrics and showcase with multi-select and empty state", async ({ page }) => {

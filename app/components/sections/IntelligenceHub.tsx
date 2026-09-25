@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from "react";
 import { Link } from "react-router";
 import { CATEGORY_MAP } from "../../../src/lib/constants";
+import { projectComplexity } from "../../data/graph-metrics";
 import type { Project } from "../../data/project-schema";
 import ProjectGraph3DLazy, { type ProjectGraphNode } from "../interactive/ProjectGraph3DLazy";
 
@@ -139,7 +140,7 @@ export default function IntelligenceHub({ projects }: Props) {
             <ul className="sr-only" aria-label="Projects represented in the 3D graph">
               {projects.map((project) => <li key={project.routeSlug}><Link to={`/projects/${project.routeSlug}/`}>{project.title} — {CATEGORY_MAP[project.category] ?? project.category}</Link></li>)}
             </ul>
-            {hoveredNode && tooltipPosition && <div role="tooltip" data-graph-tooltip className="pointer-events-none absolute z-30 max-h-[150px] w-[240px] overflow-hidden rounded-xl border border-primary/50 bg-background/90 p-3 shadow-2xl backdrop-blur-xl" style={{ left: tooltipPosition.x, top: tooltipPosition.y }}><p className="mb-1 text-[10px] font-bold uppercase text-primary">{hoveredNode.label}</p><p className="text-[9px] leading-relaxed text-muted">{hoveredNode.project?.description ?? `Technical system layer for ${hoveredNode.category} projects.`}</p><p className="mt-2 border-t border-border/80 pt-2 font-mono text-[8px] uppercase text-success">Complexity: {hoveredNode.project?.priority ? hoveredNode.project.priority * 2 + 4 : 7}</p></div>}
+            {hoveredNode && tooltipPosition && <div role="tooltip" data-graph-tooltip className="pointer-events-none absolute z-30 max-h-[150px] w-[240px] overflow-hidden rounded-xl border border-primary/50 bg-background/90 p-3 shadow-2xl backdrop-blur-xl" style={{ left: tooltipPosition.x, top: tooltipPosition.y }}><p className="mb-1 text-[10px] font-bold uppercase text-primary">{hoveredNode.label}</p><p className="text-[9px] leading-relaxed text-muted">{hoveredNode.project?.description ?? `Technical system layer for ${hoveredNode.category} projects.`}</p><p className="mt-2 border-t border-border/80 pt-2 font-mono text-[8px] uppercase text-success">Complexity: {hoveredNode.project ? projectComplexity(hoveredNode.project.priority) : 7}</p></div>}
           </section>
         </div>
       </div>

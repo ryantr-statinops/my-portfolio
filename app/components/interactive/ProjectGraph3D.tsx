@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import * as THREE from "three";
+import { projectNodeRadius } from "../../data/graph-metrics";
 import type { Project } from "../../data/project-schema";
 export type ProjectGraphNode = {
   id: string;
@@ -171,8 +172,7 @@ export default function ProjectGraph3D({ projects, onAvailabilityChange, onHover
           const angle = (Math.PI * 2 * index) / Math.max(members.length, 1) + categoryIndex * 0.61;
           const position = categoryNode.position.clone().add(new THREE.Vector3(Math.cos(angle) * 1.25, (index % 2 === 0 ? 0.75 : -0.75), Math.sin(angle) * 1.3));
           const color = categoryColor(category);
-          const complexity = project.priority * 2 + 4;
-          const projectNode = addSphere(position, color, Math.min(0.19, 0.085 + complexity * 0.007), { id: project.routeSlug, label: project.title, x: 0, y: 0, category, project }, project.routeSlug.replaceAll("-", "_").toUpperCase(), 0.72);
+          const projectNode = addSphere(position, color, projectNodeRadius(project.priority), { id: project.routeSlug, label: project.title, x: 0, y: 0, category, project }, project.routeSlug.replaceAll("-", "_").toUpperCase(), 0.72);
           addEdge(categoryNode, projectNode, color, 0.28, 1.65);
         });
       });
