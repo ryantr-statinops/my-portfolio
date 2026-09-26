@@ -1,0 +1,21 @@
+.background-media {
+  transform: translateX(2%) scale(1.08);
+}
+
+@media (max-width: 767px) {
+  .background-media {
+    transform: translateX(1%) scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .background-video {
+    display: none;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

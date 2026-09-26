@@ -6,14 +6,33 @@ Chào mừng bạn đến với không gian cá nhân của mình! Đây là nơ
 
 ## Tech Stack
 
-Dự án này được xây dựng trên nền tảng hiện đại, tập trung vào hiệu suất và trải nghiệm người dùng:
+Website portfolio là ứng dụng React/TypeScript tĩnh, được prerender cho GitHub Pages dưới `/my-portfolio/`:
 
-- **Framework:** [Astro](https://astro.build/) - Tối ưu hóa tốc độ tải trang với kiến trúc Island.
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/) - Thiết kế giao diện linh hoạt, mạnh mẽ.
-- **Content:** MDX - Kết hợp linh hoạt giữa Markdown và các thành phần UI.
-- **Math/Scientific:** Remark Math & Rehype KaTeX - Hỗ trợ hiển thị công thức toán học/khoa học.
+- **Framework:** React 19, TypeScript và React Router 7 Framework Mode.
+- **Build:** React Router prerender qua Vite; hiện có trang chủ và registry, không có trang project nào khi catalog rỗng.
+- **Styling:** Tailwind CSS 4 qua Vite.
+- **Content:** Catalog project được validate bằng Zod; hiện đang rỗng trong lúc làm lại portfolio.
+- **Math/Scientific:** Remark Math, Rehype KaTeX và stylesheet/font KaTeX đóng gói local.
+- **Tests:** Vitest và Playwright trên static artifact.
+
+### Local development
+
+Requires Node.js `>=22.12.0`.
+
+```sh
+npm ci
+npm run dev
+npm run check
+npm test
+npm run build
+npm run preview
+```
 
 ---
+
+## Release and branch flow
+
+Pull requests to `dev` and `main` run validation; GitHub Pages deploys only from `main`.
 
 ## AI-Powered Workflow
 
@@ -37,4 +56,3 @@ Bạn muốn tìm hiểu chi tiết hơn về các dự án và hành trình ph�
 ---
 
 *Dự án này là minh chứng cho việc kết hợp giữa kỹ năng lập trình thủ công và sức mạnh của trí tuệ nhân tạo hiện đại.*
-

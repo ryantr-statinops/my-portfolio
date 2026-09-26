@@ -1,69 +1,56 @@
 # Architecture — Portfolio Runtime
 
-> Current architecture and migration status. Verified 2026-09-23.
+> Canonical implementation: React 19, React Router 7 Framework Mode, Vite and TypeScript. GitHub Pages base: `/my-portfolio/`.
 
 ## Source of truth
 
-The runtime is a static Astro portfolio. MDX content is validated by Zod, rendered at build time and published to GitHub Pages under `/my-portfolio`.
+Static HTML is prerendered for the homepage and Project Registry. The project catalog is currently empty, so no detail routes are generated. Direct load and reload use route-specific HTML; deployment does not use an SPA fallback.
 
-## Stack
+## Stack and boundaries
 
-| Layer | Current implementation |
+| Layer | Implementation |
 |---|---|
-| Framework | Astro 7.3.4, static output |
-| Content | `@astrojs/mdx` 8.0.2, glob collection, Zod schema |
-| Styling | Tailwind CSS 4.3 with `@tailwindcss/vite` |
-| Math | `remark-math`, `rehype-katex`, KaTeX 0.16.11 |
-| Tests | Vitest 5.0.0 and Playwright 1.63.0/Chromium |
-| Deployment | GitHub Pages via `actions/deploy-pages@v4` |
+| Framework | React 19, TypeScript, React Router 7 Framework Mode |
+| Build | Vite, `ssr: false`, explicit prerender routes |
+| Content | `app/data/projects.json`, validated by the single Zod schema in `app/data/project-schema.ts` |
+| Detail bodies | `app/content/projects/<routeSlug>.md`, rendered by `react-markdown`, `remark-gfm`, `remark-math` and `rehype-katex` |
+| Styling | Tailwind CSS 4 through `@tailwindcss/vite` |
+| Tests | Vitest and Playwright against the prepared static artifact |
+| Hosting | GitHub Pages at `https://ryantr-statinops.github.io/my-portfolio/` |
 
-## Routes
+`app/root.tsx` owns global CSS, KaTeX CSS, favicon, sitemap metadata, site metadata and the `SiteShell`, `Outlet`, `Scripts` and `ScrollRestoration` boundary. Layout/navigation/theme/footer live in `app/components/layout/`; homepage sections in `app/components/sections/`; browser state in `app/components/interactive/`; project Markdown rendering in `app/components/ProjectMarkdown.tsx`.
 
-```text
-src/pages/index.astro              -> /
-src/pages/projects/index.astro     -> /projects/
-src/pages/projects/[slug].astro    -> /projects/<project-slug>/ (generated from content)
-```
+## Routes and artifact
 
-The old `/cluster/` dashboard is removed. The word Cluster is reserved for future project content or strategy context, not the portfolio runtime. A future Cluster project will be a normal MDX entry; this release creates no `cluster.mdx`.
+| Public route | Generated HTML |
+|---|---|
+| `/my-portfolio/` | `dist/index.html` |
+| `/my-portfolio/projects/` | `dist/projects/index.html` |
+| `/my-portfolio/projects/<slug>/` | Generated only for published projects (none currently) |
 
-## Boundaries
+`react-router.config.ts` sets `basename: "/my-portfolio/"`, `ssr: false` and prerenders `/`, `/projects` and any published project slugs. `npm run build` runs React Router and then `scripts/prepare-static-artifact.mjs`, which flattens `build/client/my-portfolio/` into the deployable `dist/` root and verifies `2 + project count` pages, `404.html`, `robots.txt`, sitemap files and the stylesheet. `scripts/static-preview.mjs` serves `dist/` beneath the GitHub Pages base path and returns an actual 404 for unknown paths.
 
-```text
-pages       -> layouts, sections, interactive, lib, content
-sections    -> ui, interactive, lib
-interactive -> lib and browser APIs only
-layouts     -> layout/ui/lib
-lib         -> no Astro components
-content     -> data only
-```
+## Data and content contracts
 
-Important runtime modules:
-
-- `src/lib/content.ts`: sorted project collection and duplicate-priority validation.
-- `src/lib/project-filter.ts`: pure multi-select filter state and matching logic.
-- `src/components/interactive/ProjectFilter.astro`: accessible filter UI and event bridge.
-- `src/components/interactive/SystemTerminal.astro`: read-only command simulator; never executes shell commands.
-- `src/lib/strategy.ts`: four capability tracks with Frame, Test and Build content slots.
-- `src/components/sections/StrategyHub.astro`: guided capability and approach selector on the homepage.
-- `src/components/sections/PortfolioRegistry.astro`: Project Registry table used by `/projects/`.
-
-## Content contract
-
-The project collection is currently empty while the portfolio is rebuilt. `/projects/` remains available and shows a rebuilding state; no project detail routes are generated. Future entries use the required fields `id`, `title`, `description`, `date`, `category`, `status`, `priority`, `tags`, `impact`, `thumbnail`, `github`, `demo` and `stack`. Categories are defined in `src/lib/constants.ts`: `software-engineering`, `data-engineering`, `ai-engineering` and `other`. Duplicate priorities fail the build; thumbnail paths must resolve to an existing asset.
+- `id` and `routeSlug` are separate fields. The current catalog is intentionally empty; future entries must satisfy the shared schema before routes can be generated.
+- `app/data/projects.ts` exports validated data, ascending-priority ordering, prerender slugs and slug lookup. Priority `1` is highest; duplicate IDs, route slugs or priorities fail validation.
+- `app/data/project-content.ts` loads the corresponding Markdown body at build time; no content network request runs in the browser.
+- Markdown images under `/images/` are resolved against Vite's `BASE_URL`; asset checks ensure every thumbnail and inline image exists under `public/images`.
+- Internal navigation uses React Router links beneath the configured basename; metadata canonical URLs and sitemap entries include `/my-portfolio/`.
 
 ## Interaction and motion
 
-The Project Registry filter uses `{ categories: string[] }`; an empty array means `All`. Strategy selection is local to the section and does not change the URL or filter projects. It defaults to Software Engineering → Frame and presents empty content slots as “Content is being prepared.” The terminal accepts only `help`, `status`, `neofetch`, `ls /projects` and `clear`; `ls /projects` explains when the collection is empty.
+The shared shell provides responsive navigation, mobile overlay focus/escape handling, active-section navigation, theme persistence and the homepage video/poster. Strategy offers four capability tracks and Frame/Test/Build steps; its content slots are intentionally empty. The homepage has no project filter; `/projects/` keeps a four-category multi-select filter and shows a rebuilding message while the catalog is empty. The read-only terminal returns `No projects published yet.` for `ls /projects`. Reduced-motion preference disables motion/autoplay.
 
-## Migration status
+## Verification
 
-- P1 shell/navigation: complete.
-- P2 sections/content boundaries: complete.
-- P3 project layout, schema strictness and GitHub Pages deployment: complete.
-- Release hardening and route migration: complete through CI/visual gates.
-- Optional GoatCounter: intentionally pending until a site endpoint is supplied.
+- `npm run check`: React Router type generation and TypeScript.
+- `npm run test:unit`: data schema/order/lookup, filter and terminal contracts.
+- `npm run build`: route prerender plus Pages artifact assembly.
+- `npm run test:smoke`: direct static route and interaction checks.
+- `npm run test:visual`: light/dark desktop, tablet and mobile snapshots.
+- `npm run preview`: serve the actual flattened artifact with direct-route and 404 behavior.
 
-## Future work
+## Branch and deployment boundary
 
-The current homepage uses the guided Strategy scaffold. The project collection is intentionally empty until new project write-ups are ready; page count and route tests derive their expectations from collection content.
+`dev` is the integration branch; major architecture decisions are developed on `refactor` and prepared for `dev` through a pull request. `main` receives a separate promotion pull request from `dev`. Pull requests to `dev` and `main` run validation only. Pages artifact upload and deployment are restricted to pushes to `main` or manual dispatch from `main`.

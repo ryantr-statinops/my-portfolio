@@ -1,37 +1,22 @@
-# CI and Release Gates
+# CI — Build, Validation and Deployment
 
-Status: implemented in `.github/workflows/deploy.yml`.
+## CI runtime
 
-## Order
+- Node `22.12.0` and lockfile install with `npm ci`.
+- Playwright image pinned to `mcr.microsoft.com/playwright:v1.63.0-noble`.
+- React Router type generation and TypeScript via `npm run check`.
+- Build through `npm run build`; prepared Pages artifact is the flattened `dist/` directory.
 
-1. `npm ci`
-2. Safe dependency update step (non-force)
-3. Report-only `npm audit`
-4. `npm run test:unit`
-5. `npm run check`
-6. `npm run build`
-7. Assert two shell pages plus one generated page per project entry
-8. Install Chromium
-9. `npm run test:smoke`
-10. `npm run test:visual`
-11. Verify sitemap and robots
-12. Upload Playwright artifacts on failure
-13. Upload the Pages artifact and deploy only from `main`
+## Validation order
 
-Schema/unit, type, build, route/metadata/link smoke and visual checks run for pull requests into `main`, pushes to `main` and manual dispatches. Only `main` can upload and deploy the Pages artifact. Node 22 is the supported CI runtime.
+1. Install and report dependency audit status.
+2. Run `npm run test:unit` and `npm run check`.
+3. Run `npm run build` and assert `2 + project count` `index.html` files.
+4. Run `npm run test:smoke` and `npm run test:visual` against the static preview.
+5. Verify `dist/sitemap-index.xml`, `dist/sitemap-0.xml` and `dist/robots.txt` exist.
 
-## Scripts
+## Branch gates
 
-```json
-{
-  "test": "npm run test:unit && npm run test:smoke && npm run test:visual",
-  "test:unit": "vitest run",
-  "test:smoke": "playwright test tests/e2e/smoke.spec.ts",
-  "test:visual": "playwright test tests/e2e/visual.spec.ts",
-  "test:watch": "vitest"
-}
-```
+Pull requests to `dev` and `main` run validation only. Pages artifact upload and deployment require a push to `main` or manual dispatch from `main`; pull requests never deploy. `dev` is the integration branch, and production promotion is a separate `dev -> main` pull request.
 
-## Dependency policy
-
-Do not use `npm audit fix --force`. Patch updates are separate from a future Astro major migration. If an audit vulnerability remains because it needs Astro 7, CI reports it without silently changing the release architecture.
+The workflow uploads Playwright artifacts on failure. Test/build outputs and `test-results/` are ignored and must not enter the PR diff. Do not use `npm audit fix --force`; review audit reports before merging.

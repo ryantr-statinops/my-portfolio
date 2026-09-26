@@ -1,40 +1,42 @@
 # QA Plan — Current Status
 
-Project: Ryan Tran portfolio · Production: GitHub Pages · Stack: Astro 7.3.4, Tailwind 4.3, MDX.
+Project: Ryan Tran portfolio · Production: GitHub Pages · Stack: React 19, React Router 7 Framework Mode, Vite, Tailwind CSS 4.
 
 ## Source of truth
 
-The current scaffold has two static pages: `/` and `/projects/`. The project collection is empty; future content adds one detail route per MDX entry. `/cluster/` is not a valid route.
+The current scaffold has two static pages: `/` and `/projects/`. The project catalog is empty; future published projects add one detail route each. Public base path is `/my-portfolio/`; direct route loads use prerendered HTML, not an SPA fallback.
 
 ## Layer status
 
 | Layer | Purpose | Implementation | Status |
 |---|---|---|---|
-| L1 | Content/schema/unit | Vitest, content/filter/terminal/strategy tests | Complete |
-| L2 | HTTP/routes/interactions | Playwright, `tests/e2e/smoke.spec.ts` | Complete — dynamic route set |
-| L3 | Visual regression | Chromium, 2 themes × 3 viewports | Complete |
+| L1 | Data/schema/filter/terminal/Strategy contracts | Vitest | Run locally or in CI |
+| L2 | Routes and interactions | Playwright on flattened `dist/` artifact | Covers the empty catalog and Strategy behavior |
+| L3 | Visual regression | Chromium, light/dark responsive snapshots | Covers desktop/tablet/mobile |
+| A11y | Name/role/value, keyboard, contrast and motion audit | axe on static preview | Complete — 0 confirmed violations on 3 routes; contrast cases marked incomplete on image/transparent backgrounds and manually reviewed |
 
 ## Commands
 
 ```bash
-npm run test:unit
+npm ci
 npm run check
 npm run build
+npm run test:unit
 npm run test:smoke
 npm run test:visual
-npm run test
+npm run preview
 ```
 
-## CI order
+## CI and branch policy
 
-GitHub Actions installs dependencies, reports audit status, runs L1, type check, build, asserts two shell pages plus project detail pages, installs Chromium, runs L2/L3, verifies sitemap/robots, uploads failure artifacts and deploys the Pages artifact. Any failure blocks deployment.
+The GitHub Actions workflow runs install, dependency audit reporting, unit tests, React Router type generation/TypeScript, build, a page-count assertion derived from project content, smoke/visual and sitemap/robots checks. Pull requests to `dev` and `main` validate only. Artifact upload and deployment run only for a push to `main` or a manual dispatch from `main`.
 
 ## Maintenance rules
 
-- Derive project routes from build output; never hardcode project slug lists in E2E tests.
-- Use reduced-motion and deterministic data for visual tests.
-- Update visual baselines only with an intentional UI change.
-- Keep dependency patch updates separate from any Astro major upgrade.
-- Keep GoatCounter disabled until its public endpoint is configured.
+- Preserve IDs, slugs, content meaning and public URLs when changing catalog data.
+- Keep reduced-motion and deterministic behavior in visual tests.
+- Update visual baselines only for documented intentional UI changes; never relax thresholds to hide drift.
+- Keep the Node floor at `22.12.0` or newer and the CI Playwright image aligned with the lockfile.
+- Keep optional analytics disabled until its public endpoint and privacy requirements are approved.
 
 See `01-content-schema.md`, `02-smoke-test.md`, `03-visual-regression.md` and `04-ci-integration.md` for layer details.

@@ -1,3 +1,4 @@
+> Historical plan record only. It describes the retired Astro implementation and is not current execution guidance. Use `docs/ARCHITECTURE_V2.md` and `docs/ROADMAP.md` for current runtime and release status.
 # Historical Refactor Record
 
 This file records the completed pre-release refactor. It is no longer an active implementation plan; current work is tracked in `docs/ROADMAP.md` and `docs/plan/`.

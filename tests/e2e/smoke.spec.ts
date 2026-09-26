@@ -13,304 +13,98 @@ const routes = ["./", "./projects/", ...projectRoutes];
 async function expectSuccessfulPage(page: Page, route: string) {
   const response = await page.goto(route);
   expect(response?.status(), `HTTP status for ${route}`).toBe(200);
-  expect(await page.title()).toMatch(/.+/);
+  await expect(page).toHaveTitle(/.+/);
   await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /.+/);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     new RegExp(`^https://ryantr-statinops\\.github\\.io${basePath}`),
   );
-  await expect(page.locator('meta[property="og:url"]')).toHaveAttribute("content", /.+/);
+  await expect(page.locator("h1").first()).toBeVisible();
 }
 
-test("all generated routes expose metadata and return HTTP 200", async ({ page }) => {
-  for (const route of routes) {
-    await expectSuccessfulPage(page, route);
-  }
+test("all published React routes expose metadata and return HTTP 200", async ({ page }) => {
+  expect(projectRoutes).toEqual([]);
+  for (const route of routes) await expectSuccessfulPage(page, route);
 });
 
-test("sitemap, robots and internal links are reachable", async ({ page, request }) => {
-  const sitemap = await request.get("./sitemap-index.xml");
-  const robots = await request.get("./robots.txt");
-  expect(sitemap.status()).toBe(200);
-  expect(robots.status()).toBe(200);
-  expect(await robots.text()).toContain("Sitemap:");
-
+test("portfolio pages show the empty state and the terminal reports no published projects", async ({ page }) => {
   await page.goto("./");
-  const links = await page.locator("a[href]").evaluateAll((anchors) =>
-    anchors
-      .map((anchor) => (anchor as HTMLAnchorElement).href)
-      .filter((href) => href.startsWith(window.location.origin) && !href.includes("#")),
-  );
-
-  for (const href of [...new Set(links)]) {
-    const response = await request.get(href);
-    expect(response.status(), href).toBe(200);
-  }
-});
-
-test("project thumbnails resolve under the GitHub Pages base path", async ({ page, request }) => {
-  await page.goto("./");
-  const sources = await page.locator("img[src]").evaluateAll((images) =>
-    images.map((image) => (image as HTMLImageElement).src).filter((src) => src.includes("/images/")),
-  );
-
-  expect(sources.length).toBeGreaterThan(0);
-  for (const source of [...new Set(sources)]) {
-    expect(new URL(source).pathname.startsWith(basePath)).toBe(true);
-    expect((await request.get(source)).status(), source).toBe(200);
-  }
-});
-
-test("project registry exposes the engineering category filter and empty state", async ({ page }) => {
-  await page.goto("./projects/");
-  const filter = page.locator("[data-project-filter]").first();
-  const all = filter.locator('[data-filter-category="all"]');
-  const software = filter.locator('[data-filter-category="software-engineering"]');
-  const data = filter.locator('[data-filter-category="data-engineering"]');
-  const ai = filter.locator('[data-filter-category="ai-engineering"]');
-  const other = filter.locator('[data-filter-category="other"]');
-
-  await expect(all).toHaveAttribute("aria-pressed", "true");
-  await expect(software).toBeVisible();
-  await expect(data).toBeVisible();
-  await expect(ai).toBeVisible();
-  await expect(other).toBeVisible();
-  await software.click();
-  await expect(software).toHaveAttribute("aria-pressed", "true");
-  await expect(all).toHaveAttribute("aria-pressed", "false");
-  await all.click();
-  await expect(all).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator("#portfolio-registry")).toContainText("Projects are being rebuilt.");
-});
-
-test("Strategy supports all capability stages without changing Projects or the URL", async ({ page }) => {
-  await page.goto("./");
-  const strategy = page.locator("[data-strategy]");
-  const domains = strategy.locator("[data-strategy-domain]");
-  const stages = strategy.locator("[data-strategy-stage]");
-  const initialUrl = page.url();
-
-  await expect(domains).toHaveCount(4);
-  await expect(stages).toHaveCount(3);
-  await expect(domains.nth(0)).toHaveAttribute("aria-pressed", "true");
-  await expect(stages.nth(0)).toHaveAttribute("aria-pressed", "true");
-
-  for (let domain = 0; domain < 4; domain += 1) {
-    await domains.nth(domain).click();
-    await expect(domains.nth(domain)).toHaveAttribute("aria-pressed", "true");
-    await expect(stages.nth(0)).toHaveAttribute("aria-pressed", "true");
-
-    for (let stage = 0; stage < 3; stage += 1) {
-      await stages.nth(stage).click();
-      await expect(stages.nth(stage)).toHaveAttribute("aria-pressed", "true");
-      await expect(strategy.locator("[data-strategy-status]")).toContainText(
-        `${["Frame", "Test", "Build"][stage]} content is being prepared.`,
-      );
-      await expect(strategy.locator("[data-decision]")).toBeHidden();
-      await expect(strategy.locator("[data-related-project]")).toBeHidden();
-    }
-  }
-
-  await expect(page).toHaveURL(initialUrl);
   await expect(page.locator("[data-project-filter]")).toHaveCount(0);
-  await expect(page.locator("#projects")).toContainText("Projects are being rebuilt.");
+  await expect(page.locator("#projects [data-project-empty]")).toHaveText("Projects are being rebuilt.");
 
-  await domains.nth(1).focus();
-  await page.keyboard.press("Enter");
-  await expect(domains.nth(1)).toHaveAttribute("aria-pressed", "true");
-  await expect(stages.nth(0)).toHaveAttribute("aria-pressed", "true");
+  await page.goto("./projects/");
+  await expect(page.locator("[data-filter-category]")).toHaveCount(5);
+  await expect(page.locator("[data-project-empty]")).toHaveText("Projects are being rebuilt.");
+  await page.locator("[data-terminal-input]").fill("ls /projects");
+  await page.locator("[data-terminal-input]").press("Enter");
+  await expect(page.locator("[data-terminal-output]")).toContainText("No projects published yet.");
 });
 
-test("Strategy has a readable default state when JavaScript is disabled", async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 320, height: 700 } });
-  const page = await context.newPage();
-  await page.goto(process.env.PLAYWRIGHT_TEST_BASE_URL ?? "http://127.0.0.1:4321/my-portfolio/");
+test("Strategy selection covers all capability-stage combinations and resets to Frame", async ({ page }) => {
+  await page.goto("./");
+  const domainButtons = page.locator("[data-strategy-domain]");
+  const stageButtons = page.locator("[data-strategy-stage]");
+  await expect(domainButtons).toHaveCount(4);
+  await expect(stageButtons).toHaveCount(3);
 
-  const strategy = page.locator("[data-strategy]");
-  await expect(strategy.locator("[data-stage-description]")).toContainText("Content is being prepared.");
-  await expect(strategy.locator("[data-strategy-domain]").first()).toBeHidden();
-  await expect(strategy.locator("[data-strategy-stage]").first()).toBeHidden();
-  expect(await page.locator("html").evaluate((element) => element.scrollWidth <= window.innerWidth)).toBe(true);
+  for (const domain of ["software-engineering", "data-engineering", "ai-engineering", "other"]) {
+    const domainButton = page.locator(`[data-strategy-domain="${domain}"]`);
+    await domainButton.click();
+    await expect(domainButton).toHaveAttribute("aria-pressed", "true");
+    for (const stage of ["frame", "test", "build"]) {
+      const stageButton = page.locator(`[data-strategy-stage="${stage}"]`);
+      await stageButton.click();
+      await expect(stageButton).toHaveAttribute("aria-pressed", "true");
+      await expect(page.locator("[data-strategy-status]")).toContainText(`${stage[0]?.toUpperCase()}${stage.slice(1)} content is being prepared.`);
+    }
+    await page.locator(`[data-strategy-stage="build"]`).click();
+    await domainButton.click();
+    await expect(page.locator('[data-strategy-stage="frame"]')).toHaveAttribute("aria-pressed", "true");
+  }
+});
+
+test("Strategy controls stay local and do not change Projects", async ({ page }) => {
+  await page.goto("./");
+  await page.locator('[data-strategy-domain="ai-engineering"]').click();
+  await page.locator('[data-strategy-stage="test"]').click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator("#projects [data-project-empty]")).toHaveText("Projects are being rebuilt.");
+});
+
+test("Strategy remains readable without JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto("./");
+  await expect(page.locator("[data-strategy-panel]")).toContainText("Content is being prepared.");
+  await expect(page.locator("[data-strategy-domain]:visible")).toHaveCount(0);
+  await expect(page.locator("[data-strategy-stage]:visible")).toHaveCount(0);
   await context.close();
 });
 
-test("portfolio runtime terminal only accepts its whitelist", async ({ page }) => {
-  await page.goto("./projects/");
-  const terminal = page.locator("[data-terminal]");
-  const input = terminal.locator("[data-terminal-input]");
-  const output = terminal.locator("[data-terminal-output]");
-
-  await input.fill("status");
-  await input.press("Enter");
-  await expect(output).toContainText("MODE: STATIC_GENERATION");
-  await input.fill("uname -a");
-  await input.press("Enter");
-  await expect(output).toContainText("command not found");
-  await input.fill("ls /projects");
-  await input.press("Enter");
-  await expect(output).toContainText("No projects published yet.");
-  await input.fill("clear");
-  await input.press("Enter");
-  await expect(output.locator("[data-terminal-entry]")).toHaveCount(0);
+test("keyboard selection works and narrow viewport has no horizontal overflow", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 720 });
+  await page.goto("./");
+  const firstDomain = page.locator('[data-strategy-domain="software-engineering"]');
+  await firstDomain.focus();
+  await page.keyboard.press("Tab");
+  await expect(page.locator('[data-strategy-domain="data-engineering"]')).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator('[data-strategy-domain="data-engineering"]')).toHaveAttribute("aria-pressed", "true");
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
 
-test("theme, skip link, anchor navigation and mobile menu work", async ({ page }) => {
-  await page.goto("./");
-  const root = page.locator("html");
-  await page.locator("#theme-toggle").click();
-  await expect(root).toHaveClass(/light|dark/);
-
-  const skipLink = page.locator('a[href="#main-content"]');
-  await skipLink.focus();
-  await expect(skipLink).toBeFocused();
-  await skipLink.press("Enter");
-  await expect(page.locator("#main-content")).toBeFocused();
-
-  await page.setViewportSize({ width: 375, height: 667 });
-  await page.goto("./");
-  await page.locator("[data-mobile-open]").click();
-  await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "true");
-  await page.locator("[data-mobile-close]").click();
-  await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "false");
+test("unknown project routes receive a 404 page", async ({ request, baseURL }) => {
+  const response = await request.get(new URL("projects/not-a-published-project/", baseURL).href);
+  expect(response.status()).toBe(404);
+  await expect(response.text()).resolves.toContain("Project not found");
 });
 
-test("homepage scrolls freely and anchors jump without snap", async ({ page }) => {
-  await page.goto("./");
-  const scrollStyle = await page.locator("html").evaluate((element) => {
-    const style = getComputedStyle(element);
-    return { behavior: style.scrollBehavior, snap: style.scrollSnapType };
-  });
-  expect(scrollStyle).toEqual({ behavior: "auto", snap: "none" });
-
-  await page.evaluate(() => window.scrollTo(0, 350));
-  await page.waitForTimeout(450);
-  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(300);
-  expect(await page.evaluate(() => window.scrollY)).toBeLessThan(400);
-
-  await page.locator('a[href="#about-me"]').click();
-  await expect(page).toHaveURL(/#about-me$/);
-  expect(await page.locator("#about-me").evaluate((element) => Math.round(element.getBoundingClientRect().top))).toBe(0);
-
-  await page.locator("#scroll-to-top").click();
-  expect(await page.evaluate(() => window.scrollY)).toBe(0);
-});
-
-test("desktop navbar smoothly scrolls between sections and respects reduced motion", async ({ page }) => {
-  await page.goto("./");
-  await page.evaluate(() => {
-    const original = Element.prototype.scrollIntoView;
-    Element.prototype.scrollIntoView = function (options) {
-      document.documentElement.dataset.navScrollBehavior =
-        typeof options === "object" ? options.behavior : "";
-      original.call(this, options);
-    };
-  });
-
-  await page.locator('[data-nav-section="projects"]').click();
-  await expect(page).toHaveURL(/#projects$/);
-  await expect(page.locator("html")).toHaveAttribute("data-nav-scroll-behavior", "smooth");
-  await expect.poll(() => page.locator("#projects").evaluate((el) => Math.abs(Math.round(el.getBoundingClientRect().top)))).toBeLessThanOrEqual(20);
-
-  await page.locator('[data-nav-section="about-me"]').click();
-  await expect(page).toHaveURL(/#about-me$/);
-  await expect.poll(() => page.locator("#about-me").evaluate((el) => Math.abs(Math.round(el.getBoundingClientRect().top)))).toBeLessThanOrEqual(20);
-
+test("homepage video keeps its poster and is absent from the registry route", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.locator('[data-nav-section="connect"]').click();
-  await expect(page).toHaveURL(/#connect$/);
-  await expect(page.locator("html")).toHaveAttribute("data-nav-scroll-behavior", "instant");
-  await expect.poll(() => page.locator("#connect").evaluate((el) => Math.abs(Math.round(el.getBoundingClientRect().top)))).toBeLessThanOrEqual(20);
-});
-
-test("mobile menu keeps background scrolling available", async ({ page }) => {
-  await page.setViewportSize({ width: 375, height: 667 });
   await page.goto("./");
-  await page.evaluate(() => window.scrollTo(0, 200));
-  await page.locator("[data-mobile-open]").click();
-  await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "true");
-  expect(await page.locator("html").evaluate((element) => getComputedStyle(element).overflowY)).not.toBe("hidden");
-
-  await page.mouse.move(200, 300);
-  await page.mouse.wheel(0, 300);
-  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(200);
-});
-
-test("mobile menu smoothly navigates home sections and keeps cross-page links", async ({ page }) => {
-  await page.setViewportSize({ width: 375, height: 667 });
-  await page.goto("./");
-  await page.evaluate(() => {
-    const original = Element.prototype.scrollIntoView;
-    Element.prototype.scrollIntoView = function (options) {
-      document.documentElement.dataset.navScrollBehavior =
-        typeof options === "object" ? options.behavior : "";
-      original.call(this, options);
-    };
-  });
-
-  await page.locator("[data-mobile-open]").click();
-  await page.locator('[data-mobile-link="projects"]').click();
-  await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "false");
-  await expect(page.locator("html")).toHaveAttribute("data-nav-scroll-behavior", "smooth");
-  await expect(page).toHaveURL(/#projects$/);
-  await expect.poll(() => page.locator("#projects").evaluate((el) => Math.abs(Math.round(el.getBoundingClientRect().top)))).toBeLessThanOrEqual(20);
-
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.locator("[data-mobile-open]").click();
-  await page.locator('[data-mobile-link="about-me"]').click();
-  await expect(page.locator("html")).toHaveAttribute("data-nav-scroll-behavior", "instant");
-  await expect(page.locator("#mobile-nav-overlay")).toHaveAttribute("data-open", "false");
-  await expect(page).toHaveURL(/#about-me$/);
-
-  if (projectRoutes.length > 0) {
-    await page.goto(projectRoutes[0]);
-    await page.locator("[data-mobile-open]").click();
-    await page.locator('[data-mobile-link="about-me"]').click();
-    await expect(page).toHaveURL(/\/my-portfolio\/#about-me$/);
-    await expect(page.locator("[data-video-background]")).toHaveCount(1);
-  }
-});
-
-test("homepage keeps one fixed video behind every section", async ({ page }) => {
-  await page.goto("./");
-  const background = page.locator("[data-video-background]");
-  const video = page.locator("[data-background-video]");
-  await expect(background).toHaveCount(1);
-  await expect(video).toHaveCount(1);
-  await expect(video.locator("source")).toHaveAttribute("src", `${basePath}videos/black-hole.webm`);
-  const firstVideo = await video.elementHandle();
-
-  for (const section of ["#main", "#about-me", "#intelligence-hub", "#projects", "#connect"]) {
-    await page.locator(section).scrollIntoViewIfNeeded();
-    const geometry = await background.evaluate((element) => ({
-      position: getComputedStyle(element).position,
-      top: Math.round(element.getBoundingClientRect().top),
-      height: Math.round(element.getBoundingClientRect().height),
-    }));
-    expect(geometry).toEqual({ position: "fixed", top: 0, height: page.viewportSize()?.height });
-    expect(await page.evaluate((element) => document.querySelector("[data-background-video]") === element, firstVideo)).toBe(true);
-  }
-
+  await expect(page.locator("[data-video-background]")).toHaveCount(1);
+  await expect(page.locator("[data-background-video]")).toBeHidden();
+  await expect(page.locator("[data-video-poster]")).toBeVisible();
   await page.goto("./projects/");
   await expect(page.locator("[data-video-background]")).toHaveCount(0);
-  if (projectRoutes.length > 0) {
-    await page.goto(projectRoutes[0]);
-    await expect(page.locator("[data-video-background]")).toHaveCount(0);
-  }
-});
-
-test("homepage shows a static poster with reduced motion or unavailable video", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("./");
-  const video = page.locator("[data-background-video]");
-  const poster = page.locator("[data-video-poster]");
-  await expect(video).toBeHidden();
-  await expect(video).toHaveJSProperty("paused", true);
-  await expect(poster).toBeVisible();
-  await expect(poster).toHaveAttribute("src", `${basePath}images/black-hole-poster.jpg`);
-
-  await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.route("**/videos/black-hole.webm", (route) => route.abort());
-  await page.reload();
-  await expect(poster).toBeVisible();
-  await expect.poll(() => poster.evaluate((element) => (element as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
 });

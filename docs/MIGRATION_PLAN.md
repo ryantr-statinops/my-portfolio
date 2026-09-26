@@ -1,3 +1,4 @@
+> Historical proposal only; its Astro implementation steps have been superseded by the React migration. Do not use this document as current execution guidance. See `docs/ARCHITECTURE_V2.md` and `docs/ROADMAP.md`.
 # MIGRATION_PLAN (v1.0) - High-Speed Legacy Migration
 
 ## GOAL

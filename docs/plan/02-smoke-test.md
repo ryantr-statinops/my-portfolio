@@ -1,26 +1,15 @@
-# L2 — Playwright Smoke Tests
+# L2 — Static Route and Interaction Smoke Tests
 
-Status: complete. Chromium smoke tests run against `astro preview` with the `/my-portfolio/` base path.
+Status: Playwright runs against the prepared `dist/` artifact served by `npm run preview` under `/my-portfolio/`.
 
 ## Route source
 
-The test reads `dist/projects/*/index.html` after build and derives all project routes. Together with `/` and `/projects/`, the route set remains valid when the project collection is empty.
+Smoke coverage derives project routes from `dist/projects/<slug>/index.html`; with an empty catalog it verifies the homepage and registry. Every published route must return HTTP 200 and include a page title, description and canonical URL under the GitHub Pages base path.
 
-## Coverage
+## Interaction coverage
 
-- HTTP 200 and title/description/canonical/OG metadata for every generated route.
-- Sitemap and robots availability.
-- Internal homepage links and project thumbnail requests.
-- Four-category filter states and the empty registry on `/projects/`; no project filter is rendered on the homepage.
-- Strategy domain/stage selection, reset behavior, keyboard access, URL stability and no-JavaScript fallback.
-- Read-only terminal whitelist, unknown command handling and clear behavior.
-- Theme toggle, skip link, anchors and mobile menu open/close.
+The suite verifies the four Strategy tracks and three stages, local selection/reset behavior, no-JavaScript fallback, keyboard operation, Projects empty state and four-category registry filter, terminal output, unknown-route 404, and homepage-only background video/poster.
 
-Run locally with:
+Static artifact checks verify two sitemap URLs plus any published projects, sitemap index, robots URL and real unknown-path 404 behavior without an SPA fallback.
 
-```bash
-npm run build
-npm run test:smoke
-```
-
-The test server and base URL are defined in `playwright.config.ts`; CI installs Chromium with `--with-deps`.
+Run `npm run test:smoke`. If local `test-results/` contains preserved user evidence, direct Playwright output to a temporary directory with `--output=/tmp/<run-name>`; never remove user evidence to make a test run.

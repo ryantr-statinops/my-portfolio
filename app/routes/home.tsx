@@ -1,0 +1,31 @@
+import type { MetaFunction } from "react-router";
+import { SITE } from "../../src/lib/constants";
+import AboutMe from "../components/sections/AboutMe";
+import Hero from "../components/sections/Hero";
+import StrategyHub from "../components/sections/StrategyHub";
+import ProjectShowcase from "../components/sections/ProjectShowcase";
+import { orderedProjects } from "../data/projects";
+
+const canonical = `${SITE.site}${SITE.base}/`;
+
+export const meta: MetaFunction = () => [
+  { title: SITE.title },
+  { name: "description", content: SITE.description },
+  { tagName: "link", rel: "canonical", href: canonical },
+  { property: "og:url", content: canonical },
+  { property: "og:image", content: `${SITE.site}${SITE.base}/images/avt.webp` },
+  { name: "twitter:image", content: `${SITE.site}${SITE.base}/images/avt.webp` },
+];
+
+export default function Home() {
+  return (
+    <>
+      <Hero />
+      <section id="about-me" className="flex min-h-screen items-center border-t border-border/30 bg-transparent">
+        <AboutMe />
+      </section>
+      <StrategyHub />
+      <ProjectShowcase projects={orderedProjects} limit={6} />
+    </>
+  );
+}

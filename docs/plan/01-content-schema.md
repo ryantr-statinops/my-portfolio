@@ -1,25 +1,17 @@
-# L1 — Content and Unit Tests
+# L1 — Catalog and Unit Tests
 
-Status: complete. The project collection may be empty; when entries exist, schema and per-entry checks still apply.
+Status: implemented with Vitest. The project catalog is intentionally empty; the public site currently generates two static routes.
 
-## Contract
+## Catalog contract
 
-The MDX project collection may contain zero or more projects. Each project must contain `id`, `title`, `description`, `date`, `category`, `status`, `priority`, `tags`, `impact`, `thumbnail`, `github`, `demo` and `stack`. Categories are `software-engineering`, `data-engineering`, `ai-engineering` and `other`; statuses are allowlisted; IDs and priorities are unique; dates use `YYYY-MM-DD`; URLs are HTTP(S); tags and stack remain within schema limits.
+- `app/data/project-schema.ts` validates the project JSON contract: historic `id`, public `routeSlug`, title, description, ISO date, category, status, unique priority, tags, impact, thumbnail, optional GitHub/demo links and stack.
+- IDs, route slugs and priorities must be unique. Priority `1` is highest and route ordering is ascending.
+- Thumbnail paths must match `/images/projects/<slug>/thumbnail.webp`; thumbnails and every Markdown inline image must exist under `public/images/`.
+- `app/data/projects.ts` provides validated records, ordering, prerender slugs and route-slug lookup.
+- Each `app/content/projects/<routeSlug>.md` preserves its full detail body; image paths resolve below `/my-portfolio/` in the built artifact.
 
-Priority `1` is highest. Tests and `getSortedProjects()` both enforce ascending order. Duplicate priority fails with the project/file context.
+## Behavior coverage
 
-Thumbnails must match exactly:
+Unit contracts cover empty collections, required/malformed metadata, category IDs, duplicate IDs/slugs/priorities, ordering, multi-select filters (including empty = All), Strategy tracks/stages, and terminal allowlist/unknown command behavior.
 
-```text
-/images/projects/<filename-slug>/thumbnail.webp
-```
-
-The test compares the MDX filename slug, checks the corresponding folder and verifies that the file exists under `public/`.
-
-## Logic coverage
-
-Vitest covers empty-collection support, required fields, allowlists, date/URL formats, ID/priority uniqueness, thumbnail path/existence, tag/stack limits, multi-select filter state, terminal command parsing and the four-track Strategy scaffold.
-
-## Maintenance
-
-When a new project or schema field is introduced, update the schema and its focused test in the same commit. Keep Strategy copy grounded in reviewed project evidence and do not publish empty slots as capability claims.
+Run with `npm run test:unit`. Keep tests deterministic and check externally visible behavior or invariants, not source text or forwarding.

@@ -14,10 +14,7 @@ const viewports = [
   { name: "mobile", width: 375, height: 667 },
 ] as const;
 
-const maskDynamic = (page: Page) => [
-  page.locator("canvas"),
-  page.locator("#utc-clock"),
-];
+const maskDynamic = (page: Page) => [page.locator("#utc-clock")];
 
 async function stabilize(page: Page) {
   await page.evaluate(() => {
@@ -27,7 +24,7 @@ async function stabilize(page: Page) {
     });
   });
   await page.addStyleTag({
-    content: "*, *::before, *::after { animation: none !important; transition: none !important; caret-color: transparent !important; } video { visibility: hidden !important; } @media (max-width: 480px) { article header { height: 677px !important; overflow: hidden !important; } }",
+    content: "*, *::before, *::after { animation: none !important; transition: none !important; caret-color: transparent !important; } video { visibility: hidden !important; }",
   });
   await page.evaluate(() => {
     document.querySelectorAll(".reveal").forEach((element) => element.classList.add("active"));
@@ -92,7 +89,8 @@ for (const theme of ["dark", "light"] as const) {
         await page.goto("./projects/");
         await stabilize(page);
         await expect(page.locator("[data-terminal]")).toHaveScreenshot(`${theme}-${viewport.name}-portfolio-runtime-terminal.png`, screenshotOptions);
-        await page.locator('[data-filter-category="software-engineering"]').first().click();
+        await page.locator('[data-filter-category="data-engineering"]').first().click();
+        await stabilize(page);
         await expect(page.locator("[data-project-filter]").first()).toHaveScreenshot(`${theme}-${viewport.name}-filter-active.png`, screenshotOptions);
         await expect(page.locator("#portfolio-registry")).toHaveScreenshot(`${theme}-${viewport.name}-projects-registry.png`, screenshotOptions);
 
