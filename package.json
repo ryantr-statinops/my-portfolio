@@ -2,7 +2,7 @@
   "name": "my-portfolio",
   "type": "module",
   "version": "0.1.0",
-  "description": "Ryan Tran — Command Center Portfolio (React + TypeScript + Tailwind)",
+  "description": "Ryan Tran \u2014 Command Center Portfolio (React + TypeScript + Tailwind)",
   "private": true,
   "engines": {
     "node": ">=22.12.0"
@@ -13,7 +13,7 @@
     "check": "react-router typegen && tsc --noEmit",
     "test": "npm run test:unit && npm run test:smoke && npm run test:visual",
     "test:unit": "vitest run",
-    "test:smoke": "playwright test tests/e2e/smoke.spec.ts tests/e2e/static-artifact.spec.ts",
+    "test:smoke": "playwright test tests/e2e/smoke.spec.ts tests/e2e/static-artifact.spec.ts tests/e2e/project-hub.spec.ts",
     "test:visual": "playwright test tests/e2e/visual.spec.ts",
     "test:watch": "vitest",
     "preview": "node scripts/static-preview.mjs"

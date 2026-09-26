@@ -19,10 +19,15 @@ export default defineConfig({
     video: "retain-on-failure",
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
-  webServer: {
+  webServer: [{
     command: "npm run build && npm run preview",
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
-  },
+  }, {
+    command: "npm exec vite -- --config tests/fixtures/vite.config.ts",
+    url: "http://127.0.0.1:4174/hub.html",
+    reuseExistingServer: false,
+    timeout: 30_000,
+  }],
 });

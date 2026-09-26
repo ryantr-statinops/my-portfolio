@@ -3,7 +3,8 @@ import { CATEGORY_IDS } from "../../src/lib/constants";
 
 export const projectCategorySchema = z.enum(CATEGORY_IDS);
 export const repositoryUrlSchema = z.url().refine((value) => {
-  const url = new URL(value);
+  let url: URL;
+  try { url = new URL(value); } catch { return false; }
   return url.protocol === "https:" && url.hostname === "github.com" &&
     !url.username && !url.password && !url.port && !url.search && !url.hash &&
     /^\/[A-Za-z0-9-]+\/[A-Za-z0-9_.-]+\/?$/.test(url.pathname) &&

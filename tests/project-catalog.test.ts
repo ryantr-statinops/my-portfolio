@@ -16,7 +16,7 @@ describe("project overview catalog", () => {
   it.each([0, -1, 1.5])("rejects invalid priority %s", (priority) => {
     expect(projectSchema.safeParse({ ...project, priority }).success).toBe(false);
   });
-  it.each(["http://github.com/owner/repo", "https://example.com/owner/repo", "https://github.com/owner", "https://github.com/owner/repo/tree/main", "https://github.com/owner/repo?tab=readme", "https://user:pass@github.com/owner/repo"]) ("rejects non-repository URL %s", (github) => {
+  it.each(["not-a-url", "", "http://github.com/owner/repo", "https://example.com/owner/repo", "https://github.com/owner", "https://github.com/owner/repo/tree/main", "https://github.com/owner/repo?tab=readme", "https://user:pass@github.com/owner/repo"]) ("rejects non-repository URL %s", (github) => {
     expect(projectSchema.safeParse({ ...project, links: { github } }).success).toBe(false);
   });
   it("requires a repository, supported category and nonempty stack values", () => {
