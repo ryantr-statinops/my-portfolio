@@ -1,0 +1,64 @@
+/* Shared information surfaces. Layout and typography belong to the caller. */
+:root {
+  --box-radius: 1rem;
+  --box-border: var(--border);
+  --box-background: rgb(var(--background-rgb) / 0.7);
+  --box-blur: 12px;
+  --box-padding: 1.25rem;
+  --box-padding-compact: 0.75rem;
+  --box-padding-filter: 1rem;
+  --box-padding-panel: 1.5rem;
+}
+
+@layer components {
+  .info-box {
+    min-width: 0;
+    border: 1px solid var(--box-border);
+    border-radius: var(--box-radius);
+    background: var(--box-background);
+    padding: var(--box-padding);
+    -webkit-backdrop-filter: blur(var(--box-blur));
+    backdrop-filter: blur(var(--box-blur));
+  }
+
+  .info-box--compact {
+    padding-block: var(--box-padding-compact);
+  }
+
+  .info-box--filter {
+    padding: var(--box-padding-compact) var(--box-padding-filter);
+  }
+
+  .info-box--panel {
+    padding: var(--box-padding-panel);
+  }
+
+  .info-box--list {
+    padding-block: 0;
+  }
+
+  .info-box--list > * + * {
+    border-top: 1px solid var(--box-border);
+  }
+
+  .info-box--interactive:hover {
+    border-color: var(--primary);
+  }
+
+  .info-box--interactive:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .info-box--interactive[aria-pressed="true"] {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: var(--background);
+  }
+
+  @media (min-width: 768px) {
+    .info-box--panel {
+      --box-padding-panel: 2rem;
+    }
+  }
+}

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./boxes.css";
 
 @font-face {
   font-family: "JetBrains Mono Local";
