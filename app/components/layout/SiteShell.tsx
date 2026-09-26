@@ -30,25 +30,39 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const links = document.querySelectorAll<HTMLAnchorElement>("[data-nav-section]");
-    const sections = [...links]
-      .map((link) => document.getElementById(link.dataset.navSection ?? ""))
+    const sections = ["main", "about-me", "projects", "connect"]
+      .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null);
-    if (sections.length === 0) return;
+    let frame: number | null = null;
 
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((left, right) => right.intersectionRatio - left.intersectionRatio);
-      const activeId = visible[0]?.target.id;
-      if (!activeId) return;
+    function updateActiveSection() {
+      frame = null;
+      const readingLine = window.innerHeight * 0.4;
+      let activeId = sections.find((section) => {
+        const bounds = section.getBoundingClientRect();
+        return bounds.top <= readingLine && bounds.bottom > readingLine;
+      })?.id;
+      if (activeId !== "main" && window.scrollY > 0 &&
+          window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+        activeId = sections.at(-1)?.id;
+      }
       links.forEach((link) => {
         if (link.dataset.navSection === activeId) link.setAttribute("aria-current", "true");
         else link.removeAttribute("aria-current");
       });
-    }, { rootMargin: "-40% 0px -40% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] });
+    }
 
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+    function scheduleUpdate() {
+      if (frame === null) frame = requestAnimationFrame(updateActiveSection);
+    }
+    updateActiveSection();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+    return () => {
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
   }, [location.pathname]);
 
   useEffect(() => {
