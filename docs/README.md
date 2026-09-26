@@ -25,6 +25,8 @@ Content authors: data → project catalog. UI changes: features → design. Rele
 - [Architecture](architecture/README.md)
   - [Rendering and static artifacts](architecture/rendering.md)
   - [Routing and navigation](architecture/routing.md)
+- [Features](features/README.md)
+  - [Homepage and site navigation](features/homepage-and-navigation.md)
 
 ## Reference conventions
 
