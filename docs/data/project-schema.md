@@ -7,6 +7,7 @@ The catalog is an array of validated overview records. All top-level fields are 
 ## Contents
 
 - [Fields](#fields)
+- [Lifecycle statuses](#lifecycle-statuses)
 - [Repository URL](#repository-url)
 - [Collection and failures](#collection-and-failures)
 - [Illustrative example](#illustrative-example)
@@ -21,11 +22,25 @@ The catalog is an array of validated overview records. All top-level fields are 
 | title | String, minimum 5 characters |
 | description | Plain text, minimum 10 characters; line breaks supported |
 | category | software-engineering, data-engineering, ai-engineering or other |
+| status | Required: pending, building, active, paused, completed or archived |
 | priority | Positive integer, unique; lower values appear first; no maximum of 10 |
 | stack | At most 12 strings; trimmed, nonempty values; empty array allowed |
 | links.github | Required repository URL, as specified below |
 
-There is no routeSlug, date, status, thumbnail, tags, impact or demo field in the inferred ProjectOverview type. Title and description minima are length checks, not automatic whitespace trimming. The schema uses a Zod object rather than a strict object; extra legacy keys are stripped from parsed output, not consumed by the UI.
+There is no routeSlug, date, thumbnail, tags, impact or demo field in the inferred ProjectOverview type. Title and description minima are length checks, not automatic whitespace trimming. The schema uses a Zod object rather than a strict object; extra legacy keys are stripped from parsed output, not consumed by the UI.
+
+## Lifecycle statuses
+
+| Value | Label | Meaning |
+|---|---|---|
+| pending | Pending | Planned; core implementation has not started |
+| building | Building | Core functionality is under development |
+| active | Active | Usable and maintained |
+| paused | Paused | Development is temporarily suspended |
+| completed | Completed | The intended scope is complete |
+| archived | Archived | No longer maintained; retained for reference |
+
+Status is an editorial field maintained by the portfolio owner. It is not inferred from commit age, fetched from GitHub or synchronized with GitHub's archive flag. Missing and unsupported values fail validation. Status does not affect priority, visibility or category filtering.
 
 ## Repository URL
 
@@ -45,6 +60,7 @@ This is test/example content, not a published repository record. Add your own re
   "title": "Example Project",
   "description": "A concise overview of the problem and approach used in this illustrative project.",
   "category": "software-engineering",
+  "status": "building",
   "priority": 1,
   "stack": [
     "TypeScript"
