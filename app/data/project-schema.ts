@@ -32,9 +32,3 @@ export const projectCatalogSchema = z.array(projectSchema).superRefine((projects
 });
 
 export type ProjectOverview = z.infer<typeof projectSchema>;
-// Temporary compatibility for the routes removed during the Hub migration.
-export type Project = ProjectOverview & {
-  routeSlug: string; date: string; status: "Research & Development";
-  tags: string[]; impact: string; thumbnail: string;
-  links: ProjectOverview["links"] & { demo?: string };
-};
