@@ -27,7 +27,7 @@ Unit fallback tests render the real component with ReactDOMServer and ensure all
 
 About Me tests verify prerendered profile/education/contacts, the six focus headings in order, external-link hints, keyboard traversal, section navigation and responsive column counts at 1280, 768 and 320 px. A no-JavaScript browser case checks visible profile content. Full-section About Me and Connect screenshots include their complete content and temporarily hide the viewport-fixed Primary navigation to avoid overlay artifacts in the tall capture. Browser navigation tests verify the real navbar and heading clearance separately.
 
-Connect tests cover four link destinations, external-link hints, 44 px targets, keyboard order, the 60/40 desktop ratio, compact height, mobile navigation, reduced-motion Back to top and no-JavaScript rendering. Contact links are inspected without sending messages or placing calls.
+Connect tests cover four link destinations, external-link hints, 44 px targets, keyboard order, the 55/45 desktop ratio, compact height, mobile navigation, reduced-motion Back to top and no-JavaScript rendering. Contact links are inspected without sending messages or placing calls. Desktop tests also check section highlights and clearing at Hero, plus the bounded project list, keyboard selection of its last entry and matching overview height.
 
 ## Test environments
 
