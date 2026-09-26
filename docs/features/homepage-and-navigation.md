@@ -16,13 +16,13 @@ The homepage has four visible areas: Hero, About Me, Project Hub and Connect.
 
 ## Composition
 
-Home renders Hero, AboutMe and ProjectHub with the validated catalog. SiteShell provides fixed navigation, the homepage video, skip link, main content and shared footer. Hero retains its headline, introduction and two navigation links. AboutMe owns its section anchor, profile, education, availability, contact links and Current Focus. Footer provides a compact connection invitation, four contact channels and a closing bar.
+Home renders Hero, AboutMe and ProjectHub with the validated catalog. SiteShell provides fixed navigation, the homepage video, skip link, main content and shared footer. Hero retains its headline, introduction and three navigation links: View Profile, View Projects and Contact. AboutMe owns its section anchor, profile, education, availability, contact links and Current Focus. Footer provides a compact connection invitation, four contact channels and a closing bar.
 
 ## About Me content and layout
 
-The section has one semantic section element with id about-me and aria-labelledby pointing to about-me-title. The heading is “About Me”, styled consistently with “Current Focus”. A large profile card presents “Statistics Student” and “Data · AI · Software”, followed by the role of mathematics/statistics as a foundation and programming/engineering as the means of implementation.
+The section has one semantic section element with id about-me and aria-labelledby pointing to about-me-title. The heading is “About Me”, styled consistently with “Project Hub”. “Statistics Student” and “Data · AI · Software” sit outside the profile card, which explains the role of mathematics/statistics as a foundation and programming/engineering as the means of implementation.
 
-Education is a short BSc in Statistics entry for Ton Duc Thang University, Faculty of Mathematics & Statistics, 2024–Present. A neighboring availability card states openness to internship and entry-level opportunities in data, AI and software engineering. It links to LinkedIn, GitHub, email and telephone. Social links open new tabs with noopener/noreferrer and an accessible hint; email and phone use mailto/tel links.
+Education is a short BSc in Statistics entry for Ton Duc Thang University, Faculty of Mathematics & Statistics, 2024–Present. An availability card below the profile states openness to internship and entry-level opportunities in data, AI and software engineering. It links to LinkedIn, GitHub, email and telephone. Social links open new tabs with noopener/noreferrer and an accessible hint; email and phone use mailto/tel links.
 
 Six Current Focus cards follow in this order: Backend Engineering, Data Engineering, AI Infrastructure, Infrastructure, Quantitative Analytics and Statistics → Engineering. They describe current interests and work rather than proficiency ratings. These cards retain their original Hero titles and concise descriptions, reordered to put Backend, Data and AI first.
 
@@ -32,21 +32,21 @@ About Me does not include work experience, achievements, the former Journey/Prin
 
 ## Connect and footer
 
-Connect uses a content-height layout with 64 px vertical padding and the same max-width as About Me. At desktop width it has 60/40 columns: an invitation on the left, and one contact box on the right. Below 1024 px the columns stack. It has no minimum viewport height or reveal visibility gate.
+Connect uses a content-height layout with 96 px top padding (128 px on desktop) and 64 px bottom padding. It shares the About Me max-width. At desktop width it has 55/45 columns: an invitation on the left, and one contact box on the right. Below 1024 px the columns stack. It has no minimum viewport height or reveal visibility gate.
 
-“Let’s connect.” introduces a general invitation to exchange ideas and projects in data, AI and software. A smaller paragraph also welcomes internship and entry-level opportunities. The contact box contains Email, LinkedIn, GitHub and Phone, in that order. Email appears once with stronger emphasis. Each entire row is a keyboard-focusable link with at least a 44 px target; email and phone use mailto/tel, while social profiles open a new tab with noopener/noreferrer and an accessible hint.
+“Let’s connect” introduces a general invitation to exchange ideas and projects in data, AI and software. A smaller paragraph also welcomes internship and entry-level opportunities. The contact box contains Email, LinkedIn, GitHub and Phone, in that order. Email appears once with stronger emphasis. Each entire row is a keyboard-focusable link with at least a 44 px target; email and phone use mailto/tel, while social profiles open a new tab with noopener/noreferrer and an accessible hint.
 
 The closing bar contains © 2026 Ryan Tran and a visible “Back to top” button. Its id remains scroll-to-top and accessible name remains “Scroll to top”. Scrolling is instant under reduced motion and smooth otherwise. The footer keeps its transparentBackground prop and connect anchor. It has no form, online status, deployment/security claims, repeated avatar or location.
 
 ## Navigation and focus
 
-Desktop and mobile navigation contain About Me, Projects and Connect. Keep their section arrays aligned. Hero View Projects links to #projects. Modified/external navigation is left to normal link behavior; matching same-page section clicks update history, focus and scroll. The shell observes visible sections for aria-current.
+Desktop and mobile navigation contain About Me, Projects and Connect. Keep their section arrays aligned. Hero View Projects links to #projects. Modified/external navigation is left to normal link behavior; matching same-page section clicks update history, focus and scroll. The shell tracks sections at a reading line 40% down the viewport for aria-current, clears the highlight in Hero and selects Connect at the bottom of the page. Scroll updates are batched with requestAnimationFrame.
 
 Mobile opening focuses the first link; Escape and explicit close restore menu-button focus. Choosing a section closes without forcing focus back. The overlay is not a full modal focus trap. The skip link targets main-content.
 
 ## Theme and motion
 
-The root initializes dark/light from localStorage or system preference. ThemeToggle persists the selected theme. Homepage video styling retains dark contrast tokens even in light preference. VideoBackground mounts on the home route and retains its poster when reduced motion is enabled or autoplay fails. Reveal effects activate immediately under reduced motion. About Me and Connect remain readable without JavaScript.
+The root initializes dark/light from localStorage or system preference. ThemeToggle in the mobile menu persists the selected theme; the desktop navbar has no theme button. Homepage video styling retains dark contrast tokens even in light preference. VideoBackground mounts on the home route and retains its poster when reduced motion is enabled or autoplay fails. Reveal effects activate immediately under reduced motion. About Me and Connect remain readable without JavaScript.
 
 ## Source references
 
