@@ -79,3 +79,61 @@ test("published projects expose matching status and repository in every category
     }
   }
 });
+
+test("About Me exposes the approved profile and six focus cards", async ({ page }) => {
+  await page.goto("./");
+  const about = page.locator("#about-me");
+  await expect(page.locator("#main")).not.toContainText("CURRENT FOCUS");
+  await expect(about).toHaveAttribute("aria-labelledby", "about-me-title");
+  await expect(about.locator("section")).toHaveCount(0);
+  await expect(about.locator("[data-focus-card] h4")).toHaveText([
+    "Backend Engineering", "Data Engineering", "AI Engineering",
+    "Infrastructure", "Quantitative Analytics", "Statistics → Engineering",
+  ]);
+  await expect(about).toContainText("Ton Duc Thang University");
+  await expect(about).toContainText("Open to internship and entry-level opportunities");
+  for (const href of ["https://www.linkedin.com/in/ryan-tr/", "https://github.com/ryantr-statinops"]) {
+    const link = about.locator(`a[href="${href}"]`);
+    await expect(link).toHaveAttribute("target", "_blank");
+    await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    await expect(link).toHaveAccessibleName(/opens in a new tab/);
+  }
+  await expect(about.locator('a[href="mailto:trankhang2856@gmail.com"]')).toHaveText("trankhang2856@gmail.com");
+  await expect(about.locator('a[href="tel:+84987357707"]')).toHaveText("0987 357 707");
+  await about.getByRole("link", { name: /LinkedIn/ }).focus();
+  await page.keyboard.press("Tab");
+  await expect(about.getByRole("link", { name: /GitHub/ })).toBeFocused();
+});
+
+test("About Me navigation and responsive cards work at every breakpoint", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const [width, columns] of [[1280, 3], [768, 2], [320, 1]]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("./");
+    if (width === 320) {
+      await page.getByRole("button", { name: "Open menu" }).click();
+      await page.getByRole("navigation", { name: "Mobile" }).getByRole("link", { name: "ABOUT ME", exact: true }).click();
+    } else {
+      await page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "ABOUT ME", exact: true }).click();
+    }
+    await expect(page).toHaveURL(/#about-me$/);
+    await expect(page.locator("#about-me-title")).toBeInViewport();
+    const title = await page.locator("#about-me-title").boundingBox();
+    expect(title!.y).toBeGreaterThan(70);
+    const count = await page.locator("[data-focus-grid]").evaluate(el => getComputedStyle(el).gridTemplateColumns.split(" ").length);
+    expect(count).toBe(columns);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+});
+
+test("About Me is readable without JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto("./#about-me");
+  const about = page.locator("#about-me");
+  await expect(about.getByRole("heading", { name: /Statistics Student/ })).toBeVisible();
+  await expect(about.getByRole("heading", { name: "Open to work" })).toBeVisible();
+  await expect(about.locator("[data-focus-card]")).toHaveCount(6);
+  await expect(about.getByRole("link", { name: "0987 357 707" })).toBeVisible();
+  await context.close();
+});
