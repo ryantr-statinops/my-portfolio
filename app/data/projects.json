@@ -85,5 +85,19 @@
     "links": {
       "github": "https://github.com/ryantr-statinops/Operation_CRM_Admission"
     }
+  },
+  {
+    "id": "csv-schema-alignment",
+    "title": "CSV Schema Alignment",
+    "description": "A Python toolkit for matching corresponding columns across CSV datasets. It combines header normalization, data profiling and similarity scoring to support schema alignment.",
+    "category": "data-engineering",
+    "status": "building",
+    "priority": 60,
+    "stack": [
+      "Python"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/CSV-Schema-Alignment"
+    }
   }
 ]
