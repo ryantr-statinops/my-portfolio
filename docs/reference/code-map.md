@@ -17,12 +17,12 @@ Relative links open the working copy; permalinks identify exact source locations
 |---|---|
 | [app/components/interactive/VideoBackground.tsx](../../app/components/interactive/VideoBackground.tsx) | [VideoBackground](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/interactive/VideoBackground.tsx#L4) |
 | [app/components/interactive/video-background.css](../../app/components/interactive/video-background.css) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/interactive/video-background.css#L1) |
-| [app/components/layout/Footer.tsx](../../app/components/layout/Footer.tsx) | [Footer](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/layout/Footer.tsx#L5) |
+| [app/components/layout/Footer.tsx](../../app/components/layout/Footer.tsx) | [Footer](https://github.com/ryantr-statinops/my-portfolio/blob/28ad4c6caacdb33f8abfd3d0e54303d346401587/app/components/layout/Footer.tsx#L12) |
 | [app/components/layout/MobileOverlay.tsx](../../app/components/layout/MobileOverlay.tsx) | [MobileOverlay](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/layout/MobileOverlay.tsx#L18) |
 | [app/components/layout/Navbar.tsx](../../app/components/layout/Navbar.tsx) | [Navbar](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/layout/Navbar.tsx#L18) |
 | [app/components/layout/SiteShell.tsx](../../app/components/layout/SiteShell.tsx) | [SiteShell](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/layout/SiteShell.tsx#L9) |
 | [app/components/layout/ThemeToggle.tsx](../../app/components/layout/ThemeToggle.tsx) | [ThemeToggle](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/layout/ThemeToggle.tsx#L5) |
-| [app/components/sections/AboutMe.tsx](../../app/components/sections/AboutMe.tsx) | [AboutMe](https://github.com/ryantr-statinops/my-portfolio/blob/8fceddadcb5a368eb6fc155954840582ead88b61/app/components/sections/AboutMe.tsx#L19) |
+| [app/components/sections/AboutMe.tsx](../../app/components/sections/AboutMe.tsx) | [AboutMe](https://github.com/ryantr-statinops/my-portfolio/blob/28ad4c6caacdb33f8abfd3d0e54303d346401587/app/components/sections/AboutMe.tsx#L19) |
 | [app/components/sections/Hero.tsx](../../app/components/sections/Hero.tsx) | [Hero](https://github.com/ryantr-statinops/my-portfolio/blob/8fceddadcb5a368eb6fc155954840582ead88b61/app/components/sections/Hero.tsx#L3) |
 | [app/components/ProjectStatusBadge.tsx](../../app/components/ProjectStatusBadge.tsx) | [PROJECT_STATUS](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/ProjectStatusBadge.tsx#L3), [ProjectStatusBadge](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/ProjectStatusBadge.tsx#L12) |
 | [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) | [ProjectOverviewPanel](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/sections/ProjectHub.tsx#L10), [ProjectHub](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/sections/ProjectHub.tsx#L26) |
@@ -40,9 +40,9 @@ Relative links open the working copy; permalinks identify exact source locations
 | [src/lib/sectionNavigation.ts](../../src/lib/sectionNavigation.ts) | [navigateToSection](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/src/lib/sectionNavigation.ts#L1) |
 | [src/styles/global.css](../../src/styles/global.css) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/src/styles/global.css#L1) |
 | [tests/e2e/project-hub.spec.ts](../../tests/e2e/project-hub.spec.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/e2e/project-hub.spec.ts#L5) |
-| [tests/e2e/smoke.spec.ts](../../tests/e2e/smoke.spec.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/8fceddadcb5a368eb6fc155954840582ead88b61/tests/e2e/smoke.spec.ts#L6) |
+| [tests/e2e/smoke.spec.ts](../../tests/e2e/smoke.spec.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/28ad4c6caacdb33f8abfd3d0e54303d346401587/tests/e2e/smoke.spec.ts#L6) |
 | [tests/e2e/static-artifact.spec.ts](../../tests/e2e/static-artifact.spec.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/e2e/static-artifact.spec.ts#L9) |
-| [tests/e2e/visual.spec.ts](../../tests/e2e/visual.spec.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/8fceddadcb5a368eb6fc155954840582ead88b61/tests/e2e/visual.spec.ts#L43) |
+| [tests/e2e/visual.spec.ts](../../tests/e2e/visual.spec.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/28ad4c6caacdb33f8abfd3d0e54303d346401587/tests/e2e/visual.spec.ts#L43) |
 | [tests/fixtures/hub.html](../../tests/fixtures/hub.html) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/fixtures/hub.html#L1) |
 | [tests/fixtures/hub.tsx](../../tests/fixtures/hub.tsx) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/fixtures/hub.tsx#L1) |
 | [tests/fixtures/projects.ts](../../tests/fixtures/projects.ts) | [fixtureProjects](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/fixtures/projects.ts#L3) |
@@ -51,7 +51,8 @@ Relative links open the working copy; permalinks identify exact source locations
 | [tests/project-catalog.test.ts](../../tests/project-catalog.test.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/project-catalog.test.ts#L7) |
 | [tests/project-hub-render.test.ts](../../tests/project-hub-render.test.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/project-hub-render.test.ts#L10) |
 | [tests/project-hub.test.ts](../../tests/project-hub.test.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/project-hub.test.ts#L10) |
-| [tests/about-render.test.ts](../../tests/about-render.test.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/8fceddadcb5a368eb6fc155954840582ead88b61/tests/about-render.test.ts#L6) |
+| [tests/about-render.test.ts](../../tests/about-render.test.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/28ad4c6caacdb33f8abfd3d0e54303d346401587/tests/about-render.test.ts#L6) |
+| [tests/footer-render.test.ts](../../tests/footer-render.test.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/28ad4c6caacdb33f8abfd3d0e54303d346401587/tests/footer-render.test.ts#L6) |
 
 ## Other inputs
 

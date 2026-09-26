@@ -24,7 +24,9 @@ Built with React and TypeScript, prerendered with React Router and published as 
 
 The homepage has four areas: **Hero → About Me → Project Hub → Connect**.
 
-**About Me** introduces a Statistics student exploring Data, AI and Software, with a short education entry and availability for internship and entry-level opportunities. Profile and contact cards sit above six Current Focus cards: Backend Engineering, Data Engineering, AI Engineering, Infrastructure, Quantitative Analytics and Statistics → Engineering. LinkedIn, GitHub, email and telephone links provide direct contact options. The full profile remains readable without JavaScript.
+**About Me** introduces a Statistics student exploring Data, AI and Software, with a short education entry and availability for internship and entry-level opportunities. Profile and contact cards stack in the left column beside six compact Current Focus cards on desktop: Backend Engineering, Data Engineering, AI Infrastructure, Infrastructure, Quantitative Analytics and Statistics → Engineering. LinkedIn, GitHub, email and telephone links provide direct contact options. The full profile remains readable without JavaScript.
+
+**Connect** closes the page with an invitation to exchange ideas and projects, followed by openness to internship and entry-level opportunities. A compact contact box provides email, LinkedIn, GitHub and phone links; the closing bar includes Back to top.
 
 The site’s visual style uses monospace typography, structured content, theme controls and a homepage video with a reduced-motion poster fallback.
 
