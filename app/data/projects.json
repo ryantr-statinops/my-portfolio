@@ -168,5 +168,24 @@
     "links": {
       "github": "https://github.com/ryantr-statinops/Grap4Prob"
     }
+  },
+  {
+    "id": "poisson-process-analytics",
+    "title": "Poisson Process Analytics",
+    "description": "A statistical study of simulated event arrivals using a Poisson process. It covers parameter estimation, goodness-of-fit checks and time-series visualization.",
+    "category": "other",
+    "status": "completed",
+    "priority": 110,
+    "stack": [
+      "Python",
+      "pandas",
+      "NumPy",
+      "SciPy",
+      "Matplotlib",
+      "Seaborn"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/Statistical-Analytics-for-Poisson-Process-Time-Series-Data"
+    }
   }
 ]
