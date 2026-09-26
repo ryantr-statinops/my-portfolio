@@ -46,9 +46,7 @@ jobs:
       - name: Assert generated page count
         run: |
           page_count=$(find dist -type f -name 'index.html' | wc -l | tr -d ' ')
-          project_count=$(node -e 'console.log(JSON.parse(require("fs").readFileSync("app/data/projects.json", "utf8")).length)')
-          expected_page_count=$((2 + project_count))
-          test "$page_count" -eq "$expected_page_count"
+          test "$page_count" -eq 1
       - name: L2 - Smoke tests
         run: npm run test:smoke
       - name: L3 - Visual regression tests

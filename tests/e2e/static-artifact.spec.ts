@@ -17,15 +17,15 @@ test("static sitemap and robots preserve the GitHub Pages base URL", async ({ re
   expect(robots).toContain(`Sitemap: ${publicBase}sitemap-index.xml`);
 
   const routeUrls = [...sitemapXml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
-  expect(routeUrls).toHaveLength(2);
+  expect(routeUrls).toHaveLength(1);
   expect(routeUrls.every((url) => url.startsWith(publicBase))).toBe(true);
   expect(routeUrls.every((url) => !url.includes("/my-portfolio/my-portfolio/"))).toBe(true);
 });
 
-test("unknown static paths receive a real 404 page, never the SPA fallback", async ({ request, baseURL }) => {
-  const response = await request.get(new URL("projects/not-a-published-project/", baseURL).href);
+for (const path of ["projects/", "projects/not-a-published-project/", "missing-page/"]) test(`${path} returns a real 404 with a Hub link`, async ({ request, baseURL }) => {
+  const response = await request.get(new URL(path, baseURL).href);
   expect(response.status()).toBe(404);
   const html = await response.text();
-  expect(html).toContain("Project not found");
-  expect(html).toContain('href="/my-portfolio/projects/"');
+  expect(html).toContain("Page not found");
+  expect(html).toContain('href="/my-portfolio/#projects"');
 });
