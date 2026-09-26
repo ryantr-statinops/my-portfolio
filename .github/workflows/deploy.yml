@@ -46,7 +46,9 @@ jobs:
       - name: Assert generated page count
         run: |
           page_count=$(find dist -type f -name 'index.html' | wc -l | tr -d ' ')
-          test "$page_count" -eq 7
+          project_count=$(find src/content/projects -maxdepth 1 -type f \( -name '*.md' -o -name '*.mdx' \) | wc -l | tr -d ' ')
+          expected_page_count=$((2 + project_count))
+          test "$page_count" -eq "$expected_page_count"
       - name: L2 - Smoke tests
         run: npm run test:smoke
       - name: L3 - Visual regression tests
