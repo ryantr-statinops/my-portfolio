@@ -1,3 +1,12 @@
+const focusAreas = [
+  { title: "Backend Engineering", description: "Building APIs and backend services with Python, FastAPI and Go, with a focus on system architecture." },
+  { title: "Data Engineering", description: "Working with data pipelines, databases and infrastructure to collect, transform and organize data." },
+  { title: "AI Engineering", description: "Exploring agents, MCP, agent harnesses and model routing to integrate AI into practical tools and workflows." },
+  { title: "Infrastructure", description: "Working with Linux, Docker, networking and service orchestration to run and connect applications." },
+  { title: "Quantitative Analytics", description: "Applying statistical modeling and programming to quantitative research and trading systems." },
+  { title: "Statistics → Engineering", description: "Using mathematical and statistical reasoning to frame problems, then implementing solutions through code." },
+];
+
 const journey = [
   { step: "Statistics", description: "Applied statistics — quantitative thinking as the base layer." },
   { step: "Data", description: "Data systems, pipelines and databases." },
@@ -42,6 +51,13 @@ export default function AboutMe() {
             {principles.map((principle, index) => <article key={principle.title} className="glass-premium group rounded-3xl border border-border/80 bg-card/30 p-5 transition-all duration-500 hover:border-primary/50"><div className="mb-2 flex items-center gap-2"><span className="rounded bg-primary/10 px-2 py-0.5 font-mono text-[9px] text-primary">0{index + 1}</span><h4 className="text-sm font-bold uppercase tracking-tight transition-colors group-hover:text-primary">{principle.title}</h4></div><p className="text-xs leading-relaxed text-muted transition-colors group-hover:text-foreground/80">{principle.description}</p></article>)}
           </div>
         </div>
+        <div className="col-span-12">          <div className="space-y-2 reveal">
+            <p className="text-[16px] font-bold uppercase tracking-tighter text-primary">CURRENT FOCUS</p>
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+              {focusAreas.map((area) => <div key={area.title} className="glass flex flex-col gap-1.5 rounded-xl border border-border bg-foreground/[0.03] p-4 transition-colors hover:border-primary/30"><span className="font-mono text-[10px] font-bold uppercase tracking-widest text-foreground">{area.title}</span><span className="font-mono text-xs leading-relaxed text-muted">{area.description}</span></div>)}
+            </div>
+          </div>
+</div>
       </div>
     </section>
   );
