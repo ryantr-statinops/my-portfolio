@@ -38,7 +38,7 @@ Shared logic in `src/lib/` is imported by React components and tests. The produc
 
 ## Pages
 
-This index introduces the architecture. Routing and rendering pages are linked here as they are added.
+- [Routing and navigation](routing.md)
 
 ## Source references
 

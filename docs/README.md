@@ -23,6 +23,7 @@ Content authors: data → project catalog. UI changes: features → design. Rele
 
 - [Project overview](overview.md) — purpose, stack and current content.
 - [Architecture](architecture/README.md)
+  - [Routing and navigation](architecture/routing.md)
 
 ## Reference conventions
 
