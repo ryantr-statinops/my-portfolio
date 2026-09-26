@@ -2,9 +2,8 @@ import type { MetaFunction } from "react-router";
 import { SITE } from "../../src/lib/constants";
 import AboutMe from "../components/sections/AboutMe";
 import Hero from "../components/sections/Hero";
-import StrategyHub from "../components/sections/StrategyHub";
-import ProjectShowcase from "../components/sections/ProjectShowcase";
-import { orderedProjects } from "../data/projects";
+import ProjectHub from "../components/sections/ProjectHub";
+import { projects } from "../data/projects";
 
 const canonical = `${SITE.site}${SITE.base}/`;
 
@@ -24,8 +23,7 @@ export default function Home() {
       <section id="about-me" className="flex min-h-screen items-center border-t border-border/30 bg-transparent">
         <AboutMe />
       </section>
-      <StrategyHub />
-      <ProjectShowcase projects={orderedProjects} limit={6} />
+      <ProjectHub projects={projects} />
     </>
   );
 }

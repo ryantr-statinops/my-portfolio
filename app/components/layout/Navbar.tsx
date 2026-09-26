@@ -4,7 +4,6 @@ import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
   { label: "ABOUT ME", sectionId: "about-me" },
-  { label: "STRATEGY", sectionId: "intelligence-hub" },
   { label: "PROJECTS", sectionId: "projects" },
   { label: "CONNECT", sectionId: "connect" },
 ];
