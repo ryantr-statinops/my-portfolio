@@ -1,20 +1,9 @@
 import { test, expect, type Page } from "@playwright/test";
-import { existsSync, readdirSync } from "node:fs";
-import { join, resolve } from "node:path";
-
-const projectOutput = resolve(process.cwd(), "dist/projects");
-const projectRoutes = readdirSync(projectOutput, { withFileTypes: true })
-  .filter((entry) => entry.isDirectory() && existsSync(join(projectOutput, entry.name, "index.html")))
-  .map((entry) => `./projects/${entry.name}/`)
-  .sort();
-
 const viewports = [
   { name: "desktop", width: 1280, height: 800 },
   { name: "tablet", width: 768, height: 1024 },
   { name: "mobile", width: 375, height: 667 },
 ] as const;
-
-const maskDynamic = (page: Page) => [page.locator("#utc-clock")];
 
 async function stabilize(page: Page) {
   await page.evaluate(() => {
@@ -40,8 +29,6 @@ async function screenshotSectionViewport(
     caret: "hide";
     maxDiffPixelRatio: number;
     timeout: number;
-    mask: ReturnType<typeof maskDynamic>;
-    maskColor: string;
   },
 ) {
   await page.evaluate((sectionSelector) => {
@@ -72,33 +59,17 @@ for (const theme of ["dark", "light"] as const) {
           caret: "hide" as const,
           maxDiffPixelRatio: viewport.name === "mobile" ? 0.08 : 0.05,
           timeout: 15_000,
-          mask: maskDynamic(page),
-          maskColor: theme === "dark" ? "#111111" : "#e5e5e5",
         };
 
         await screenshotSectionViewport(page, "section#main", `${theme}-${viewport.name}-home-hero.png`, screenshotOptions);
         await screenshotSectionViewport(page, "section#about-me", `${theme}-${viewport.name}-home-about.png`, screenshotOptions);
-        await screenshotSectionViewport(page, "section#intelligence-hub", `${theme}-${viewport.name}-home-intelligence-hub.png`, screenshotOptions);
-        await page.locator('[data-strategy-domain="data-engineering"]').click();
-        await page.locator('[data-strategy-stage="build"]').click();
-        await expect(page.locator("[data-strategy]")).toHaveScreenshot(`${theme}-${viewport.name}-strategy-build.png`, screenshotOptions);
-        await page.locator("[data-strategy]").scrollIntoViewIfNeeded();
-        await screenshotSectionViewport(page, "section#projects", `${theme}-${viewport.name}-home-project-showcase.png`, screenshotOptions);
+        await screenshotSectionViewport(page, "section#projects", `${theme}-${viewport.name}-home-project-hub.png`, screenshotOptions);
         await screenshotSectionViewport(page, "footer#connect", `${theme}-${viewport.name}-home-footer.png`, screenshotOptions);
 
-        await page.goto("./projects/");
+        await page.goto("http://127.0.0.1:4174/hub.html");
         await stabilize(page);
-        await expect(page.locator("[data-terminal]")).toHaveScreenshot(`${theme}-${viewport.name}-portfolio-runtime-terminal.png`, screenshotOptions);
-        await page.locator('[data-filter-category="data-engineering"]').first().click();
-        await stabilize(page);
-        await expect(page.locator("[data-project-filter]").first()).toHaveScreenshot(`${theme}-${viewport.name}-filter-active.png`, screenshotOptions);
-        await expect(page.locator("#portfolio-registry")).toHaveScreenshot(`${theme}-${viewport.name}-projects-registry.png`, screenshotOptions);
-
-        if (projectRoutes.length > 0) {
-          await page.goto(projectRoutes[0]);
-          await stabilize(page);
-          await expect(page.locator("article header")).toHaveScreenshot(`${theme}-${viewport.name}-project-detail-header.png`, screenshotOptions);
-        }
+        await page.locator('[data-project-select="software-later"]').click();
+        await expect(page.locator("[data-project-hub]")).toHaveScreenshot(`${theme}-${viewport.name}-populated-project-hub.png`, screenshotOptions);
       });
     });
   }
