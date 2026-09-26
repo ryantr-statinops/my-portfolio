@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "id": "homematch",
+    "title": "HomeMatch",
+    "description": "A student-focused housing platform for discovering rental rooms and finding compatible roommates. Built with Next.js and Supabase.",
+    "category": "software-engineering",
+    "status": "active",
+    "priority": 10,
+    "stack": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Supabase"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/HomeMatch"
+    }
+  }
+]
