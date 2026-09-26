@@ -19,11 +19,14 @@ export default function AboutMe() {
     <section id="about-me" aria-labelledby="about-me-title" className="relative w-full border-t border-border/30 px-6 py-20 md:px-12 lg:px-8">
       <div className="mx-auto grid max-w-6xl lg:max-w-[var(--desktop-content-width)] items-start gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         <div className="min-w-0">
-          <h2 id="about-me-title" className="mb-4 text-xl font-semibold">About Me</h2>
+          <h2 id="about-me-title" className="mb-4 text-[22px] font-semibold">About Me</h2>
+          <h3 className="mb-6 text-[clamp(2rem,4vw,3.5rem)] font-bold uppercase leading-[1.05] tracking-tighter">
+            Statistics Student
+            <span className="text-gradient mt-3 block text-[clamp(1.25rem,2.7vw,2.5rem)]">Data · AI · Software</span>
+          </h3>
           <div data-about-profile-grid className="grid gap-4">
             <article data-about-profile className="info-box">
-              <h3 className="text-[clamp(1.5rem,3vw,2.25rem)] font-bold leading-tight tracking-tight">Statistics Student<span className="mt-2 block text-xl text-muted">Data · AI · Software</span></h3>
-              <p className="mt-4 text-sm leading-relaxed text-muted">I study Statistics and explore how mathematical ideas become practical tools across data, quantitative research and AI. Mathematics and statistics give me a foundation for understanding problems; programming and engineering help me turn that understanding into working software.</p>
+              <p className="text-sm leading-relaxed text-white">I study Statistics and explore how mathematical ideas become practical tools across data, quantitative research and AI. Mathematics and statistics give me a foundation for understanding problems; programming and engineering help me turn that understanding into working software.</p>
               <div className="mt-5 border-t border-border pt-4">
                 <h4 className="text-base font-semibold">BSc in Statistics</h4>
                 <p className="mt-2 text-sm leading-relaxed text-muted">Ton Duc Thang University<br />Faculty of Mathematics &amp; Statistics · 2024–Present</p>
@@ -46,7 +49,7 @@ export default function AboutMe() {
           </div>
         </div>
         <div className="min-w-0" aria-labelledby="current-focus-title">
-          <h3 id="current-focus-title" className="mb-4 text-xl font-semibold">Current Focus</h3>
+          <h3 id="current-focus-title" className="mb-4 text-[22px] font-semibold">Current Focus</h3>
           <div data-focus-grid className="grid gap-3">
             {focusAreas.map((area) => (
               <article data-focus-card key={area.title} className="info-box info-box--compact">
