@@ -151,5 +151,22 @@
     "links": {
       "github": "https://github.com/ryantr-statinops/Alpha_Stratergy_Agent"
     }
+  },
+  {
+    "id": "grap4prob",
+    "title": "Grap4Prob",
+    "description": "An interactive probability learning website with simulations and visual explanations. Topics include the law of large numbers, the central limit theorem and classic probability experiments.",
+    "category": "other",
+    "status": "active",
+    "priority": 100,
+    "stack": [
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Chart.js"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/Grap4Prob"
+    }
   }
 ]
