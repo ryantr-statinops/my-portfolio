@@ -3,8 +3,8 @@ import { projectsForCategory, resolveSelectedProject } from "../app/data/project
 import type { ProjectOverview } from "../app/data/project-schema";
 
 const projects: ProjectOverview[] = [
-  { id: "later", title: "Later Project", description: "A software project overview.", category: "software-engineering", priority: 20, stack: [], links: { github: "https://github.com/example/later" } },
-  { id: "first", title: "First Project", description: "A data project overview.", category: "data-engineering", priority: 1, stack: ["SQL"], links: { github: "https://github.com/example/first" } },
+  { id: "later", title: "Later Project", description: "A software project overview.", category: "software-engineering", status: "active", priority: 20, stack: [], links: { github: "https://github.com/example/later" } },
+  { id: "first", title: "First Project", description: "A data project overview.", category: "data-engineering", status: "active", priority: 1, stack: ["SQL"], links: { github: "https://github.com/example/first" } },
 ];
 
 describe("project hub selection", () => {

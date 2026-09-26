@@ -2,6 +2,9 @@ import { z } from "zod";
 import { CATEGORY_IDS } from "../../src/lib/constants";
 
 export const projectCategorySchema = z.enum(CATEGORY_IDS);
+export const projectStatusSchema = z.enum(["pending", "building", "active", "paused", "completed", "archived"]);
+export type ProjectStatus = z.infer<typeof projectStatusSchema>;
+
 export const repositoryUrlSchema = z.url().refine((value) => {
   let url: URL;
   try { url = new URL(value); } catch { return false; }
@@ -16,6 +19,7 @@ export const projectSchema = z.object({
   title: z.string().min(5),
   description: z.string().min(10),
   category: projectCategorySchema,
+  status: projectStatusSchema,
   priority: z.number().int().positive(),
   stack: z.array(z.string().trim().min(1)).max(12),
   links: z.object({ github: repositoryUrlSchema }),

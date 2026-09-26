@@ -1,9 +1,15 @@
 import { describe, expect, it } from "vitest";
 import { projectCatalogSchema, projectSchema } from "../app/data/project-schema";
 
-const project = { id: "example-project", title: "Example Project", description: "An example overview for schema verification.", category: "software-engineering", priority: 11, stack: ["TypeScript"], links: { github: "https://github.com/example/project" } };
+const project = { id: "example-project", title: "Example Project", description: "An example overview for schema verification.", category: "software-engineering", status: "active", priority: 11, stack: ["TypeScript"], links: { github: "https://github.com/example/project" } };
 
 describe("project overview catalog", () => {
+  it.each(["pending", "building", "active", "paused", "completed", "archived"])("accepts status %s", (status) => {
+    expect(projectSchema.parse({ ...project, status }).status).toBe(status);
+  });
+  it.each([undefined, null, "", "archive", "unknown"])("rejects invalid or missing status %s", (status) => {
+    expect(projectSchema.safeParse({ ...project, status }).success).toBe(false);
+  });
   it("accepts empty catalogs and priorities above ten", () => {
     expect(projectCatalogSchema.parse([])).toEqual([]);
     expect(projectSchema.parse(project).priority).toBe(11);
