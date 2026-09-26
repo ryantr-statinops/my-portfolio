@@ -1,51 +1,39 @@
-# Homepage and site navigation
+# Homepage and navigation
 
 [Documentation index](../README.md) · [Section index](README.md)
 
-Identify the components responsible for homepage content and shared navigation.
+The homepage has four visible areas: Hero, About Me, Project Hub and Connect.
 
 ## Contents
 
 - [Composition](#composition)
-- [Navigation and accessibility](#navigation-and-accessibility)
-- [Theme and background](#theme-and-background)
-- [Editing checklist](#editing-checklist)
+- [Navigation and focus](#navigation-and-focus)
+- [Theme and motion](#theme-and-motion)
 - [Source references](#source-references)
 - [Related documents](#related-documents)
 
 ## Composition
 
-Home renders `Hero`, an `about-me` wrapper around `AboutMe`, `StrategyHub` and `ProjectShowcase` with a limit of six. The shared shell surrounds every route with navigation, skip link, main content and footer. The video background is mounted only when the router pathname is `/`.
+Home renders Hero, the about-me section and ProjectHub with the validated catalog. SiteShell provides fixed navigation, the homepage video, skip link, main content and shared footer. Profile content lives in Hero/AboutMe; contact links and scroll-to-top live in Footer.
 
-Profile copy belongs in Hero/AboutMe; navigation labels and section IDs are duplicated in Navbar and MobileOverlay, so keep those arrays aligned. Footer provides the connect section and scroll-to-top control.
+## Navigation and focus
 
-## Navigation and accessibility
+Desktop and mobile navigation contain About Me, Projects and Connect. Keep their section arrays aligned. Hero View Projects links to #projects. Modified/external navigation is left to normal link behavior; matching same-page section clicks update history, focus and scroll. The shell observes visible sections for aria-current.
 
-The fixed desktop navbar shows section links at the `md` breakpoint; narrower screens use a menu button and overlay. Opening the overlay focuses the first link. Close and Escape restore focus to the menu button; choosing a section closes without forcing focus back. The implementation does not establish a full modal focus trap.
+Mobile opening focuses the first link; Escape and explicit close restore menu-button focus. Choosing a section closes without forcing focus back. The overlay is not a full modal focus trap. The skip link targets main-content.
 
-The shell’s skip link targets `main-content`. Section navigation respects modifier clicks and reduced motion. Reveal elements activate on intersection or immediately for reduced motion.
+## Theme and motion
 
-## Theme and background
-
-The root initializes the `dark` class using stored `theme` or system preference. ThemeToggle changes the class and saves `dark`/`light` in localStorage. The homepage also receives `homepage-video`, whose CSS intentionally uses dark contrast tokens even for light preference.
-
-VideoBackground uses `black-hole.webm` and its poster, mutes and loops playback, and listens for reduced-motion changes. CSS hides the video for reduced motion; the poster stays visible. Autoplay rejection is caught. The registry does not mount the background.
-
-## Editing checklist
-
-Keep section IDs aligned with both navigation arrays and browser selectors. Check desktop and mobile navigation, Escape, keyboard focus and same-page hashes after navigation edits. For media changes, confirm the poster still works with reduced motion and blocked autoplay. Product labels such as the footer deployment version are hard-coded copy, not runtime release information.
+The root initializes dark/light from localStorage or system preference. ThemeToggle persists the selected theme. Homepage video styling retains dark contrast tokens even in light preference. VideoBackground mounts on the home route and retains its poster when reduced motion is enabled or autoplay fails. Reveal effects activate immediately under reduced motion. Footer deployment/security labels are static presentation copy.
 
 ## Source references
 
-- [app/routes/home.tsx](../../app/routes/home.tsx) — `export default function Home` ([source line 20](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/routes/home.tsx#L20)).
-- [app/components/layout/SiteShell.tsx](../../app/components/layout/SiteShell.tsx) — `export default function SiteShell` ([source line 9](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/components/layout/SiteShell.tsx#L9)).
-- [app/components/layout/Navbar.tsx](../../app/components/layout/Navbar.tsx) — `const navItems` ([source line 5](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/components/layout/Navbar.tsx#L5)).
-- [app/components/layout/MobileOverlay.tsx](../../app/components/layout/MobileOverlay.tsx) — `const navItems` ([source line 6](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/components/layout/MobileOverlay.tsx#L6)).
-- [app/components/layout/ThemeToggle.tsx](../../app/components/layout/ThemeToggle.tsx) — `function toggleTheme` ([source line 6](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/components/layout/ThemeToggle.tsx#L6)).
-- [app/components/interactive/VideoBackground.tsx](../../app/components/interactive/VideoBackground.tsx) — `export default function VideoBackground` ([source line 4](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/components/interactive/VideoBackground.tsx#L4)).
-- [app/components/layout/Footer.tsx](../../app/components/layout/Footer.tsx) — `export default function Footer` ([source line 5](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/components/layout/Footer.tsx#L5)).
+- [app/routes/home.tsx](../../app/routes/home.tsx) — `export default function Home` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/routes/home.tsx#L19)).
+- [app/components/layout/SiteShell.tsx](../../app/components/layout/SiteShell.tsx) — `export default function SiteShell` ([line 9](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/components/layout/SiteShell.tsx#L9)).
+- [app/components/layout/Navbar.tsx](../../app/components/layout/Navbar.tsx) — `const navItems` ([line 5](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/components/layout/Navbar.tsx#L5)).
+- [app/components/layout/MobileOverlay.tsx](../../app/components/layout/MobileOverlay.tsx) — `const navItems` ([line 6](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/components/layout/MobileOverlay.tsx#L6)).
+- [src/lib/sectionNavigation.ts](../../src/lib/sectionNavigation.ts) — `export function navigateToSection` ([line 1](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/src/lib/sectionNavigation.ts#L1)).
 
 ## Related documents
 
-- [Routing and navigation](../architecture/routing.md)
-- [Styling and assets](../design/styling-and-assets.md)
+- [Project Hub](project-hub.md)

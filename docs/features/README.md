@@ -2,7 +2,7 @@
 
 [Documentation index](../README.md)
 
-Locate feature behavior, state ownership and edit points.
+Find behavior and state ownership for the homepage and Project Hub.
 
 ## Contents
 
@@ -12,14 +12,12 @@ Locate feature behavior, state ownership and edit points.
 
 ## Pages
 
-- [Homepage and site navigation](homepage-and-navigation.md)
-- [Project catalog and filtering](project-catalog.md)
-- [Strategy Hub](strategy-hub.md)
-- [Terminal commands](terminal.md)
+- [Homepage and navigation](homepage-and-navigation.md)
+- [Project Hub](project-hub.md)
 
 ## Source references
 
-- [app/routes/home.tsx](../../app/routes/home.tsx) — `export default function Home` ([source line 20](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/routes/home.tsx#L20)).
+- [app/routes/home.tsx](../../app/routes/home.tsx) — `export default function Home` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/routes/home.tsx#L19)).
 
 ## Related documents
 

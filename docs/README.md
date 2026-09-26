@@ -2,37 +2,33 @@
 
 [Documentation index](README.md)
 
-Technical documentation for maintainers of Ryan Tran’s static portfolio. Start with the overview, follow the architecture, then use feature and reference pages for a specific change.
+English maintainer documentation for the single-page portfolio and its Project Hub.
 
 ## Contents
 
 - [Reading paths](#reading-paths)
 - [Directory](#directory)
 - [Reference conventions](#reference-conventions)
-- [Maintaining these docs](#maintaining-these-docs)
+- [Maintaining documentation](#maintaining-documentation)
 - [Source references](#source-references)
 - [Related documents](#related-documents)
 
 ## Reading paths
 
-New maintainers: overview → architecture → development.
-
-Content authors: data → project catalog. UI changes: features → design. Release troubleshooting: deployment → testing. Use the directory below for the pages currently available.
+Start with Overview → Architecture → Development. To publish a project, read Data → Project Hub. For UI work use Design; for failed releases use Deployment → Testing.
 
 ## Directory
 
-- [Project overview](overview.md) — purpose, stack and current content.
+- [Overview](overview.md)
 - [Architecture](architecture/README.md)
   - [Rendering and static artifacts](architecture/rendering.md)
   - [Routing and navigation](architecture/routing.md)
 - [Features](features/README.md)
-  - [Homepage and site navigation](features/homepage-and-navigation.md)
-  - [Project catalog and filtering](features/project-catalog.md)
-  - [Strategy Hub](features/strategy-hub.md)
-  - [Terminal commands](features/terminal.md)
+  - [Homepage and navigation](features/homepage-and-navigation.md)
+  - [Project Hub](features/project-hub.md)
 - [Data](data/README.md)
-  - [Project content authoring](data/content-authoring.md)
-  - [Project data schema](data/project-schema.md)
+  - [Project overview authoring](data/content-authoring.md)
+  - [Project overview schema](data/project-schema.md)
 - [Design](design/README.md)
   - [Styling and assets](design/styling-and-assets.md)
 - [Development](development/README.md)
@@ -46,20 +42,16 @@ Content authors: data → project catalog. UI changes: features → design. Rele
 
 ## Reference conventions
 
-Internal links are relative Markdown links. Section links use heading anchors. Each topic names its source file and symbol, with a GitHub permalink to the verified implementation at `1ad473623a2d8cd3f1e5efe8831e539433543349`. Relative source links open the working copy; permalinks preserve the documented version and line location.
+Relative source links open the current file. Symbol permalinks pin a verified source revision; this update uses `75b94490a3cc85eca54936f87e0f0901e7a7e49b`. Line numbers belong to the linked commit, not necessarily future revisions. Internal section links use heading anchors.
 
-The source snapshot is a documentation baseline, not a claim that future revisions retain the same line numbers.
+## Maintaining documentation
 
-## Maintaining these docs
-
-Update the relevant topic whenever behavior, data contracts, commands or configuration change. Confirm each source symbol in the working tree; when implementation changes, refresh its permalink SHA and line. Update both the section index and this directory with the page. Keep one authoritative explanation per topic and link to it elsewhere.
-
-Check relative file targets, heading anchors, JSON examples and `git diff --check` before committing. Distinguish current behavior from suggestions. Never present decorative UI labels as verified operational guarantees.
+Update behavior, examples, references and index entries with the implementation. Validate JSON examples against Zod; check relative paths, anchors and `git diff --check`. Distinguish fixture data from the empty production catalog. No project detail pages, Markdown article pipeline or runtime terminal are part of the current application.
 
 ## Source references
 
-- [package.json](../package.json) — `"scripts"` ([source line 10](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/package.json#L10)).
-- [app/routes.ts](../app/routes.ts) — `export default` ([source line 4](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/routes.ts#L4)).
+- [app/routes.ts](../app/routes.ts) — `export default` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/routes.ts#L3)).
+- [package.json](../package.json) — `"scripts"` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/package.json#L10)).
 
 ## Related documents
 

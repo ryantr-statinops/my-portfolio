@@ -1,88 +1,66 @@
-# Project data schema
+# Project overview schema
 
 [Documentation index](../README.md) · [Section index](README.md)
 
-Use the catalog contract as the authoritative checklist for project metadata.
+The catalog is an array of validated overview records. All top-level fields are required.
 
 ## Contents
 
 - [Fields](#fields)
-- [Enums and collection rules](#enums-and-collection-rules)
-- [Illustrative valid entry](#illustrative-valid-entry)
-- [Failure behavior](#failure-behavior)
+- [Repository URL](#repository-url)
+- [Collection and failures](#collection-and-failures)
+- [Illustrative example](#illustrative-example)
 - [Source references](#source-references)
 - [Related documents](#related-documents)
 
 ## Fields
 
-All top-level fields below are required. Only the two fields inside `links` are optional.
-
-| Field | Contract |
+| Field | Rule |
 |---|---|
-| `id` | String matching `^[a-z0-9]+(?:-[a-z0-9]+)*$`; unique in catalog |
-| `routeSlug` | Same pattern as id; unique; used for route and Markdown filename |
-| `title` | String, minimum 5 characters |
-| `description` | String, minimum 10 characters |
-| `date` | Valid ISO date via `z.iso.date()`, e.g. `2026-09-26` |
-| `category` | One of the category IDs below |
-| `status` | One of the status values below |
-| `priority` | Integer 1–10 inclusive; unique in catalog |
-| `tags` | Array of at most 12 nonempty strings; empty array accepted |
-| `impact` | String, minimum 20 characters |
-| `thumbnail` | Matches `^/images/projects/[a-z0-9-]+/thumbnail\.webp$` |
-| `links` | Required object; may be `{}` |
-| `links.github` | Optional URL string via `z.url()` |
-| `links.demo` | Optional URL string via `z.url()` |
-| `stack` | Array of at most 12 nonempty strings; empty array accepted |
+| id | Lowercase alphanumeric slug with single hyphen separators; unique |
+| title | String, minimum 5 characters |
+| description | Plain text, minimum 10 characters; line breaks supported |
+| category | software-engineering, data-engineering, ai-engineering or other |
+| priority | Positive integer, unique; lower values appear first; no maximum of 10 |
+| stack | At most 12 strings; trimmed, nonempty values; empty array allowed |
+| links.github | Required repository URL, as specified below |
 
-String minima are length checks, not trim or editorial-quality checks. The URL schema does not restrict these fields to specific hosts.
+There is no routeSlug, date, status, thumbnail, tags, impact or demo field in the inferred ProjectOverview type. Title and description minima are length checks, not automatic whitespace trimming. The schema uses a Zod object rather than a strict object; extra legacy keys are stripped from parsed output, not consumed by the UI.
 
-## Enums and collection rules
+## Repository URL
 
-Categories: `software-engineering`, `data-engineering`, `ai-engineering`, `other`.
+Use https://github.com/owner/repository, optionally with a trailing slash. The validator rejects other protocols/hosts, credentials, custom nondefault ports, query strings, fragments and nested paths such as /tree/main. Owner characters are alphanumeric/hyphen; repository names also allow underscore and dot. URL parsing normalizes input. Validation checks URL shape, not remote repository existence or visibility.
 
-Statuses: `In Progress`, `Production`, `Archived`, `Research & Development`, `Audit Pending`.
+## Collection and failures
 
-`projectCatalogSchema` accepts an empty array. Its refinement rejects duplicate IDs, route slugs and priorities. Unique priorities within 1–10 mean at most ten entries can currently pass validation. The schema does not require id, routeSlug and thumbnail directory to match each other; using the same slug is the authoring convention. It validates the asset path string, not whether the file exists. Markdown existence is checked separately when the loader reads it.
+An empty catalog is valid. Duplicate IDs or priorities report the entry index and offending field. Catalog parsing happens at import time, so invalid input prevents the application/build from proceeding. Keep priorities stable when possible; gaps such as 10, 20 and 30 leave room for insertion.
 
-## Illustrative valid entry
+## Illustrative example
 
-This example is documentation only; it does not publish a project. Insert entries into the catalog array, not as a standalone catalog object.
+This is test/example content, not a published repository record. Add your own real repository and overview.
 
 ```json
 {
-  "id": "example-system",
-  "routeSlug": "example-system",
-  "title": "Example Engineering System",
-  "description": "An illustrative catalog entry for documenting a future engineering project.",
-  "date": "2026-09-26",
+  "id": "example-project",
+  "title": "Example Project",
+  "description": "A concise overview of the problem and approach used in this illustrative project.",
   "category": "software-engineering",
-  "status": "Research & Development",
   "priority": 1,
-  "tags": [
-    "Documentation"
-  ],
-  "impact": "Demonstrates the expected content contract for a future portfolio project.",
-  "thumbnail": "/images/projects/example-system/thumbnail.webp",
-  "links": {},
   "stack": [
     "TypeScript"
-  ]
+  ],
+  "links": {
+    "github": "https://github.com/example/project"
+  }
 }
 ```
 
-## Failure behavior
-
-The catalog module calls `.parse` during import. Invalid data throws rather than silently skipping entries, so malformed catalog content can stop route generation or build. Error paths identify the entry index and field; duplicates use explicit duplicate ID, slug or priority messages. `Project` is inferred from the item schema.
-
 ## Source references
 
-- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const projectSchema` ([source line 6](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/data/project-schema.ts#L6)).
-- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const projectCatalogSchema` ([source line 31](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/data/project-schema.ts#L31)).
-- [src/lib/constants.ts](../../src/lib/constants.ts) — `export const CATEGORY_IDS` ([source line 8](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/src/lib/constants.ts#L8)).
-- [app/data/projects.ts](../../app/data/projects.ts) — `projectCatalogSchema.parse` ([source line 4](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/data/projects.ts#L4)).
+- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const repositoryUrlSchema` ([line 5](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/data/project-schema.ts#L5)).
+- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const projectSchema` ([line 14](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/data/project-schema.ts#L14)).
+- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const projectCatalogSchema` ([line 24](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/data/project-schema.ts#L24)).
 
 ## Related documents
 
-- [Project catalog](../features/project-catalog.md)
-- [Content authoring](content-authoring.md)
+- [Authoring](content-authoring.md)

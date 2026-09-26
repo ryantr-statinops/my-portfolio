@@ -1,77 +1,42 @@
-# Project content authoring
+# Project overview authoring
 
 [Documentation index](../README.md) · [Section index](README.md)
 
-Add a project by keeping catalog metadata, Markdown and public assets consistent.
+Publish a concise project overview by editing JSON; no article or thumbnail is required.
 
 ## Contents
 
-- [Prepare the entry](#prepare-the-entry)
-- [Write the article](#write-the-article)
-- [Update scaffold expectations](#update-scaffold-expectations)
-- [Validate publication](#validate-publication)
+- [Add a project](#add-a-project)
+- [Overview guidance](#overview-guidance)
+- [Production versus fixtures](#production-versus-fixtures)
 - [Source references](#source-references)
 - [Related documents](#related-documents)
 
-## Prepare the entry
+## Add a project
 
-1. Choose a lowercase hyphenated slug and unused priority in 1–10.
-2. Add an object to `app/data/projects.json`, following the schema reference. Keep `links` even if it is empty.
-3. Create `app/content/projects/<routeSlug>.md`. The glob reads only `.md` files directly in this directory. Nested folders and `.mdx` are not included.
-4. Add `public/images/projects/<routeSlug>/thumbnail.webp` and use `/images/projects/<routeSlug>/thumbnail.webp` in metadata.
-5. Add any article images to `public/` and reference them with `/images/...` for the renderer’s base-path rewrite.
+1. Add an object to app/data/projects.json using the schema example.
+2. Give it a unique ID and positive integer priority; lower priorities appear first.
+3. Choose one category and provide title, plain-text description, stack and a real HTTPS GitHub repository link.
+4. Run unit tests, type-check and build; inspect selection, text wrapping and repository navigation.
+5. Review visual changes when the production empty state is replaced with real content.
 
-The metadata lives in JSON. There is no frontmatter parser; a Markdown frontmatter block is not used to populate project fields.
+No Markdown file, frontmatter, thumbnail or project route is created. The sitemap remains one homepage regardless of catalog size.
 
-## Write the article
+## Overview guidance
 
-A useful article contains problem, constraints, approach, implementation, evidence and limitations. The route already renders the project title and metadata, so start the body with level-two sections. GFM supports tables and task lists; math uses `$...$` and display `$$...$$` through the configured plugins.
+Explain the problem, what the project does and its practical scope in a short description. Use the stack list for technologies. Put detailed implementation material in the linked repository. Do not place Markdown syntax in description expecting it to render.
 
-```markdown
-## Problem
+## Production versus fixtures
 
-Explain the problem and the constraints.
-
-## Approach
-
-State the decision and its tradeoffs.
-
-## Results
-
-Describe measured outcomes and limitations.
-
-![System diagram](/images/projects/example-system/diagram.webp)
-```
-
-The image path is illustrative: create the actual asset before publishing. Ordinary Markdown links are not automatically rewritten with the deployment base; use a correct published path or absolute URL.
-
-## Update scaffold expectations
-
-The current tests intentionally assert an empty catalog. Publishing the first project therefore also requires updating those expectations:
-
-- `tests/project-catalog.test.ts` asserts imported catalog arrays are empty.
-- `tests/e2e/smoke.spec.ts` asserts no generated project routes and checks empty messages.
-- `tests/e2e/static-artifact.spec.ts` expects exactly two sitemap URLs.
-- Visual tests discover generated project routes and capture the first project detail when present. Review new detail snapshots and changed home/registry snapshots.
-
-Update these to express the new published state; retain duplicate/schema/error-path coverage. If a Strategy Hub stage links to this project, verify the link slug and review scaffold-specific strategy tests as well.
-
-## Validate publication
-
-Run `npm run test:unit`, `npm run check`, `npm run build`, `npm run test:smoke` and `npm run test:visual` after updating the applicable expectations. Inspect the built detail page, metadata, images and math in preview. Verify the sitemap includes the new slug and the artifact has `2 + catalog.length` index pages.
-
-Schema checks do not prove thumbnails exist. Missing Markdown throws 404 in `readProjectMarkdown`; a malformed or missing image needs a separate asset/browser check. A Markdown file without a catalog entry creates no published route.
+Production starts with an empty catalog. The unit and browser tests use separate records under tests/fixtures; these are never imported by production routes. When publishing the first real record, update smoke assertions that intentionally check the current empty state and review the homepage baseline. Schema and populated-fixture tests should continue to pass unchanged.
 
 ## Source references
 
-- [app/data/project-content.ts](../../app/data/project-content.ts) — `const contentFiles` ([source line 1](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/data/project-content.ts#L1)).
-- [app/data/project-content.ts](../../app/data/project-content.ts) — `export function readProjectMarkdown` ([source line 7](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/data/project-content.ts#L7)).
-- [tests/project-catalog.test.ts](../../tests/project-catalog.test.ts) — `accepts an empty collection` ([source line 22](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/tests/project-catalog.test.ts#L22)).
-- [tests/e2e/smoke.spec.ts](../../tests/e2e/smoke.spec.ts) — `expect(projectRoutes).toEqual([])` ([source line 26](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/tests/e2e/smoke.spec.ts#L26)).
-- [tests/e2e/static-artifact.spec.ts](../../tests/e2e/static-artifact.spec.ts) — `toHaveLength(2)` ([source line 20](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/tests/e2e/static-artifact.spec.ts#L20)).
-- [app/components/ProjectMarkdown.tsx](../../app/components/ProjectMarkdown.tsx) — `components={{` ([source line 17](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/components/ProjectMarkdown.tsx#L17)).
+- [app/data/projects.ts](../../app/data/projects.ts) — `export const projects` ([line 4](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/data/projects.ts#L4)).
+- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const projectSchema` ([line 14](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/data/project-schema.ts#L14)).
+- [tests/fixtures/projects.ts](../../tests/fixtures/projects.ts) — `export const fixtureProjects` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/tests/fixtures/projects.ts#L3)).
 
 ## Related documents
 
-- [Schema and example](project-schema.md)
-- [Project rendering](../features/project-catalog.md)
+- [Schema](project-schema.md)
+- [Project Hub](../features/project-hub.md)
