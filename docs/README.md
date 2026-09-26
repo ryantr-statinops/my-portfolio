@@ -38,6 +38,8 @@ Content authors: data → project catalog. UI changes: features → design. Rele
 - [Development](development/README.md)
   - [Local development setup](development/setup.md)
   - [Testing and visual baselines](development/testing.md)
+- [Deployment](deployment/README.md)
+  - [GitHub Pages deployment](deployment/github-pages.md)
 
 ## Reference conventions
 
