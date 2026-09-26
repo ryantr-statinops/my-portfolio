@@ -99,5 +99,27 @@
     "links": {
       "github": "https://github.com/ryantr-statinops/CSV-Schema-Alignment"
     }
+  },
+  {
+    "id": "scrawlnews",
+    "title": "ScrawlNews",
+    "description": "A news collection and summarization system with a local monitoring dashboard. It processes RSS feeds, extracts article content and integrates LLM summaries with optional Telegram delivery.",
+    "category": "ai-engineering",
+    "status": "active",
+    "priority": 70,
+    "stack": [
+      "Python",
+      "FastAPI",
+      "Celery",
+      "Redis",
+      "SQLite",
+      "React",
+      "TypeScript",
+      "Vite",
+      "OpenAI API"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/ScrawlNews"
+    }
   }
 ]
