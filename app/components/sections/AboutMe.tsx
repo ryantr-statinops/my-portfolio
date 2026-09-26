@@ -22,7 +22,7 @@ export default function AboutMe() {
           <h2 id="about-me-title" className="mb-4 text-[22px] font-semibold">About Me</h2>
           <h3 className="mb-6 text-[clamp(2rem,4vw,3.5rem)] font-bold uppercase leading-[1.05] tracking-tighter">
             Statistics Student
-            <span className="text-gradient mt-3 block text-[clamp(1.25rem,2.7vw,2.5rem)]">Data · AI · Software</span>
+            <span className="text-gradient mt-3 block text-[clamp(18px,calc(2.7vw_-_2px),38px)]">Data · AI · Software</span>
           </h3>
           <div data-about-profile-grid className="grid gap-4">
             <article data-about-profile className="info-box">
