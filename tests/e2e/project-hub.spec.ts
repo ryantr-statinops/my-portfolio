@@ -47,3 +47,14 @@ test("empty catalog keeps an honest empty state", async ({ page }) => {
   await expect(page.locator("[data-project-empty]")).toHaveText("Projects are being prepared.");
   await expect(page.locator("[data-project-select]")).toHaveCount(0);
 });
+
+for (const theme of ["light", "dark"] as const) {
+  test(`Hub introduction follows the ${theme} foreground color`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme: theme });
+    await page.goto(fixtureUrl);
+    await page.evaluate(selectedTheme => document.documentElement.classList.toggle("dark", selectedTheme === "dark"), theme);
+    const intro = page.locator("[data-project-hub] header p");
+    await expect(intro).toBeVisible();
+    await expect(intro).toHaveCSS("color", theme === "light" ? "rgb(10, 10, 10)" : "rgb(255, 255, 255)");
+  });
+}
