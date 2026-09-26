@@ -21,7 +21,7 @@ Content authors: data → project catalog. UI changes: features → design. Rele
 
 ## Directory
 
-This index establishes the documentation conventions. Topic pages are added together with their navigation links.
+- [Project overview](overview.md) — purpose, stack and current content.
 
 ## Reference conventions
 
