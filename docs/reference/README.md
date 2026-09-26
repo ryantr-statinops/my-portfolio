@@ -13,6 +13,7 @@ Look up exact implementation locations and configuration ownership.
 ## Pages
 
 - [Source code map](code-map.md)
+- [Configuration and commands](configuration.md)
 
 ## Source references
 
