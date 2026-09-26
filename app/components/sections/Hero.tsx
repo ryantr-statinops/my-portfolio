@@ -14,6 +14,7 @@ export default function Hero() {
             <div className="flex flex-wrap gap-3">
               <Link to="/#about-me" className="info-box info-box--compact info-box--interactive inline-flex min-h-11 items-center justify-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-foreground">VIEW PROFILE</Link>
               <Link to="/#projects" className="info-box info-box--compact info-box--interactive inline-flex min-h-11 items-center justify-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-foreground">VIEW PROJECTS</Link>
+              <Link to="/#connect" className="info-box info-box--compact info-box--interactive inline-flex min-h-11 items-center justify-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-foreground">CONTACT</Link>
             </div>
           </div>
         </div>
