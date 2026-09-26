@@ -30,6 +30,6 @@ export function parseTerminalCommand(
 
   return {
     clear: false,
-    output: commandMap[command] ?? "command not found",
+    output: Object.hasOwn(commandMap, command) ? commandMap[command]! : "command not found",
   };
 }

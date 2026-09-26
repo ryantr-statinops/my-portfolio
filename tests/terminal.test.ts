@@ -15,6 +15,8 @@ describe("Portfolio Runtime Terminal", () => {
     expect(parseTerminalCommand("ls /projects", commands).output).toContain("No projects published yet.");
     expect(parseTerminalCommand("clear").clear).toBe(true);
     expect(parseTerminalCommand("uname -a", commands).output).toBe("command not found");
+    expect(parseTerminalCommand("constructor", commands).output).toBe("command not found");
+    expect(parseTerminalCommand("__proto__", commands).output).toBe("command not found");
   });
 
   it("keeps portfolio runtime copy neutral", () => {
