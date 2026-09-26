@@ -82,6 +82,10 @@ for (const theme of ["dark", "light"] as const) {
         await screenshotSectionViewport(page, "section#main", `${theme}-${viewport.name}-home-hero.png`, screenshotOptions);
         await screenshotSectionViewport(page, "section#about-me", `${theme}-${viewport.name}-home-about.png`, screenshotOptions);
         await screenshotSectionViewport(page, "section#intelligence-hub", `${theme}-${viewport.name}-home-intelligence-hub.png`, screenshotOptions);
+        await page.locator('[data-strategy-domain="data-engineering"]').click();
+        await page.locator('[data-strategy-stage="build"]').click();
+        await expect(page.locator("[data-strategy-panel]")).toHaveScreenshot(`${theme}-${viewport.name}-strategy-build.png`, screenshotOptions);
+        await page.locator("[data-strategy]").scrollIntoViewIfNeeded();
         await screenshotSectionViewport(page, "section#projects", `${theme}-${viewport.name}-home-project-showcase.png`, screenshotOptions);
         await screenshotSectionViewport(page, "footer#connect", `${theme}-${viewport.name}-home-footer.png`, screenshotOptions);
 

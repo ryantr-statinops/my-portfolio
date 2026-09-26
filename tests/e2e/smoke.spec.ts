@@ -83,6 +83,57 @@ test("project registry exposes the engineering category filter and empty state",
   await expect(page.locator("#portfolio-registry")).toContainText("Projects are being rebuilt.");
 });
 
+test("Strategy supports all capability stages without changing Projects or the URL", async ({ page }) => {
+  await page.goto("./");
+  const strategy = page.locator("[data-strategy]");
+  const domains = strategy.locator("[data-strategy-domain]");
+  const stages = strategy.locator("[data-strategy-stage]");
+  const initialUrl = page.url();
+
+  await expect(domains).toHaveCount(4);
+  await expect(stages).toHaveCount(3);
+  await expect(domains.nth(0)).toHaveAttribute("aria-pressed", "true");
+  await expect(stages.nth(0)).toHaveAttribute("aria-pressed", "true");
+
+  for (let domain = 0; domain < 4; domain += 1) {
+    await domains.nth(domain).click();
+    await expect(domains.nth(domain)).toHaveAttribute("aria-pressed", "true");
+    await expect(stages.nth(0)).toHaveAttribute("aria-pressed", "true");
+
+    for (let stage = 0; stage < 3; stage += 1) {
+      await stages.nth(stage).click();
+      await expect(stages.nth(stage)).toHaveAttribute("aria-pressed", "true");
+      await expect(strategy.locator("[data-strategy-status]")).toContainText(
+        `${["Frame", "Test", "Build"][stage]} content is being prepared.`,
+      );
+      await expect(strategy.locator("[data-decision]")).toBeHidden();
+      await expect(strategy.locator("[data-related-project]")).toBeHidden();
+    }
+  }
+
+  await expect(page).toHaveURL(initialUrl);
+  await expect(page.locator("[data-project-filter]")).toHaveCount(0);
+  await expect(page.locator("#projects")).toContainText("Projects are being rebuilt.");
+
+  await domains.nth(1).focus();
+  await page.keyboard.press("Enter");
+  await expect(domains.nth(1)).toHaveAttribute("aria-pressed", "true");
+  await expect(stages.nth(0)).toHaveAttribute("aria-pressed", "true");
+});
+
+test("Strategy has a readable default state when JavaScript is disabled", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 320, height: 700 } });
+  const page = await context.newPage();
+  await page.goto(process.env.PLAYWRIGHT_TEST_BASE_URL ?? "http://127.0.0.1:4321/my-portfolio/");
+
+  const strategy = page.locator("[data-strategy]");
+  await expect(strategy.locator("[data-stage-description]")).toContainText("Content is being prepared.");
+  await expect(strategy.locator("[data-strategy-domain]").first()).toBeHidden();
+  await expect(strategy.locator("[data-strategy-stage]").first()).toBeHidden();
+  expect(await page.locator("html").evaluate((element) => element.scrollWidth <= window.innerWidth)).toBe(true);
+  await context.close();
+});
+
 test("portfolio runtime terminal only accepts its whitelist", async ({ page }) => {
   await page.goto("./projects/");
   const terminal = page.locator("[data-terminal]");
