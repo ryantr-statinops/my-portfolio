@@ -65,3 +65,5 @@ If test output belongs to root from a prior container run, repair ownership only
 ## Related documents
 
 - [Build architecture](../architecture/rendering.md)
+- [Testing](testing.md)
+- [Configuration](../reference/configuration.md)

@@ -49,3 +49,5 @@ The registry’s integrity/encryption wording and terminal status are presentati
 ## Related documents
 
 - [Routing](../architecture/routing.md)
+- [Project schema](../data/project-schema.md)
+- [Content authoring](../data/content-authoring.md)

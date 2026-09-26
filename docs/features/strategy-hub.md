@@ -40,3 +40,4 @@ When filling strategy content, also review the unconditional status copy and the
 ## Related documents
 
 - [Homepage](homepage-and-navigation.md)
+- [Testing](../development/testing.md)

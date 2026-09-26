@@ -85,3 +85,4 @@ The catalog module calls `.parse` during import. Invalid data throws rather than
 ## Related documents
 
 - [Project catalog](../features/project-catalog.md)
+- [Content authoring](content-authoring.md)

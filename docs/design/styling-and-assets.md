@@ -56,3 +56,4 @@ Reveal classes activate through SiteShell intersection observers. Reduced motion
 
 - [Theme behavior](../features/homepage-and-navigation.md)
 - [Content authoring](../data/content-authoring.md)
+- [Visual testing](../development/testing.md#snapshot-contract)

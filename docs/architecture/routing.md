@@ -45,3 +45,4 @@ Direct unknown static URLs receive the generated `404.html`. The preview server 
 ## Related documents
 
 - [Architecture](README.md)
+- [Base URL configuration](../reference/configuration.md#changing-the-public-base-url)

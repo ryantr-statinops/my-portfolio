@@ -42,7 +42,7 @@ CI enables one worker, two retries and the GitHub reporter. Local defaults allow
 
 ## Snapshot contract
 
-Viewports are desktop 1280×800, tablet 768×1024 and mobile 375×667, in dark and light themes. Stabilization pauses videos, hides video rendering, disables transitions/animations and activates reveal elements. The UTC clock is masked. Screenshots include page viewports and individual elements.
+Viewports are desktop 1280×800, tablet 768×1024 and mobile 375×667, in dark and light themes. Stabilization pauses videos, hides video rendering, disables transitions/animations and activates reveal elements. The mask targets `#utc-clock` if present; the current UI does not render that element. Screenshots include page viewports and individual elements.
 
 The pixel-ratio allowance is 0.08 on mobile and 0.05 elsewhere, with a 15-second screenshot assertion timeout. Dimension changes can still fail despite these allowances. Detail screenshots are conditional on at least one generated project route. Baselines are tracked in the spec’s `-snapshots` directory.
 
@@ -80,3 +80,4 @@ If `test-results` is unwritable, a temporary `--output=/tmp/portfolio-tests` avo
 
 - [Local setup](setup.md)
 - [Publishing content](../data/content-authoring.md)
+- [CI pipeline](../deployment/github-pages.md)

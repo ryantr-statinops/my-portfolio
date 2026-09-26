@@ -84,3 +84,4 @@ Project Markdown belongs in `app/content/projects/` (currently only `.gitkeep`).
 - [Architecture](../architecture/README.md)
 - [Features](../features/README.md)
 - [Testing](../development/testing.md)
+- [Configuration](configuration.md)

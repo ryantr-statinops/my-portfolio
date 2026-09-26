@@ -59,3 +59,6 @@ These are lockfile versions at the source snapshot, not upstream latest-version 
 ## Related documents
 
 - [Documentation index](README.md)
+- [Architecture](architecture/README.md)
+- [Local setup](development/setup.md)
+- [Configuration](reference/configuration.md)

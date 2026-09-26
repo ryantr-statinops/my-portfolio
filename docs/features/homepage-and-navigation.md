@@ -17,7 +17,7 @@ Identify the components responsible for homepage content and shared navigation.
 
 Home renders `Hero`, an `about-me` wrapper around `AboutMe`, `StrategyHub` and `ProjectShowcase` with a limit of six. The shared shell surrounds every route with navigation, skip link, main content and footer. The video background is mounted only when the router pathname is `/`.
 
-Profile copy belongs in Hero/AboutMe; navigation labels and section IDs are duplicated in Navbar and MobileOverlay, so keep those arrays aligned. Footer provides the connect section, UTC clock and scroll-to-top control.
+Profile copy belongs in Hero/AboutMe; navigation labels and section IDs are duplicated in Navbar and MobileOverlay, so keep those arrays aligned. Footer provides the connect section and scroll-to-top control.
 
 ## Navigation and accessibility
 
@@ -48,3 +48,4 @@ Keep section IDs aligned with both navigation arrays and browser selectors. Chec
 ## Related documents
 
 - [Routing and navigation](../architecture/routing.md)
+- [Styling and assets](../design/styling-and-assets.md)

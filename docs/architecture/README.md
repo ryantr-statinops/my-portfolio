@@ -50,3 +50,5 @@ Shared logic in `src/lib/` is imported by React components and tests. The produc
 ## Related documents
 
 - [Project overview](../overview.md)
+- [Code map](../reference/code-map.md)
+- [Deployment](../deployment/github-pages.md)

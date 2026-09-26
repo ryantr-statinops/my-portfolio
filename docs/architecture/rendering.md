@@ -49,3 +49,4 @@ The preparation script chooses a `global-*.css` asset for the 404 page and fails
 ## Related documents
 
 - [Routing](routing.md)
+- [GitHub Pages](../deployment/github-pages.md)
