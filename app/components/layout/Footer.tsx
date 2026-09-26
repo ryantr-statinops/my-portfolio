@@ -17,8 +17,7 @@ export default function Footer({ transparentBackground = false }: Props) {
       <div className="px-6 py-16 md:px-12 lg:px-8">
         <div data-connect-grid className="mx-auto grid max-w-6xl lg:max-w-[var(--desktop-content-width)] items-start gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
           <div className="min-w-0">
-            <p className="mb-4 text-xl font-semibold">Connect</p>
-            <h2 id="connect-title" className="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight tracking-tight">Let’s connect.</h2>
+            <h2 id="connect-title" className="text-gradient origin-left scale-y-110 text-[clamp(2.5rem,5.5vw,5rem)] font-black uppercase leading-[1.1] tracking-tighter [-webkit-text-stroke:0.5px_#38bdf8]">Let’s connect.</h2>
             <p className="mt-5 max-w-lg text-base leading-relaxed">Have an idea, a project, or a shared interest in data, AI or software? I’d love to hear from you.</p>
             <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted">I’m also open to internship and entry-level opportunities in these fields.</p>
           </div>
