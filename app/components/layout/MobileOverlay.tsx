@@ -28,7 +28,7 @@ export default function MobileOverlay({ open, onClose, onNavigateToSection }: Pr
         {navItems.map((item, index) => <Link key={item.sectionId} ref={index === 0 ? firstLink : undefined} to={`/#${item.sectionId}`} data-mobile-link={item.sectionId} onClick={(event) => { onClose(false); onNavigateToSection(event, item.sectionId); }} className="nav-control flex items-center px-4 py-3 text-xl font-semibold">{item.label}</Link>)}
         <ThemeToggle id="mobile-theme-toggle" />
       </nav>
-      <button type="button" data-mobile-close onClick={() => onClose()} aria-label="Close menu" className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground hover:text-primary"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="m18 6-12 12M6 6l12 12" /></svg></button>
+      <button type="button" data-mobile-close onClick={() => onClose()} aria-label="Close menu" className="info-box info-box--navigation info-box--interactive absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="m18 6-12 12M6 6l12 12" /></svg></button>
     </div>
   );
 }
