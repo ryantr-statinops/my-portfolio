@@ -136,5 +136,20 @@
     "links": {
       "github": "https://github.com/ryantr-statinops/SKILLS"
     }
+  },
+  {
+    "id": "alpha-strategy-agent",
+    "title": "Alpha Strategy Agent",
+    "description": "An agent-assisted workflow for quantitative strategy research. It supports strategy generation, framework validation and submission checks for a competition-specific research process.",
+    "category": "ai-engineering",
+    "status": "building",
+    "priority": 90,
+    "stack": [
+      "Python",
+      "Markdown"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/Alpha_Stratergy_Agent"
+    }
   }
 ]
