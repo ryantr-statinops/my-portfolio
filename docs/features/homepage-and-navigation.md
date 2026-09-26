@@ -50,20 +50,20 @@ The root initializes dark/light from localStorage or system preference. ThemeTog
 
 ## Source references
 
-- [app/components/layout/Footer.tsx](../../app/components/layout/Footer.tsx) — [Footer](https://github.com/ryantr-statinops/my-portfolio/blob/28ad4c6caacdb33f8abfd3d0e54303d346401587/app/components/layout/Footer.tsx#L12).
+- [app/components/layout/Footer.tsx](../../app/components/layout/Footer.tsx) — [Footer](https://github.com/ryantr-statinops/my-portfolio/blob/bc71cdaa778c74acdc05ae548bccad1b7379c700/app/components/layout/Footer.tsx#L12).
 
-- [app/components/sections/Hero.tsx](../../app/components/sections/Hero.tsx) — [Hero](https://github.com/ryantr-statinops/my-portfolio/blob/8fceddadcb5a368eb6fc155954840582ead88b61/app/components/sections/Hero.tsx#L3).
+- [app/components/sections/Hero.tsx](../../app/components/sections/Hero.tsx) — [Hero](https://github.com/ryantr-statinops/my-portfolio/blob/bc71cdaa778c74acdc05ae548bccad1b7379c700/app/components/sections/Hero.tsx#L3).
 
-- [app/components/sections/AboutMe.tsx](../../app/components/sections/AboutMe.tsx) — [AboutMe](https://github.com/ryantr-statinops/my-portfolio/blob/28ad4c6caacdb33f8abfd3d0e54303d346401587/app/components/sections/AboutMe.tsx#L19).
+- [app/components/sections/AboutMe.tsx](../../app/components/sections/AboutMe.tsx) — [AboutMe](https://github.com/ryantr-statinops/my-portfolio/blob/bc71cdaa778c74acdc05ae548bccad1b7379c700/app/components/sections/AboutMe.tsx#L17).
 
-- [app/components/sections/AboutMe.tsx](../../app/components/sections/AboutMe.tsx) — [contacts](https://github.com/ryantr-statinops/my-portfolio/blob/28ad4c6caacdb33f8abfd3d0e54303d346401587/app/components/sections/AboutMe.tsx#L10).
+- [app/components/sections/AboutMe.tsx](../../app/components/sections/AboutMe.tsx) — [contacts](https://github.com/ryantr-statinops/my-portfolio/blob/bc71cdaa778c74acdc05ae548bccad1b7379c700/app/components/sections/AboutMe.tsx#L10).
 
-- [app/components/sections/AboutMe.tsx](../../app/components/sections/AboutMe.tsx) — [focusAreas](https://github.com/ryantr-statinops/my-portfolio/blob/28ad4c6caacdb33f8abfd3d0e54303d346401587/app/components/sections/AboutMe.tsx#L1).
+- [app/components/sections/AboutMe.tsx](../../app/components/sections/AboutMe.tsx) — [focusAreas](https://github.com/ryantr-statinops/my-portfolio/blob/bc71cdaa778c74acdc05ae548bccad1b7379c700/app/components/sections/AboutMe.tsx#L1).
 
 - [app/routes/home.tsx](../../app/routes/home.tsx) — `export default function Home` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/8fceddadcb5a368eb6fc155954840582ead88b61/app/routes/home.tsx#L19)).
-- [app/components/layout/SiteShell.tsx](../../app/components/layout/SiteShell.tsx) — `export default function SiteShell` ([line 9](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/layout/SiteShell.tsx#L9)).
-- [app/components/layout/Navbar.tsx](../../app/components/layout/Navbar.tsx) — `const navItems` ([line 5](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/layout/Navbar.tsx#L5)).
-- [app/components/layout/MobileOverlay.tsx](../../app/components/layout/MobileOverlay.tsx) — `const navItems` ([line 6](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/layout/MobileOverlay.tsx#L6)).
+- [app/components/layout/SiteShell.tsx](../../app/components/layout/SiteShell.tsx) — `export default function SiteShell` ([line 9](https://github.com/ryantr-statinops/my-portfolio/blob/bc71cdaa778c74acdc05ae548bccad1b7379c700/app/components/layout/SiteShell.tsx#L9)).
+- [app/components/layout/Navbar.tsx](../../app/components/layout/Navbar.tsx) — `const navItems` ([line 4](https://github.com/ryantr-statinops/my-portfolio/blob/bc71cdaa778c74acdc05ae548bccad1b7379c700/app/components/layout/Navbar.tsx#L4)).
+- [app/components/layout/MobileOverlay.tsx](../../app/components/layout/MobileOverlay.tsx) — `const navItems` ([line 6](https://github.com/ryantr-statinops/my-portfolio/blob/bc71cdaa778c74acdc05ae548bccad1b7379c700/app/components/layout/MobileOverlay.tsx#L6)).
 - [src/lib/sectionNavigation.ts](../../src/lib/sectionNavigation.ts) — `export function navigateToSection` ([line 1](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/src/lib/sectionNavigation.ts#L1)).
 
 ## Related documents

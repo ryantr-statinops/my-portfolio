@@ -52,8 +52,8 @@ Tests cover desktop 1280×800, tablet 768×1024 and mobile 375×667; these are t
 
 ## Source references
 
-- [src/styles/global.css](../../src/styles/global.css) — `@theme` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/src/styles/global.css#L19)).
-- [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) — `export default function ProjectHub` ([line 26](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/sections/ProjectHub.tsx#L26)).
+- [src/styles/global.css](../../src/styles/global.css) — `@theme` ([line 20](https://github.com/ryantr-statinops/my-portfolio/blob/bc71cdaa778c74acdc05ae548bccad1b7379c700/src/styles/global.css#L20)).
+- [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) — `export default function ProjectHub` ([line 26](https://github.com/ryantr-statinops/my-portfolio/blob/bc71cdaa778c74acdc05ae548bccad1b7379c700/app/components/sections/ProjectHub.tsx#L26)).
 - [app/components/interactive/VideoBackground.tsx](../../app/components/interactive/VideoBackground.tsx) — `export default function VideoBackground` ([line 4](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/interactive/VideoBackground.tsx#L4)).
 - [tests/fixtures/styles.css](../../tests/fixtures/styles.css) — `@source` ([line 2](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/fixtures/styles.css#L2)).
 

@@ -39,8 +39,8 @@ The section ID is projects. Hero and desktop/mobile navigation link to /#project
 
 - [app/components/ProjectStatusBadge.tsx](../../app/components/ProjectStatusBadge.tsx) — [ProjectStatusBadge](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/ProjectStatusBadge.tsx#L12).
 
-- [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) — `export default function ProjectHub` ([line 26](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/sections/ProjectHub.tsx#L26)).
-- [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) — `function ProjectOverviewPanel` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/sections/ProjectHub.tsx#L10)).
+- [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) — `export default function ProjectHub` ([line 26](https://github.com/ryantr-statinops/my-portfolio/blob/bc71cdaa778c74acdc05ae548bccad1b7379c700/app/components/sections/ProjectHub.tsx#L26)).
+- [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) — `function ProjectOverviewPanel` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/bc71cdaa778c74acdc05ae548bccad1b7379c700/app/components/sections/ProjectHub.tsx#L10)).
 - [app/data/project-hub.ts](../../app/data/project-hub.ts) — `export function projectsForCategory` ([line 5](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/data/project-hub.ts#L5)).
 - [app/data/project-hub.ts](../../app/data/project-hub.ts) — `export function resolveSelectedProject` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/data/project-hub.ts#L10)).
 
