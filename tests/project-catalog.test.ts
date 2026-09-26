@@ -1,3 +1,4 @@
+import { projects } from "../app/data/projects";
 import { describe, expect, it } from "vitest";
 import { projectCatalogSchema, projectSchema } from "../app/data/project-schema";
 
@@ -29,5 +30,28 @@ describe("project overview catalog", () => {
     expect(projectSchema.safeParse({ ...project, links: {} }).success).toBe(false);
     expect(projectSchema.safeParse({ ...project, category: "invalid" }).success).toBe(false);
     expect(projectSchema.safeParse({ ...project, stack: [" "] }).success).toBe(false);
+  });
+});
+
+describe("published catalog", () => {
+  it("contains the twelve selected projects in stable priority order", () => {
+    expect(projectCatalogSchema.parse(projects)).toEqual(projects);
+    expect(projects.map(p => p.id)).toEqual([
+      "homematch", "orbit-system-manager", "statistical-computing-lab", "infoboard",
+      "admissions-crm-automation", "csv-schema-alignment", "scrawlnews", "agent-skill-library",
+      "alpha-strategy-agent", "grap4prob", "poisson-process-analytics", "mean-reversion-analytics",
+    ]);
+    expect(projects.map(p => p.priority)).toEqual(Array.from({ length: 12 }, (_, i) => (i + 1) * 10));
+    expect(projects.map(p => p.status)).toEqual([
+      "active", "active", "building", "building", "active", "building",
+      "active", "active", "building", "active", "completed", "building",
+    ]);
+    expect(Object.fromEntries(["software-engineering", "data-engineering", "ai-engineering", "other"].map(
+      category => [category, projects.filter(p => p.category === category).length],
+    ))).toEqual({ "software-engineering": 4, "data-engineering": 2, "ai-engineering": 3, other: 3 });
+    expect(projects.every(p => p.links.github.startsWith("https://github.com/ryantr-statinops/"))).toBe(true);
+    expect(new Set(projects.map(p => p.links.github)).size).toBe(12);
+    expect(projects.find(p => p.id === "alpha-strategy-agent")?.links.github).toBe("https://github.com/ryantr-statinops/Alpha_Stratergy_Agent");
+    expect(projects.find(p => p.id === "infoboard")?.stack).toEqual([]);
   });
 });

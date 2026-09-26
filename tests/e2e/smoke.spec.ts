@@ -1,5 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { projects } from "../../app/data/projects";
+import { readFileSync } from "node:fs";
+import { projectCatalogSchema } from "../../app/data/project-schema";
+const projects = projectCatalogSchema.parse(JSON.parse(readFileSync(new URL("../../app/data/projects.json", import.meta.url), "utf8")));
 
 test("homepage exposes metadata and the Project Hub", async ({ page }) => {
   const response = await page.goto("./");
@@ -56,4 +58,24 @@ test("legacy Hub anchor and reduced motion remain supported", async ({ page }) =
   await expect(page.locator("#projects")).toBeInViewport();
   await expect(page.locator("[data-background-video]")).toBeHidden();
   await expect(page.locator("[data-video-poster]")).toBeVisible();
+});
+
+test("published projects expose matching status and repository in every category", async ({ page }) => {
+  await page.goto("./");
+  for (const category of ["software-engineering", "data-engineering", "ai-engineering", "other"]) {
+    await page.locator(`[data-project-category="${category}"]`).click();
+    const entries = projects.filter(p => p.category === category);
+    await expect(page.locator("[data-project-select]")).toHaveCount(entries.length);
+    for (const project of entries) {
+      const button = page.locator(`[data-project-select="${project.id}"]`);
+      await button.click();
+      await expect(button).toHaveAttribute("aria-pressed", "true");
+      await expect(button.locator("[data-project-status]")).toHaveAttribute("data-project-status", project.status);
+      const panel = page.locator("#project-overview-panel");
+      await expect(panel.getByRole("heading")).toHaveText(project.title);
+      await expect(panel.locator("[data-project-status]")).toHaveAttribute("data-project-status", project.status);
+      await expect(panel.getByRole("link")).toHaveAttribute("href", project.links.github);
+      await expect(panel.getByRole("link")).toHaveAttribute("rel", "noopener noreferrer");
+    }
+  }
 });

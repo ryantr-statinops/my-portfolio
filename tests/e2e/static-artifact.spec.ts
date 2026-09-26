@@ -1,5 +1,9 @@
 import { expect, test } from "@playwright/test";
 
+import { readFileSync } from "node:fs";
+import { projectCatalogSchema } from "../../app/data/project-schema";
+const projects = projectCatalogSchema.parse(JSON.parse(readFileSync(new URL("../../app/data/projects.json", import.meta.url), "utf8")));
+
 const publicBase = "https://ryantr-statinops.github.io/my-portfolio/";
 
 test("static sitemap and robots preserve the GitHub Pages base URL", async ({ request, baseURL }) => {
@@ -28,4 +32,18 @@ for (const path of ["projects/", "projects/not-a-published-project/", "missing-p
   const html = await response.text();
   expect(html).toContain("Page not found");
   expect(html).toContain('href="/my-portfolio/#projects"');
+});
+
+test("static homepage includes every published overview, status and repository", async ({ request, baseURL }) => {
+  const response = await request.get(baseURL!);
+  expect(response.status()).toBe(200);
+  const html = await response.text();
+  for (const project of projects) {
+    expect(html).toContain(project.title);
+    expect(html).toContain(project.description);
+    expect(html).toContain(project.links.github);
+    expect(html).toContain(`data-project-status="${project.status}"`);
+  }
+  expect(html.match(/data-project-overview/g)).toHaveLength(12);
+  expect(html).not.toContain("Projects are being prepared.");
 });
