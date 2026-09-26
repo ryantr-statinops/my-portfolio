@@ -47,7 +47,7 @@ export default function ProjectHub({ projects }: Props) {
           <p className="mt-4 text-sm leading-relaxed text-muted">Explore projects by domain, read the overview and browse the source repository.</p>
         </header>
         {ready && <div role="group" aria-label="Project categories" className="mb-8 flex flex-wrap gap-2">
-          {([['all', 'All'], ...Object.entries(CATEGORY_MAP)] as [ProjectCategory, string][]).map(([id, label]) => <button key={id} type="button" data-project-category={id} aria-pressed={category === id} onClick={() => selectCategory(id)} className="min-h-11 max-w-full rounded border border-border bg-background/35 px-4 py-3 text-left font-mono text-xs backdrop-blur-md transition-colors hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-background">{label}</button>)}
+          {([['all', 'All'], ...Object.entries(CATEGORY_MAP)] as [ProjectCategory, string][]).map(([id, label]) => <button key={id} type="button" data-project-category={id} aria-pressed={category === id} onClick={() => selectCategory(id)} className="info-box info-box--filter info-box--interactive min-h-11 max-w-full text-left font-mono text-xs">{label}</button>)}
         </div>}
         {visible.length === 0 ? <p data-project-empty role="status" className="info-box info-box--panel text-sm text-muted">{projects.length === 0 ? "Projects are being prepared." : "No projects in this category yet."}</p> : ready ? <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.5fr)]">
           <nav aria-label="Choose a project" className="min-w-0">
