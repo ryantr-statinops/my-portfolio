@@ -41,3 +41,9 @@ test("populated Hub supports keyboard selection and narrow screens", async ({ pa
   await expect(page.locator("#project-overview-panel")).toContainText("Software First");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
+
+test("empty catalog keeps an honest empty state", async ({ page }) => {
+  await page.goto(fixtureUrl + "?empty");
+  await expect(page.locator("[data-project-empty]")).toHaveText("Projects are being prepared.");
+  await expect(page.locator("[data-project-select]")).toHaveCount(0);
+});

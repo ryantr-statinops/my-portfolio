@@ -5,4 +5,4 @@ import "./styles.css";
 
 const theme = localStorage.getItem("theme") ?? "dark";
 document.documentElement.classList.toggle("dark", theme === "dark");
-createRoot(document.getElementById("root")!).render(<ProjectHub projects={fixtureProjects} />);
+createRoot(document.getElementById("root")!).render(<ProjectHub projects={new URLSearchParams(location.search).has("empty") ? [] : fixtureProjects} />);

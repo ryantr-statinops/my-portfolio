@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { projects } from "../../app/data/projects";
 
 test("homepage exposes metadata and the Project Hub", async ({ page }) => {
   const response = await page.goto("./");
@@ -8,11 +9,11 @@ test("homepage exposes metadata and the Project Hub", async ({ page }) => {
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://ryantr-statinops.github.io/my-portfolio/");
   await expect(page.locator("h1").first()).toBeVisible();
   await expect(page.locator("[data-project-hub]")).toHaveCount(1);
-  await expect(page.locator("[data-project-empty]")).toHaveText("Projects are being prepared.");
+  await expect(page.locator("[data-project-overview]")).toHaveCount(projects.length ? 1 : 0);
   await expect(page.locator("[data-project-category]")).toHaveCount(5);
   await page.locator('[data-project-category="data-engineering"]').click();
   await expect(page.locator('[data-project-category="data-engineering"]')).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator("[data-project-overview]")).toHaveCount(0);
+  await expect(page.locator("[data-project-overview]")).toHaveCount(projects.some(p => p.category === "data-engineering") ? 1 : 0);
 });
 
 test("Hero and desktop navigation lead to the Hub", async ({ page }) => {
@@ -43,7 +44,8 @@ test("Hub remains readable without JavaScript", async ({ browser }) => {
   const page = await context.newPage();
   await page.goto("./");
   await expect(page.getByRole("heading", { name: "Project Hub." })).toBeVisible();
-  await expect(page.locator("[data-project-empty]")).toHaveText("Projects are being prepared.");
+  await expect(page.locator("[data-project-overview]")).toHaveCount(projects.length);
+  for (const project of projects) await expect(page.locator("[data-project-fallback]")).toContainText(project.title);
   await expect(page.locator("[data-project-category]")).toHaveCount(0);
   await context.close();
 });
