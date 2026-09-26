@@ -15,7 +15,7 @@ export default function Footer({ transparentBackground = false }: Props) {
   return (
     <footer id="connect" aria-labelledby="connect-title" className={`relative w-full border-t border-border ${background} ${layer}`}>
       <div className="px-6 py-16 md:px-12 lg:px-8">
-        <div data-connect-grid className="mx-auto grid max-w-6xl lg:max-w-[var(--desktop-content-width)] items-start gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+        <div data-connect-grid className="mx-auto grid max-w-6xl lg:max-w-[var(--desktop-content-width)] items-start gap-8 lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)]">
           <div className="min-w-0">
             <h2 id="connect-title" className="text-gradient origin-left scale-y-110 text-[clamp(2.5rem,5.5vw,5rem)] font-black uppercase leading-[1.1] tracking-tighter [-webkit-text-stroke:0.5px_#38bdf8]">Let’s connect.</h2>
             <p className="mt-5 max-w-lg text-[17px] leading-relaxed">Have an idea, a project, or a shared interest in data, AI or software? I’d love to hear from you.</p>
