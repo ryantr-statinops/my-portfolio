@@ -42,9 +42,8 @@ export default function ProjectHub({ projects }: Props) {
       <span id="intelligence-hub" aria-hidden="true" className="absolute left-0 top-0" />
       <div className="mx-auto max-w-7xl">
         <header className="mb-10 max-w-2xl">
-          <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted">02 / Selected work</p>
           <h2 id="project-hub-title" className="text-4xl font-bold uppercase tracking-tight md:text-6xl">Project Hub.</h2>
-          <p className="mt-4 text-sm leading-relaxed text-muted">Explore projects by domain, read the overview and browse the source repository.</p>
+          <p className="mt-4 text-base leading-relaxed text-white">Explore projects by domain, read the overview and browse the source repository.</p>
         </header>
         {ready && <div role="group" aria-label="Project categories" className="mb-8 flex flex-wrap gap-2">
           {([['all', 'All'], ...Object.entries(CATEGORY_MAP)] as [ProjectCategory, string][]).map(([id, label]) => <button key={id} type="button" data-project-category={id} aria-pressed={category === id} onClick={() => selectCategory(id)} className="info-box info-box--filter info-box--interactive min-h-11 max-w-full text-left font-mono text-xs">{label}</button>)}
