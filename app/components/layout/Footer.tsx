@@ -22,7 +22,7 @@ export default function Footer({ transparentBackground = false }: Props) {
             <p className="mt-5 max-w-lg text-base leading-relaxed">Have an idea, a project, or a shared interest in data, AI or software? I’d love to hear from you.</p>
             <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted">I’m also open to internship and entry-level opportunities in these fields.</p>
           </div>
-          <ul aria-label="Contact channels" className="min-w-0 divide-y divide-border rounded-2xl border border-border bg-background/70 px-5 backdrop-blur-md">
+          <ul aria-label="Contact channels" className="info-box info-box--list">
             {contacts.map((contact) => (
               <li key={contact.label}>
                 <a href={contact.href} target={contact.external ? "_blank" : undefined} rel={contact.external ? "noopener noreferrer" : undefined} className="block min-h-11 rounded py-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">

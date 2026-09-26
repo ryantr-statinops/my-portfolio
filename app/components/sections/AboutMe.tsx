@@ -14,8 +14,6 @@ const contacts = [
   { label: "0987 357 707", href: "tel:+84987357707", external: false },
 ];
 
-const cardClassName = "min-w-0 rounded-2xl border border-border bg-background/70 p-5 backdrop-blur-md";
-
 export default function AboutMe() {
   return (
     <section id="about-me" aria-labelledby="about-me-title" className="relative w-full border-t border-border/30 px-6 py-20 md:px-12">
@@ -23,7 +21,7 @@ export default function AboutMe() {
         <div className="min-w-0">
           <h2 id="about-me-title" className="mb-4 text-xl font-semibold">About Me</h2>
           <div data-about-profile-grid className="grid gap-4">
-            <article data-about-profile className={cardClassName}>
+            <article data-about-profile className="info-box">
               <h3 className="text-[clamp(1.5rem,3vw,2.25rem)] font-bold leading-tight tracking-tight">Statistics Student<span className="mt-2 block text-xl text-muted">Data · AI · Software</span></h3>
               <p className="mt-4 text-sm leading-relaxed text-muted">I study Statistics and explore how mathematical ideas become practical tools across data, quantitative research and AI. Mathematics and statistics give me a foundation for understanding problems; programming and engineering help me turn that understanding into working software.</p>
               <div className="mt-5 border-t border-border pt-4">
@@ -31,7 +29,7 @@ export default function AboutMe() {
                 <p className="mt-2 text-sm leading-relaxed text-muted">Ton Duc Thang University<br />Faculty of Mathematics &amp; Statistics · 2024–Present</p>
               </div>
             </article>
-            <article data-about-contact className={cardClassName}>
+            <article data-about-contact className="info-box">
               <h3 className="text-2xl font-bold leading-tight tracking-tight">Open to work</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted">Open to internship and entry-level opportunities in data, AI and software engineering.</p>
               <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1">
@@ -51,7 +49,7 @@ export default function AboutMe() {
           <h3 id="current-focus-title" className="mb-4 text-xl font-semibold">Current Focus</h3>
           <div data-focus-grid className="grid gap-3">
             {focusAreas.map((area) => (
-              <article data-focus-card key={area.title} className="min-w-0 rounded-2xl border border-border bg-background/70 px-5 py-3 backdrop-blur-md">
+              <article data-focus-card key={area.title} className="info-box info-box--compact">
                 <h4 className="text-base font-semibold">{area.title}</h4>
                 <p className="mt-1 text-sm leading-relaxed text-muted">{area.description}</p>
               </article>
