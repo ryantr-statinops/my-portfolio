@@ -56,5 +56,17 @@
     "links": {
       "github": "https://github.com/ryantr-statinops/Stat_Lab"
     }
+  },
+  {
+    "id": "infoboard",
+    "title": "InfoBoard",
+    "description": "A keyboard-first browser tab search tool under development. Its planned architecture pairs a browser extension with a local Go native host for tab indexing and search.",
+    "category": "software-engineering",
+    "status": "building",
+    "priority": 40,
+    "stack": [],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/InfoBoard"
+    }
   }
 ]
