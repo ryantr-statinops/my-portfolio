@@ -36,16 +36,12 @@ export default function Footer({ transparentBackground = false }: Props) {
           </ul>
         </div>
       </div>
-      <div className="w-full border-t border-border/30 bg-foreground/[0.01] px-8 py-6 md:px-12">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 md:flex-row">
-          <div className="flex items-center gap-4">
-            <div className="h-9 w-9 overflow-hidden rounded-full border border-border/50 bg-muted/10 p-1"><img src={`${import.meta.env.BASE_URL}images/avt.webp`} alt="Ryan Tran" className="h-full w-full rounded-full object-cover" /></div>
-            <div><p className="mb-1 font-mono text-[9px] font-bold uppercase leading-none tracking-widest text-foreground">© 2026 Ryan Tran</p><p className="font-mono text-[8px] uppercase tracking-tighter text-muted">Precision_Systems_Specialist</p></div>
-          </div>
-          <div className="flex items-center gap-8">
-            <div className="flex flex-col items-end"><p className="mb-1 font-mono text-[8px] uppercase tracking-[0.2em] text-muted">Deployment: v4.2.0-Production</p><p className="font-mono text-[8px] font-bold uppercase text-success">Protocol_Secure</p></div>
-            <button id="scroll-to-top" type="button" onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" })} aria-label="Scroll to top" className="group flex h-10 w-10 items-center justify-center rounded-full border border-border/50 transition-all duration-300 hover:border-primary hover:bg-primary hover:text-background"><span className="text-lg transition-transform group-hover:-translate-y-1" aria-hidden="true">↑</span></button>
-          </div>
+      <div className="border-t border-border/30 px-6 py-4 md:px-12">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2">
+          <p className="text-xs text-muted">© 2026 Ryan Tran</p>
+          <button id="scroll-to-top" type="button" onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" })} aria-label="Scroll to top" className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-foreground/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+            Back to top <span aria-hidden="true">↑</span>
+          </button>
         </div>
       </div>
     </footer>
