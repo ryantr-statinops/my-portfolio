@@ -187,5 +187,24 @@
     "links": {
       "github": "https://github.com/ryantr-statinops/Statistical-Analytics-for-Poisson-Process-Time-Series-Data"
     }
+  },
+  {
+    "id": "mean-reversion-analytics",
+    "title": "Mean Reversion Analytics",
+    "description": "A Python workspace for researching mean-reversion strategies with MetaTrader 5 integration. It combines technical indicators, market data utilities and strategy execution code.",
+    "category": "other",
+    "status": "building",
+    "priority": 120,
+    "stack": [
+      "Python",
+      "MetaTrader 5",
+      "pandas",
+      "NumPy",
+      "Matplotlib",
+      "Jupyter"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/mean_reversion_analytics"
+    }
   }
 ]
