@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { CATEGORY_MAP } from "../../../src/lib/constants";
 import type { Project } from "../../data/project-schema";
 import "./portfolio-registry.css";
 
@@ -30,7 +31,7 @@ export default function PortfolioRegistry({ projects }: Props) {
               <tbody className="divide-y divide-border/30">
                 {projects.map((project, index) => <tr key={project.routeSlug} data-portfolio-project data-category={project.category} className="group border-b border-border/40 transition-colors hover:bg-primary/[0.05]">
                   <td className="px-5 py-3.5"><Link to={`/projects/${project.routeSlug}/`} className="flex items-center gap-3"><span className="font-mono text-[9px] text-muted opacity-40">{String(index + 1).padStart(2, "0")}</span><span className="space-y-0.5"><span className="block text-xs font-black uppercase tracking-tight text-foreground transition-colors group-hover:text-primary">{project.title}</span><span className="block font-mono text-[8px] text-muted opacity-50">UID: {project.routeSlug.slice(0, 8)}</span></span></Link></td>
-                  <td className="px-5 py-3.5"><span className="rounded border border-border/80 bg-foreground/5 px-2 py-0.5 font-mono text-[9px] uppercase text-foreground">{project.category.replaceAll("-", "_")}</span></td>
+                  <td className="px-5 py-3.5"><span className="rounded border border-border/80 bg-foreground/5 px-2 py-0.5 font-mono text-[9px] uppercase text-foreground">{CATEGORY_MAP[project.category]}</span></td>
                   <td className="px-5 py-3.5"><div className="flex flex-wrap gap-1">{project.stack.slice(0, 3).map((technology) => <span key={technology} className="border-l border-primary/30 pl-2 font-mono text-[8px] text-muted">{technology}</span>)}</div></td>
                   <td className="px-5 py-3.5"><span className={`rounded-full border px-2 py-0.5 font-mono text-[8px] font-bold ${statusClasses[project.status]}`}>{project.status.toUpperCase()}</span></td>
                   <td className="px-5 py-3.5 text-right"><span className="font-mono text-[10px] font-bold tracking-tight text-success">{project.impact}</span></td>
