@@ -26,7 +26,16 @@ The homepage has four areas: **Hero → About Me → Project Hub → Connect**. 
 
 The site is served beneath `/my-portfolio/` and needs no production application server or database. There is one application route: the homepage. Project details live in the linked GitHub repositories.
 
-**Current content status:** the production catalog is empty. The Hub displays “Projects are being prepared.” Populated examples exist only in test fixtures; they are not published as portfolio projects.
+**Published catalog:** 12 selected projects with English overviews, technology stacks, lifecycle statuses and GitHub repository links.
+
+| Category | Projects |
+|---|---|
+| Software Engineering | HomeMatch, Orbit System Manager, Statistical Computing Lab, InfoBoard |
+| Data Engineering | Admissions CRM Automation, CSV Schema Alignment |
+| AI Engineering | ScrawlNews, Agent Skill Library, Alpha Strategy Agent |
+| Other | Grap4Prob, Poisson Process Analytics, Mean Reversion Analytics |
+
+Statuses are maintained editorially: **Pending**, **Building**, **Active**, **Paused**, **Completed** and **Archived**. They describe project lifecycle, not verified uptime or GitHub archive settings. See the [status definitions](docs/data/project-schema.md#lifecycle-statuses).
 
 ## Project Hub
 
@@ -35,7 +44,7 @@ Project Hub combines category selection, a project list and an overview panel:
 - Browse All, Software Engineering, Data Engineering, AI Engineering or Other.
 - Projects appear in ascending `priority` order; the first visible project is selected initially.
 - Choosing a category preserves the current project when it still matches, or selects the first result. Empty groups clear the panel.
-- Read the title, category, plain-text overview and tech stack, then open **View repository** in a new tab.
+- Read the title, category, lifecycle status, plain-text overview and tech stack, then open **View repository** in a new tab.
 - Desktop uses a list beside the panel; smaller screens stack the list above it.
 - Without JavaScript, all overviews and repository links remain readable in an ordered static presentation.
 
@@ -129,12 +138,13 @@ Add a record to [app/data/projects.json](app/data/projects.json) with:
 
 - A unique lowercase hyphenated `id`.
 - `title`, plain-text `description`, one supported `category` and a `stack` array.
+- A required `status`: `pending`, `building`, `active`, `paused`, `completed` or `archived`.
 - A unique positive integer `priority`; lower numbers appear first, with no upper limit of ten.
 - A required `links.github` URL such as `https://github.com/owner/repository`.
 
 No Markdown article, thumbnail or detail route is needed. Repository URL validation checks shape and protocol; verify the actual repository is available to visitors before publishing.
 
-Use the [schema example](docs/data/project-schema.md) and [authoring guide](docs/data/content-authoring.md). When adding the first real project, update production smoke expectations and visual baselines that currently describe an empty catalog. The sitemap stays at one homepage regardless of project count.
+Use the [schema example](docs/data/project-schema.md) and [authoring guide](docs/data/content-authoring.md). When changing the curated selection, update catalog assertions and review visual baselines. Commit each project separately. The sitemap stays at one homepage regardless of project count.
 
 For other changes, see [homepage/navigation](docs/features/homepage-and-navigation.md), [styling/assets](docs/design/styling-and-assets.md) and the [base URL checklist](docs/reference/configuration.md#changing-the-public-base-url).
 
@@ -150,7 +160,7 @@ npm test
 
 On Linux, `npx playwright install --with-deps chromium` can install system libraries where permitted. Browser tests start production preview on port 4173 and a separate populated-fixture server on port 4174; keep both ports available. Fixture records are never imported into production routes.
 
-- Unit tests cover validation, priority/category ordering, selection transitions and readable pre-hydration output.
+- Unit tests cover validation, all six statuses, the published catalog, priority/category ordering, selection transitions and readable pre-hydration output.
 - Browser tests cover navigation, keyboard interactions, mobile overflow, empty/populated Hub states, repository links and removed-route 404s.
 - Visual tests cover both themes at desktop, tablet and mobile sizes, including the populated list/panel layout.
 
