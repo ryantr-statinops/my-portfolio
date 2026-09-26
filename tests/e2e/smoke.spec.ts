@@ -227,3 +227,23 @@ test("desktop navbar tracks sections and clears its highlight at the Hero", asyn
   await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
   await expect(active).toHaveCount(0);
 });
+
+test("desktop project list scrolls within its box and matches the overview height", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("./#projects");
+  const list = page.getByRole("navigation", { name: "Choose a project" });
+  const panel = page.locator("#project-overview-panel");
+  await expect(list).toBeVisible();
+  const listBox = (await list.boundingBox())!;
+  const panelBox = (await panel.boundingBox())!;
+  expect(listBox.height).toBeCloseTo(panelBox.height, 0);
+  expect(listBox.height).toBeLessThanOrEqual(480);
+  expect(await list.evaluate(el => el.scrollHeight > el.clientHeight)).toBe(true);
+  const last = list.locator("[data-project-select]").last();
+  const title = await last.locator("[data-project-title]").innerText();
+  await last.focus();
+  await page.keyboard.press("Enter");
+  await expect(last).toHaveAttribute("aria-pressed", "true");
+  await expect(panel.getByRole("heading")).toHaveText(title);
+  expect(await list.evaluate(el => el.scrollTop)).toBeGreaterThan(0);
+});
