@@ -7,6 +7,8 @@ Shared styling lives in the global stylesheet; media-specific rules live with Vi
 ## Contents
 
 - [Tokens and type](#tokens-and-type)
+- [Shared information boxes](#shared-information-boxes)
+- [Desktop content width](#desktop-content-width)
 - [Hub layout](#hub-layout)
 - [Assets and motion](#assets-and-motion)
 - [Source references](#source-references)
@@ -15,6 +17,25 @@ Shared styling lives in the global stylesheet; media-specific rules live with Vi
 ## Tokens and type
 
 Tailwind is imported by src/styles/global.css and compiled by its Vite plugin. @theme exposes CSS-variable colors and the mono font stack. Root variables define light values; .dark overrides them. The homepage-video light override preserves dark contrast above the video. Regular/bold JetBrains Mono fonts are bundled with their OFL license. There is no KaTeX or Markdown prose styling pipeline.
+
+## Shared information boxes
+
+[src/styles/boxes.css](../../src/styles/boxes.css), imported by the global stylesheet, owns information surface styles. Change its root variables to adjust radius, border, background opacity, blur and spacing across About Me, Connect and Project Hub. Theme colors derive from the existing root color tokens.
+
+| Class | Usage |
+|---|---|
+| info-box | Profile and availability cards; shared 16 px radius, 70% background and 20 px padding |
+| info-box--compact | Focus cards and selectable project rows; 12 px vertical padding |
+| info-box--filter | Category filters; 12 px vertical and 16 px horizontal padding |
+| info-box--panel | Project overview, prerender fallback and empty state; 24 px padding, 32 px from 768 px |
+| info-box--list | Contact list; no vertical container padding, shared row dividers |
+| info-box--interactive | Project row and category filter hover, keyboard focus and aria-pressed selection |
+
+Always combine modifiers with info-box. Keep layout and typography on the component; avoid overriding surface properties there. Category filters share the surface and interactive styles. Action buttons, technology chips and status badges remain separate controls.
+
+## Desktop content width
+
+About Me, Project Hub and Connect (including its closing bar) share --desktop-content-width, defined in the global stylesheet as 85rem (1360px). From 1024px, their containers use that maximum width and 32px outer gutters. Below that breakpoint their existing widths and spacing remain unchanged.
 
 ## Hub layout
 
