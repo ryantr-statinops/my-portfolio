@@ -88,7 +88,7 @@ for (const theme of ["dark", "light"] as const) {
         await page.goto("./projects/");
         await stabilize(page);
         await expect(page.locator("[data-terminal]")).toHaveScreenshot(`${theme}-${viewport.name}-portfolio-runtime-terminal.png`, screenshotOptions);
-        await page.locator('[data-filter-category="finance-quant"]').first().click();
+        await page.locator('[data-filter-category="software-engineering"]').first().click();
         await expect(page.locator("[data-project-filter]").first()).toHaveScreenshot(`${theme}-${viewport.name}-filter-active.png`, screenshotOptions);
         await expect(page.locator("#portfolio-registry")).toHaveScreenshot(`${theme}-${viewport.name}-projects-registry.png`, screenshotOptions);
 

@@ -61,33 +61,26 @@ test("project thumbnails resolve under the GitHub Pages base path", async ({ pag
   }
 });
 
-test("homepage and project registry support multi-select and empty filters", async ({ page }) => {
-  for (const route of ["./", "./projects/"]) {
-    await page.goto(route);
-    const filter = page.locator("[data-project-filter]").first();
-    const all = filter.locator('[data-filter-category="all"]');
-    const quant = filter.locator('[data-filter-category="finance-quant"]');
-    const ops = filter.locator('[data-filter-category="ops-automation"]');
-    const emptyCategory = filter.locator('[data-filter-category="ai-implementation"]');
+test("project registry exposes the engineering category filter and empty state", async ({ page }) => {
+  await page.goto("./projects/");
+  const filter = page.locator("[data-project-filter]").first();
+  const all = filter.locator('[data-filter-category="all"]');
+  const software = filter.locator('[data-filter-category="software-engineering"]');
+  const data = filter.locator('[data-filter-category="data-engineering"]');
+  const ai = filter.locator('[data-filter-category="ai-engineering"]');
+  const other = filter.locator('[data-filter-category="other"]');
 
-    await expect(all).toHaveAttribute("aria-pressed", "true");
-    await quant.click();
-    await expect(quant).toHaveAttribute("aria-pressed", "true");
-    await expect(all).toHaveAttribute("aria-pressed", "false");
-    await ops.click();
-    await expect(ops).toHaveAttribute("aria-pressed", "true");
-    await expect(page.locator('[data-filter-empty]')).toBeHidden();
-
-    await quant.click();
-    await ops.click();
-    await emptyCategory.click();
-    await expect(page.locator('[data-filter-empty]')).toBeVisible();
-    await expect(emptyCategory).toHaveAttribute("aria-pressed", "true");
-
-    await all.click();
-    await expect(all).toHaveAttribute("aria-pressed", "true");
-    await expect(page.locator('[data-filter-empty]')).toBeHidden();
-  }
+  await expect(all).toHaveAttribute("aria-pressed", "true");
+  await expect(software).toBeVisible();
+  await expect(data).toBeVisible();
+  await expect(ai).toBeVisible();
+  await expect(other).toBeVisible();
+  await software.click();
+  await expect(software).toHaveAttribute("aria-pressed", "true");
+  await expect(all).toHaveAttribute("aria-pressed", "false");
+  await all.click();
+  await expect(all).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator("#portfolio-registry")).toContainText("Projects are being rebuilt.");
 });
 
 test("portfolio runtime terminal only accepts its whitelist", async ({ page }) => {
@@ -102,6 +95,9 @@ test("portfolio runtime terminal only accepts its whitelist", async ({ page }) =
   await input.fill("uname -a");
   await input.press("Enter");
   await expect(output).toContainText("command not found");
+  await input.fill("ls /projects");
+  await input.press("Enter");
+  await expect(output).toContainText("No projects published yet.");
   await input.fill("clear");
   await input.press("Enter");
   await expect(output.locator("[data-terminal-entry]")).toHaveCount(0);
