@@ -69,7 +69,11 @@ for (const theme of ["dark", "light"] as const) {
         await expect(page.locator("section#about-me")).toHaveScreenshot(`${theme}-${viewport.name}-home-about.png`, screenshotOptions);
         await sectionCaptureStyle.evaluate(element => element.parentNode?.removeChild(element));
         await screenshotSectionViewport(page, "section#projects", `${theme}-${viewport.name}-home-project-hub.png`, screenshotOptions);
-        await screenshotSectionViewport(page, "footer#connect", `${theme}-${viewport.name}-home-footer.png`, screenshotOptions);
+        const footerCaptureStyle = await page.addStyleTag({
+          content: 'nav[aria-label="Primary"] { visibility: hidden !important; }',
+        });
+        await expect(page.locator("footer#connect")).toHaveScreenshot(`${theme}-${viewport.name}-home-footer.png`, screenshotOptions);
+        await footerCaptureStyle.evaluate(element => element.parentNode?.removeChild(element));
 
         await page.goto("http://127.0.0.1:4174/hub.html");
         await stabilize(page);
