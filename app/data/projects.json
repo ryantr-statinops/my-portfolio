@@ -16,5 +16,24 @@
     "links": {
       "github": "https://github.com/ryantr-statinops/HomeMatch"
     }
+  },
+  {
+    "id": "orbit-system-manager",
+    "title": "Orbit System Manager",
+    "description": "A desktop application for monitoring CPU, memory, GPU and network activity. It combines real-time system metrics with interactive visualizations and a 3D CPU topology view.",
+    "category": "software-engineering",
+    "status": "active",
+    "priority": 20,
+    "stack": [
+      "JavaScript",
+      "Three.js",
+      "Tauri",
+      "Python",
+      "psutil",
+      "WebSockets"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/Orbit-System-Manager"
+    }
   }
 ]
