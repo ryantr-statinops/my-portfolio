@@ -31,7 +31,7 @@ app contains routes, components and validated catalog modules. src/lib contains 
 ## Source references
 
 - [package.json](../package.json) — `"dependencies"` ([line 21](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/package.json#L21)).
-- [app/routes/home.tsx](../app/routes/home.tsx) — `export default function Home` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/routes/home.tsx#L19)).
+- [app/routes/home.tsx](../app/routes/home.tsx) — `export default function Home` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/8fceddadcb5a368eb6fc155954840582ead88b61/app/routes/home.tsx#L19)).
 - [app/data/projects.json](../app/data/projects.json) — production catalog ([line 1](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/data/projects.json#L1)).
 
 ## Related documents

@@ -26,7 +26,7 @@ Section IDs are main, about-me, projects and footer connect. The intelligence-hu
 - [app/routes.ts](../../app/routes.ts) — `export default` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/routes.ts#L3)).
 - [react-router.config.ts](../../react-router.config.ts) — `prerender:` ([line 6](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/react-router.config.ts#L6)).
 - [src/lib/sectionNavigation.ts](../../src/lib/sectionNavigation.ts) — `export function navigateToSection` ([line 1](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/src/lib/sectionNavigation.ts#L1)).
-- [app/routes/home.tsx](../../app/routes/home.tsx) — `export const meta` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/routes/home.tsx#L10)).
+- [app/routes/home.tsx](../../app/routes/home.tsx) — `export const meta` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/8fceddadcb5a368eb6fc155954840582ead88b61/app/routes/home.tsx#L10)).
 
 ## Related documents
 
