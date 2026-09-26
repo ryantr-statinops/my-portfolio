@@ -1,10 +1,8 @@
-import { CATEGORY_MAP } from "./constants";
+import { PROJECT_CATEGORIES } from "./constants";
 
 export type ProjectFilterState = {
   categories: string[];
 };
-
-export const PROJECT_CATEGORIES = Object.keys(CATEGORY_MAP);
 
 export const createFilterState = (categories: string[] = []): ProjectFilterState => ({
   categories: normalizeCategories(categories),

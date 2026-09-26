@@ -7,9 +7,9 @@ import {
 } from "../src/lib/project-filter";
 
 const projects = [
-  { data: { category: "data-math" } },
-  { data: { category: "finance-quant" } },
-  { data: { category: "system-ui" } },
+  { data: { category: "data-engineering" } },
+  { data: { category: "software-engineering" } },
+  { data: { category: "other" } },
 ];
 
 describe("Project filter state", () => {
@@ -18,32 +18,32 @@ describe("Project filter state", () => {
 
     expect(state.categories).toEqual([]);
     expect(filterProjects(projects, state)).toHaveLength(3);
-    expect(matchesFilter("ops-automation", state)).toBe(true);
+    expect(matchesFilter("ai-engineering", state)).toBe(true);
   });
 
   it("toggles categories without duplicate values", () => {
-    const selected = toggleFilterCategory(createFilterState(), "data-math");
-    const selectedTwice = toggleFilterCategory(selected, "data-math");
+    const selected = toggleFilterCategory(createFilterState(), "data-engineering");
+    const selectedTwice = toggleFilterCategory(selected, "data-engineering");
 
-    expect(selected.categories).toEqual(["data-math"]);
+    expect(selected.categories).toEqual(["data-engineering"]);
     expect(selectedTwice.categories).toEqual([]);
   });
 
   it("supports multiple categories", () => {
     let state = createFilterState();
-    state = toggleFilterCategory(state, "data-math");
-    state = toggleFilterCategory(state, "system-ui");
+    state = toggleFilterCategory(state, "data-engineering");
+    state = toggleFilterCategory(state, "other");
 
     expect(filterProjects(projects, state)).toHaveLength(2);
     expect(filterProjects(projects, state).map((project) => project.data.category)).toEqual([
-      "data-math",
-      "system-ui",
+      "data-engineering",
+      "other",
     ]);
   });
 
   it("resets to All when the all control is selected", () => {
     const state = toggleFilterCategory(
-      toggleFilterCategory(createFilterState(), "finance-quant"),
+      toggleFilterCategory(createFilterState(), "software-engineering"),
       "all",
     );
 

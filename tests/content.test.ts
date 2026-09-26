@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { readFileSync, readdirSync, existsSync } from 'fs'
 import { join } from 'path'
 import matter from 'gray-matter'
+import { PROJECT_CATEGORIES } from '../src/lib/constants'
 
 const PROJECTS_DIR = 'src/content/projects'
 
@@ -28,15 +29,6 @@ const projects: ProjectFrontmatter[] = readdirSync(PROJECTS_DIR)
     const raw = readFileSync(join(PROJECTS_DIR, f), 'utf-8')
     return { file: f, ...matter(raw).data } as ProjectFrontmatter
   })
-
-const validCategories = [
-  'finance-quant',
-  'ops-automation',
-  'data-math',
-  'system-ui',
-  'ai-implementation',
-  'software-engineering',
-]
 
 const validStatuses = [
   'In Progress',
@@ -68,7 +60,7 @@ describe('Content Schema Validation', () => {
 
   it('4.4 category is whitelisted', () => {
     projects.forEach((p) => {
-      expect(validCategories, p.file).toContain(p.category)
+      expect(PROJECT_CATEGORIES, p.file).toContain(p.category)
     })
   })
 

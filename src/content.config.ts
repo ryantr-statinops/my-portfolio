@@ -1,5 +1,6 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from 'astro/loaders';
+import { PROJECT_CATEGORIES } from "./lib/constants";
 
 /**
  * Project Collection Configuration (Astro v5+ Content Layer)
@@ -11,14 +12,7 @@ const projects = defineCollection({
     title: z.string().min(5),
     description: z.string().min(10),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
-    category: z.enum([
-      "finance-quant",
-      "ops-automation",
-      "data-math",
-      "system-ui",
-      "ai-implementation",
-      "software-engineering"
-    ]),
+    category: z.enum(PROJECT_CATEGORIES),
     status: z.enum([
       "In Progress",
       "Production",

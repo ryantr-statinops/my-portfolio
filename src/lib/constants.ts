@@ -7,12 +7,12 @@ export const SITE = {
 } as const;
 
 export const CATEGORY_MAP: Record<string, string> = {
-  "finance-quant": "Quant",
-  "ops-automation": "Ops",
-  "data-math": "Data",
-  "system-ui": "System",
-  "ai-implementation": "AI",
-  "software-engineering": "Software",
+  "software-engineering": "Software Engineering",
+  "data-engineering": "Data Engineering",
+  "ai-engineering": "AI Engineering",
+  other: "Other",
 };
+
+export const PROJECT_CATEGORIES = Object.keys(CATEGORY_MAP) as [string, ...string[]];
 
 // NOTE: Navbar SSOT is NAV_ITEMS in components/layout/Navbar.types.ts (has sectionId for ScrollSpy).
