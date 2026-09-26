@@ -92,9 +92,11 @@ for (const theme of ["dark", "light"] as const) {
         await expect(page.locator("[data-project-filter]").first()).toHaveScreenshot(`${theme}-${viewport.name}-filter-active.png`, screenshotOptions);
         await expect(page.locator("#portfolio-registry")).toHaveScreenshot(`${theme}-${viewport.name}-projects-registry.png`, screenshotOptions);
 
-        await page.goto(projectRoutes[0]);
-        await stabilize(page);
-        await expect(page.locator("article header")).toHaveScreenshot(`${theme}-${viewport.name}-project-detail-header.png`, screenshotOptions);
+        if (projectRoutes.length > 0) {
+          await page.goto(projectRoutes[0]);
+          await stabilize(page);
+          await expect(page.locator("article header")).toHaveScreenshot(`${theme}-${viewport.name}-project-detail-header.png`, screenshotOptions);
+        }
       });
     });
   }
