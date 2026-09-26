@@ -2,8 +2,8 @@ import { Link } from "react-router";
 
 export default function Hero() {
   return (
-    <section id="main" className="relative flex min-h-screen w-full items-center overflow-hidden bg-transparent px-6 pb-20 pt-20 md:px-12">
-      <div className="relative z-10 w-full max-w-5xl">
+    <section id="main" className="relative flex min-h-screen w-full items-start overflow-hidden bg-transparent px-6 pb-20 pt-20 md:px-12">
+      <div className="relative z-10 flex min-h-[calc(70svh_-_5rem)] w-full max-w-5xl items-center">
         <div className="space-y-10">
           <div className="space-y-4 reveal">
             <h1 className="text-[clamp(2rem,8vw,5rem)] font-bold uppercase leading-[0.9] tracking-tighter">SYSTEMS<br />OPERATIONS<br /><span className="text-gradient">INFRASTRUCTURE</span></h1>
