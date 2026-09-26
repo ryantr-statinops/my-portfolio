@@ -33,6 +33,8 @@ Content authors: data → project catalog. UI changes: features → design. Rele
 - [Data](data/README.md)
   - [Project content authoring](data/content-authoring.md)
   - [Project data schema](data/project-schema.md)
+- [Design](design/README.md)
+  - [Styling and assets](design/styling-and-assets.md)
 
 ## Reference conventions
 
