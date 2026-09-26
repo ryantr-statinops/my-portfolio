@@ -1,10 +1,10 @@
 const focusAreas = [
-  { title: "Backend Engineering", description: "Building APIs and backend services with Python, FastAPI and Go, with a focus on system architecture." },
-  { title: "Data Engineering", description: "Working with data pipelines, databases and infrastructure to collect, transform and organize data." },
-  { title: "AI Engineering", description: "Exploring agents, MCP, agent harnesses and model routing to integrate AI into practical tools and workflows." },
-  { title: "Infrastructure", description: "Working with Linux, Docker, networking and service orchestration to run and connect applications." },
-  { title: "Quantitative Analytics", description: "Applying statistical modeling and programming to quantitative research and trading systems." },
-  { title: "Statistics → Engineering", description: "Using mathematical and statistical reasoning to frame problems, then implementing solutions through code." },
+  { title: "Backend Engineering", description: "Python, FastAPI, Go, Traefik, APIs & system architecture" },
+  { title: "Data Engineering", description: "data pipelines, databases & data infrastructure" },
+  { title: "AI Infrastructure", description: "MCP, agents, harnesses, model routing & developer tooling" },
+  { title: "Infrastructure", description: "Linux, Docker, networking & service orchestration" },
+  { title: "Quantitative Analytics", description: "statistical modeling, quantitative research & trading systems" },
+  { title: "Statistics → Engineering", description: "applying quantitative thinking to software systems" },
 ];
 
 const contacts = [

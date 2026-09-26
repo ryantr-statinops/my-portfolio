@@ -13,7 +13,7 @@ describe("About Me static content", () => {
   });
   it("renders six focus areas in the approved order", () => {
     const html = renderToStaticMarkup(createElement(AboutMe));
-    const titles = ["Backend Engineering", "Data Engineering", "AI Engineering", "Infrastructure", "Quantitative Analytics", "Statistics → Engineering"];
+    const titles = ["Backend Engineering", "Data Engineering", "AI Infrastructure", "Infrastructure", "Quantitative Analytics", "Statistics → Engineering"];
     expect(html.match(/data-focus-card/g)).toHaveLength(6);
     const indices = titles.map(title => html.indexOf(title));
     expect(indices.every(i => i >= 0)).toBe(true);

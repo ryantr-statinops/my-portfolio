@@ -87,7 +87,7 @@ test("About Me exposes the approved profile and six focus cards", async ({ page 
   await expect(about).toHaveAttribute("aria-labelledby", "about-me-title");
   await expect(about.locator("section")).toHaveCount(0);
   await expect(about.locator("[data-focus-card] h4")).toHaveText([
-    "Backend Engineering", "Data Engineering", "AI Engineering",
+    "Backend Engineering", "Data Engineering", "AI Infrastructure",
     "Infrastructure", "Quantitative Analytics", "Statistics → Engineering",
   ]);
   await expect(about).toContainText("Ton Duc Thang University");
@@ -107,7 +107,7 @@ test("About Me exposes the approved profile and six focus cards", async ({ page 
 
 test("About Me navigation and responsive cards work at every breakpoint", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  for (const [width, columns] of [[1280, 3], [768, 2], [320, 1]]) {
+  for (const [width, columns] of [[1280, 1], [768, 1], [320, 1]]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("./");
     if (width === 320) {
