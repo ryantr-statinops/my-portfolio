@@ -13,7 +13,9 @@ const terminalCommands = [
   },
   {
     input: "ls /projects",
-    output: projects.map((project) => `${project.data.category.padEnd(22, " ")} ${project.id}`).join("\n"),
+    output: projects.length === 0
+      ? "No projects published yet."
+      : projects.map((project) => `${project.data.category.padEnd(22, " ")} ${project.id}`).join("\n"),
   },
 ];
 ---

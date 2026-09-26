@@ -21,6 +21,13 @@ const statusColors: Record<string, string> = {
 
 <section id="portfolio-registry" class="w-full min-h-screen flex items-center bg-background relative overflow-hidden py-12">
   <div class="max-w-[1600px] mx-auto px-6 md:px-10 w-full">
+    {projects.length === 0 ? (
+      <div class="py-20 text-center">
+        <h2 class="text-2xl font-bold tracking-tight">Projects are being rebuilt.</h2>
+        <p class="mt-3 text-sm text-muted">The registry will return when the new project collection is ready.</p>
+      </div>
+    ) : (
+      <>
     <!-- Header -->
     <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4 reveal">
       <div class="space-y-2">
@@ -108,6 +115,8 @@ const statusColors: Record<string, string> = {
         <span>Encryption: AES-256</span>
       </div>
     </div>
+      </>
+    )}
   </div>
 </section>
 

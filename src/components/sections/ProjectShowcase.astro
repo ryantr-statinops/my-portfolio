@@ -13,6 +13,13 @@ const visible = projects.slice(0, limit);
 
 <section id="projects" class="min-h-screen flex items-center py-20 bg-transparent border-y border-border px-8 md:px-12 reveal">
   <div class="max-w-7xl mx-auto w-full">
+    {projects.length === 0 ? (
+      <div class="py-16 text-center">
+        <h2 class="text-2xl font-bold tracking-tight">Projects are being rebuilt.</h2>
+        <p class="mt-3 text-sm text-muted">New project write-ups will appear here.</p>
+      </div>
+    ) : (
+      <>
     <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
       <div class="space-y-4">
         <div class="flex items-center gap-2">
@@ -41,6 +48,8 @@ const visible = projects.slice(0, limit);
           [ VIEW_SELECTED_SYSTEMS ]
         </a>
       </div>
+    )}
+      </>
     )}
   </div>
 </section>
