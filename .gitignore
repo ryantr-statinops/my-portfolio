@@ -1,5 +1,5 @@
 # Build output
-.astro/
+
 dist/
 build/
 # generated types
@@ -28,8 +28,6 @@ playwright-report/
 # jetbrains setting folder
 .idea/
 
-# hide agents folder (legacy, now docs/)
-.agents/
 # OS
 Thumbs.db
 
