@@ -2,7 +2,6 @@ import type { LinksFunction, MetaFunction } from "react-router";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import SiteShell from "./components/layout/SiteShell";
 import stylesheet from "../src/styles/global.css?url";
-import "katex/dist/katex.min.css";
 
 const siteBase = import.meta.env.BASE_URL;
 
