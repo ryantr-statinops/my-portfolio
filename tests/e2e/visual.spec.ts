@@ -62,7 +62,12 @@ for (const theme of ["dark", "light"] as const) {
         };
 
         await screenshotSectionViewport(page, "section#main", `${theme}-${viewport.name}-home-hero.png`, screenshotOptions);
-        await screenshotSectionViewport(page, "section#about-me", `${theme}-${viewport.name}-home-about.png`, screenshotOptions);
+        // Isolate the full section from viewport-fixed navigation during the tall capture.
+        const sectionCaptureStyle = await page.addStyleTag({
+          content: 'nav[aria-label="Primary"] { visibility: hidden !important; }',
+        });
+        await expect(page.locator("section#about-me")).toHaveScreenshot(`${theme}-${viewport.name}-home-about.png`, screenshotOptions);
+        await sectionCaptureStyle.evaluate(element => element.parentNode?.removeChild(element));
         await screenshotSectionViewport(page, "section#projects", `${theme}-${viewport.name}-home-project-hub.png`, screenshotOptions);
         await screenshotSectionViewport(page, "footer#connect", `${theme}-${viewport.name}-home-footer.png`, screenshotOptions);
 
