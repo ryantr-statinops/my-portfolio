@@ -2,68 +2,49 @@
 
 [Documentation index](../README.md) · [Section index](README.md)
 
-Install dependencies, run the application and preview the exact static artifact.
+Use the repository lockfile and run commands from the repository root.
 
 ## Contents
 
-- [Prerequisites](#prerequisites)
-- [Development workflow](#development-workflow)
-- [Generated files](#generated-files)
-- [Common setup failures](#common-setup-failures)
+- [Install and develop](#install-and-develop)
+- [Check and preview](#check-and-preview)
+- [Generated files and troubleshooting](#generated-files-and-troubleshooting)
 - [Source references](#source-references)
 - [Related documents](#related-documents)
 
-## Prerequisites
+## Install and develop
 
-Use Node.js `>=22.12.0` and npm. CI currently uses Node 22.12.0. Install from the checked-in lockfile with `npm ci`; use this rather than an unconstrained dependency update when reproducing a build.
-
-Run commands from the repository root. Package scripts and static scripts resolve paths relative to that directory.
-
-## Development workflow
+Requires Node >=22.12.0 and npm. CI uses 22.12.0.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the URL printed by the dev server under `/my-portfolio/`. `npm run check` generates route types then runs TypeScript without emitting application JavaScript. Editing JSON is subject to schema parsing; an invalid entry can prevent the app from loading.
+Open the printed dev URL under /my-portfolio/. No custom application environment file is required. Invalid catalog records fail validation during import.
 
-To verify the production artifact:
+## Check and preview
 
 ```sh
+npm run check
 npm run build
 npm run preview
 ```
 
-Open `http://127.0.0.1:4173/my-portfolio/`. Preview requires `dist/`; its server does not build. `PORT=4174 npm run preview` changes the preview port.
+check generates route types and runs TypeScript. Preview serves the existing dist directory at http://127.0.0.1:4173/my-portfolio/. PORT can change its port. The root / is outside the preview base and returns 404.
 
-## Generated files
+## Generated files and troubleshooting
 
-| Directory | Producer | Git policy |
-|---|---|---|
-| `node_modules/` | npm | Ignored |
-| `.react-router/` | Route type generation | Ignored |
-| `build/` | React Router | Ignored |
-| `dist/` | Static artifact script | Ignored |
-| `test-results/`, `playwright-report/` | Playwright output | Ignored |
+node_modules, .react-router, build, dist, test-results and playwright-report are ignored. Recreate them with their owning commands. Baseline PNGs under tests are tracked inputs.
 
-Recreate these through their owning commands. `docs/` contains maintained source documentation; screenshot baselines under tests are tracked test inputs.
-
-## Common setup failures
-
-A preview 404 at `/` is expected: open the configured base path. If preview has no artifact, build first. If a local port is occupied, stop its process or select a free preview port and align Playwright’s base URL.
-
-If test output belongs to root from a prior container run, repair ownership only for the affected generated directory, or pass a writable `--output` directory to Playwright. Do not run npm as root merely to suppress the permission error. Browser binaries are separate from npm dependencies; install the Chromium runtime for local Playwright testing.
+Browser tests also start a test-only Vite server on port 4174; free that port before running them. Install matching Chromium binaries locally. If old test output is owned by root, correct ownership of the generated output or pass a writable --output directory; do not run all npm commands as root.
 
 ## Source references
 
-- [package.json](../../package.json) — `"engines"` ([source line 7](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/package.json#L7)).
-- [package.json](../../package.json) — `"scripts"` ([source line 10](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/package.json#L10)).
-- [.gitignore](../../.gitignore) — `dist/` ([source line 3](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/.gitignore#L3)).
-- [scripts/static-preview.mjs](../../scripts/static-preview.mjs) — `const port` ([source line 57](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/scripts/static-preview.mjs#L57)).
+- [package.json](../../package.json) — `"engines"` ([line 7](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/package.json#L7)).
+- [scripts/static-preview.mjs](../../scripts/static-preview.mjs) — `const port` ([line 57](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/scripts/static-preview.mjs#L57)).
+- [playwright.config.ts](../../playwright.config.ts) — `webServer:` ([line 22](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/playwright.config.ts#L22)).
 
 ## Related documents
 
-- [Build architecture](../architecture/rendering.md)
 - [Testing](testing.md)
-- [Configuration](../reference/configuration.md)

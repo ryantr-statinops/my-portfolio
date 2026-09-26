@@ -2,58 +2,37 @@
 
 [Documentation index](../README.md) · [Section index](README.md)
 
-Find the source of theme tokens, typography, component styling and static media.
+Shared styling lives in the global stylesheet; media-specific rules live with VideoBackground.
 
 ## Contents
 
-- [Stylesheet ownership](#stylesheet-ownership)
-- [Fonts and prose](#fonts-and-prose)
-- [Media and paths](#media-and-paths)
-- [Responsive behavior and motion](#responsive-behavior-and-motion)
+- [Tokens and type](#tokens-and-type)
+- [Hub layout](#hub-layout)
+- [Assets and motion](#assets-and-motion)
 - [Source references](#source-references)
 - [Related documents](#related-documents)
 
-## Stylesheet ownership
+## Tokens and type
 
-Tailwind enters through `@import "tailwindcss"` in the global stylesheet and `@tailwindcss/vite` in Vite. The root links the global CSS; component styles cover the video background and registry. Keep shared tokens in the global stylesheet and local behavior with its component.
+Tailwind is imported by src/styles/global.css and compiled by its Vite plugin. @theme exposes CSS-variable colors and the mono font stack. Root variables define light values; .dark overrides them. The homepage-video light override preserves dark contrast above the video. Regular/bold JetBrains Mono fonts are bundled with their OFL license. There is no KaTeX or Markdown prose styling pipeline.
 
-`@theme` maps background, foreground, surface, card, border, primary, accent, success and muted utilities to CSS variables. It also defines the mono font stack. The default root is light; `.dark` overrides tokens. Homepage light preference has an additional `.homepage-video:not(.dark)` override to retain dark contrast over the video.
+## Hub layout
 
-## Fonts and prose
+ProjectHub uses category buttons above a list/panel layout. At lg and above the grid has two columns; smaller widths stack the list and panel. Long titles, descriptions and stack labels wrap. Controls provide focus-visible styling and selected aria-pressed states. Both themes use existing project tokens. The section retains the homepage background rather than introducing a new visual identity.
 
-Regular and bold JetBrains Mono TTF files are bundled with weights 400 and 700 and `font-display: swap`. Keep the associated OFL license with the files. KaTeX CSS is imported from the installed package and its fonts are included by the build.
+## Assets and motion
 
-ProjectMarkdown applies `project-prose` plus utility classes. Review the actual global prose rules when changing article layout; the manifest does not declare a separate Tailwind typography plugin.
+Avatar and current icon/social image use public/images/avt.webp. Homepage media uses black-hole.webm and black-hole-poster.jpg. Public paths are prefixed with import.meta.env.BASE_URL. Project overviews require no image. Reveal effects respect reduced motion; video playback pauses and CSS leaves the poster visible.
 
-## Media and paths
-
-| Asset source | Use |
-|---|---|
-| `public/images/avt.webp` | Avatar, current favicon and social metadata |
-| `public/images/black-hole-poster.jpg` | Homepage fallback image |
-| `public/videos/black-hole.webm` | Homepage background video |
-| `public/images/projects/<slug>/thumbnail.webp` | Convention for future project thumbnails |
-| `src/assets/fonts/` | Imported fonts and license |
-
-Public files are copied as static assets. Prefix application image/video URLs with `import.meta.env.BASE_URL`; catalog thumbnail values remain `/images/...` and are prefixed by consumers. Other public files may exist without being active UI inputs; existence alone is not proof of usage.
-
-## Responsive behavior and motion
-
-Navbar switches to mobile controls below `md`; showcase expands across one, two and three columns; Strategy Hub uses its own responsive grid. Browser snapshots cover 1280×800, 768×1024 and 375×667. Smoke additionally checks horizontal overflow at 320 px. These test sizes are not CSS breakpoint definitions.
-
-Reveal classes activate through SiteShell intersection observers. Reduced motion activates reveal elements immediately and disables background-video motion. For visual changes, review both themes and all viewport cases rather than updating snapshots without inspection.
+Tests cover desktop 1280×800, tablet 768×1024 and mobile 375×667; these are test dimensions, not CSS breakpoint declarations. Populated Hub fixtures explicitly include application classes in Tailwind scanning so their layout matches production styling.
 
 ## Source references
 
-- [src/styles/global.css](../../src/styles/global.css) — `@theme` ([source line 19](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/src/styles/global.css#L19)).
-- [src/styles/global.css](../../src/styles/global.css) — `:root.homepage-video` ([source line 63](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/src/styles/global.css#L63)).
-- [app/components/interactive/video-background.css](../../app/components/interactive/video-background.css) — `@media` ([source line 5](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/components/interactive/video-background.css#L5)).
-- [app/components/sections/portfolio-registry.css](../../app/components/sections/portfolio-registry.css) — `.` ([source line 1](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/components/sections/portfolio-registry.css#L1)).
-- [src/assets/fonts/JetBrainsMono-OFL.txt](../../src/assets/fonts/JetBrainsMono-OFL.txt) — `SIL OPEN FONT LICENSE` ([source line 9](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/src/assets/fonts/JetBrainsMono-OFL.txt#L9)).
-- [vite.config.ts](../../vite.config.ts) — `plugins:` ([source line 7](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/vite.config.ts#L7)).
+- [src/styles/global.css](../../src/styles/global.css) — `@theme` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/src/styles/global.css#L19)).
+- [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) — `export default function ProjectHub` ([line 24](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/components/sections/ProjectHub.tsx#L24)).
+- [app/components/interactive/VideoBackground.tsx](../../app/components/interactive/VideoBackground.tsx) — `export default function VideoBackground` ([line 4](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/components/interactive/VideoBackground.tsx#L4)).
+- [tests/fixtures/styles.css](../../tests/fixtures/styles.css) — `@source` ([line 2](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/tests/fixtures/styles.css#L2)).
 
 ## Related documents
 
-- [Theme behavior](../features/homepage-and-navigation.md)
-- [Content authoring](../data/content-authoring.md)
-- [Visual testing](../development/testing.md#snapshot-contract)
+- [Visual tests](../development/testing.md)

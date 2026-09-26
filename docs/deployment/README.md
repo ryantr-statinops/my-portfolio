@@ -2,7 +2,7 @@
 
 [Documentation index](../README.md)
 
-Understand the release pipeline and locate failures by step.
+Trace CI validation and publication of the static site.
 
 ## Contents
 
@@ -16,7 +16,7 @@ Understand the release pipeline and locate failures by step.
 
 ## Source references
 
-- [.github/workflows/deploy.yml](../../.github/workflows/deploy.yml) — `jobs:` ([source line 19](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/.github/workflows/deploy.yml#L19)).
+- [app/routes/home.tsx](../../app/routes/home.tsx) — `export default function Home` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/routes/home.tsx#L19)).
 
 ## Related documents
 

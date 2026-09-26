@@ -2,63 +2,39 @@
 
 [Documentation index](README.md)
 
-Understand what the repository ships and where to find its implementation.
+Ryan Tran’s static single-page portfolio presents a profile and repository overviews.
 
 ## Contents
 
-- [Purpose and current state](#purpose-and-current-state)
+- [Current product](#current-product)
 - [Stack](#stack)
 - [Repository layout](#repository-layout)
 - [Source references](#source-references)
 - [Related documents](#related-documents)
 
-## Purpose and current state
+## Current product
 
-The portfolio presents Ryan Tran’s profile, engineering capabilities and project registry. It is a static website hosted beneath `/my-portfolio/` on GitHub Pages. There is no deployed application server or database.
+The homepage contains Hero, About Me, Project Hub and Connect. Project Hub replaces the former Strategy Hub stages and standalone project registry. Visitors read overviews in a list/panel interface and open GitHub repositories for details. The production catalog is currently empty.
 
-The checked-in catalog is `[]`. Home and registry pages render empty project states. Strategy tracks exist for four categories, with blank content and “Content is being prepared.” placeholders in the product. Documentation describes this scaffold honestly rather than inventing projects or completed capabilities.
+There is no project detail route, Markdown article pipeline, runtime terminal, application backend or database. Old project URLs return a custom 404 linking to the Hub.
 
 ## Stack
 
-| Layer | Repository version | Role |
-|---|---|---|
-| React / React DOM | 19.3.0 | UI and hydration |
-| React Router | 7.18.4 | Framework routes and prerender |
-| TypeScript | 5.9.3 | Strict type checking |
-| Vite | 6.4.3 | Build pipeline |
-| Tailwind CSS | 4.3.0 | Styling through the Vite plugin |
-| Zod | 4.6.5 | Catalog validation |
-| React Markdown | 10.1.0 | Project article rendering |
-| Vitest | 5.0.0 | Unit tests |
-| Playwright | 1.63.0 | Browser and screenshot tests |
+React 19 and React Router 7 Framework Mode provide UI, hydration and prerendering. Vite 6 builds the application; Tailwind CSS 4 supplies utilities and theme tokens. Zod 4 validates JSON overviews. TypeScript provides strict checking; Vitest and Playwright verify logic, rendering, browser behavior and screenshots.
 
-These are lockfile versions at the source snapshot, not upstream latest-version claims. `package.json` declares ranges; `npm ci` uses `package-lock.json`. Markdown uses remark-gfm, remark-math and rehype-katex; KaTeX CSS/fonts are bundled. Node must satisfy `>=22.12.0`; CI selects 22.12.0.
+Package ranges are in package.json and resolved versions in package-lock.json. These describe the repository, not upstream latest releases. Node requires >=22.12.0; CI selects 22.12.0. Dependencies for server rendering remain necessary during the build even though production is static.
 
 ## Repository layout
 
-| Location | Responsibility |
-|---|---|
-| `app/` | React routes, shell, UI, project data and Markdown |
-| `src/lib/` | Shared constants, strategy, terminal and section navigation |
-| `src/styles/` and `src/assets/` | Global CSS and bundled fonts |
-| `public/` | Static images, videos, icons and robots |
-| `scripts/` | Artifact preparation and local static server |
-| `tests/` | Unit tests, browser tests and screenshot baselines |
-| `.github/workflows/` | Validation and deployment |
-| `docs/` | Maintainer documentation |
-
-`src/` is active shared code. The current runtime is React Router; it does not use Astro.
+app contains routes, components and validated catalog modules. src/lib contains site/category constants and section navigation; src/styles and src/assets contain CSS and fonts. public contains static media/robots. scripts prepares and serves dist. tests includes unit/browser cases, separate fixture inputs and screenshot baselines. docs provides maintainer guides. Generated output is ignored by Git.
 
 ## Source references
 
-- [package.json](../package.json) — `"dependencies"` ([source line 21](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/package.json#L21)).
-- [package-lock.json](../package-lock.json) — `"lockfileVersion"` ([source line 4](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/package-lock.json#L4)).
-- [app/data/projects.json](../app/data/projects.json) — `[]` ([source line 1](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/data/projects.json#L1)).
-- [src/lib/strategy.ts](../src/lib/strategy.ts) — `emptyStage` ([source line 25](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/src/lib/strategy.ts#L25)).
+- [package.json](../package.json) — `"dependencies"` ([line 21](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/package.json#L21)).
+- [app/routes/home.tsx](../app/routes/home.tsx) — `export default function Home` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/routes/home.tsx#L19)).
+- [app/data/projects.json](../app/data/projects.json) — `[]` ([line 1](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/data/projects.json#L1)).
 
 ## Related documents
 
-- [Documentation index](README.md)
 - [Architecture](architecture/README.md)
-- [Local setup](development/setup.md)
-- [Configuration](reference/configuration.md)
+- [Project Hub](features/project-hub.md)

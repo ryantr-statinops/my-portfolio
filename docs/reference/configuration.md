@@ -2,101 +2,65 @@
 
 [Documentation index](../README.md) · [Section index](README.md)
 
-Locate tool settings and distinguish deployment paths from environment overrides.
+Locate runtime/build settings without confusing application inputs with test fixtures.
 
 ## Contents
 
 - [Configuration files](#configuration-files)
 - [Npm scripts](#npm-scripts)
-- [Environment and browser state](#environment-and-browser-state)
+- [Environment and state](#environment-and-state)
 - [Changing the public base URL](#changing-the-public-base-url)
-- [Exact source locations](#exact-source-locations)
 - [Source references](#source-references)
 - [Related documents](#related-documents)
 
 ## Configuration files
 
-| File | Responsibility |
-|---|---|
-| `package.json` | Node requirement, dependency ranges and npm scripts |
-| `package-lock.json` | Reproducible installed package versions |
-| `vite.config.ts` | Base URL plus Tailwind/React Router plugins |
-| `react-router.config.ts` | Basename, static mode and prerender route list |
-| `tsconfig.json` | ES2022, strict typing, bundler resolution, React JSX and generated route types |
-| `vitest.config.ts` | Node unit-test environment and test glob |
-| `playwright.config.ts` | Browser, preview startup, retries, output policies and base URL |
-| `.github/workflows/deploy.yml` | CI environment, validation and Pages deployment |
-| `.gitignore` | Generated dependencies/build/test output and local files |
-| `.mailmap` | Git author identity normalization |
-
-These files remain at root or their tool’s conventional location. Moving one requires updating its consumers, not just the documentation.
+package.json defines scripts/ranges; package-lock.json pins installed packages. vite.config.ts sets base and Tailwind/React Router plugins. react-router.config.ts sets basename, ssr:false and home prerender. tsconfig.json enables strict ES2022/bundler/React JSX typing. vitest.config.ts selects Node unit tests. playwright.config.ts controls Chromium and both test servers. tests/fixtures/vite.config.ts serves only the fixture entry. The GitHub workflow validates and deploys. .gitignore excludes generated output; .mailmap normalizes Git author identity.
 
 ## Npm scripts
 
-| Command | Exact script |
+| Script | Command |
 |---|---|
-| `npm run dev` | `react-router dev` |
-| `npm run build` | `react-router build && node scripts/prepare-static-artifact.mjs` |
-| `npm run check` | `react-router typegen && tsc --noEmit` |
-| `npm run test` | `npm run test:unit && npm run test:smoke && npm run test:visual` |
-| `npm run test:unit` | `vitest run` |
-| `npm run test:smoke` | `playwright test tests/e2e/smoke.spec.ts tests/e2e/static-artifact.spec.ts` |
-| `npm run test:visual` | `playwright test tests/e2e/visual.spec.ts` |
-| `npm run test:watch` | `vitest` |
-| `npm run preview` | `node scripts/static-preview.mjs` |
+| dev | `react-router dev` |
+| build | `react-router build && node scripts/prepare-static-artifact.mjs` |
+| check | `react-router typegen && tsc --noEmit` |
+| test | `npm run test:unit && npm run test:smoke && npm run test:visual` |
+| test:unit | `vitest run` |
+| test:smoke | `playwright test tests/e2e/smoke.spec.ts tests/e2e/static-artifact.spec.ts tests/e2e/project-hub.spec.ts` |
+| test:visual | `playwright test tests/e2e/visual.spec.ts` |
+| test:watch | `vitest` |
+| preview | `node scripts/static-preview.mjs` |
 
-`npm test` is an alias for the test script; it does not include `check`. Browser tests build/start static preview through Playwright configuration. `npm run preview` alone does not build.
+## Environment and state
 
-## Environment and browser state
+| Input | Effect |
+|---|---|
+| PORT | Preview server port, default 4173 |
+| PLAYWRIGHT_TEST_BASE_URL | Production test URL/readiness endpoint; default http://127.0.0.1:4173/my-portfolio/ |
+| PLAYWRIGHT_EXECUTABLE_PATH | Optional browser binary override; can affect snapshots |
+| CI | Nonempty value enables one worker, retries, forbidOnly and GitHub reporter; disables production-server reuse |
+| import.meta.env.BASE_URL | Vite-provided asset base |
+| localStorage theme | Persisted dark/light selection |
 
-| Input | Consumer | Default and effect |
-|---|---|---|
-| `PORT` | Static preview script | 4173; HTTP port |
-| `PLAYWRIGHT_TEST_BASE_URL` | Playwright config | `http://127.0.0.1:4173/my-portfolio/`; request/navigation and readiness URL |
-| `PLAYWRIGHT_EXECUTABLE_PATH` | Playwright config | Unset; otherwise launches specified browser binary |
-| `CI` | Playwright config | Any nonempty value enables forbidOnly, 2 retries, 1 worker, GitHub reporter and disables server reuse |
-| `import.meta.env.BASE_URL` | Root and asset consumers | Supplied by Vite from `base`; not a standalone custom environment variable |
-| localStorage `theme` | Root initialization and ThemeToggle | Stored theme or initial system preference |
-
-The preview script reads `process.env.PORT` directly and does not load dotenv files. Changing the Playwright base URL does not rewrite app routing or preview base-path constants. If changing its port, set `PORT` and the test base URL together. No custom application secret is required by the current static site.
+Fixture server uses fixed port 4174 and is never reused. Preview reads process.env directly, without dotenv loading. Hub selection is not persisted. No GitHub API token or runtime fetch is used.
 
 ## Changing the public base URL
 
-The current base is repeated in several places. Review all of these together:
-
-1. Router basename and Vite base.
-2. `SITE.site` and `SITE.base` in shared constants for canonical/social URLs.
-3. Artifact script’s siteOrigin, basePath, siteDirectory and base-directory exclusion in its copy loop.
-4. Static preview basePath.
-5. `public/robots.txt` sitemap URL.
-6. Playwright’s default URL and hard-coded URL expectations in smoke/static-artifact tests.
-7. README/docs public links and any authored Markdown links.
-
-Then rebuild and verify direct routes, thumbnails, article images, sitemap URLs and 404 links. The current setup has no single configuration value that changes every consumer.
-
-## Exact source locations
-
-- [package.json](../../package.json) — `"scripts"` ([source line 10](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/package.json#L10)).
-- [package-lock.json](../../package-lock.json) — `"lockfileVersion"` ([source line 4](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/package-lock.json#L4)).
-- [vite.config.ts](../../vite.config.ts) — `base:` ([source line 6](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/vite.config.ts#L6)).
-- [react-router.config.ts](../../react-router.config.ts) — `basename:` ([source line 5](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/react-router.config.ts#L5)).
-- [tsconfig.json](../../tsconfig.json) — `"compilerOptions"` ([source line 2](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/tsconfig.json#L2)).
-- [vitest.config.ts](../../vitest.config.ts) — `include:` ([source line 5](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/vitest.config.ts#L5)).
-- [playwright.config.ts](../../playwright.config.ts) — `const baseURL` ([source line 3](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/playwright.config.ts#L3)).
-- [.github/workflows/deploy.yml](../../.github/workflows/deploy.yml) — `on:` ([source line 3](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/.github/workflows/deploy.yml#L3)).
-- [.gitignore](../../.gitignore) — `dist/` ([source line 3](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/.gitignore#L3)).
-- [.mailmap](../../.mailmap) — `` ([source line 1](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/.mailmap#L1)).
+Update router basename, Vite base, SITE.site/base, artifact origin/base/siteDirectory/copy exclusion, preview basePath, public/robots.txt, Playwright production base URL and static/smoke URL expectations. Review README/docs links and the custom 404 target. Rebuild and verify assets, home hashes and sitemap use the new base exactly once. The test fixture URL is independent of the production base.
 
 ## Source references
 
-- [scripts/static-preview.mjs](../../scripts/static-preview.mjs) — `process.env.PORT` ([source line 57](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/scripts/static-preview.mjs#L57)).
-- [playwright.config.ts](../../playwright.config.ts) — `process.env.CI` ([source line 7](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/playwright.config.ts#L7)).
-- [src/lib/constants.ts](../../src/lib/constants.ts) — `export const SITE` ([source line 1](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/src/lib/constants.ts#L1)).
-- [scripts/prepare-static-artifact.mjs](../../scripts/prepare-static-artifact.mjs) — `const siteOrigin` ([source line 4](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/scripts/prepare-static-artifact.mjs#L4)).
-- [public/robots.txt](../../public/robots.txt) — `Sitemap:` ([source line 4](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/public/robots.txt#L4)).
+- [package.json](../../package.json) — `"scripts"` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/package.json#L10)).
+- [vite.config.ts](../../vite.config.ts) — `base:` ([line 6](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/vite.config.ts#L6)).
+- [react-router.config.ts](../../react-router.config.ts) — `basename:` ([line 4](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/react-router.config.ts#L4)).
+- [tsconfig.json](../../tsconfig.json) — `"compilerOptions"` ([line 2](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/tsconfig.json#L2)).
+- [vitest.config.ts](../../vitest.config.ts) — `include:` ([line 5](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/vitest.config.ts#L5)).
+- [playwright.config.ts](../../playwright.config.ts) — `const baseURL` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/playwright.config.ts#L3)).
+- [scripts/static-preview.mjs](../../scripts/static-preview.mjs) — `const port` ([line 57](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/scripts/static-preview.mjs#L57)).
+- [src/lib/constants.ts](../../src/lib/constants.ts) — `export const SITE` ([line 1](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/src/lib/constants.ts#L1)).
+- [tests/fixtures/vite.config.ts](../../tests/fixtures/vite.config.ts) — `server:` ([line 8](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/tests/fixtures/vite.config.ts#L8)).
 
 ## Related documents
 
-- [Code map](code-map.md)
 - [Local setup](../development/setup.md)
 - [Deployment](../deployment/github-pages.md)

@@ -2,51 +2,43 @@
 
 [Documentation index](../README.md) · [Section index](README.md)
 
-Explain how the build becomes a deployable GitHub Pages directory.
+Build one public HTML page with static assets, sitemap and a custom error page.
 
 ## Contents
 
 - [Build sequence](#build-sequence)
-- [Server entry and hydration](#server-entry-and-hydration)
-- [Artifact contract](#artifact-contract)
-- [Local static serving](#local-static-serving)
+- [Rendering and hydration](#rendering-and-hydration)
+- [Preview](#preview)
 - [Source references](#source-references)
 - [Related documents](#related-documents)
 
 ## Build sequence
 
-1. `npm run build` runs `react-router build` using Vite and the Tailwind plugin.
-2. React Router prerenders home, registry and catalog project paths. `ssr: false` disables a deployed server runtime, while build-time rendering still uses the server entry.
-3. `prepare-static-artifact.mjs` reads `build/client/my-portfolio/index.html` and fails if it is absent.
-4. It copies client assets into the base directory, excluding the base directory itself, `.vite` and `__spa-fallback.html`.
-5. It writes sitemap files and a styled 404 page, checks required route files, removes the old `dist/` and moves the prepared directory there.
-6. GitHub Actions uploads `dist/` for Pages.
+1. React Router builds through Vite and prerenders the home route.
+2. The artifact script requires build/client/my-portfolio/index.html.
+3. It copies client assets into that directory, excluding the base directory itself, .vite and the SPA fallback.
+4. It creates sitemap-index.xml, sitemap-0.xml and 404.html, requiring the global stylesheet for the error page.
+5. It checks required files, removes the prior dist directory and moves the prepared directory to dist.
 
-## Server entry and hydration
+The sitemap contains exactly the homepage. The artifact contains one index.html regardless of project count; repository URLs do not become sitemap entries.
 
-`handleRequest` uses `renderToPipeableStream`, a Node stream adapter and `ServerRouter`. HEAD requests omit the body. Bots and SPA mode wait for `onAllReady`; other requests use `onShellReady`. The exported stream timeout is 5000 ms, with abort scheduled after an additional 1000 ms. This explains why `@react-router/node` and `isbot` remain dependencies.
+## Rendering and hydration
 
-The root emits scripts for browser hydration and scroll restoration. Theme initialization runs in the document head. Interactive controls become active after hydration; Strategy Hub hides its controls before readiness while retaining readable initial content.
+ssr:false means there is no deployed application server. The build still uses the framework server entry, React streaming and the Node stream adapter. isbot chooses stream readiness for bot requests. The entry handles HEAD requests and has a 5000 ms stream timeout plus a 1000 ms abort margin.
 
-## Artifact contract
+ProjectHub initially renders all overview articles (or the catalog empty message). After hydration its effect enables category controls and the selected-project panel. No client request loads project content.
 
-The artifact must contain home and registry `index.html` files, one per project slug, `404.html`, `robots.txt`, `sitemap-index.xml` and `sitemap-0.xml`. CI expects `2 + catalog.length` files named `index.html`. Public sitemap URLs include the base path exactly once.
+## Preview
 
-The preparation script chooses a `global-*.css` asset for the 404 page and fails if it cannot find one. It reads raw project JSON after the framework build has imported and validated the catalog. Existing `dist/` is replaced by each successful preparation.
-
-## Local static serving
-
-`npm run preview` serves `dist/` on `127.0.0.1:4173`; `PORT` overrides the port. Only `/my-portfolio` and descendants are served. Directories resolve to `index.html`; missing files return the generated 404 with status 404. Build first: preview does not generate artifacts. It is a local HTTP server, not the production hosting service.
+The static server serves dist at 127.0.0.1:4173/my-portfolio/. PORT overrides the port. Missing paths return 404.html with status 404; requests outside the base return 404. Build before preview; the server does not generate files. CI uploads dist directly to Pages.
 
 ## Source references
 
-- [app/entry.server.tsx](../../app/entry.server.tsx) — `export default function handleRequest` ([source line 9](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/entry.server.tsx#L9)).
-- [react-router.config.ts](../../react-router.config.ts) — `ssr:` ([source line 6](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/react-router.config.ts#L6)).
-- [scripts/prepare-static-artifact.mjs](../../scripts/prepare-static-artifact.mjs) — `const homePage` ([source line 9](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/scripts/prepare-static-artifact.mjs#L9)).
-- [scripts/prepare-static-artifact.mjs](../../scripts/prepare-static-artifact.mjs) — `const routePaths` ([source line 34](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/scripts/prepare-static-artifact.mjs#L34)).
-- [scripts/static-preview.mjs](../../scripts/static-preview.mjs) — `function resolveFile` ([source line 26](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/scripts/static-preview.mjs#L26)).
+- [app/entry.server.tsx](../../app/entry.server.tsx) — `export default function handleRequest` ([line 9](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/entry.server.tsx#L9)).
+- [scripts/prepare-static-artifact.mjs](../../scripts/prepare-static-artifact.mjs) — `const publicUrls` ([line 20](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/scripts/prepare-static-artifact.mjs#L20)).
+- [scripts/prepare-static-artifact.mjs](../../scripts/prepare-static-artifact.mjs) — `const routePaths` ([line 29](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/scripts/prepare-static-artifact.mjs#L29)).
+- [scripts/static-preview.mjs](../../scripts/static-preview.mjs) — `function resolveFile` ([line 26](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/scripts/static-preview.mjs#L26)).
 
 ## Related documents
 
-- [Routing](routing.md)
-- [GitHub Pages](../deployment/github-pages.md)
+- [Deployment](../deployment/github-pages.md)

@@ -2,7 +2,7 @@
 
 [Documentation index](../README.md)
 
-Follow the application from validated content to static HTML and hydrated React components.
+Follow JSON overviews from import-time validation to the static page and browser state.
 
 ## Contents
 
@@ -17,38 +17,32 @@ Follow the application from validated content to static HTML and hydrated React 
 ```mermaid
 flowchart TD
   JSON[Project JSON] --> ZOD[Zod validation]
-  ZOD --> CAT[Ordered catalog and slugs]
-  MD[Project Markdown] --> LOADER[Project loader]
-  CAT --> ROUTES[Route registration and prerender list]
-  CAT --> LOADER
-  ROUTES --> BUILD[React Router build]
-  LOADER --> BUILD
-  BUILD --> ART[Static artifact preparation]
-  ART --> PAGES[GitHub Pages]
-  PAGES --> UI[Browser hydration and local interaction]
+  ZOD --> HOME[Home route]
+  HOME --> HUB[Project Hub]
+  HUB --> STATIC[Prerendered overview articles]
+  STATIC --> PAGES[GitHub Pages artifact]
+  PAGES --> HYDRATE[Browser hydration]
+  HYDRATE --> PANEL[Category list and overview panel]
+  PANEL --> REPO[External GitHub repository]
 ```
 
 ## Boundaries
 
-`app/root.tsx` defines the HTML document, global assets and metadata; its `App` renders `SiteShell` around the route outlet. The shell owns navigation, shared footer, reveal effects and homepage video. Route modules compose feature components.
+root.tsx owns the HTML document, assets, metadata and SiteShell around the outlet. SiteShell owns navigation, shared footer, background media and reveal behavior. Home passes parsed project records into ProjectHub. Filtering and selection helpers are pure functions.
 
-Catalog validation happens when the data module is imported. Project Markdown is eagerly imported as raw text. The build resolves published routes into HTML; browser state drives filters, strategy selection, terminal history and theme. These interactions do not write back to the catalog.
-
-Shared logic in `src/lib/` is imported by React components and tests. The production artifact contains static files; the Node preview server is for local validation.
+The catalog is imported at build time and bundled for the browser; nothing fetches GitHub data at runtime. No secret is needed. The static fallback exposes every overview before JavaScript activates list/panel controls.
 
 ## Pages
 
-- [Rendering and static artifacts](rendering.md)
-- [Routing and navigation](routing.md)
+- [Routing](routing.md)
+- [Rendering and artifacts](rendering.md)
 
 ## Source references
 
-- [app/root.tsx](../../app/root.tsx) — `export default function App` ([source line 44](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/root.tsx#L44)).
-- [app/components/layout/SiteShell.tsx](../../app/components/layout/SiteShell.tsx) — `export default function SiteShell` ([source line 9](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/components/layout/SiteShell.tsx#L9)).
-- [app/data/projects.ts](../../app/data/projects.ts) — `projectCatalogSchema.parse` ([source line 4](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/app/data/projects.ts#L4)).
+- [app/root.tsx](../../app/root.tsx) — `export default function App` ([line 43](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/root.tsx#L43)).
+- [app/data/projects.ts](../../app/data/projects.ts) — `export const projects` ([line 4](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/data/projects.ts#L4)).
+- [app/data/project-hub.ts](../../app/data/project-hub.ts) — `export function projectsForCategory` ([line 5](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/data/project-hub.ts#L5)).
 
 ## Related documents
 
-- [Project overview](../overview.md)
-- [Code map](../reference/code-map.md)
-- [Deployment](../deployment/github-pages.md)
+- [Source map](../reference/code-map.md)

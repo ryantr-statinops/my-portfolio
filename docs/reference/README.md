@@ -2,7 +2,7 @@
 
 [Documentation index](../README.md)
 
-Look up exact implementation locations and configuration ownership.
+Find symbols, scripts and configuration ownership.
 
 ## Contents
 
@@ -17,7 +17,7 @@ Look up exact implementation locations and configuration ownership.
 
 ## Source references
 
-- [package.json](../../package.json) — `"scripts"` ([source line 10](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/package.json#L10)).
+- [app/routes/home.tsx](../../app/routes/home.tsx) — `export default function Home` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/routes/home.tsx#L19)).
 
 ## Related documents
 

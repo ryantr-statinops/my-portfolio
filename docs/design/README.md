@@ -2,7 +2,7 @@
 
 [Documentation index](../README.md)
 
-Understand styling ownership and assets before changing the interface.
+Find token, typography, media and responsive-layout ownership.
 
 ## Contents
 
@@ -16,7 +16,7 @@ Understand styling ownership and assets before changing the interface.
 
 ## Source references
 
-- [src/styles/global.css](../../src/styles/global.css) — `@theme` ([source line 19](https://github.com/ryantr-statinops/my-portfolio/blob/1ad473623a2d8cd3f1e5efe8831e539433543349/src/styles/global.css#L19)).
+- [app/routes/home.tsx](../../app/routes/home.tsx) — `export default function Home` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/routes/home.tsx#L19)).
 
 ## Related documents
 

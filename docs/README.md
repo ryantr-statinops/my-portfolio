@@ -42,7 +42,7 @@ Start with Overview → Architecture → Development. To publish a project, read
 
 ## Reference conventions
 
-Relative source links open the current file. Symbol permalinks pin a verified source revision; this update uses `75b94490a3cc85eca54936f87e0f0901e7a7e49b`. Line numbers belong to the linked commit, not necessarily future revisions. Internal section links use heading anchors.
+Relative source links open the current file. Symbol permalinks pin a verified source revision; this update uses `24efc0ca6734fc406153cc5b291764af915cda52`. Line numbers belong to the linked commit, not necessarily future revisions. Internal section links use heading anchors.
 
 ## Maintaining documentation
 
@@ -50,8 +50,8 @@ Update behavior, examples, references and index entries with the implementation.
 
 ## Source references
 
-- [app/routes.ts](../app/routes.ts) — `export default` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/routes.ts#L3)).
-- [package.json](../package.json) — `"scripts"` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/package.json#L10)).
+- [app/routes.ts](../app/routes.ts) — `export default` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/routes.ts#L3)).
+- [package.json](../package.json) — `"scripts"` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/package.json#L10)).
 
 ## Related documents
 
