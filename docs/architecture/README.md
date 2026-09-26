@@ -38,6 +38,7 @@ Shared logic in `src/lib/` is imported by React components and tests. The produc
 
 ## Pages
 
+- [Rendering and static artifacts](rendering.md)
 - [Routing and navigation](routing.md)
 
 ## Source references
