@@ -45,7 +45,7 @@ test("Hub remains readable without JavaScript", async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto("./");
-  await expect(page.getByRole("heading", { name: "Project Hub." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Project Hub", exact: true })).toBeVisible();
   await expect(page.locator("[data-project-overview]")).toHaveCount(projects.length);
   for (const project of projects) await expect(page.locator("[data-project-fallback]")).toContainText(project.title);
   await expect(page.locator("[data-project-category]")).toHaveCount(0);
@@ -190,7 +190,7 @@ test("Connect navigation, compact layout and Back to top work responsively", asy
     const cols = await page.locator("[data-connect-grid]").evaluate(el => getComputedStyle(el).gridTemplateColumns.split(" ").map(Number.parseFloat));
     expect(cols).toHaveLength(width >= 1024 ? 2 : 1);
     if (width >= 1024) {
-      expect(cols[0] / cols[1]).toBeCloseTo(1.5, 1);
+      expect(cols[0] / cols[1]).toBeCloseTo(11 / 9, 1);
       expect((await page.locator("#connect").boundingBox())!.height).toBeLessThan(700);
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -206,7 +206,7 @@ test("Connect remains readable without JavaScript", async ({ browser }) => {
   const page = await context.newPage();
   await page.goto("./#connect");
   const footer = page.locator("#connect");
-  await expect(footer.getByRole("heading", { name: "Let’s connect." })).toBeVisible();
+  await expect(footer.getByRole("heading", { name: "Let’s connect", exact: true })).toBeVisible();
   await expect(footer.getByRole("link")).toHaveCount(4);
   await expect(footer).toContainText("Have an idea, a project");
   await context.close();
