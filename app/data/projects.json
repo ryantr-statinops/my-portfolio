@@ -35,5 +35,26 @@
     "links": {
       "github": "https://github.com/ryantr-statinops/Orbit-System-Manager"
     }
+  },
+  {
+    "id": "statistical-computing-lab",
+    "title": "Statistical Computing Lab",
+    "description": "An educational workspace combining web development and statistical computing. It brings together web interfaces, a Python API and R learning materials.",
+    "category": "software-engineering",
+    "status": "building",
+    "priority": 30,
+    "stack": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "FastAPI",
+      "Python",
+      "NumPy",
+      "R"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/Stat_Lab"
+    }
   }
 ]
