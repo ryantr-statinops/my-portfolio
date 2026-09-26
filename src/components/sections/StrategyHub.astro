@@ -29,14 +29,14 @@ const stages = Object.keys(tracks[0]?.stages ?? {});
           data-strategy-domain={track.id}
           aria-pressed={index === 0 ? "true" : "false"}
           hidden
-          class="min-h-11 rounded border border-border bg-transparent px-4 py-3 text-left font-mono text-xs text-muted transition-colors hover:border-primary hover:text-foreground aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-background"
+          class="min-h-11 rounded border border-border bg-background/35 px-4 py-3 text-left font-mono text-xs text-foreground backdrop-blur-md transition-colors hover:border-primary aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-background"
         >
           <span class="mr-2 opacity-60">0{index + 1}</span>{track.title}
         </button>
       ))}
     </div>
 
-    <div class="grid gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.4fr)] lg:gap-12">
+    <div class="grid gap-8 rounded-xl border border-border/60 bg-background/30 p-5 backdrop-blur-md md:p-7 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.4fr)] lg:gap-12">
       <div class="flex flex-col justify-between gap-8 border-t border-border pt-6 lg:border-t-0 lg:border-r lg:pr-10 lg:pt-0">
         <div>
           <p class="text-[10px] font-mono uppercase tracking-[0.25em] text-muted">Selected capability</p>
@@ -56,7 +56,7 @@ const stages = Object.keys(tracks[0]?.stages ?? {});
               data-strategy-stage={stage}
               aria-pressed={index === 0 ? "true" : "false"}
               hidden
-              class="min-h-11 border-b-2 border-border bg-transparent px-2 py-3 text-left font-mono text-xs uppercase text-muted transition-colors hover:text-foreground aria-pressed:border-primary aria-pressed:text-foreground"
+              class="min-h-11 rounded-t border-b-2 border-border bg-background/25 px-2 py-3 text-left font-mono text-xs uppercase text-foreground backdrop-blur-md transition-colors hover:text-primary aria-pressed:border-primary aria-pressed:text-foreground"
             >
               <span class="mr-1 opacity-60">0{index + 1}</span>{stage}
             </button>
