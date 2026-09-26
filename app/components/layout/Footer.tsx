@@ -14,8 +14,8 @@ export default function Footer({ transparentBackground = false }: Props) {
   const layer = transparentBackground ? "z-10" : "";
   return (
     <footer id="connect" aria-labelledby="connect-title" className={`relative w-full border-t border-border ${background} ${layer}`}>
-      <div className="px-6 py-16 md:px-12">
-        <div data-connect-grid className="mx-auto grid max-w-6xl items-start gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+      <div className="px-6 py-16 md:px-12 lg:px-8">
+        <div data-connect-grid className="mx-auto grid max-w-6xl lg:max-w-[var(--desktop-content-width)] items-start gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
           <div className="min-w-0">
             <p className="mb-4 text-xl font-semibold">Connect</p>
             <h2 id="connect-title" className="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight tracking-tight">Let’s connect.</h2>
@@ -36,8 +36,8 @@ export default function Footer({ transparentBackground = false }: Props) {
           </ul>
         </div>
       </div>
-      <div className="border-t border-border/30 px-6 py-4 md:px-12">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2">
+      <div className="border-t border-border/30 px-6 py-4 md:px-12 lg:px-8">
+        <div className="mx-auto flex max-w-6xl lg:max-w-[var(--desktop-content-width)] flex-wrap items-center justify-between gap-x-6 gap-y-2">
           <p className="text-xs text-muted">© 2026 Ryan Tran</p>
           <button id="scroll-to-top" type="button" onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" })} aria-label="Scroll to top" className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-foreground/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
             Back to top <span aria-hidden="true">↑</span>

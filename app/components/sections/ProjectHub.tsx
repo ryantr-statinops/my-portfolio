@@ -38,9 +38,9 @@ export default function ProjectHub({ projects }: Props) {
   }
 
   return (
-    <section id="projects" data-project-hub aria-labelledby="project-hub-title" className="relative min-h-screen w-full border-t border-border/30 px-6 py-20 md:px-12">
+    <section id="projects" data-project-hub aria-labelledby="project-hub-title" className="relative min-h-screen w-full border-t border-border/30 px-6 py-20 md:px-12 lg:px-8">
       <span id="intelligence-hub" aria-hidden="true" className="absolute left-0 top-0" />
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-7xl lg:max-w-[var(--desktop-content-width)]">
         <header className="mb-10 max-w-2xl">
           <h2 id="project-hub-title" className="text-4xl font-bold uppercase tracking-tight md:text-6xl">Project Hub.</h2>
           <p className="mt-4 text-base leading-relaxed text-white">Explore projects by domain, read the overview and browse the source repository.</p>

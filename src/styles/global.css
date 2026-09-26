@@ -32,6 +32,7 @@
 }
 
 :root {
+  --desktop-content-width: 85rem; /* 1360px shared desktop content width */
   --background: #ffffff;
   --foreground: #0a0a0a;
   --surface: #f5f5f5;
