@@ -21,10 +21,10 @@ Hệ thống Portfolio này phải phục vụ 4 nhóm đối tượng với nhu
 
 Để tránh việc người dùng bị choáng ngợp, dự án sẽ được phân loại theo "Domains" thay vì theo "Tools":
 
-* **`finance-quant`**: Các dự án về trading bot, backtesting, statistical arbitrage.
-* **`ops-automation`**: Các giải pháp ERP, script tối ưu hóa vận hành, Cluster ecosystem.
-* **`data-math`**: Phân tích dữ liệu, minh họa toán học (LaTeX), dự án cộng đồng.
-* **`system-ui`**: Các dự án về Linux Distro, tùy chỉnh workspace, UI/UX tối giản.
+* **`software-engineering`**: Backend, frontend, systems, developer tools và applications.
+* **`data-engineering`**: Data pipelines, databases, data infrastructure, observability và automation.
+* **`ai-engineering`**: AI applications, agents, MCP, LLM workflows và AI-assisted systems.
+* **`other`**: Nội dung phù hợp với portfolio nhưng nằm ngoài ba nhóm kỹ thuật chính.
 
 ## 4. Content Principles (Nguyên tắc nội dung)
 

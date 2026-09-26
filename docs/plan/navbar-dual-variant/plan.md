@@ -139,7 +139,7 @@ gitGraph
 4. Write `ScrollSpy.astro` (script-only component).
 5. Write branch-specific `Navbar.<variant>.astro`.
 6. Update `MainLayout.astro:64-84` to import new component (replace inline nav).
-7. `npm run build` locally — verify 7 pages still generated.
+7. `npm run build` locally — verify generated pages equal the two shell pages plus project entries.
 8. Verify `dist/index.html` contains nav with all 4 `aria-label` / `href` items.
 9. Manual smoke: scroll, click each anchor, toggle theme, open mobile overlay, ESC close.
 
@@ -208,7 +208,7 @@ gitGraph
 ## 13. Definition of done
 
 - [ ] Both branches pushed to `origin`.
-- [ ] Each branch builds locally with 0 errors and 7 pages.
+- [ ] Each branch builds locally with 0 errors and the content-derived page count.
 - [ ] Manual smoke checklist in §8 passes for each branch.
 - [ ] User has compared both via `npm run dev` (or Pages preview per §11 answer).
 - [ ] Winning branch merged to `main`; losing branch either closed or improvements cherry-picked.

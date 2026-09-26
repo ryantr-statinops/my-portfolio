@@ -6,8 +6,8 @@ Status: complete. Chromium baselines are committed under `tests/e2e/visual.spec.
 
 - Themes: dark and light.
 - Viewports: desktop `1280x800`, tablet `768x1024`, mobile `375x667`.
-- Six scopes per matrix entry: Hero, homepage project showcase, Project Registry, active filter, Portfolio Runtime Terminal and project detail header.
-- Total: 36 snapshots.
+- Homepage scopes include Hero, About, guided Strategy, selected Strategy stage, Projects, footer, Project Registry, active filter and Portfolio Runtime Terminal.
+- Project detail screenshots are added when project content is published.
 
 ## Determinism
 
@@ -22,4 +22,4 @@ npx playwright test tests/e2e/visual.spec.ts --update-snapshots
 npm run test:visual
 ```
 
-The test uses the same generated project route source as smoke tests and does not introduce a fake data dashboard.
+The test uses the same generated project route source as smoke tests and does not introduce fake project data.

@@ -10,7 +10,7 @@ Status: implemented in `.github/workflows/deploy.yml`.
 4. `npm run test:unit`
 5. `npm run check`
 6. `npm run build`
-7. Assert exactly seven generated `index.html` pages
+7. Assert two shell pages plus one generated page per project entry
 8. Install Chromium
 9. `npm run test:smoke`
 10. `npm run test:visual`

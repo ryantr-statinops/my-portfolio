@@ -14,12 +14,12 @@ Mọi dự án khi đẩy lên hệ thống phải có phần Header (Frontmatte
 ---
 id: "unique-slug-01"
 title: "Tên dự án rõ ràng"
-category: "finance-quant" # [finance-quant, ops-automation, data-math, system-ui]
-status: "Completed" # [In Progress, Production, Archived]
+category: "software-engineering" # [software-engineering, data-engineering, ai-engineering, other]
+status: "Production" # [In Progress, Production, Archived, Research & Development, Audit Pending]
 priority: 1 # 1 là cao nhất (đưa lên đầu trang)
 stack: ["Python", "Pandas", "React"]
 impact: "Mô tả ngắn gọn kết quả (Ví dụ: Tự động hóa 80% quy trình)"
-thumbnail: "/images/projects/thumb-01.webp"
+thumbnail: "/images/projects/unique-slug-01/thumbnail.webp"
 github: "https://github.com/..."
 demo: "https://..."
 ---

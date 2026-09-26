@@ -9,7 +9,7 @@ Professional & Minimalist (Bloomberg/High-end Fintech style). The portfolio func
 ## 1. Layout Structure
 
 - **Scroll**: Native page scrolling and immediate anchor navigation; sections do not snap and the mobile menu does not lock background scrolling
-- **Homepage background**: One fixed WebM video and poster sit behind Hero, About Me, Intelligence Hub, Projects and Footer; project pages keep their own background
+- **Homepage background**: One fixed WebM video and poster sit behind Hero, About Me, Strategy, Projects and Footer; project pages keep their own background
 - **Grid**: 12-column responsive grid system via Tailwind CSS
 - **Breakpoints**: Mobile-first (1 column) → `md:` (2 columns) → `lg:` (3 columns)
 
@@ -109,44 +109,26 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 - **Background**: Decorative blur blobs (`animate-pulse`)
 - **Card styling**: Glass-premium, `rounded-3xl`, border, hover effect
 
-### C. Intelligence Hub (`IntelligenceHub.astro`)
+### C. Strategy (`StrategyHub.astro`)
 
 ```
 ┌──────────────────────────────────────────┐
-│ ● SYSTEM_MODE: STRATEGIC_VIEW  V3.2.0    │
-│                          UTC: 14:02:30   │
+│ CAPABILITIES & APPROACH                  │
+│ [Software] [Data] [AI] [Other]           │
 │                                          │
-│ System Management Visualization          │
-│ [ISO_Aligned]                            │
+│ Selected capability     01 FRAME 02 TEST │
+│ Software Engineering    03 BUILD         │
 │                                          │
-│ ┌──────┐┌──────┐┌──────┐┌──────────┐    │
-│ │05    ││12    ││04    ││HIGH      │    │
-│ │PROJ. ││STACKS││SECTOR││LEVEL     │    │
-│ └──────┘└──────┘└──────┘└──────────┘    │
-│                                          │
-│ ┌─── PANEL 1 ───┐┌─── PANEL 2 ──────────┤
-│ │Portfolio Asset ││  3D Interactive      │
-│ │Registry        ││  Project Graph       │
-│ │☑ finance_quant ││                      │
-│ │  ✓ Mean Rev... ││  [3D force-directed  │
-│ │☑ data-math    ││   nodes + links]      │
-│ │  ✓ Grap4Prob  ││                      │
-│ │               ││  [Auto-rotating,      │
-│ │[GITHUB][LINK] ││   drag to rotate]     │
-│ └───────────────┘└───────────────────────┘
+│                         Content is being │
+│                         prepared.        │
 └──────────────────────────────────────────┘
 ```
 
-- **Dashboard-style layout** (3/12 + 9/12 panel split)
-- **Terminal header bar**: Status indicators, version, UTC clock
-- **4 KPI cards**: Large monospace numbers, domain labels
-- **Left panel**: Project registry with checkboxes, categorized list with links
-- **Center panel**: Interactive 3D force-directed graph (Canvas API)
-  - 3 layers: System Core → Categories → Projects
-  - Nodes colored by domain: fin (cyan), ops (green), ai (pink), sys (white)
-  - Auto-rotates, draggable, hover tooltips
-  - Bloom/glow effects on hover
-- **Bottom**: GitHub + LinkedIn exit node buttons
+- Four capability choices: Software Engineering, Data Engineering, AI Engineering and Other
+- Three local steps: Frame, Test and Build; selecting another capability resets to Frame
+- The content scaffold intentionally has no capability claims or project links yet
+- The controls are hidden until JavaScript initializes; the default preparation message remains available without JavaScript
+- Mobile stacks the capability choices and keeps the three stage controls in one row
 
 ### D. Project Registry (Project Cards Grid)
 
@@ -226,10 +208,9 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 | Element | Technology | Behavior |
 |---|---|---|
 | **Homepage Video Background** | WebM video + poster | One fixed video behind every homepage section; static poster with reduced motion or unavailable video |
-| **3D Graph** | Canvas 2D (simulated 3D) | Force-directed layout, auto-rotate, drag to rotate, hover tooltips |
+| **Strategy selector** | Native buttons + component state | Choose a capability and Frame/Test/Build stage; selection stays local and does not alter the URL |
 | **Scroll Reveal** | IntersectionObserver | Elements fade + translate up on scroll into view |
 | **Theme Toggle** | Vanilla JS + localStorage | Toggles `dark` class on `<html>`, stores preference |
-| **UTC Clock** | setInterval | Real-time clock in Intelligence Hub header |
 | **Project Card Hover** | CSS transitions | Grayscale→color, scale, translate, border effects |
 | **Scroll-to-top** | Vanilla JS | Immediate scroll to the top with `window.scrollTo(0, 0)` |
 
@@ -242,7 +223,7 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 | **Navigation** | Logo + hamburger-style toggle, simplified | Full terminal menu, avatar + name |
 | **Hero** | Single column, stacked text | 3 stat cards inline |
 | **About Me** | Stacked vertically | 2-column grid (5+7) |
-| **Intelligence Hub** | Full-width panels stacked | 3+9 column sidebar + graph |
+| **Strategy** | Capability choices stack; three stage controls remain inline | Four capability choices in one row; content and stages beside them |
 | **Projects** | 1 column | 2-3 columns |
 | **Footer** | Stacked | 2-column layout |
 
@@ -283,13 +264,6 @@ Modes are toggled via ThemeToggle component and persisted in localStorage.
 
 ---
 
-## 10. Domain Color Mapping
+## 10. Capability labels
 
-Used across the Intelligence Hub 3D graph and project badges:
-
-| Domain | Color | Hex |
-|---|---|---|
-| Finance / Quant | Cyan | `#00f2ff` |
-| Operations | Emerald | `#10b981` / `#93f8d8` |
-| AI / ML | Pink | `#fb7185` |
-| System / UI | White | `#ffffff` |
+The four labels are Software Engineering, Data Engineering, AI Engineering and Other. The Strategy scaffold uses the same IDs as the project content categories and registry filter.

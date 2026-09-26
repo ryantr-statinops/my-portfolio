@@ -22,7 +22,7 @@ The runtime is a static Astro portfolio. MDX content is validated by Zod, render
 ```text
 src/pages/index.astro              -> /
 src/pages/projects/index.astro     -> /projects/
-src/pages/projects/[slug].astro    -> /projects/<project-slug>/ (5 pages)
+src/pages/projects/[slug].astro    -> /projects/<project-slug>/ (generated from content)
 ```
 
 The old `/cluster/` dashboard is removed. The word Cluster is reserved for future project content or strategy context, not the portfolio runtime. A future Cluster project will be a normal MDX entry; this release creates no `cluster.mdx`.
@@ -44,16 +44,17 @@ Important runtime modules:
 - `src/lib/project-filter.ts`: pure multi-select filter state and matching logic.
 - `src/components/interactive/ProjectFilter.astro`: accessible filter UI and event bridge.
 - `src/components/interactive/SystemTerminal.astro`: read-only command simulator; never executes shell commands.
-- `src/components/sections/IntelligenceHub.astro`: Project Graph, registry list and derived counts.
+- `src/lib/strategy.ts`: four capability tracks with Frame, Test and Build content slots.
+- `src/components/sections/StrategyHub.astro`: guided capability and approach selector on the homepage.
 - `src/components/sections/PortfolioRegistry.astro`: Project Registry table used by `/projects/`.
 
 ## Content contract
 
-The five current projects retain their IDs and routes. Required fields are `id`, `title`, `description`, `date`, `category`, `status`, `priority`, `tags`, `impact`, `thumbnail`, `github`, `demo` and `stack`. Priority `1` is highest; duplicate priorities fail the build. Thumbnails must match `/images/projects/<filename-slug>/thumbnail.webp` and the file must exist.
+The project collection is currently empty while the portfolio is rebuilt. `/projects/` remains available and shows a rebuilding state; no project detail routes are generated. Future entries use the required fields `id`, `title`, `description`, `date`, `category`, `status`, `priority`, `tags`, `impact`, `thumbnail`, `github`, `demo` and `stack`. Categories are defined in `src/lib/constants.ts`: `software-engineering`, `data-engineering`, `ai-engineering` and `other`. Duplicate priorities fail the build; thumbnail paths must resolve to an existing asset.
 
 ## Interaction and motion
 
-The filter uses `{ categories: string[] }`; an empty array means `All`. The terminal accepts only `help`, `status`, `neofetch`, `ls /projects` and `clear`. Heatmap and Project Graph canvases render deterministic static fallbacks under `prefers-reduced-motion: reduce`; SmoothSnap is disabled in that mode.
+The Project Registry filter uses `{ categories: string[] }`; an empty array means `All`. Strategy selection is local to the section and does not change the URL or filter projects. It defaults to Software Engineering → Frame and presents empty content slots as “Content is being prepared.” The terminal accepts only `help`, `status`, `neofetch`, `ls /projects` and `clear`; `ls /projects` explains when the collection is empty.
 
 ## Migration status
 
@@ -65,4 +66,4 @@ The filter uses `{ categories: string[] }`; an empty array means `All`. The term
 
 ## Future work
 
-Astro 7 was migrated on `dev` and must pass the full unit, smoke, visual, check and build suite before promotion to `main`.
+The current homepage uses the guided Strategy scaffold. The project collection is intentionally empty until new project write-ups are ready; page count and route tests derive their expectations from collection content.

@@ -4,15 +4,15 @@ Project: Ryan Tran portfolio · Production: GitHub Pages · Stack: Astro 7.3.4, 
 
 ## Source of truth
 
-The release has seven static pages: `/`, `/projects/` and five MDX project routes. `/cluster/` is not a valid route. A future Cluster startup project will be normal MDX content under `/projects/` and is outside this release.
+The current scaffold has two static pages: `/` and `/projects/`. The project collection is empty; future content adds one detail route per MDX entry. `/cluster/` is not a valid route.
 
 ## Layer status
 
 | Layer | Purpose | Implementation | Status |
 |---|---|---|---|
-| L1 | Content/schema/unit | Vitest, content/filter/terminal tests | Complete — 22 tests |
+| L1 | Content/schema/unit | Vitest, content/filter/terminal/strategy tests | Complete |
 | L2 | HTTP/routes/interactions | Playwright, `tests/e2e/smoke.spec.ts` | Complete — dynamic route set |
-| L3 | Visual regression | Chromium, 36 baselines | Complete — 2 themes × 3 viewports |
+| L3 | Visual regression | Chromium, 2 themes × 3 viewports | Complete |
 
 ## Commands
 
@@ -27,7 +27,7 @@ npm run test
 
 ## CI order
 
-GitHub Actions installs dependencies, reports audit status, runs L1, type check, build, asserts exactly seven generated pages, installs Chromium, runs L2/L3, verifies sitemap/robots, uploads failure artifacts and deploys the Pages artifact. Any failure blocks deployment.
+GitHub Actions installs dependencies, reports audit status, runs L1, type check, build, asserts two shell pages plus project detail pages, installs Chromium, runs L2/L3, verifies sitemap/robots, uploads failure artifacts and deploys the Pages artifact. Any failure blocks deployment.
 
 ## Maintenance rules
 

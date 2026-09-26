@@ -1,31 +1,34 @@
 # Release Roadmap — Portfolio Hardening
 
 > Source of truth for the current portfolio release. Production target: GitHub Pages.
-> Last verified: 2026-09-23.
+> Last verified: 2026-09-26.
 
 ## Current release model
 
 - `/` is the homepage.
 - `/projects/` is the canonical Project Registry.
-- Five project detail pages are generated from `src/content/projects/*.mdx`.
+- The project collection is empty during the content rebuild; future detail pages are generated from `src/content/projects/*.mdx`.
 - `/cluster/` was removed. A future Cluster startup project will be added as its own MDX entry and route under `/projects/`; no `cluster.mdx` is part of this release.
-- The static build must generate exactly seven pages.
-- Existing project IDs, slugs and public URLs remain unchanged.
-- `dev` is the integration branch for project work; completed changes reach `main` through pull requests.
+- The static build generates two pages while the collection is empty, then two pages plus one per project.
+- Legacy project entries, detail routes and dedicated media have been removed.
+- The current Strategy and content rebuild is delivered as small commits directly on `main`.
 - `refactor` remains reserved for major architectural decisions.
 
 ## Completed release work
 
 - Route migration from the old dashboard to `/projects/`.
+- Replacement of Intelligence Hub with a four-domain guided Strategy scaffold (Frame, Test, Build).
+- Empty project states on the homepage, Project Registry and terminal.
+- New portfolio categories: Software Engineering, Data Engineering, AI Engineering and Other.
 - Neutral portfolio terminology and removal of unverified dashboard metrics.
 - Ascending priority order (`1` is highest) with duplicate-priority build failure.
 - Strict project thumbnail paths and content tests.
 - Base-path-aware navigation for GitHub Pages.
-- Shared multi-select category filter on the homepage and Project Registry.
+- Multi-select category filter on the Project Registry; homepage filtering is removed.
 - Read-only Portfolio Runtime Terminal with a whitelist of five commands.
 - Reduced-motion fallbacks and deterministic visual-test behavior.
 - L1 unit tests, L2 Chromium smoke tests and L3 responsive visual baselines.
-- CI gates for check, build, seven-page output, smoke, visual, sitemap and robots.
+- CI gates for check, build, dynamic page count, smoke, visual, sitemap and robots.
 
 ## Remaining release work
 
@@ -43,7 +46,7 @@ The build must remain valid and load no analytics script when the variable is ab
 
 ## Release acceptance criteria
 
-`npm run test`, `npm run check` and `npm run build` pass; seven pages are generated; all routes and internal links return 200; filters and terminal behavior pass; dark/light responsive baselines pass; sitemap and robots exist; GitHub Pages deploys; documentation contains no obsolete deployment or removed-feature assumptions.
+`npm run test`, `npm run check` and `npm run build` pass; generated page count is two plus project detail routes; all generated routes and internal links return 200; Strategy, registry filters and terminal behavior pass; dark/light responsive baselines pass; sitemap and robots exist; GitHub Pages deploys; documentation reflects the empty project collection and Strategy scaffold.
 
 ## Commit policy
 
