@@ -25,6 +25,8 @@ Tailwind is imported by src/styles/global.css and compiled by its Vite plugin. @
 | Class | Usage |
 |---|---|
 | info-box | Profile and availability cards; shared 16 px radius, 70% background and 20 px padding |
+| info-box--navigation | 8 px container padding; navbar-compact reduces navbar padding to 4 px |
+| nav-control | Inner controls with hover/focus and aria-current styling; minimum heights are 44 px by default, 36 px in the compact navbar and 28 px for its section links |
 | info-box--compact | Focus cards and selectable project rows; 12 px vertical padding |
 | info-box--filter | Category filters; 12 px vertical and 16 px horizontal padding |
 | info-box--panel | Project overview, prerender fallback and empty state; 24 px padding, 32 px from 768 px |
@@ -32,7 +34,7 @@ Tailwind is imported by src/styles/global.css and compiled by its Vite plugin. @
 | info-box--scroll-list | Bounded scroll container with a thin scrollbar and stable gutter |
 | info-box--interactive | Project row and category filter hover, keyboard focus and aria-pressed selection |
 
-Always combine modifiers with info-box. Project entries inside the scroll container use their own compact interactive info-box, with spacing between cards. Keep layout and typography on the component; avoid overriding surface properties there. Category filters share the surface and interactive styles. Action buttons, technology chips and status badges remain separate controls.
+Always combine modifiers with info-box. Project entries inside the scroll container use their own compact interactive info-box, with spacing between cards. Keep layout and typography on the component; avoid overriding surface properties there. Category filters share the surface and interactive styles. Hero action links also use compact interactive boxes. The desktop navbar and mobile menu share the box surface, with nav-control for their inner links and the mobile theme toggle. Technology chips and status badges remain separate controls.
 
 ## Desktop content width
 
