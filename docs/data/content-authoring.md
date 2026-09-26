@@ -41,9 +41,9 @@ Each project record should be committed separately so content changes remain eas
 
 ## Source references
 
-- [app/data/projects.ts](../../app/data/projects.ts) — `export const projects` ([line 4](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/data/projects.ts#L4)).
-- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const projectSchema` ([line 14](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/data/project-schema.ts#L14)).
-- [tests/fixtures/projects.ts](../../tests/fixtures/projects.ts) — `export const fixtureProjects` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/tests/fixtures/projects.ts#L3)).
+- [app/data/projects.ts](../../app/data/projects.ts) — `export const projects` ([line 4](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/data/projects.ts#L4)).
+- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const projectSchema` ([line 17](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/data/project-schema.ts#L17)).
+- [tests/fixtures/projects.ts](../../tests/fixtures/projects.ts) — `export const fixtureProjects` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/fixtures/projects.ts#L3)).
 
 ## Related documents
 

@@ -41,9 +41,9 @@ Browser tests also start a test-only Vite server on port 4174; free that port be
 
 ## Source references
 
-- [package.json](../../package.json) — `"engines"` ([line 7](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/package.json#L7)).
-- [scripts/static-preview.mjs](../../scripts/static-preview.mjs) — `const port` ([line 57](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/scripts/static-preview.mjs#L57)).
-- [playwright.config.ts](../../playwright.config.ts) — `webServer:` ([line 22](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/playwright.config.ts#L22)).
+- [package.json](../../package.json) — `"engines"` ([line 7](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/package.json#L7)).
+- [scripts/static-preview.mjs](../../scripts/static-preview.mjs) — `const port` ([line 57](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/scripts/static-preview.mjs#L57)).
+- [playwright.config.ts](../../playwright.config.ts) — `webServer:` ([line 22](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/playwright.config.ts#L22)).
 
 ## Related documents
 

@@ -50,15 +50,15 @@ Update router basename, Vite base, SITE.site/base, artifact origin/base/siteDire
 
 ## Source references
 
-- [package.json](../../package.json) — `"scripts"` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/package.json#L10)).
-- [vite.config.ts](../../vite.config.ts) — `base:` ([line 6](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/vite.config.ts#L6)).
-- [react-router.config.ts](../../react-router.config.ts) — `basename:` ([line 4](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/react-router.config.ts#L4)).
-- [tsconfig.json](../../tsconfig.json) — `"compilerOptions"` ([line 2](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/tsconfig.json#L2)).
-- [vitest.config.ts](../../vitest.config.ts) — `include:` ([line 5](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/vitest.config.ts#L5)).
-- [playwright.config.ts](../../playwright.config.ts) — `const baseURL` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/playwright.config.ts#L3)).
-- [scripts/static-preview.mjs](../../scripts/static-preview.mjs) — `const port` ([line 57](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/scripts/static-preview.mjs#L57)).
-- [src/lib/constants.ts](../../src/lib/constants.ts) — `export const SITE` ([line 1](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/src/lib/constants.ts#L1)).
-- [tests/fixtures/vite.config.ts](../../tests/fixtures/vite.config.ts) — `server:` ([line 8](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/tests/fixtures/vite.config.ts#L8)).
+- [package.json](../../package.json) — `"scripts"` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/package.json#L10)).
+- [vite.config.ts](../../vite.config.ts) — `base:` ([line 6](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/vite.config.ts#L6)).
+- [react-router.config.ts](../../react-router.config.ts) — `basename:` ([line 4](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/react-router.config.ts#L4)).
+- [tsconfig.json](../../tsconfig.json) — `"compilerOptions"` ([line 2](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tsconfig.json#L2)).
+- [vitest.config.ts](../../vitest.config.ts) — `include:` ([line 5](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/vitest.config.ts#L5)).
+- [playwright.config.ts](../../playwright.config.ts) — `const baseURL` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/playwright.config.ts#L3)).
+- [scripts/static-preview.mjs](../../scripts/static-preview.mjs) — `const port` ([line 57](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/scripts/static-preview.mjs#L57)).
+- [src/lib/constants.ts](../../src/lib/constants.ts) — `export const SITE` ([line 1](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/src/lib/constants.ts#L1)).
+- [tests/fixtures/vite.config.ts](../../tests/fixtures/vite.config.ts) — `server:` ([line 8](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/fixtures/vite.config.ts#L8)).
 
 ## Related documents
 

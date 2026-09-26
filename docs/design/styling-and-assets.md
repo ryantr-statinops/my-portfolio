@@ -28,10 +28,10 @@ Tests cover desktop 1280×800, tablet 768×1024 and mobile 375×667; these are t
 
 ## Source references
 
-- [src/styles/global.css](../../src/styles/global.css) — `@theme` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/src/styles/global.css#L19)).
-- [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) — `export default function ProjectHub` ([line 24](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/components/sections/ProjectHub.tsx#L24)).
-- [app/components/interactive/VideoBackground.tsx](../../app/components/interactive/VideoBackground.tsx) — `export default function VideoBackground` ([line 4](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/components/interactive/VideoBackground.tsx#L4)).
-- [tests/fixtures/styles.css](../../tests/fixtures/styles.css) — `@source` ([line 2](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/tests/fixtures/styles.css#L2)).
+- [src/styles/global.css](../../src/styles/global.css) — `@theme` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/src/styles/global.css#L19)).
+- [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) — `export default function ProjectHub` ([line 26](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/sections/ProjectHub.tsx#L26)).
+- [app/components/interactive/VideoBackground.tsx](../../app/components/interactive/VideoBackground.tsx) — `export default function VideoBackground` ([line 4](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/interactive/VideoBackground.tsx#L4)).
+- [tests/fixtures/styles.css](../../tests/fixtures/styles.css) — `@source` ([line 2](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/fixtures/styles.css#L2)).
 
 ## Related documents
 

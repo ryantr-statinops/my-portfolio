@@ -73,9 +73,11 @@ This is test/example content, not a published repository record. Add your own re
 
 ## Source references
 
-- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const repositoryUrlSchema` ([line 5](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/data/project-schema.ts#L5)).
-- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const projectSchema` ([line 14](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/data/project-schema.ts#L14)).
-- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const projectCatalogSchema` ([line 24](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/data/project-schema.ts#L24)).
+- [app/data/project-schema.ts](../../app/data/project-schema.ts) — [projectStatusSchema](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/data/project-schema.ts#L5).
+
+- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const repositoryUrlSchema` ([line 8](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/data/project-schema.ts#L8)).
+- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const projectSchema` ([line 17](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/data/project-schema.ts#L17)).
+- [app/data/project-schema.ts](../../app/data/project-schema.ts) — `export const projectCatalogSchema` ([line 28](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/data/project-schema.ts#L28)).
 
 ## Related documents
 

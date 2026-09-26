@@ -50,8 +50,8 @@ Update behavior, examples, references and index entries with the implementation.
 
 ## Source references
 
-- [app/routes.ts](../app/routes.ts) — `export default` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/routes.ts#L3)).
-- [package.json](../package.json) — `"scripts"` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/package.json#L10)).
+- [app/routes.ts](../app/routes.ts) — `export default` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/routes.ts#L3)).
+- [package.json](../package.json) — `"scripts"` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/package.json#L10)).
 
 ## Related documents
 

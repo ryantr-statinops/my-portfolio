@@ -34,10 +34,10 @@ The static server serves dist at 127.0.0.1:4173/my-portfolio/. PORT overrides th
 
 ## Source references
 
-- [app/entry.server.tsx](../../app/entry.server.tsx) — `export default function handleRequest` ([line 9](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/entry.server.tsx#L9)).
-- [scripts/prepare-static-artifact.mjs](../../scripts/prepare-static-artifact.mjs) — `const publicUrls` ([line 20](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/scripts/prepare-static-artifact.mjs#L20)).
-- [scripts/prepare-static-artifact.mjs](../../scripts/prepare-static-artifact.mjs) — `const routePaths` ([line 29](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/scripts/prepare-static-artifact.mjs#L29)).
-- [scripts/static-preview.mjs](../../scripts/static-preview.mjs) — `function resolveFile` ([line 26](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/scripts/static-preview.mjs#L26)).
+- [app/entry.server.tsx](../../app/entry.server.tsx) — `export default function handleRequest` ([line 9](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/entry.server.tsx#L9)).
+- [scripts/prepare-static-artifact.mjs](../../scripts/prepare-static-artifact.mjs) — `const publicUrls` ([line 20](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/scripts/prepare-static-artifact.mjs#L20)).
+- [scripts/prepare-static-artifact.mjs](../../scripts/prepare-static-artifact.mjs) — `const routePaths` ([line 29](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/scripts/prepare-static-artifact.mjs#L29)).
+- [scripts/static-preview.mjs](../../scripts/static-preview.mjs) — `function resolveFile` ([line 26](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/scripts/static-preview.mjs#L26)).
 
 ## Related documents
 

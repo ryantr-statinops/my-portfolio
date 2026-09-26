@@ -37,10 +37,12 @@ The section ID is projects. Hero and desktop/mobile navigation link to /#project
 
 ## Source references
 
-- [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) — `export default function ProjectHub` ([line 24](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/components/sections/ProjectHub.tsx#L24)).
-- [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) — `function ProjectOverviewPanel` ([line 8](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/components/sections/ProjectHub.tsx#L8)).
-- [app/data/project-hub.ts](../../app/data/project-hub.ts) — `export function projectsForCategory` ([line 5](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/data/project-hub.ts#L5)).
-- [app/data/project-hub.ts](../../app/data/project-hub.ts) — `export function resolveSelectedProject` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/75b94490a3cc85eca54936f87e0f0901e7a7e49b/app/data/project-hub.ts#L10)).
+- [app/components/ProjectStatusBadge.tsx](../../app/components/ProjectStatusBadge.tsx) — [ProjectStatusBadge](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/ProjectStatusBadge.tsx#L12).
+
+- [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) — `export default function ProjectHub` ([line 26](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/sections/ProjectHub.tsx#L26)).
+- [app/components/sections/ProjectHub.tsx](../../app/components/sections/ProjectHub.tsx) — `function ProjectOverviewPanel` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/components/sections/ProjectHub.tsx#L10)).
+- [app/data/project-hub.ts](../../app/data/project-hub.ts) — `export function projectsForCategory` ([line 5](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/data/project-hub.ts#L5)).
+- [app/data/project-hub.ts](../../app/data/project-hub.ts) — `export function resolveSelectedProject` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/app/data/project-hub.ts#L10)).
 
 ## Related documents
 

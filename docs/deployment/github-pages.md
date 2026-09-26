@@ -30,9 +30,9 @@ After success, open home, test Hub navigation/repository links when populated, a
 
 ## Source references
 
-- [.github/workflows/deploy.yml](../../.github/workflows/deploy.yml) — `on:` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/.github/workflows/deploy.yml#L3)).
-- [.github/workflows/deploy.yml](../../.github/workflows/deploy.yml) — `Assert generated page count` ([line 46](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/.github/workflows/deploy.yml#L46)).
-- [.github/workflows/deploy.yml](../../.github/workflows/deploy.yml) — `deploy:` ([line 72](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/.github/workflows/deploy.yml#L72)).
+- [.github/workflows/deploy.yml](../../.github/workflows/deploy.yml) — `on:` ([line 3](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/.github/workflows/deploy.yml#L3)).
+- [.github/workflows/deploy.yml](../../.github/workflows/deploy.yml) — `Assert generated page count` ([line 46](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/.github/workflows/deploy.yml#L46)).
+- [.github/workflows/deploy.yml](../../.github/workflows/deploy.yml) — `deploy:` ([line 72](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/.github/workflows/deploy.yml#L72)).
 
 ## Related documents
 

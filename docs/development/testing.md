@@ -45,10 +45,10 @@ Production smoke tests read the validated catalog and check all project selectio
 
 ## Source references
 
-- [tests/project-hub-render.test.ts](../../tests/project-hub-render.test.ts) — `describe(` ([line 8](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/tests/project-hub-render.test.ts#L8)).
-- [tests/e2e/project-hub.spec.ts](../../tests/e2e/project-hub.spec.ts) — `test(` ([line 5](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/tests/e2e/project-hub.spec.ts#L5)).
-- [tests/e2e/visual.spec.ts](../../tests/e2e/visual.spec.ts) — `const viewports` ([line 2](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/tests/e2e/visual.spec.ts#L2)).
-- [playwright.config.ts](../../playwright.config.ts) — `webServer:` ([line 22](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/playwright.config.ts#L22)).
+- [tests/project-hub-render.test.ts](../../tests/project-hub-render.test.ts) — `describe(` ([line 10](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/project-hub-render.test.ts#L10)).
+- [tests/e2e/project-hub.spec.ts](../../tests/e2e/project-hub.spec.ts) — `test(` ([line 5](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/e2e/project-hub.spec.ts#L5)).
+- [tests/e2e/visual.spec.ts](../../tests/e2e/visual.spec.ts) — `const viewports` ([line 2](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/e2e/visual.spec.ts#L2)).
+- [playwright.config.ts](../../playwright.config.ts) — `webServer:` ([line 22](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/playwright.config.ts#L22)).
 
 ## Related documents
 
