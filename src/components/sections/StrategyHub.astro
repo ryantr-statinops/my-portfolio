@@ -93,3 +93,112 @@ const stages = Object.keys(tracks[0]?.stages ?? {});
     </div>
   </div>
 </section>
+
+<script>
+  import { STRATEGY_STAGES, STRATEGY_TRACKS } from "../../lib/strategy";
+  import { getBaseUrl } from "../../lib/utils";
+
+  const root = document.querySelector<HTMLElement>("[data-strategy]");
+
+  if (root) {
+    const domainButtons = [...root.querySelectorAll<HTMLButtonElement>("[data-strategy-domain]")];
+    const stageButtons = [...root.querySelectorAll<HTMLButtonElement>("[data-strategy-stage]")];
+    const title = root.querySelector<HTMLElement>("[data-strategy-title]");
+    const description = root.querySelector<HTMLElement>("[data-strategy-description]");
+    const status = root.querySelector<HTMLElement>("[data-strategy-status]");
+    const stageLabel = root.querySelector<HTMLElement>("[data-stage-label]");
+    const stageTitle = root.querySelector<HTMLElement>("[data-stage-title]");
+    const stageDescription = root.querySelector<HTMLElement>("[data-stage-description]");
+    const decision = root.querySelector<HTMLElement>("[data-decision]");
+    const decisionTitle = root.querySelector<HTMLElement>("[data-decision-title]");
+    const decisionRationale = root.querySelector<HTMLElement>("[data-decision-rationale]");
+    const tradeoff = root.querySelector<HTMLDetailsElement>("[data-tradeoff]");
+    const benefit = root.querySelector<HTMLElement>("[data-benefit]");
+    const benefitCopy = root.querySelector<HTMLElement>("[data-benefit-copy]");
+    const tradeoffCopyWrap = root.querySelector<HTMLElement>("[data-tradeoff-copy-wrap]");
+    const tradeoffCopy = root.querySelector<HTMLElement>("[data-tradeoff-copy]");
+    const relatedProject = root.querySelector<HTMLAnchorElement>("[data-related-project]");
+
+    const state: { domainId: string; stage: (typeof STRATEGY_STAGES)[number] } = {
+      domainId: STRATEGY_TRACKS[0]?.id ?? "",
+      stage: STRATEGY_STAGES[0],
+    };
+
+    function updateText(element: HTMLElement | null, value: string) {
+      if (!element) return;
+      element.textContent = value;
+      element.hidden = value.trim().length === 0;
+    }
+
+    function render() {
+      const track = STRATEGY_TRACKS.find((item) => item.id === state.domainId) ?? STRATEGY_TRACKS[0];
+      const content = track?.stages[state.stage];
+      if (!track || !content) return;
+
+      domainButtons.forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.strategyDomain === track.id));
+      });
+      stageButtons.forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.strategyStage === state.stage));
+      });
+
+      updateText(title, track.title);
+      updateText(description, track.description);
+      updateText(stageLabel, content.label);
+      updateText(stageTitle, content.title);
+      updateText(stageDescription, content.description || "Content is being prepared.");
+      updateText(decisionTitle, content.decision);
+      updateText(decisionRationale, content.rationale);
+
+      const hasDecision = Boolean(content.decision || content.rationale || content.benefit || content.tradeoff);
+      if (decision) decision.hidden = !hasDecision;
+      if (tradeoff) {
+        tradeoff.hidden = !content.benefit && !content.tradeoff;
+        tradeoff.open = false;
+      }
+      if (benefit) benefit.hidden = !content.benefit;
+      updateText(benefitCopy, content.benefit);
+      if (tradeoffCopyWrap) tradeoffCopyWrap.hidden = !content.tradeoff;
+      updateText(tradeoffCopy, content.tradeoff);
+
+      if (relatedProject) {
+        if (content.relatedProject) {
+          relatedProject.href = getBaseUrl(`/projects/${content.relatedProject}`);
+          relatedProject.textContent = `Explore ${content.relatedProject}`;
+          relatedProject.hidden = false;
+        } else {
+          relatedProject.removeAttribute("href");
+          relatedProject.textContent = "";
+          relatedProject.hidden = true;
+        }
+      }
+
+      if (status) status.textContent = `${content.label} content is being prepared.`;
+    }
+
+    domainButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const domainId = button.dataset.strategyDomain;
+        if (!domainId || !STRATEGY_TRACKS.some((track) => track.id === domainId)) return;
+        state.domainId = domainId;
+        state.stage = STRATEGY_STAGES[0];
+        render();
+      });
+    });
+
+    stageButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const stage = button.dataset.strategyStage as (typeof STRATEGY_STAGES)[number] | undefined;
+        if (!stage || !STRATEGY_STAGES.includes(stage)) return;
+        state.stage = stage;
+        render();
+      });
+    });
+
+    render();
+    root.querySelectorAll<HTMLButtonElement>("[data-strategy-domain], [data-strategy-stage]").forEach((button) => {
+      button.hidden = false;
+    });
+    root.dataset.strategyReady = "true";
+  }
+</script>
