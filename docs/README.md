@@ -29,6 +29,7 @@ Content authors: data → project catalog. UI changes: features → design. Rele
   - [Homepage and site navigation](features/homepage-and-navigation.md)
   - [Project catalog and filtering](features/project-catalog.md)
   - [Strategy Hub](features/strategy-hub.md)
+  - [Terminal commands](features/terminal.md)
 
 ## Reference conventions
 

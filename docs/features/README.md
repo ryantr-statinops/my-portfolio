@@ -15,6 +15,7 @@ Locate feature behavior, state ownership and edit points.
 - [Homepage and site navigation](homepage-and-navigation.md)
 - [Project catalog and filtering](project-catalog.md)
 - [Strategy Hub](strategy-hub.md)
+- [Terminal commands](terminal.md)
 
 ## Source references
 
