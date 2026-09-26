@@ -9,11 +9,11 @@ export default function Hero() {
             <h1 className="text-[clamp(2rem,8vw,5rem)] font-bold uppercase leading-[0.9] tracking-tighter">SYSTEMS<br />OPERATIONS<br /><span className="text-gradient">INFRASTRUCTURE</span></h1>
             <p className="max-w-2xl text-xl font-medium leading-relaxed text-muted md:text-2xl">An Math - Statistics student building<br /><span className="font-semibold italic text-primary">software</span>, <span className="font-semibold italic text-primary">data systems</span>, and <span className="font-semibold italic text-primary">infrastructure</span><br />across <span className="text-gradient">quantitative research</span> and <span className="font-semibold italic text-primary">AI-native</span> tooling.</p>
           </div>
-          <div className="space-y-2 pt-2 reveal">
-            <p className="text-[16px] font-bold uppercase tracking-tighter text-primary">EXPLORE</p>
+          <div className="space-y-4 pt-2 reveal">
+            <p className="text-[22px] font-bold uppercase tracking-tight text-primary">EXPLORE</p>
             <div className="flex flex-wrap gap-3">
-              <Link to="/#about-me" className="glass inline-flex items-center justify-center rounded-xl border border-border bg-foreground/[0.03] px-6 py-3 font-mono text-xs font-black uppercase tracking-[0.2em] text-foreground transition-colors hover:border-white hover:bg-white hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">VIEW PROFILE</Link>
-              <Link to="/#projects" className="glass inline-flex items-center justify-center rounded-xl border border-border bg-foreground/[0.03] px-6 py-3 font-mono text-xs font-black uppercase tracking-[0.2em] text-foreground transition-colors hover:border-white hover:bg-white hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">VIEW PROJECTS</Link>
+              <Link to="/#about-me" className="info-box info-box--compact info-box--interactive inline-flex min-h-11 items-center justify-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-foreground">VIEW PROFILE</Link>
+              <Link to="/#projects" className="info-box info-box--compact info-box--interactive inline-flex min-h-11 items-center justify-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-foreground">VIEW PROJECTS</Link>
             </div>
           </div>
         </div>
