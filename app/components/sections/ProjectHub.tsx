@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CATEGORY_MAP } from "../../../src/lib/constants";
 import { projectsForCategory, resolveSelectedProject, type ProjectCategory } from "../../data/project-hub";
 import type { ProjectOverview } from "../../data/project-schema";
@@ -24,12 +24,35 @@ function ProjectOverviewPanel({ project }: { project: ProjectOverview }) {
 }
 
 export default function ProjectHub({ projects }: Props) {
+  const listRef = useRef<HTMLElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
   const [category, setCategory] = useState<ProjectCategory>("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const visible = projectsForCategory(projects, category);
   const selected = resolveSelectedProject(visible, selectedId);
   useEffect(() => setReady(true), []);
+
+  useEffect(() => {
+    const list = listRef.current;
+    const button = list?.querySelector<HTMLButtonElement>('[aria-pressed="true"]');
+    if (!list || !button) return;
+    const viewport = list.getBoundingClientRect();
+    const item = button.getBoundingClientRect();
+    if (item.top < viewport.top) list.scrollTop -= viewport.top - item.top;
+    else if (item.bottom > viewport.bottom) list.scrollTop += item.bottom - viewport.bottom;
+  }, [ready, category, selected?.id]);
+
+  function selectProject(id: string) {
+    setSelectedId(id);
+    if (window.matchMedia("(max-width: 1023px)").matches) {
+      requestAnimationFrame(() => panelRef.current?.scrollIntoView({
+        block: "start",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+      }));
+    }
+  }
+
 
   function selectCategory(next: ProjectCategory) {
     const nextProjects = projectsForCategory(projects, next);
@@ -48,11 +71,11 @@ export default function ProjectHub({ projects }: Props) {
         {ready && <div role="group" aria-label="Project categories" className="mb-8 flex flex-wrap gap-2">
           {([['all', 'All'], ...Object.entries(CATEGORY_MAP)] as [ProjectCategory, string][]).map(([id, label]) => <button key={id} type="button" data-project-category={id} aria-pressed={category === id} onClick={() => selectCategory(id)} className="info-box info-box--filter info-box--interactive min-h-11 max-w-full text-left font-mono text-xs">{label}</button>)}
         </div>}
-        {visible.length === 0 ? <p data-project-empty role="status" className="info-box info-box--panel text-sm text-muted">{projects.length === 0 ? "Projects are being prepared." : "No projects in this category yet."}</p> : ready ? <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.5fr)]">
-          <nav aria-label="Choose a project" className="min-w-0">
-            <ul className="space-y-2">{visible.map((project) => <li key={project.id}><button type="button" data-project-select={project.id} aria-pressed={selected?.id === project.id} aria-controls="project-overview-panel" onClick={() => setSelectedId(project.id)} className="info-box info-box--compact info-box--interactive min-h-11 w-full break-words text-left text-sm"><span className="flex flex-wrap items-center justify-between gap-3"><span data-project-title>{project.title}</span><ProjectStatusBadge status={project.status} /></span></button></li>)}</ul>
+        {visible.length === 0 ? <p data-project-empty role="status" className="info-box info-box--panel text-sm text-muted">{projects.length === 0 ? "Projects are being prepared." : "No projects in this category yet."}</p> : ready ? <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.5fr)]">
+          <nav ref={listRef} aria-label="Choose a project" className="info-box info-box--scroll-list h-[min(240px,40svh)] lg:h-[min(480px,60svh)]">
+            <ul className="space-y-2 p-3">{visible.map((project) => <li key={project.id}><button type="button" data-project-select={project.id} aria-pressed={selected?.id === project.id} aria-controls="project-overview-panel" onClick={() => selectProject(project.id)} className="info-box info-box--compact info-box--interactive min-h-11 w-full break-words text-left text-sm"><span className="flex flex-wrap items-center justify-between gap-3"><span data-project-title>{project.title}</span><ProjectStatusBadge status={project.status} /></span></button></li>)}</ul>
           </nav>
-          <div id="project-overview-panel" aria-live="polite" aria-atomic="true" className="info-box info-box--panel">{selected && <ProjectOverviewPanel project={selected} />}</div>
+          <div ref={panelRef} id="project-overview-panel" aria-live="polite" aria-atomic="true" className="info-box info-box--panel scroll-mt-24 lg:h-[min(480px,60svh)] lg:overflow-y-auto [scrollbar-width:thin] [scrollbar-color:var(--border)_transparent]">{selected && <ProjectOverviewPanel project={selected} />}</div>
         </div> : <div data-project-fallback className="space-y-6">{visible.map((project) => <div key={project.id} className="info-box info-box--panel"><ProjectOverviewPanel project={project} /></div>)}</div>}
       </div>
     </section>

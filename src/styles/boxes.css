@@ -41,6 +41,14 @@
     border-top: 1px solid var(--box-border);
   }
 
+  .info-box--scroll-list {
+    padding: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    scrollbar-gutter: stable;
+  }
+
   .info-box--interactive:hover {
     border-color: var(--primary);
   }

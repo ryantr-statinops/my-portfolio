@@ -15,7 +15,7 @@ Browse repository overviews by category without leaving the homepage until openi
 
 ## Layout and state
 
-Desktop at the lg breakpoint uses a project list beside an overview panel. Smaller screens stack the list above the panel. Categories are All, Software Engineering, Data Engineering, AI Engineering and Other. All is the initial filter.
+Desktop at the lg breakpoint uses a scrollable project list beside an overview panel. The list shares the information-box surface and is capped at min(480px, 60svh). Smaller screens stack a min(240px, 40svh) list above the panel. Each entry is a compact interactive info-box with spacing, keyboard focus and a selected state; the overview matches the list height on desktop and scrolls internally when needed. Below 1024px the overview grows with its content. Selecting a project below 1024px scrolls to the overview with navbar clearance and respects reduced motion. Category changes reveal the selected row within the list without scrolling the page. Categories are All, Software Engineering, Data Engineering, AI Engineering and Other. All is the initial filter.
 
 The list is sorted by ascending positive priority. Initial selection is the first visible project. Changing categories retains the selected ID if present in the next result; otherwise it selects the first result. Empty results clear selection, so switching to a populated category after an empty one selects its first project. Selection and category are local React state and are not persisted or encoded in the URL.
 

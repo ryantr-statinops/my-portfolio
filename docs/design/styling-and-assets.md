@@ -29,9 +29,10 @@ Tailwind is imported by src/styles/global.css and compiled by its Vite plugin. @
 | info-box--filter | Category filters; 12 px vertical and 16 px horizontal padding |
 | info-box--panel | Project overview, prerender fallback and empty state; 24 px padding, 32 px from 768 px |
 | info-box--list | Contact list; no vertical container padding, shared row dividers |
+| info-box--scroll-list | Bounded scroll container with a thin scrollbar and stable gutter |
 | info-box--interactive | Project row and category filter hover, keyboard focus and aria-pressed selection |
 
-Always combine modifiers with info-box. Keep layout and typography on the component; avoid overriding surface properties there. Category filters share the surface and interactive styles. Action buttons, technology chips and status badges remain separate controls.
+Always combine modifiers with info-box. Project entries inside the scroll container use their own compact interactive info-box, with spacing between cards. Keep layout and typography on the component; avoid overriding surface properties there. Category filters share the surface and interactive styles. Action buttons, technology chips and status badges remain separate controls.
 
 ## Desktop content width
 
