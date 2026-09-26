@@ -121,5 +121,20 @@
     "links": {
       "github": "https://github.com/ryantr-statinops/ScrawlNews"
     }
+  },
+  {
+    "id": "agent-skill-library",
+    "title": "Agent Skill Library",
+    "description": "A reusable library of skills and workflows for AI coding agents. Markdown-based instructions and synchronization tooling help share workflows across agent environments.",
+    "category": "ai-engineering",
+    "status": "active",
+    "priority": 80,
+    "stack": [
+      "Markdown",
+      "Python"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/SKILLS"
+    }
   }
 ]
