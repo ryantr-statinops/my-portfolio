@@ -68,5 +68,22 @@
     "links": {
       "github": "https://github.com/ryantr-statinops/InfoBoard"
     }
+  },
+  {
+    "id": "admissions-crm-automation",
+    "title": "Admissions CRM Automation",
+    "description": "A Google Sheets admissions workflow powered by Apps Script. It consolidates records, synchronizes updates and standardizes contact data while tracking source rows.",
+    "category": "data-engineering",
+    "status": "active",
+    "priority": 50,
+    "stack": [
+      "JavaScript",
+      "Google Apps Script",
+      "Google Sheets",
+      "clasp"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/Operation_CRM_Admission"
+    }
   }
 ]
