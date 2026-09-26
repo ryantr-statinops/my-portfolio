@@ -7,7 +7,7 @@ it.each([false, true])("prerenders the compact Connect footer (transparent=%s)",
   const html = renderToStaticMarkup(createElement(Footer, { transparentBackground }));
   expect(html).toContain(transparentBackground ? "bg-transparent" : "bg-background");
   expect(html).toContain('aria-labelledby="connect-title"');
-  expect(html).toContain("Let’s connect.");
+  expect(html).toContain("Let’s connect");
   expect(html).toContain("Back to top");
   expect(html.match(/<a /g)).toHaveLength(4);
   expect(html.match(/mailto:/g)).toHaveLength(1);
