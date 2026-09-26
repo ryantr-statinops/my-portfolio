@@ -20,9 +20,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <section id="about-me" className="flex min-h-screen items-center border-t border-border/30 bg-transparent">
-        <AboutMe />
-      </section>
+      <AboutMe />
       <ProjectHub projects={projects} />
     </>
   );
