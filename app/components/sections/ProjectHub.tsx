@@ -61,7 +61,7 @@ export default function ProjectHub({ projects }: Props) {
   }
 
   return (
-    <section id="projects" data-project-hub aria-labelledby="project-hub-title" className="relative min-h-screen w-full border-t border-border/30 px-6 py-20 md:px-12 lg:px-8">
+    <section id="projects" data-project-hub aria-labelledby="project-hub-title" className="relative min-h-screen w-full px-6 pb-20 pt-28 md:px-12 lg:px-8 lg:pt-36">
       <span id="intelligence-hub" aria-hidden="true" className="absolute left-0 top-0" />
       <div className="mx-auto max-w-7xl lg:max-w-[var(--desktop-content-width)]">
         <header className="mb-10">
