@@ -13,6 +13,7 @@ Set up the workspace and choose checks appropriate to a change.
 ## Pages
 
 - [Local development setup](setup.md)
+- [Testing and visual baselines](testing.md)
 
 ## Source references
 

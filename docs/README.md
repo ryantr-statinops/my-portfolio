@@ -37,6 +37,7 @@ Content authors: data → project catalog. UI changes: features → design. Rele
   - [Styling and assets](design/styling-and-assets.md)
 - [Development](development/README.md)
   - [Local development setup](development/setup.md)
+  - [Testing and visual baselines](development/testing.md)
 
 ## Reference conventions
 
