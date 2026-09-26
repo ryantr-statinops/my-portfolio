@@ -26,7 +26,7 @@ The sitemap contains exactly the homepage. The artifact contains one index.html 
 
 ssr:false means there is no deployed application server. The build still uses the framework server entry, React streaming and the Node stream adapter. isbot chooses stream readiness for bot requests. The entry handles HEAD requests and has a 5000 ms stream timeout plus a 1000 ms abort margin.
 
-ProjectHub initially renders all overview articles (or the catalog empty message). After hydration its effect enables category controls and the selected-project panel. No client request loads project content.
+ProjectHub initially renders all overview articles with lifecycle status and repository links (or the catalog empty message). After hydration its effect enables category controls and the selected-project panel. No client request loads project content.
 
 ## Preview
 

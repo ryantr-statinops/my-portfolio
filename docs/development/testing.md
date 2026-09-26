@@ -2,7 +2,7 @@
 
 [Documentation index](../README.md) · [Section index](README.md)
 
-Validate both the empty production catalog and a populated Hub using isolated test fixtures.
+Validate the twelve-project production catalog and isolated populated/empty Hub fixtures.
 
 ## Contents
 
@@ -17,13 +17,13 @@ Validate both the empty production catalog and a populated Hub using isolated te
 
 | Command | Coverage |
 |---|---|
-| npm run test:unit | Schema, category/selection helpers and static fallback rendering |
+| npm run test:unit | Schema, six lifecycle statuses, published catalog, category/selection helpers and static fallback rendering |
 | npm run check | Route type generation and TypeScript |
 | npm run test:smoke | Production homepage, hashes/mobile/keyboard, legacy 404s, sitemap and populated fixture interactions |
 | npm run test:visual | Dark/light homepage and populated Hub snapshots at three sizes |
 | npm test | Unit, smoke and visual in sequence; excludes type-check |
 
-Unit fallback tests render the real component with ReactDOMServer and ensure all overviews/repo links exist before hydration. Populated browser tests verify order, retained selection, category fallback, clearing stale panels, repo target, keyboard operation and 320 px overflow. A desktop geometry assertion checks that the panel actually sits beside the list.
+Unit fallback tests render the real component with ReactDOMServer and ensure all overviews, lifecycle labels and repository links exist before hydration. Populated browser tests verify order, retained selection, category fallback, clearing stale panels, repo target, keyboard operation and 320 px overflow. A desktop geometry assertion checks that the panel actually sits beside the list.
 
 ## Test environments
 
@@ -33,7 +33,7 @@ CI uses the pinned Playwright 1.63.0 Noble container, one worker and two retries
 
 ## Visual contract
 
-Themes: dark and light. Viewports: desktop 1280×800, tablet 768×1024 and mobile 375×667. Each case captures Hero, About, empty Project Hub, Footer and the populated fixture Hub after selecting Software Later. Videos are paused/hidden, transitions disabled and reveal elements activated.
+Themes: dark and light. Viewports: desktop 1280×800, tablet 768×1024 and mobile 375×667. Each case captures Hero, About, populated Project Hub, Footer and the populated fixture Hub after selecting Software Later. Videos are paused/hidden, transitions disabled and reveal elements activated.
 
 Pixel-ratio allowances remain 0.08 mobile and 0.05 elsewhere, with a 15-second assertion timeout. Dimension changes still matter. Failure traces/screenshots/videos are retained.
 
@@ -41,7 +41,7 @@ Pixel-ratio allowances remain 0.08 mobile and 0.05 elsewhere, with a 15-second a
 
 Inspect expected, actual and diff images before updating. Use npm run test:visual -- --grep "dark tablet" --update-snapshots for a targeted intentional change, inspect changed PNGs, then rerun without update mode. Do not hide failures by raising thresholds. The fixture must have real styles before its baseline is accepted.
 
-Production smoke and homepage snapshots currently assume an empty catalog; update these when first publishing real records. Pure schema/selection and populated-fixture coverage should remain useful.
+Production smoke tests read the validated catalog and check all project selections, statuses and repository links. Static-artifact tests require all twelve overviews in prerendered HTML. Unit tests lock the curated IDs, status assignments, priorities and category counts; update these expectations deliberately when changing the selection. The fixture URL ?empty preserves empty-catalog coverage; the AI category in the populated fixture preserves empty-category coverage.
 
 ## Source references
 

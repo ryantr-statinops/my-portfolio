@@ -21,13 +21,15 @@ The list is sorted by ascending positive priority. Initial selection is the firs
 
 ## Overview and repository
 
-Each panel displays title, category, description, stack and View repository. Description is plain text with line breaks preserved; it is not Markdown. Empty stack arrays hide the stack list. The repository is a required HTTPS GitHub owner/repository URL. Links open in a new tab with noopener/noreferrer and an accessible new-tab hint.
+Each panel displays title, category, lifecycle status, description, stack and View repository. Description is plain text with line breaks preserved; it is not Markdown. Empty stack arrays hide the stack list. The repository is a required HTTPS GitHub owner/repository URL. Links open in a new tab with noopener/noreferrer and an accessible new-tab hint.
+
+A shared badge mapping displays Pending, Building, Active, Paused, Completed or Archived in both the project list and overview. Each badge includes visible text and an accessible “Status:” prefix. Explicit foreground/background color pairs remain readable on selected rows and in both themes. Status does not change sorting or filtering.
 
 ## Empty and static rendering
 
-The production catalog is currently empty. The message is “Projects are being prepared.” An empty category within a populated catalog displays “No projects in this category yet.” No stale overview remains visible.
+The production catalog contains twelve projects across four categories (4 Software Engineering, 2 Data Engineering, 3 AI Engineering and 3 Other). An empty catalog still displays “Projects are being prepared.” An empty category within a populated catalog displays “No projects in this category yet.” No stale overview remains visible.
 
-Before hydration, all projects render as ordered overview articles with usable repository links. Without JavaScript these remain readable. After the readiness effect, category buttons and list/panel selection replace the static presentation. Buttons use aria-pressed and visible keyboard focus; the panel is a polite live region.
+Before hydration, all projects render as ordered overview articles with status labels and usable repository links. Without JavaScript these remain readable. After the readiness effect, category buttons and list/panel selection replace the static presentation. Buttons use aria-pressed and visible keyboard focus; the panel is a polite live region.
 
 ## Navigation
 

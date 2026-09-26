@@ -14,7 +14,7 @@ Ryan Tran’s static single-page portfolio presents a profile and repository ove
 
 ## Current product
 
-The homepage contains Hero, About Me, Project Hub and Connect. Project Hub replaces the former Strategy Hub stages and standalone project registry. Visitors read overviews in a list/panel interface and open GitHub repositories for details. The production catalog is currently empty.
+The homepage contains Hero, About Me, Project Hub and Connect. Project Hub replaces the former Strategy Hub stages and standalone project registry. Visitors read overviews in a list/panel interface and open GitHub repositories for details. The production catalog contains twelve selected projects: four Software Engineering, two Data Engineering, three AI Engineering and three Other. Each overview includes an editorial lifecycle status.
 
 There is no project detail route, Markdown article pipeline, runtime terminal, application backend or database. Old project URLs return a custom 404 linking to the Hub.
 
@@ -32,7 +32,7 @@ app contains routes, components and validated catalog modules. src/lib contains 
 
 - [package.json](../package.json) — `"dependencies"` ([line 21](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/package.json#L21)).
 - [app/routes/home.tsx](../app/routes/home.tsx) — `export default function Home` ([line 19](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/routes/home.tsx#L19)).
-- [app/data/projects.json](../app/data/projects.json) — `[]` ([line 1](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/data/projects.json#L1)).
+- [app/data/projects.json](../app/data/projects.json) — production catalog ([line 1](https://github.com/ryantr-statinops/my-portfolio/blob/24efc0ca6734fc406153cc5b291764af915cda52/app/data/projects.json#L1)).
 
 ## Related documents
 

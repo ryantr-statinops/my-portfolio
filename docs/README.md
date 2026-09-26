@@ -46,7 +46,7 @@ Relative source links open the current file. Symbol permalinks pin a verified so
 
 ## Maintaining documentation
 
-Update behavior, examples, references and index entries with the implementation. Validate JSON examples against Zod; check relative paths, anchors and `git diff --check`. Distinguish fixture data from the empty production catalog. No project detail pages, Markdown article pipeline or runtime terminal are part of the current application.
+Update behavior, examples, references and index entries with the implementation. Validate JSON examples against Zod; check relative paths, anchors and `git diff --check`. Distinguish fixture data from the twelve-project production catalog and document lifecycle status changes. No project detail pages, Markdown article pipeline or runtime terminal are part of the current application.
 
 ## Source references
 
