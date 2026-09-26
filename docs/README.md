@@ -31,6 +31,7 @@ Content authors: data → project catalog. UI changes: features → design. Rele
   - [Strategy Hub](features/strategy-hub.md)
   - [Terminal commands](features/terminal.md)
 - [Data](data/README.md)
+  - [Project content authoring](data/content-authoring.md)
   - [Project data schema](data/project-schema.md)
 
 ## Reference conventions

@@ -12,6 +12,7 @@ Reference metadata contracts and the process for publishing content.
 
 ## Pages
 
+- [Project content authoring](content-authoring.md)
 - [Project data schema](project-schema.md)
 
 ## Source references
