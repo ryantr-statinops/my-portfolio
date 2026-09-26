@@ -211,3 +211,19 @@ test("Connect remains readable without JavaScript", async ({ browser }) => {
   await expect(footer).toContainText("Have an idea, a project");
   await context.close();
 });
+
+test("desktop navbar tracks sections and clears its highlight at the Hero", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("./");
+  const nav = page.getByRole("navigation", { name: "Primary" });
+  const active = nav.locator('[aria-current="true"]');
+  await expect(active).toHaveCount(0);
+  for (const [label, id] of [["ABOUT ME", "about-me"], ["PROJECTS", "projects"], ["CONNECT", "connect"]]) {
+    await nav.getByRole("link", { name: label, exact: true }).click();
+    await expect(active).toHaveCount(1);
+    await expect(active).toHaveAttribute("data-nav-section", id);
+  }
+  await page.getByRole("button", { name: "Scroll to top" }).click();
+  await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
+  await expect(active).toHaveCount(0);
+});
