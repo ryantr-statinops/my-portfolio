@@ -7,7 +7,7 @@ type Props = {
   projects: Project[];
 };
 
-const statusClasses: Record<Project["status"], string> = {
+const statusClasses: Record<string, string> = {
   Production: "border-success/20 bg-success/10 text-success",
   "In Progress": "border-primary/20 bg-primary/10 text-primary",
   Archived: "border-border bg-muted/10 text-muted",

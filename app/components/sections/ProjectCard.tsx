@@ -15,7 +15,7 @@ export default function ProjectCard({ project }: Props) {
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60" />
         <div className="absolute left-4 top-4 flex gap-2">
           <span className="rounded-full border border-border/80 bg-background/60 px-3 py-1 font-mono text-[9px] font-bold uppercase tracking-widest text-primary shadow-xl backdrop-blur-md">{CATEGORY_MAP[project.category] ?? project.category}</span>
-          {project.status === "In Progress" && <span className="animate-pulse rounded-full border border-primary/30 bg-primary/20 px-3 py-1 font-mono text-[9px] font-bold uppercase text-primary">WIP</span>}
+          {String(project.status) === "In Progress" && <span className="animate-pulse rounded-full border border-primary/30 bg-primary/20 px-3 py-1 font-mono text-[9px] font-bold uppercase text-primary">WIP</span>}
         </div>
       </div>
       <div className="flex flex-1 flex-col space-y-4 p-6">

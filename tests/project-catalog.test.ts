@@ -1,50 +1,27 @@
 import { describe, expect, it } from "vitest";
-import { projectCatalogSchema, type Project } from "../app/data/project-schema";
-import { getProjectBySlug, orderedProjects, projects } from "../app/data/projects";
+import { projectCatalogSchema, projectSchema } from "../app/data/project-schema";
 
-const validProject: Project = {
-  id: "new-project",
-  routeSlug: "new-project",
-  title: "A Future Portfolio Project",
-  description: "A project entry used to validate future content against the portfolio contract.",
-  date: "2026-01-01",
-  category: "software-engineering",
-  status: "Research & Development",
-  priority: 1,
-  tags: ["Example"],
-  impact: "A representative impact statement used only in a schema test fixture.",
-  thumbnail: "/images/projects/new-project/thumbnail.webp",
-  links: {},
-  stack: ["TypeScript"],
-};
+const project = { id: "example-project", title: "Example Project", description: "An example overview for schema verification.", category: "software-engineering", priority: 11, stack: ["TypeScript"], links: { github: "https://github.com/example/project" } };
 
-describe("project catalog", () => {
-  it("accepts an empty collection and keeps the scaffold unpopulated", () => {
+describe("project overview catalog", () => {
+  it("accepts empty catalogs and priorities above ten", () => {
     expect(projectCatalogSchema.parse([])).toEqual([]);
-    expect(projects).toEqual([]);
-    expect(orderedProjects).toEqual([]);
-    expect(getProjectBySlug("not-a-project")).toBeUndefined();
+    expect(projectSchema.parse(project).priority).toBe(11);
   });
-
-  it("rejects duplicate IDs, route slugs and priorities", () => {
-    const duplicate = { ...validProject, routeSlug: "new-project", priority: 1 };
-    const result = projectCatalogSchema.safeParse([validProject, duplicate]);
-
+  it("requires unique IDs and priorities", () => {
+    const result = projectCatalogSchema.safeParse([project, project]);
     expect(result.success).toBe(false);
-    if (!result.success) {
-      expect(result.error.issues.map((issue) => issue.message)).toContain("Duplicate route slug: new-project");
-      expect(result.error.issues.map((issue) => issue.message)).toContain("Duplicate priority: 1");
-      expect(result.error.issues.map((issue) => issue.message)).toContain("Duplicate project ID: " + validProject.id);
-    }
+    if (!result.success) expect(result.error.issues.map((issue) => issue.path)).toEqual([[1, "id"], [1, "priority"]]);
   });
-  it("accepts only the four portfolio category IDs", () => {
-    expect(projectCatalogSchema.safeParse([validProject]).success).toBe(true);
-    expect(projectCatalogSchema.safeParse([{ ...validProject, category: "finance-quant" }]).success).toBe(false);
+  it.each([0, -1, 1.5])("rejects invalid priority %s", (priority) => {
+    expect(projectSchema.safeParse({ ...project, priority }).success).toBe(false);
   });
-
-  it("rejects missing required fields and malformed asset paths", () => {
-    const { impact: _impact, ...missingImpact } = validProject;
-    expect(projectCatalogSchema.safeParse([missingImpact]).success).toBe(false);
-    expect(projectCatalogSchema.safeParse([{ ...validProject, thumbnail: "/images/missing.webp" }]).success).toBe(false);
+  it.each(["http://github.com/owner/repo", "https://example.com/owner/repo", "https://github.com/owner", "https://github.com/owner/repo/tree/main", "https://github.com/owner/repo?tab=readme", "https://user:pass@github.com/owner/repo"]) ("rejects non-repository URL %s", (github) => {
+    expect(projectSchema.safeParse({ ...project, links: { github } }).success).toBe(false);
+  });
+  it("requires a repository, supported category and nonempty stack values", () => {
+    expect(projectSchema.safeParse({ ...project, links: {} }).success).toBe(false);
+    expect(projectSchema.safeParse({ ...project, category: "invalid" }).success).toBe(false);
+    expect(projectSchema.safeParse({ ...project, stack: [" "] }).success).toBe(false);
   });
 });
