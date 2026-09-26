@@ -42,7 +42,7 @@ export default function ProjectHub({ projects }: Props) {
       <span id="intelligence-hub" aria-hidden="true" className="absolute left-0 top-0" />
       <div className="mx-auto max-w-7xl lg:max-w-[var(--desktop-content-width)]">
         <header className="mb-10">
-          <h2 id="project-hub-title" className="text-4xl font-bold uppercase tracking-tight md:text-6xl">Project Hub.</h2>
+          <h2 id="project-hub-title" className="text-4xl font-bold uppercase tracking-tight md:text-6xl">Project Hub</h2>
           <p className="mt-4 text-xl font-medium leading-relaxed text-white md:text-2xl [-webkit-text-stroke:0.5px_currentColor] [paint-order:stroke_fill]">Explore projects by domain, read the overview and browse the source repository.</p>
         </header>
         {ready && <div role="group" aria-label="Project categories" className="mb-8 flex flex-wrap gap-2">

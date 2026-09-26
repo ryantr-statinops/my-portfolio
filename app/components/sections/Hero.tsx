@@ -6,7 +6,7 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-5xl">
         <div className="space-y-10">
           <div className="space-y-4 reveal">
-            <h1 className="text-[clamp(2rem,8vw,5rem)] font-bold uppercase leading-[0.9] tracking-tighter">SYSTEMS.<br />OPERATIONS.<br /><span className="text-gradient">INFRASTRUCTURE.</span></h1>
+            <h1 className="text-[clamp(2rem,8vw,5rem)] font-bold uppercase leading-[0.9] tracking-tighter">SYSTEMS<br />OPERATIONS<br /><span className="text-gradient">INFRASTRUCTURE</span></h1>
             <p className="max-w-2xl text-xl font-medium leading-relaxed text-muted md:text-2xl">An Math - Statistics student building<br /><span className="font-semibold italic text-primary">software</span>, <span className="font-semibold italic text-primary">data systems</span>, and <span className="font-semibold italic text-primary">infrastructure</span><br />across <span className="text-gradient">quantitative research</span> and <span className="font-semibold italic text-primary">AI-native</span> tooling.</p>
           </div>
           <div className="space-y-2 pt-2 reveal">
