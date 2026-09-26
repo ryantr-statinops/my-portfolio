@@ -22,7 +22,11 @@ Built with React and TypeScript, prerendered with React Router and published as 
 
 ## About the project
 
-The homepage has four areas: **Hero → About Me → Project Hub → Connect**. Its visual style uses monospace typography, structured content, theme controls and a homepage video with a reduced-motion poster fallback.
+The homepage has four areas: **Hero → About Me → Project Hub → Connect**.
+
+**About Me** introduces a Statistics student exploring Data, AI and Software, with a short education entry and availability for internship and entry-level opportunities. Profile and contact cards sit above six Current Focus cards: Backend Engineering, Data Engineering, AI Engineering, Infrastructure, Quantitative Analytics and Statistics → Engineering. LinkedIn, GitHub, email and telephone links provide direct contact options. The full profile remains readable without JavaScript.
+
+The site’s visual style uses monospace typography, structured content, theme controls and a homepage video with a reduced-motion poster fallback.
 
 The site is served beneath `/my-portfolio/` and needs no production application server or database. There is one application route: the homepage. Project details live in the linked GitHub repositories.
 

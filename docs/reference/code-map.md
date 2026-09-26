@@ -51,7 +51,6 @@ Relative links open the working copy; permalinks identify exact source locations
 | [tests/project-catalog.test.ts](../../tests/project-catalog.test.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/project-catalog.test.ts#L7) |
 | [tests/project-hub-render.test.ts](../../tests/project-hub-render.test.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/project-hub-render.test.ts#L10) |
 | [tests/project-hub.test.ts](../../tests/project-hub.test.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/61d2f0700d82eb1fc892d99256578d06352d56cc/tests/project-hub.test.ts#L10) |
-
 | [tests/about-render.test.ts](../../tests/about-render.test.ts) | [entry](https://github.com/ryantr-statinops/my-portfolio/blob/8fceddadcb5a368eb6fc155954840582ead88b61/tests/about-render.test.ts#L6) |
 
 ## Other inputs
