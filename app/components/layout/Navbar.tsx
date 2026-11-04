@@ -36,23 +36,34 @@ export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menu
             : "border-border/40 bg-background/70 shadow-lg backdrop-blur-lg scale-100"
         }`}
       >
-        {/* Left: Brand + Menu */}
-        <div className="flex items-center gap-4 sm:gap-6">
+        {/* Left: Brand & Live Status + Menu */}
+        <div className="flex items-center gap-3 sm:gap-4">
           <Link
             to="/"
-            className="flex items-center gap-2.5 font-bold tracking-tight text-foreground transition-opacity hover:opacity-80"
+            className="flex items-center gap-2.5 font-bold tracking-tight text-foreground transition-opacity hover:opacity-85"
             aria-label="Ryan Tran — Home"
           >
-            <img
-              src={`${import.meta.env.BASE_URL}images/avt.webp`}
-              alt=""
-              className="h-8 w-8 shrink-0 rounded-full object-cover ring-1 ring-border"
-              width="32"
-              height="32"
-            />
-            <span className="font-mono text-sm font-bold uppercase tracking-wider text-foreground">
-              RYAN TRAN
-            </span>
+            <div className="relative shrink-0">
+              <img
+                src={`${import.meta.env.BASE_URL}images/avt.webp`}
+                alt=""
+                className="h-7 w-7 md:h-8 md:w-8 rounded-full object-cover ring-1 ring-border/80"
+                width="32"
+                height="32"
+              />
+              <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-background"></span>
+              </span>
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="font-mono text-xs md:text-sm font-bold uppercase tracking-wider text-foreground leading-none">
+                RYAN TRAN
+              </span>
+              <span className="hidden sm:inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-widest text-emerald-500 font-semibold mt-1 leading-none">
+                AVAILABLE
+              </span>
+            </div>
           </Link>
 
           <button
@@ -63,12 +74,12 @@ export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menu
             aria-label="Open menu"
             aria-controls="mobile-nav-overlay"
             aria-expanded={menuOpen}
-            className="info-box info-box--compact inline-flex h-9 items-center gap-2 rounded-full px-3.5 text-xs font-mono font-medium tracking-wide text-foreground transition-colors hover:border-primary/50"
+            className="group inline-flex h-7 md:h-8 items-center gap-1.5 rounded-full border border-border/50 bg-surface/60 px-2.5 text-xs font-mono font-medium tracking-wide text-foreground transition-all hover:bg-surface hover:border-primary/40"
           >
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="transition-transform group-hover:scale-110">
               <path d="M4 7h16M4 17h10" />
             </svg>
-            <span>Menu</span>
+            <span className="hidden sm:inline text-[11px]">Menu</span>
           </button>
         </div>
 
