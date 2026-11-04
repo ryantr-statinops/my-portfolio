@@ -83,15 +83,15 @@ export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menu
           </button>
         </div>
 
-        {/* Center: Desktop/Tablet Navigation */}
-        <nav aria-label="Primary" className="hidden md:flex items-center gap-5 lg:gap-6">
+        {/* Center: Desktop/Tablet Navigation Dock Tabs */}
+        <nav aria-label="Primary" className="hidden md:flex items-center gap-1 rounded-full border border-border/40 bg-surface/40 p-1 backdrop-blur-sm">
           {navItems.map((item) => (
             <Link
               key={item.sectionId}
               to={`/#${item.sectionId}`}
               onClick={(event) => onNavigateToSection(event, item.sectionId)}
               data-nav-section={item.sectionId}
-              className="nav-control nav-section-link inline-flex items-center font-mono text-xs font-medium tracking-wider text-muted hover:text-foreground transition-colors"
+              className="nav-control nav-section-link inline-flex items-center rounded-full px-3 py-1 font-mono text-xs font-semibold tracking-wider text-muted hover:text-foreground transition-all duration-200"
             >
               {item.label}
             </Link>
