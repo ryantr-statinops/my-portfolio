@@ -11,39 +11,26 @@ This skill defines specialized operating modes for AI agents working within the 
 
 ## 1. Role Matrix Overview
 
-```
-[Task Request]
-      │
-      ▼
-┌──────────────┐
-│  Architect   │ ──► System design, schema design, routing & layout planning
-└──────┬───────┘
-      │
-      ▼
-┌──────────────┐
-│   Designer   │ ──► UI/UX layout, design system, theme cohesion, micro-interactions
-└──────┬───────┘
-      │
-      ▼
-┌──────────────┐
-│ Implementer  │ ──► React 19, Tailwind v4, TypeScript component & logic authoring
-└──────┬───────┘
-      │
-      ▼
-┌──────────────┐
-│   Reviewer   │ ──► Code hygiene, Zod schema compliance, security, zero-regression
-└──────┬───────┘
-      │
-      ▼
-┌──────────────┐
-│    Tester    │ ──► Vitest unit tests, Playwright smoke, E2E & visual validation
-└──────────────┘
+```mermaid
+flowchart TD
+    TR([Task Request]) --> ARC["Architect<br>(ref: #role-architect)<br>• System & Schema Design"]
+    ARC --> DES["Frontend Designer<br>(ref: #role-designer)<br>• UI/UX, Theme & Styling"]
+    DES --> IMP["Implementer<br>(ref: #role-implementer)<br>• Component & Logic Authoring"]
+    IMP --> REV["Reviewer<br>(ref: #role-reviewer)<br>• Types, Lint & Schema Validation"]
+    REV --> TST["Tester<br>(ref: #role-tester)<br>• Unit, Smoke & E2E Tests"]
+
+    click ARC href "#role-architect" "Jump to Architect section"
+    click DES href "#role-designer" "Jump to Designer section"
+    click IMP href "#role-implementer" "Jump to Implementer section"
+    click REV href "#role-reviewer" "Jump to Reviewer section"
+    click TST href "#role-tester" "Jump to Tester section"
 ```
 
 ---
 
 ## 2. Personas & Operating Protocols
 
+<a id="role-architect"></a>
 ### Role: Architect
 - **Trigger**: New features, architectural refactors, data modeling, routing updates, or broad structural changes.
 - **Responsibilities**:
@@ -55,6 +42,7 @@ This skill defines specialized operating modes for AI agents working within the 
 
 ---
 
+<a id="role-designer"></a>
 ### Role: Frontend Designer (UI/UX Specialist)
 - **Trigger**: UI/UX overhauls, new section designs, theme/color palette adjustments, responsive layout tuning, and interactive animations.
 - **Responsibilities**:
@@ -66,6 +54,7 @@ This skill defines specialized operating modes for AI agents working within the 
 - **Deliverables**: UI wireframe specs, Tailwind styling guidance, spacing/color palette rules, component visual mockups.
 ---
 
+<a id="role-implementer"></a>
 ### Role: Implementer (Developer)
 - **Trigger**: Writing, editing, or refactoring components, styles, data, or utility functions.
 - **Responsibilities**:
@@ -78,6 +67,7 @@ This skill defines specialized operating modes for AI agents working within the 
 
 ---
 
+<a id="role-reviewer"></a>
 ### Role: Reviewer (Code Auditor)
 - **Trigger**: Post-implementation verification or pre-commit checks.
 - **Responsibilities**:
@@ -89,6 +79,7 @@ This skill defines specialized operating modes for AI agents working within the 
 
 ---
 
+<a id="role-tester"></a>
 ### Role: Tester (QA Engineer)
 - **Trigger**: Verification of bug fixes, features, or UI layout changes.
 - **Responsibilities**:
