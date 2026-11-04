@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import MobileOverlay from "./MobileOverlay";
 import Navbar from "./Navbar";
 import VideoBackground from "../interactive/VideoBackground";
+import VerticalStepper from "./VerticalStepper";
 
 export default function SiteShell({ children }: { children: React.ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -94,6 +95,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
       {isHomePage && <VideoBackground />}
       <a href="#main-content" className="sr-only fixed left-2 top-2 z-[60] rounded-full bg-foreground px-3 py-1 text-background focus:not-sr-only">Skip to content</a>
       <Navbar menuOpen={menuOpen} menuButtonRef={menuButton} onOpenMenu={() => setMenuOpen(true)} onNavigateToSection={navigateToHomeSection} />
+      {isHomePage && <VerticalStepper onNavigate={navigateToHomeSection} />}
       <MobileOverlay open={menuOpen} onClose={(restoreFocus = true) => {
         setMenuOpen(false);
         if (restoreFocus) menuButton.current?.focus();
