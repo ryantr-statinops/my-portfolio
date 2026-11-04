@@ -98,12 +98,13 @@ export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menu
           ))}
         </nav>
 
-        {/* Right: Search button + Volume/Theme Toggle */}
-        <div className="flex items-center gap-2.5">
+        {/* Right: Search button + Theme Toggle */}
+        <div className="flex items-center gap-1.5 md:gap-2">
           <button
             type="button"
             aria-label="Search catalog"
-            className="info-box inline-flex h-9 w-9 items-center justify-center !p-0 rounded-full text-foreground transition-colors hover:border-primary/50"
+            title="Search catalog"
+            className="inline-flex h-7 w-7 md:h-8 md:w-8 items-center justify-center rounded-full border border-border/50 bg-surface/60 text-foreground transition-all hover:bg-surface hover:border-primary/40 active:scale-95"
             onClick={() => {
               const projectsSection = document.getElementById("projects");
               if (projectsSection) {
@@ -111,7 +112,7 @@ export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menu
               }
             }}
           >
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8" />
               <path d="m21 21-4.3-4.3" />
             </svg>
@@ -119,7 +120,7 @@ export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menu
 
           <ThemeToggle
             id="navbar-theme-toggle"
-            className="info-box inline-flex h-9 w-9 items-center justify-center !p-0 rounded-full text-foreground transition-colors hover:border-primary/50"
+            className="inline-flex h-7 w-7 md:h-8 md:w-8 items-center justify-center rounded-full border border-border/50 bg-surface/60 text-foreground transition-all hover:bg-surface hover:border-primary/40 active:scale-95"
           />
         </div>
       </div>
