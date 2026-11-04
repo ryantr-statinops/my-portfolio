@@ -1,12 +1,12 @@
 import type { ProjectStatus } from "../data/project-schema";
 
 export const PROJECT_STATUS = {
-  pending: { label: "Pending", color: "border-neutral-300 bg-neutral-100 text-neutral-800" },
-  building: { label: "Building", color: "border-amber-300 bg-amber-100 text-amber-900" },
-  active: { label: "Active", color: "border-emerald-300 bg-emerald-100 text-emerald-900" },
-  paused: { label: "Paused", color: "border-orange-300 bg-orange-100 text-orange-900" },
-  completed: { label: "Completed", color: "border-blue-300 bg-blue-100 text-blue-900" },
-  archived: { label: "Archived", color: "border-slate-300 bg-slate-100 text-slate-800" },
+  pending: { label: "Pending", color: "border-border/60 bg-surface/80 text-muted" },
+  building: { label: "Building", color: "border-amber-500/40 bg-amber-500/10 text-amber-500 dark:text-amber-400" },
+  active: { label: "Active", color: "border-accent/40 bg-accent/10 text-accent" },
+  paused: { label: "Paused", color: "border-orange-500/40 bg-orange-500/10 text-orange-500 dark:text-orange-400" },
+  completed: { label: "Completed", color: "border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" },
+  archived: { label: "Archived", color: "border-border/40 bg-surface/40 text-muted/70" },
 } satisfies Record<ProjectStatus, { label: string; color: string }>;
 
 export default function ProjectStatusBadge({ status }: { status: ProjectStatus }) {

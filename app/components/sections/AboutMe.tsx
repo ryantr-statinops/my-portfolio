@@ -26,14 +26,18 @@ export default function AboutMe() {
           </h3>
           <div data-about-profile-grid className="grid gap-4">
             <article data-about-profile className="info-box">
-              <p className="text-sm leading-relaxed text-white">I study Statistics and explore how mathematical ideas become practical tools across data, quantitative research and AI. Mathematics and statistics give me a foundation for understanding problems; programming and engineering help me turn that understanding into working software.</p>
+              <p className="text-sm leading-relaxed text-foreground">I study Statistics and explore how mathematical ideas become practical tools across data, quantitative research and AI. Mathematics and statistics give me a foundation for understanding problems; programming and engineering help me turn that understanding into working software.</p>
               <div className="mt-5 border-t border-border pt-4">
                 <h4 className="text-base font-semibold">BSc in Statistics</h4>
                 <p className="mt-2 text-sm leading-relaxed text-muted">Ton Duc Thang University<br />Faculty of Mathematics &amp; Statistics · 2024–Present</p>
               </div>
             </article>
             <article data-about-contact className="info-box">
-              <h3 className="text-2xl font-bold leading-tight tracking-tight">Open to work</h3>
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+                <span className="font-mono text-xs uppercase tracking-widest text-accent font-semibold">Active Status</span>
+              </div>
+              <h3 className="mt-1 text-2xl font-bold leading-tight tracking-tight">Open to work</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted">Open to internship and entry-level opportunities in data, AI and software engineering.</p>
               <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1">
                 {contacts.map((contact) => (
@@ -52,8 +56,8 @@ export default function AboutMe() {
           <h3 id="current-focus-title" className="mb-4 text-[22px] font-semibold">Current Focus</h3>
           <div data-focus-grid className="grid gap-3">
             {focusAreas.map((area) => (
-              <article data-focus-card key={area.title} className="info-box info-box--compact">
-                <h4 className="text-base font-semibold">{area.title}</h4>
+              <article data-focus-card key={area.title} className="info-box info-box--compact transition-all duration-200 hover:border-accent/40 hover:shadow-[0_0_15px_rgba(var(--accent-rgb),0.1)]">
+                <h4 className="text-base font-semibold text-foreground group-hover:text-accent transition-colors">{area.title}</h4>
                 <p className="mt-1 text-sm leading-relaxed text-muted">{area.description}</p>
               </article>
             ))}

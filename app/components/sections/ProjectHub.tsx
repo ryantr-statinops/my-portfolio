@@ -14,9 +14,9 @@ function ProjectOverviewPanel({ project }: { project: ProjectOverview }) {
       <h3 className="text-2xl font-bold tracking-tight md:text-3xl">{project.title}</h3>
       <p className="whitespace-pre-line text-sm leading-relaxed text-muted">{project.description}</p>
       {project.stack.length > 0 && <ul aria-label="Tech stack" className="flex flex-wrap gap-2">
-        {project.stack.map((technology, index) => <li key={`${technology}-${index}`} className="max-w-full rounded border border-border px-3 py-1 font-mono text-xs">{technology}</li>)}
+        {project.stack.map((technology, index) => <li key={`${technology}-${index}`} className="max-w-full rounded border border-border/80 bg-surface/50 px-3 py-1 font-mono text-xs text-muted hover:border-accent hover:text-accent transition-colors">{technology}</li>)}
       </ul>}
-      <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded border border-primary px-4 py-3 text-sm font-semibold transition-colors hover:bg-primary hover:text-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+      <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border/80 px-6 py-2.5 text-xs font-mono font-bold uppercase tracking-wider text-foreground transition-all hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(var(--accent-rgb),0.25)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">
         View repository <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span>
       </a>
     </article>
