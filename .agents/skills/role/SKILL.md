@@ -13,11 +13,18 @@ This skill defines specialized operating modes for AI agents working within the 
 
 ```mermaid
 flowchart TD
-    TR([Task Request]) --> ARC["Architect<br>(ref: #role-architect)<br>• System & Schema Design"]
-    ARC --> DES["Frontend Designer<br>(ref: #role-designer)<br>• UI/UX, Theme & Styling"]
-    DES --> IMP["Implementer<br>(ref: #role-implementer)<br>• Component & Logic Authoring"]
-    IMP --> REV["Reviewer<br>(ref: #role-reviewer)<br>• Types, Lint & Schema Validation"]
-    REV --> TST["Tester<br>(ref: #role-tester)<br>• Unit, Smoke & E2E Tests"]
+    TR([Task Request]) --> DISPATCHER{Task Classifier}
+
+    DISPATCHER -- "New Module / Architecture" --> ARC["Architect<br>(ref: #role-architect)<br>• System & Schema Design"]
+    DISPATCHER -- "UI/UX & Styling" --> DES["Frontend Designer<br>(ref: #role-designer)<br>• Layout, Theme & Visuals"]
+    DISPATCHER -- "Code Logic / Bug Fix" --> IMP["Implementer<br>(ref: #role-implementer)<br>• Component & Logic Authoring"]
+    DISPATCHER -- "Pre-commit / Type Check" --> REV["Reviewer<br>(ref: #role-reviewer)<br>• Types, Schema & Code Audit"]
+    DISPATCHER -- "Verification / QA" --> TST["Tester<br>(ref: #role-tester)<br>• Unit, Smoke & Visual Tests"]
+
+    ARC -.-> DES
+    DES -.-> IMP
+    IMP -.-> REV
+    REV -.-> TST
 
     click ARC href "#role-architect" "Jump to Architect section"
     click DES href "#role-designer" "Jump to Designer section"
@@ -91,12 +98,18 @@ flowchart TD
 
 ---
 
-## 3. Dynamic Switching Protocol
+## 3. Dynamic Task-Based Dispatching Matrix
 
-When handling a user request, proceed through the roles in sequential gates:
+Agents MUST NOT walk through all roles sequentially for every request. Instead, classify the task scope and activate only the necessary role chain:
 
-1. **Inception / Planning**: Assume **Architect** to evaluate scope, constraints, and impact on contracts.
-2. **Design / Prototyping**: Assume **Frontend Designer** to specify layout, responsive behavior, typography, and theme styling.
-3. **Execution**: Assume **Implementer** to execute surgical edits adhering to the stack and design specs.
-4. **Auditing**: Assume **Reviewer** to inspect types, styling consistency, and schema rules.
-5. **Verification**: Assume **Tester** to run tests and smoke verification before completion.
+| Task Scope | Active Role Chain | Verification Gate |
+| :--- | :--- | :--- |
+| **Full Feature / New Module** | `Architect` ➔ `Designer` ➔ `Implementer` ➔ `Reviewer` ➔ `Tester` | `npm run check && npm run test` |
+| **UI / UX / Styling Tweak** | `Designer` ➔ `Implementer` ➔ `Tester` | Visual / responsive smoke check |
+| **Logic Bug Fix** | `Implementer` ➔ `Reviewer` ➔ `Tester` | Unit test (`npm run test:unit`) |
+| **Architecture / Schema Refactor** | `Architect` ➔ `Implementer` ➔ `Reviewer` | `npm run check` & Zod schema validation |
+| **Code Review / Audit** | `Reviewer` | Typegen & lint audit |
+| **Minor Copy / Doc Edit** | `Implementer` | Diff inspection |
+
+### Execution Rule
+Jump directly to the entry role indicated by the task scope above, perform the focused responsibility, and hand off only to downstream roles required by the verification gate.
