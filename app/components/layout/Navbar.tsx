@@ -1,4 +1,4 @@
-import type { MouseEvent, RefObject } from "react";
+import { useEffect, useState, type MouseEvent, RefObject } from "react";
 import { Link } from "react-router";
 import ThemeToggle from "./ThemeToggle";
 
@@ -16,9 +16,26 @@ type Props = {
 };
 
 export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menuButtonRef }: Props) {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    function handleScroll() {
+      setIsScrolled(window.scrollY > 20);
+    }
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="pointer-events-none fixed left-0 top-0 z-50 w-full px-6 py-4 md:px-10 lg:px-12">
-      <div className="pointer-events-auto mx-auto flex w-full max-w-7xl items-center justify-between">
+    <header className="pointer-events-none fixed left-0 top-0 z-50 flex w-full justify-center px-3 pt-3 md:pt-4">
+      <div
+        className={`info-box pointer-events-auto flex items-center justify-between gap-3 rounded-full !py-1.5 px-3 md:gap-6 md:!py-2 md:px-5 transition-all duration-300 ${
+          isScrolled
+            ? "border-border/80 bg-background/90 shadow-2xl backdrop-blur-xl scale-[0.98]"
+            : "border-border/40 bg-background/70 shadow-lg backdrop-blur-lg scale-100"
+        }`}
+      >
         {/* Left: Brand + Menu */}
         <div className="flex items-center gap-4 sm:gap-6">
           <Link
