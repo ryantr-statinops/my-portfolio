@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./boxes.css";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {
   font-family: "JetBrains Mono Local";
@@ -62,19 +63,6 @@
   --muted: #a3a3a3;
 }
 
-:root.homepage-video:not(.dark) {
-  --background: #0a0a0a;
-  --foreground: #ffffff;
-  --surface: #161616;
-  --card: #161616;
-  --border: #404040;
-  --primary: #ffffff;
-  --primary-rgb: 255, 255, 255;
-  --background-rgb: 10, 10, 10;
-  --success: #10b981;
-  --success-rgb: 16, 185, 129;
-  --muted: #a3a3a3;
-}
 
 @layer base {
   body {

@@ -22,8 +22,9 @@ export default function VideoBackground() {
   const poster = `${import.meta.env.BASE_URL}images/black-hole-poster.jpg`;
   return (
     <div data-video-background aria-hidden="true" className="video-background fixed inset-0 z-0 overflow-hidden pointer-events-none">
-      <img data-video-poster src={poster} alt="" className="background-media absolute inset-0 h-full w-full object-cover" />
-      <video ref={video} data-background-video className="background-media background-video absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="none" poster={poster} tabIndex={-1}>
+      <div className="absolute inset-0 bg-background/80 dark:bg-transparent z-10 transition-colors duration-300 pointer-events-none" />
+      <img data-video-poster src={poster} alt="" className="background-media absolute inset-0 h-full w-full object-cover dark:opacity-100 opacity-25 transition-opacity duration-300" />
+      <video ref={video} data-background-video className="background-media background-video absolute inset-0 h-full w-full object-cover dark:opacity-100 opacity-25 transition-opacity duration-300" autoPlay muted loop playsInline preload="none" poster={poster} tabIndex={-1}>
         <source src={`${import.meta.env.BASE_URL}videos/black-hole.webm`} type="video/webm" />
       </video>
     </div>
