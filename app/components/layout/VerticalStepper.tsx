@@ -83,8 +83,8 @@ export default function VerticalStepper({ onNavigate }: Props) {
               <div className="relative flex h-[15px] w-[15px] items-center justify-center shrink-0">
                 {isActive ? (
                   <span className="relative flex h-2.5 w-2.5 items-center justify-center">
-                    <span className="absolute inline-flex h-4 w-4 rounded-full bg-foreground/15 ring-1 ring-foreground/25 animate-pulse" />
-                    <span className="relative h-2.5 w-2.5 rounded-full border-2 border-foreground bg-background" />
+                    <span className="absolute inline-flex h-4 w-4 rounded-full bg-accent/20 ring-1 ring-accent/40 animate-pulse" />
+                    <span className="relative h-2.5 w-2.5 rounded-full border-2 border-accent bg-background" />
                   </span>
                 ) : (
                   <span className="h-1.5 w-1.5 rounded-full bg-transparent group-hover:bg-muted/40 transition-colors" />
@@ -95,8 +95,8 @@ export default function VerticalStepper({ onNavigate }: Props) {
               <span
                 className={`tracking-wider text-xs font-mono transition-all duration-200 ${
                   isActive
-                    ? "!text-foreground font-bold translate-x-1"
-                    : "!text-muted/60 group-hover:!text-muted group-hover:translate-x-0.5"
+                    ? "!text-accent font-bold translate-x-1"
+                    : "!text-muted/60 group-hover:!text-foreground group-hover:translate-x-0.5"
                 }`}
               >
                 {item.label}

@@ -67,7 +67,7 @@ export default function Navbar({ onOpenMenu, menuOpen, menuButtonRef }: Props) {
             type="button"
             aria-label="Search catalog"
             title="Search catalog"
-            className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-border/80 bg-background/50 backdrop-blur-sm text-foreground transition-all hover:border-foreground hover:scale-105 active:scale-95 cursor-pointer"
+            className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-border/80 bg-background/50 backdrop-blur-sm text-foreground transition-all hover:border-accent hover:shadow-[0_0_12px_rgba(var(--accent-rgb),0.35)] hover:scale-105 active:scale-95 cursor-pointer"
             onClick={() => {
               const projectsSection = document.getElementById("projects");
               if (projectsSection) {
@@ -93,7 +93,7 @@ export default function Navbar({ onOpenMenu, menuOpen, menuButtonRef }: Props) {
 
           <ThemeToggle
             id="navbar-theme-toggle"
-            className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-border/80 bg-background/50 backdrop-blur-sm text-foreground transition-all hover:border-foreground hover:scale-105 active:scale-95 cursor-pointer"
+            className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-border/80 bg-background/50 backdrop-blur-sm text-foreground transition-all hover:border-accent hover:shadow-[0_0_12px_rgba(var(--accent-rgb),0.35)] hover:scale-105 active:scale-95 cursor-pointer"
           />
         </div>
       </div>
