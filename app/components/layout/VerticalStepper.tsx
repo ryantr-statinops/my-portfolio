@@ -2,10 +2,10 @@ import { useEffect, useState, type MouseEvent } from "react";
 import { Link } from "react-router";
 
 const sections = [
-  { id: "main", label: "Intro" },
-  { id: "about-me", label: "Expertise" },
-  { id: "projects", label: "Projects" },
-  { id: "connect", label: "Contact" },
+  { id: "main", label: "Intro", isSectionTarget: false },
+  { id: "about-me", label: "ABOUT ME", isSectionTarget: true },
+  { id: "projects", label: "PROJECTS", isSectionTarget: true },
+  { id: "connect", label: "CONNECT", isSectionTarget: true },
 ];
 
 type Props = {
@@ -54,8 +54,8 @@ export default function VerticalStepper({ onNavigate }: Props) {
   }, []);
 
   return (
-    <aside
-      aria-label="Section indicators"
+    <nav
+      aria-label="Primary"
       className="fixed left-6 md:left-8 lg:left-12 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-start select-none pointer-events-auto"
     >
       <div className="relative flex flex-col gap-6 pl-4 font-mono text-xs">
@@ -68,6 +68,7 @@ export default function VerticalStepper({ onNavigate }: Props) {
             <Link
               key={item.id}
               to={`/#${item.id}`}
+              data-nav-section={item.isSectionTarget ? item.id : undefined}
               onClick={(e) => {
                 if (onNavigate) {
                   onNavigate(e, item.id);
@@ -76,7 +77,7 @@ export default function VerticalStepper({ onNavigate }: Props) {
                   document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
                 }
               }}
-              className={`group flex items-center gap-2 transition-all duration-200 ${
+              className={`nav-control ${item.isSectionTarget ? "nav-section-link" : ""} group flex items-center gap-2 transition-all duration-200 !min-h-0 py-1 ${
                 isActive
                   ? "font-semibold text-foreground translate-x-1"
                   : "text-muted/60 hover:text-muted hover:translate-x-0.5"
@@ -95,6 +96,6 @@ export default function VerticalStepper({ onNavigate }: Props) {
           );
         })}
       </div>
-    </aside>
+    </nav>
   );
 }
