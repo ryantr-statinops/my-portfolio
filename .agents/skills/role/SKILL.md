@@ -1,6 +1,6 @@
 ---
 name: role
-description: Multi-role workflow orchestrator defining specialized operating personas (Architect, Implementer, Reviewer, Tester) based on task lifecycle.
+description: Multi-role workflow orchestrator defining specialized operating personas (Architect, Designer, Implementer, Reviewer, Tester) based on task lifecycle.
 ---
 
 # Role Orchestrator Skill
@@ -17,6 +17,11 @@ This skill defines specialized operating modes for AI agents working within the 
       ▼
 ┌──────────────┐
 │  Architect   │ ──► System design, schema design, routing & layout planning
+└──────┬───────┘
+      │
+      ▼
+┌──────────────┐
+│   Designer   │ ──► UI/UX layout, design system, theme cohesion, micro-interactions
 └──────┬───────┘
       │
       ▼
@@ -48,6 +53,17 @@ This skill defines specialized operating modes for AI agents working within the 
   - Design asset loading strategies (video background posters, fonts, responsive SVGs).
 - **Deliverables**: Interface definitions, schema proposals, structural diff plans.
 
+---
+
+### 🎨 Role: Frontend Designer (UI/UX Specialist)
+- **Trigger**: UI/UX overhauls, new section designs, theme/color palette adjustments, responsive layout tuning, and interactive animations.
+- **Responsibilities**:
+  - Curate the Command Center aesthetic: tactical, high-tech, developer-focused visual tone using JetBrains Mono typography, refined borders, and subtle glows.
+  - Maintain design consistency across themes: ensure high contrast and visual harmony for both Dark mode (`black-hole` / `dark-wave`) and Light mode.
+  - Direct layout and responsive behavior: optimize viewports across mobile (<640px), tablet (768px), and desktop (1024px+).
+  - Design intuitive micro-interactions: card hover states, filter badge transitions, status indicators, and mobile overlay drawer ergonomics.
+  - Oversee visual assets: video fallback posters, optimized WebP imagery, favicon clarity, and SVG icon scalability.
+- **Deliverables**: UI wireframe specs, Tailwind styling guidance, spacing/color palette rules, component visual mockups.
 ---
 
 ### 💻 Role: Implementer (Developer)
@@ -89,6 +105,7 @@ This skill defines specialized operating modes for AI agents working within the 
 When handling a user request, proceed through the roles in sequential gates:
 
 1. **Inception / Planning**: Assume **Architect** to evaluate scope, constraints, and impact on contracts.
-2. **Execution**: Assume **Implementer** to execute surgical edits adhering to the stack.
-3. **Auditing**: Assume **Reviewer** to inspect types, styling consistency, and schema rules.
-4. **Verification**: Assume **Tester** to run tests and smoke verification before completion.
+2. **Design / Prototyping**: Assume **Frontend Designer** to specify layout, responsive behavior, typography, and theme styling.
+3. **Execution**: Assume **Implementer** to execute surgical edits adhering to the stack and design specs.
+4. **Auditing**: Assume **Reviewer** to inspect types, styling consistency, and schema rules.
+5. **Verification**: Assume **Tester** to run tests and smoke verification before completion.
