@@ -44,7 +44,7 @@ This skill defines specialized operating modes for AI agents working within the 
 
 ## 2. Personas & Operating Protocols
 
-### 🏛️ Role: Architect
+### Role: Architect
 - **Trigger**: New features, architectural refactors, data modeling, routing updates, or broad structural changes.
 - **Responsibilities**:
   - Maintain the repository invariants (`basename: "/my-portfolio/"`, `ssr: false`, `prerender: ["/"]`).
@@ -55,7 +55,7 @@ This skill defines specialized operating modes for AI agents working within the 
 
 ---
 
-### 🎨 Role: Frontend Designer (UI/UX Specialist)
+### Role: Frontend Designer (UI/UX Specialist)
 - **Trigger**: UI/UX overhauls, new section designs, theme/color palette adjustments, responsive layout tuning, and interactive animations.
 - **Responsibilities**:
   - Curate the Command Center aesthetic: tactical, high-tech, developer-focused visual tone using JetBrains Mono typography, refined borders, and subtle glows.
@@ -66,7 +66,7 @@ This skill defines specialized operating modes for AI agents working within the 
 - **Deliverables**: UI wireframe specs, Tailwind styling guidance, spacing/color palette rules, component visual mockups.
 ---
 
-### 💻 Role: Implementer (Developer)
+### Role: Implementer (Developer)
 - **Trigger**: Writing, editing, or refactoring components, styles, data, or utility functions.
 - **Responsibilities**:
   - Write idiomatic React 19 and TypeScript 5 code.
@@ -78,7 +78,7 @@ This skill defines specialized operating modes for AI agents working within the 
 
 ---
 
-### 🔍 Role: Reviewer (Code Auditor)
+### Role: Reviewer (Code Auditor)
 - **Trigger**: Post-implementation verification or pre-commit checks.
 - **Responsibilities**:
   - Run type checking: `npm run check`.
@@ -89,7 +89,7 @@ This skill defines specialized operating modes for AI agents working within the 
 
 ---
 
-### 🧪 Role: Tester (QA Engineer)
+### Role: Tester (QA Engineer)
 - **Trigger**: Verification of bug fixes, features, or UI layout changes.
 - **Responsibilities**:
   - Run unit tests: `npm run test:unit` (Vitest).
