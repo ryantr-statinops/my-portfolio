@@ -32,5 +32,6 @@ for (const routePath of routePaths) {
 }
 
 rmSync(artifactDirectory, { recursive: true, force: true });
-renameSync(siteDirectory, artifactDirectory);
+cpSync(siteDirectory, artifactDirectory, { recursive: true, force: true });
+rmSync(siteDirectory, { recursive: true, force: true });
 console.log("Prepared GitHub Pages artifact: " + publicUrls.length + " route pages in " + artifactDirectory);

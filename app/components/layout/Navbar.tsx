@@ -55,8 +55,8 @@ export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menu
           </button>
         </div>
 
-        {/* Center: Desktop Navigation */}
-        <nav aria-label="Primary" className="hidden lg:flex items-center gap-6">
+        {/* Center: Desktop/Tablet Navigation */}
+        <nav aria-label="Primary" className="hidden md:flex items-center gap-5 lg:gap-6">
           {navItems.map((item) => (
             <Link
               key={item.sectionId}
