@@ -77,21 +77,21 @@ export default function VerticalStepper({ onNavigate }: Props) {
                   document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
                 }
               }}
-              className={`nav-control ${item.isSectionTarget ? "nav-section-link" : ""} group flex items-center gap-2 transition-all duration-200 !min-h-0 py-1 ${
+              className={`nav-control ${item.isSectionTarget ? "nav-section-link" : ""} group flex items-center gap-2.5 transition-all duration-200 !min-h-0 !bg-transparent hover:!bg-transparent py-0.5 ${
                 isActive
-                  ? "font-semibold text-foreground translate-x-1"
-                  : "text-muted/60 hover:text-muted hover:translate-x-0.5"
+                  ? "!text-foreground font-bold translate-x-1"
+                  : "!text-muted/60 hover:!text-muted hover:translate-x-0.5"
               }`}
             >
-              {/* Stepper indicator dot aligned with track line */}
+              {/* Stepper indicator circle on track line */}
               <span
-                className={`relative -ml-[19.75px] h-2 w-2 rounded-full border transition-all duration-300 ${
+                className={`relative -ml-[20px] h-2.5 w-2.5 rounded-full border-2 transition-all duration-300 ${
                   isActive
-                    ? "border-primary bg-primary ring-4 ring-primary/20 scale-110"
-                    : "border-transparent bg-transparent group-hover:bg-border/60"
+                    ? "border-foreground bg-background ring-2 ring-foreground/20 scale-125"
+                    : "border-transparent bg-transparent group-hover:bg-muted/40"
                 }`}
               />
-              <span className="tracking-wider">{item.label}</span>
+              <span className="tracking-wider text-xs font-mono">{item.label}</span>
             </Link>
           );
         })}
