@@ -91,7 +91,6 @@ export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menu
 
           <ThemeToggle
             id="navbar-theme-toggle"
-            variant="sound"
             className="info-box inline-flex h-9 w-9 items-center justify-center !p-0 rounded-full text-foreground transition-colors hover:border-primary/50"
           />
         </div>
