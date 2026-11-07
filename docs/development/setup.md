@@ -7,6 +7,7 @@ Use the repository lockfile and run commands from the repository root.
 ## Contents
 
 - [Install and develop](#install-and-develop)
+- [Optional AI agent tooling](#optional-ai-agent-tooling)
 - [Check and preview](#check-and-preview)
 - [Generated files and troubleshooting](#generated-files-and-troubleshooting)
 - [Source references](#source-references)
@@ -22,6 +23,18 @@ npm run dev
 ```
 
 Open the printed dev URL under /my-portfolio/. No custom application environment file is required. Invalid catalog records fail validation during import.
+
+## Optional AI agent tooling
+
+MCP server definitions are maintained in `.agents/mcp/servers.json`. Run
+`npm run mcp:sync` after editing that file and `npm run mcp:check` to verify the
+generated client configurations. These commands do not connect to MCP services.
+
+Only Stitch is configured. Its `STITCH_API_KEY` is needed for Stitch tool calls,
+not for the portfolio's development server or production build. Local Codex can
+read it from the ignored root `.env`; other clients must receive it in their own
+runtime environment. See [Shared MCP setup](mcp.md) for the setup sequence and
+client-specific credential instructions.
 
 ## Check and preview
 
@@ -48,3 +61,4 @@ Browser tests also start a test-only Vite server on port 4174; free that port be
 ## Related documents
 
 - [Testing](testing.md)
+- [Shared MCP setup](mcp.md)

@@ -17,6 +17,13 @@ Locate runtime/build settings without confusing application inputs with test fix
 
 package.json defines scripts/ranges; package-lock.json pins installed packages. vite.config.ts sets base and Tailwind/React Router plugins. react-router.config.ts sets basename, ssr:false and home prerender. tsconfig.json enables strict ES2022/bundler/React JSX typing. vitest.config.ts selects Node unit tests. playwright.config.ts controls Chromium and both test servers. tests/fixtures/vite.config.ts serves only the fixture entry. The GitHub workflow validates and deploys. .gitignore excludes generated output; .mailmap normalizes Git author identity.
 
+For agent tooling, [`.agents/mcp/servers.json`](../../.agents/mcp/servers.json) is the
+shared MCP source. `mcp:sync` generates the supported clients' project
+configurations and updates `.agents/mcp/generated.json`, which tracks managed
+server names. Read [Shared MCP setup](../development/mcp.md) before changing
+definitions or providing credentials; edit the source rather than generated
+server entries.
+
 ## Npm scripts
 
 | Script | Command |
@@ -24,12 +31,19 @@ package.json defines scripts/ranges; package-lock.json pins installed packages. 
 | dev | `react-router dev` |
 | build | `react-router build && node scripts/prepare-static-artifact.mjs` |
 | check | `react-router typegen && tsc --noEmit` |
+| mcp:sync | `node .agents/mcp/sync.mjs` |
+| mcp:check | `node .agents/mcp/sync.mjs --check` |
+| mcp:test | `node --test .agents/mcp/sync.test.mjs` |
 | test | `npm run test:unit && npm run test:smoke && npm run test:visual` |
 | test:unit | `vitest run` |
 | test:smoke | `playwright test tests/e2e/smoke.spec.ts tests/e2e/static-artifact.spec.ts tests/e2e/project-hub.spec.ts` |
 | test:visual | `playwright test tests/e2e/visual.spec.ts` |
 | test:watch | `vitest` |
 | preview | `node scripts/static-preview.mjs` |
+
+MCP synchronization checks and offline tests are separate from `npm test` and
+are not currently run by the GitHub Actions workflow. They do not verify live
+service connectivity. See [MCP verification](../development/mcp.md#updating-and-verifying).
 
 ## Environment and state
 
@@ -41,8 +55,14 @@ package.json defines scripts/ranges; package-lock.json pins installed packages. 
 | CI | Nonempty value enables one worker, retries, forbidOnly and GitHub reporter; disables production-server reuse |
 | import.meta.env.BASE_URL | Vite-provided asset base |
 | localStorage theme | Persisted dark/light selection |
+| STITCH_API_KEY | Development-tool credential for Stitch MCP; local Codex reads process environment first, then the root `.env`; other clients need their own runtime credential setup |
 
 Fixture server uses fixed port 4174 and is never reused. Preview reads process.env directly, without dotenv loading. Hub selection is not persisted. No GitHub API token or runtime fetch is used.
+
+`STITCH_API_KEY` is not an application input and is not required for development,
+build or deployment of the portfolio. The sync script writes variable references,
+not credential values. Keep local `.env` files untracked; see
+[MCP credentials](../../.agents/mcp/README.md#credentials) for client differences.
 
 ## Changing the public base URL
 
@@ -63,4 +83,5 @@ Update router basename, Vite base, SITE.site/base, artifact origin/base/siteDire
 ## Related documents
 
 - [Local setup](../development/setup.md)
+- [Shared MCP setup](../development/mcp.md)
 - [Deployment](../deployment/github-pages.md)

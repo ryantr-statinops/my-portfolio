@@ -13,6 +13,7 @@ Set up the workspace and verify changes.
 ## Pages
 
 - [Local development setup](setup.md)
+- [Shared MCP setup](mcp.md)
 - [Testing and visual baselines](testing.md)
 
 ## Source references

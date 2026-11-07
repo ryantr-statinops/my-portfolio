@@ -4,6 +4,9 @@
 configuration belongs to the project and is shared across agent applications.
 This manifest is a repository convention, not a file that clients load directly.
 
+For an onboarding walkthrough from the main documentation, see
+[Shared MCP setup](../../docs/development/mcp.md).
+
 Only Google Stitch is configured at present. Playwright, Context7, shadcn/ui and
 React Grab are not added by this setup. MCP tools support development; they are
 not included in the portfolio's production bundle.

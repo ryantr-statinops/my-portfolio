@@ -17,6 +17,9 @@ English maintainer documentation for the single-page portfolio and its Project H
 
 Start with Overview → Architecture → Development. To publish a project, read Data → Project Hub. For UI work use Design; for failed releases use Deployment → Testing.
 
+For AI agent tooling, start with [Shared MCP setup](development/mcp.md), which links
+to the source configuration and client-specific instructions in `.agents/mcp/`.
+
 ## Directory
 
 - [Overview](overview.md)
@@ -33,6 +36,7 @@ Start with Overview → Architecture → Development. To publish a project, read
   - [Styling and assets](design/styling-and-assets.md)
 - [Development](development/README.md)
   - [Local development setup](development/setup.md)
+  - [Shared MCP setup](development/mcp.md)
   - [Testing and visual baselines](development/testing.md)
 - [Deployment](deployment/README.md)
   - [GitHub Pages deployment](deployment/github-pages.md)

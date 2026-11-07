@@ -19,9 +19,16 @@ Validate the twelve-project production catalog and isolated populated/empty Hub 
 |---|---|
 | npm run test:unit | Schema, six lifecycle statuses, published catalog, category/selection helpers and static fallback rendering |
 | npm run check | Route type generation and TypeScript |
+| npm run mcp:check | Read-only check that generated MCP client configurations match the shared manifest |
+| npm run mcp:test | Offline Node tests for MCP adapters, sync preservation/conflicts and credential-header resolution |
 | npm run test:smoke | Production homepage, hashes/mobile/keyboard, legacy 404s, sitemap and populated fixture interactions |
 | npm run test:visual | Dark/light homepage and populated Hub snapshots at three sizes |
-| npm test | Unit, smoke and visual in sequence; excludes type-check |
+| npm test | Unit, smoke and visual in sequence; excludes type-check and MCP checks/tests |
+
+MCP tests use temporary files and synthetic credentials; they do not contact
+Stitch or launch browsers. Run them when changing MCP tooling. The current
+GitHub Actions workflow does not run these separate MCP commands. For live
+connection verification and client setup, see [Shared MCP setup](mcp.md).
 
 Unit fallback tests render the real component with ReactDOMServer and ensure all overviews, lifecycle labels and repository links exist before hydration. Populated browser tests verify order, retained selection, category fallback, clearing stale panels, repo target, keyboard operation and 320 px overflow. A desktop geometry assertion checks that the panel actually sits beside the list.
 
@@ -57,3 +64,4 @@ Production smoke tests read the validated catalog and check all project selectio
 ## Related documents
 
 - [Authoring](../data/content-authoring.md)
+- [Shared MCP setup](mcp.md)

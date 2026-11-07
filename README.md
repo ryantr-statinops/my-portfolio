@@ -96,12 +96,20 @@ Open [http://127.0.0.1:4173/my-portfolio/](http://127.0.0.1:4173/my-portfolio/).
 
 See [local setup](docs/development/setup.md) for generated files and troubleshooting.
 
+For AI agent tooling, see [shared MCP setup](docs/development/mcp.md). MCP definitions
+live in `.agents/mcp/servers.json` and are synchronized into each supported client's
+project configuration. Only Stitch is currently configured; its credentials are
+development-tool inputs and are not required to run or build the portfolio.
+
 ## Available commands
 
 | Command | Purpose |
 |---|---|
 | `npm run dev` | Start the development server |
 | `npm run check` | Generate route types and run TypeScript checking |
+| `npm run mcp:sync` | Synchronize shared MCP definitions into agent client configurations |
+| `npm run mcp:check` | Check MCP configuration synchronization without writing files |
+| `npm run mcp:test` | Test MCP synchronization and credential-header resolution offline |
 | `npm run build` | Prerender home and prepare `dist/` |
 | `npm run preview` | Serve the built artifact locally |
 | `npm run test:unit` | Verify schema, selection helpers and static Hub rendering |
@@ -110,12 +118,13 @@ See [local setup](docs/development/setup.md) for generated files and troubleshoo
 | `npm run test:watch` | Run Vitest in watch mode |
 | `npm test` | Run unit, smoke and visual tests in sequence |
 
-Type checking is separate from `npm test`. See the [configuration reference](docs/reference/configuration.md) for scripts and environment inputs.
+Type checking and MCP checks/tests are separate from `npm test`. See the [configuration reference](docs/reference/configuration.md) for scripts and environment inputs.
 
 ## Project structure
 
 ```text
 my-portfolio/
+├── .agents/mcp/             # Shared MCP definitions, sync scripts and client setup guide
 ├── app/
 │   ├── components/          # Shared layout, homepage sections and ProjectHub
 │   ├── data/                # JSON catalog, Zod schema and selection helpers
@@ -200,6 +209,7 @@ Start at the [documentation index](docs/README.md). Each area includes navigatio
 | Schema and authoring | [Data](docs/data/README.md) |
 | Styling and assets | [Design](docs/design/README.md) |
 | Setup and tests | [Development](docs/development/README.md) |
+| Shared MCP setup across AI agents | [MCP development guide](docs/development/mcp.md) |
 | CI and hosting | [Deployment](docs/deployment/README.md) |
 | Symbols and configuration | [Reference](docs/reference/README.md) |
 
