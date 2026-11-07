@@ -37,3 +37,4 @@ npm run test   # Run unit, smoke, and visual tests
 2. **Schema Integrity**: Any changes to `app/data/projects.json` must strictly satisfy `app/data/project-schema.ts`.
 3. **Verified Changes**: Run `npm run check` after modifying TypeScript files or routes.
 4. **Skills & MCPs**: Reference `.agents/skills/` and `.agents/mcp/` for modular capabilities and environment integrations.
+5. **Shared MCP Configuration**: Treat `.agents/mcp/servers.json` as the source of truth. After changing it, run `npm run mcp:sync` and `npm run mcp:check`. Read `.agents/mcp/README.md` for client setup and credential handling. Preserve unrelated client settings; do not edit generated MCP entries directly or commit secrets.
