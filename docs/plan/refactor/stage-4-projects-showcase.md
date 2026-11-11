@@ -1,60 +1,68 @@
-# Stage 4: Featured Showcase & Project Catalog
+# Stage 4: Featured Showcase & Project Catalog (Fine-Grained Breakdown)
 
 > **File**: `docs/plan/refactor/stage-4-projects-showcase.md`
-> **Status**: Planned (Dependencies: Stage 3)
+> **Status**: Ready for execution (Dependencies: Stage 3 complete)
 > **Branch**: `main`
-> **Reference**: [renlenon.vercel.app](https://renlenon.vercel.app/)
+> **Push Destination**: Local only (do not push to remote)
+> **Commit Policy**: Strictly 1 single action per commit
 
 ---
 
 ## Objective
 Rebuild `ProjectHub.tsx` into a modern project showcase featuring:
-1. One prominent **Featured Project Showcase Banner** at the top with screenshot preview, comprehensive description, and primary action buttons.
-2. A sleek, compact **Multi-Card Grid** for remaining projects featuring official technology badges and direct repository links.
+1. One prominent **Featured Project Showcase Banner** at the top with badges, comprehensive description, tech stack tags, and primary action buttons.
+2. A sleek, compact **Project Card Grid** with category filtering, technology badges, and repository links, preserving 100% test compatibility.
 
 ---
 
-## Tasks & Commit Breakdown
+## Fine-Grained Atomic Commit Sequence
 
-### Task 4.1: Featured Project Highlight Showcase
-- **Scope**:
-  - Build `app/components/sections/FeaturedProjectCard.tsx`:
-    - Highlights the top flagship project (e.g. `HomeMatch` or `Statistical Computing Lab`).
-    - Visual container with preview mockup/screenshot, domain tag (`Software Engineering` / `AI Engineering`), status badge (`Active`), detailed problem & architecture description, tech stack tags, and direct button `View Repository ↗`.
-  - Integrate into `ProjectHub.tsx`.
-- **Files Modified**:
-  - `app/components/sections/FeaturedProjectCard.tsx` (new)
-  - `app/components/sections/ProjectHub.tsx`
+### Commit 4.1: Section Container & Document Flow
+- **Action**: Streamline container to `w-full max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14`, removing `min-h-screen` and legacy desktop padding.
+- **File**: `app/components/sections/ProjectHub.tsx`
 - **Commit Message**:
   ```
-  feat(projects): introduce featured project highlight showcase banner
+  refactor(projects): streamline project-hub container to max-w-3xl document flow
   ```
-- **Checks**:
-  - `npm run check`
+- **Check**: `npm run check && npm run test:unit`
 
 ---
 
-### Task 4.2: Compact Project Grid with Tech Stack Badges
-- **Scope**:
-  - Reorganize the project catalog below the featured project into a responsive 2 or 3-column card grid:
-    - Card: title, status badge, concise summary, domain category.
-    - Technology badges with real tech labels/icons (`Python`, `FastAPI`, `Docker`, `React`, `TypeScript`, `Supabase`).
-    - Direct GitHub link `Visit repo ↗`.
-  - Maintain strict compatibility with `projects.json` and Zod schema validation in `app/data/project-schema.ts`.
-- **Files Modified**:
-  - `app/components/sections/ProjectHub.tsx`
-  - `app/components/ProjectStatusBadge.tsx` (if badge styling is updated)
+### Commit 4.2: Featured Project Showcase Banner
+- **Action**: Add high-contrast Featured Project showcase banner highlighting the flagship project (`HomeMatch`) above the catalog.
+- **File**: `app/components/sections/ProjectHub.tsx`
 - **Commit Message**:
   ```
-  feat(projects): redesign project catalog into compact multi-card grid with tech badges
+  feat(projects): introduce featured project showcase banner
   ```
-- **Checks**:
-  - `npm run check`
-  - `npm run test:unit`
+- **Check**: `npm run check && npm run test:unit`
 
 ---
 
-## Stage 4 Completion Criteria
-- Top featured project immediately grabs attention with strong visual hierarchy.
-- Secondary projects are easy to browse in a clean card grid with recognizable technology badges.
-- Data integrity with `projects.json` is preserved 100%.
+### Commit 4.3: Modern Project Card Grid & Filter
+- **Action**: Redesign the project browsing catalog into a clean card grid with tech stack badges, retaining `data-project-category`, `data-project-select`, and `data-project-overview` compatibility.
+- **File**: `app/components/sections/ProjectHub.tsx`
+- **Commit Message**:
+  ```
+  feat(projects): redesign project catalog into modern card grid with tech badges
+  ```
+- **Check**: `npm run check && npm run test:unit`
+
+---
+
+### Commit 4.4: Refine Empty State & Status Badges
+- **Action**: Polish empty state message and badge styling with soft rounded pill aesthetics.
+- **File**: `app/components/sections/ProjectHub.tsx`
+- **Commit Message**:
+  ```
+  refactor(projects): refine empty state and status badge styling
+  ```
+- **Check**: `npm run check && npm run test:unit`
+
+---
+
+## Stage 4 Verification & Quality Gate
+1. `npm run check` passes with 0 errors.
+2. `npm run test:unit` passes 42/42 tests.
+3. Visual confirmation on `http://localhost:5173/my-portfolio/`.
+4. All commits remain strictly local on `main`.
