@@ -15,16 +15,6 @@ export default function Footer({ transparentBackground = false }: Props) {
   return (
     <footer id="connect" aria-labelledby="connect-title" className={`relative w-full ${background} ${layer}`}>
       <div className="mx-auto max-w-3xl px-4 sm:px-6 pt-12 pb-12 sm:pt-16 sm:pb-16 border-t border-dashed border-border/80">
-        {/* Editorial Signature Quote */}
-        <div className="mb-10 rounded-2xl border border-dashed border-border/70 bg-surface/30 p-6 sm:p-8 text-center backdrop-blur-sm">
-          <p className="text-base sm:text-lg italic font-medium text-foreground/90">
-            &ldquo;Precision in code, clarity in systems.&rdquo;
-          </p>
-          <p className="mt-2 text-xs text-muted font-mono tracking-wider uppercase">
-            Ryan Tran &bull; Crafting intentional software &amp; data solutions
-          </p>
-        </div>
-
         {/* Connect Section Header */}
         <div className="min-w-0">
           <h2 id="connect-title" className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
