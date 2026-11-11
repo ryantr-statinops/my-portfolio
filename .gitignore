@@ -33,3 +33,8 @@ Thumbs.db
 
 # Note
 note.txt
+
+# agents configs
+.codex/
+.cursor/
+.gemini/
