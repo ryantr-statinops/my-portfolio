@@ -6,7 +6,20 @@ import AboutMe from "../app/components/sections/AboutMe";
 describe("About Me static content", () => {
   it("renders the approved profile, education and contact details without animation gating", () => {
     const html = renderToStaticMarkup(createElement(AboutMe));
-    for (const text of ["Statistics Student", "Data · AI · Software", "BSc in Statistics", "Ton Duc Thang University", "2024–Present", "Open to work", "mailto:trankhang2856@gmail.com", "tel:+84987357707"]) expect(html).toContain(text);
+    for (const text of [
+      "Statistics Student",
+      "Data · AI · Software",
+      "BSc in Statistics",
+      "Ton Duc Thang University",
+      "HUB Network",
+      "MINI HIPPO",
+      "Ho Chi Minh City Statistics Office",
+      "Organizations",
+      "Ton Duc Thang University Startup Club",
+      "Open to work",
+      "mailto:trankhang2856@gmail.com",
+      "tel:+84987357707",
+    ]) expect(html).toContain(text);
     expect(html.match(/<section/g)).toHaveLength(1);
     expect(html).toContain('aria-labelledby="about-me-title"');
     for (const text of ["reveal", "Journey", "System_Principle", "production hardware", "HUB NETWORK", "Top 3"]) expect(html).not.toContain(text);
