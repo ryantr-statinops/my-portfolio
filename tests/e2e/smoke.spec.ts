@@ -88,6 +88,11 @@ test("About Me exposes the approved profile and six focus cards", async ({ page 
     "Infrastructure", "Quantitative Analytics", "Statistics → Engineering",
   ]);
   await expect(about).toContainText("Ton Duc Thang University");
+  await expect(about).toContainText("HUB Network");
+  await expect(about).toContainText("MINI HIPPO");
+  await expect(about).toContainText("Ho Chi Minh City Statistics Office");
+  await expect(about).toContainText("Organizations");
+  await expect(about).toContainText("Ton Duc Thang University Startup Club");
   await expect(about).toContainText("Open to internship and entry-level opportunities");
   for (const href of ["https://www.linkedin.com/in/ryan-tr/", "https://github.com/ryantr-statinops"]) {
     const link = about.locator(`a[href="${href}"]`);
