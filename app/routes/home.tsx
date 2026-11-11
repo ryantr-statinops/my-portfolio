@@ -3,6 +3,7 @@ import { SITE } from "../../src/lib/constants";
 import AboutMe from "../components/sections/AboutMe";
 import Hero from "../components/sections/Hero";
 import ProjectHub from "../components/sections/ProjectHub";
+import Technologies from "../components/sections/Technologies";
 import { projects } from "../data/projects";
 
 const canonical = `${SITE.site}${SITE.base}/`;
@@ -22,6 +23,7 @@ export default function Home() {
       <Hero />
       <AboutMe />
       <ProjectHub projects={projects} />
+      <Technologies />
     </>
   );
 }
