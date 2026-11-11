@@ -101,6 +101,22 @@ export default function Hero() {
               GET IN TOUCH →
             </Link>
           </div>
+
+          {/* 3-Column Summary Stats Metric Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
+            <div className="info-box info-box--compact p-3.5 sm:p-4 rounded-xl border border-border/80 bg-surface/50 transition-all hover:border-accent/40">
+              <div className="text-base sm:text-lg font-bold text-foreground">BSc Statistics</div>
+              <div className="text-xs text-muted mt-0.5">Ton Duc Thang Univ</div>
+            </div>
+            <div className="info-box info-box--compact p-3.5 sm:p-4 rounded-xl border border-border/80 bg-surface/50 transition-all hover:border-accent/40">
+              <div className="text-base sm:text-lg font-bold text-accent">8+</div>
+              <div className="text-xs text-muted mt-0.5">Projects Built</div>
+            </div>
+            <div className="info-box info-box--compact p-3.5 sm:p-4 rounded-xl border border-border/80 bg-surface/50 transition-all hover:border-accent/40">
+              <div className="text-base sm:text-lg font-bold text-foreground">Data &amp; AI</div>
+              <div className="text-xs text-muted mt-0.5">Core Focus</div>
+            </div>
+          </div>
         </div>
       </div>
 
