@@ -3,10 +3,6 @@ import { Link } from "react-router";
 const avatarUrl = `${import.meta.env.BASE_URL}images/avt.webp`;
 
 export default function Hero() {
-  function scrollToNext() {
-    document.getElementById("about-me")?.scrollIntoView({ behavior: "smooth" });
-  }
-
   return (
     <section
       id="main"
@@ -119,30 +115,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      {/* Bottom-right "Scroll for more" Pill Badge */}
-      <button
-        type="button"
-        onClick={scrollToNext}
-        aria-label="Scroll for more"
-        className="group absolute bottom-10 right-6 md:right-10 lg:right-12 z-20 hidden sm:inline-flex items-center gap-2.5 rounded-full border border-border/80 bg-background/80 backdrop-blur-md px-4 py-2.5 text-xs font-mono font-medium text-foreground shadow-lg transition-all hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(var(--accent-rgb),0.25)] hover:scale-105 active:scale-95 cursor-pointer"
-      >
-        <svg
-          aria-hidden="true"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="transition-transform group-hover:translate-y-0.5"
-        >
-          <path d="M12 5v14M19 12l-7 7-7-7" />
-        </svg>
-        <span>Scroll for more</span>
-      </button>
     </section>
   );
 }
