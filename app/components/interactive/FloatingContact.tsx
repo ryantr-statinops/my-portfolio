@@ -126,7 +126,7 @@ export default function FloatingContact() {
                 id="floating-contact-heading"
                 className="text-base font-semibold text-foreground"
               >
-                Work with Ryan
+                Work with me
               </h2>
               <p className="mt-0.5 text-xs sm:text-sm text-muted">
                 Have a project in mind? Let&apos;s connect.
@@ -227,7 +227,7 @@ export default function FloatingContact() {
             <path d="M22 13a18.15 18.15 0 0 1-20 0" />
             <rect width="20" height="14" x="2" y="6" rx="2" />
           </svg>
-          <span className="font-semibold text-sm">Work with Ryan</span>
+          <span className="font-semibold text-sm">Work with me</span>
         </button>
       </div>
     </div>

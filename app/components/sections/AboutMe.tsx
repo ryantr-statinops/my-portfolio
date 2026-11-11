@@ -1,16 +1,5 @@
 const experiences = [
   {
-    company: "HUB Network",
-    role: "Internal Developer – Startup Growth / HR",
-    period: "Feb 2025 – May 2026",
-    highlights: [
-      "Automated internal workflows using Google Apps Script and Python.",
-      "Engineered operational dashboards and mentor management tools.",
-      "Handled statistical data processing and recurring operational reporting.",
-      "Coordinated startup program operations and community events.",
-    ],
-  },
-  {
     company: "MINI HIPPO",
     role: "Business Tools Developer",
     period: "Sep 2025 – Feb 2026",

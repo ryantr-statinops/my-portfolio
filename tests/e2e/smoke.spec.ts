@@ -247,7 +247,7 @@ test("desktop project list scrolls within its box and matches the overview heigh
 
 test("Floating contact controls allow expanding and collapsing contact options modal", async ({ page }) => {
   await page.goto("./");
-  const trigger = page.getByRole("button", { name: "Work with Ryan" });
+  const trigger = page.getByRole("button", { name: "Work with me" });
   await expect(trigger).toBeVisible();
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
 
@@ -256,7 +256,7 @@ test("Floating contact controls allow expanding and collapsing contact options m
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
   const panel = page.locator("#floating-contact-panel");
   await expect(panel).toBeVisible();
-  await expect(panel.getByRole("heading", { name: "Work with Ryan" })).toBeVisible();
+  await expect(panel.getByRole("heading", { name: "Work with me" })).toBeVisible();
   await expect(panel.getByRole("link", { name: /Send an Email/ })).toBeVisible();
   await expect(panel.getByRole("link", { name: /Connect on LinkedIn/ })).toBeVisible();
 

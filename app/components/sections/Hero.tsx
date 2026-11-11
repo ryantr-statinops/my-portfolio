@@ -29,7 +29,7 @@ export default function Hero() {
                 </svg>
               </div>
               <p className="text-xs sm:text-sm text-muted font-normal mt-0.5">
-                Applied Statistics · Data, AI &amp; Software Engineering
+                Quant Researcher - AI/ML Engineering
               </p>
               {/* Quick Social Link Icons */}
               <div className="mt-2 flex items-center gap-3 text-muted">

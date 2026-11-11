@@ -6,7 +6,7 @@ import FloatingContact from "../app/components/interactive/FloatingContact";
 it("prerenders the floating contact widget with accessible markup and contact options", () => {
   const html = renderToStaticMarkup(createElement(FloatingContact));
   expect(html).toContain("floating-controls");
-  expect(html).toContain("Work with Ryan");
+  expect(html).toContain("Work with me");
   expect(html).toContain('aria-controls="floating-contact-panel"');
   expect(html).toContain('aria-expanded="false"');
   expect(html).toContain('role="dialog"');
