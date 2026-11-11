@@ -1,4 +1,4 @@
-import { useEffect, useState, type MouseEvent, RefObject } from "react";
+import type { MouseEvent, RefObject } from "react";
 import { Link } from "react-router";
 import ThemeToggle from "./ThemeToggle";
 
@@ -10,31 +10,14 @@ type Props = {
 };
 
 export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menuButtonRef }: Props) {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    function handleScroll() {
-      setIsScrolled(window.scrollY > 20);
-    }
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
-    <header
-      className={`pointer-events-none fixed left-0 top-0 z-50 w-full px-6 py-5 md:px-10 md:py-6 lg:px-14 transition-all duration-300 ${
-        isScrolled
-          ? "backdrop-blur-md bg-background/70 border-b border-border/30"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="pointer-events-auto mx-auto flex w-full max-w-7xl items-center justify-between">
+    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur-xl transition-colors">
+      <nav aria-label="Primary" className="mx-auto flex w-full max-w-3xl items-center justify-between px-4 py-3 sm:px-6 sm:py-3.5">
         {/* Left: Brand + Editorial Menu Button */}
-        <div className="flex items-center gap-6 sm:gap-8 md:gap-10">
+        <div className="flex items-center gap-4 sm:gap-6">
           <Link
             to="/"
-            className="font-mono text-base sm:text-lg font-bold tracking-tight text-foreground transition-colors hover:text-accent"
+            className="font-mono text-base font-bold tracking-tight text-foreground transition-colors hover:text-accent sm:text-lg"
             aria-label="Ryan Tran — Home"
           >
             RT
@@ -48,19 +31,19 @@ export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menu
             aria-label="Open menu"
             aria-controls="mobile-nav-overlay"
             aria-expanded={menuOpen}
-            className="group flex sm:hidden items-center gap-2 text-xs font-medium text-foreground tracking-wide transition-opacity hover:opacity-70 cursor-pointer"
+            className="group flex cursor-pointer items-center gap-2 text-xs font-medium tracking-wide text-foreground transition-opacity hover:opacity-70 sm:hidden"
           >
-            <div className="flex flex-col gap-[5px] w-5">
+            <div className="flex w-5 flex-col gap-[5px]">
               <span className="block h-[1.5px] w-full bg-foreground transition-transform group-hover:translate-x-0.5" />
               <span className="block h-[1.5px] w-3.5 bg-foreground transition-transform group-hover:translate-x-1" />
             </div>
-            <span className="font-sans font-medium text-xs">Menu</span>
+            <span className="font-sans text-xs font-medium">Menu</span>
           </button>
         </div>
 
         {/* Center/Right: Inline Navigation Links & Controls */}
         <div className="flex items-center gap-4 sm:gap-6">
-          <div className="hidden sm:flex items-center gap-4 md:gap-6 text-xs md:text-sm font-medium text-muted">
+          <div className="hidden items-center gap-4 text-xs font-medium text-muted sm:flex md:gap-6 md:text-sm">
             <Link
               to="/#projects"
               data-nav-section="projects"
@@ -87,12 +70,12 @@ export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menu
             </Link>
           </div>
 
-          <div className="hidden sm:block w-[1px] h-4 bg-border/80" />
+          <div className="hidden h-4 w-[1px] bg-border/80 sm:block" />
           <button
             type="button"
             aria-label="Search catalog"
             title="Search catalog"
-            className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-border/80 bg-background/50 backdrop-blur-sm text-foreground transition-all hover:border-accent hover:shadow-[0_0_12px_rgba(var(--accent-rgb),0.35)] hover:scale-105 active:scale-95 cursor-pointer"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-border/80 bg-background/50 text-foreground backdrop-blur-sm transition-all hover:scale-105 hover:border-accent hover:shadow-[0_0_12px_rgba(var(--accent-rgb),0.35)] active:scale-95 md:h-10 md:w-10"
             onClick={() => {
               const projectsSection = document.getElementById("projects");
               if (projectsSection) {
@@ -118,10 +101,10 @@ export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menu
 
           <ThemeToggle
             id="navbar-theme-toggle"
-            className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-border/80 bg-background/50 backdrop-blur-sm text-foreground transition-all hover:border-accent hover:shadow-[0_0_12px_rgba(var(--accent-rgb),0.35)] hover:scale-105 active:scale-95 cursor-pointer"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-border/80 bg-background/50 text-foreground backdrop-blur-sm transition-all hover:scale-105 hover:border-accent hover:shadow-[0_0_12px_rgba(var(--accent-rgb),0.35)] active:scale-95 md:h-10 md:w-10"
           />
         </div>
-      </div>
+      </nav>
     </header>
   );
 }
