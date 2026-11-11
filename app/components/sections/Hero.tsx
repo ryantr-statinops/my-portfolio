@@ -75,36 +75,28 @@ export default function Hero() {
               </div>
             </div>
           </div>
-          {/* Eyebrow / Category Tag */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_var(--accent)]" />
-              <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-muted md:text-sm">
-                ENGINEERING WORKSPACE
-              </p>
-            </div>
-            <h1 className="text-[clamp(2.5rem,5.5vw,4.75rem)] font-bold tracking-tight text-foreground leading-[1.08]">
+          {/* Headline */}
+          <div className="space-y-3">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-[1.15]">
               Precision in code,<br />
-              <span className="text-gradient">clarity in systems</span>
+              <span className="text-gradient">clarity in systems.</span>
             </h1>
+            <p className="max-w-2xl text-sm sm:text-base text-muted font-normal leading-relaxed">
+              Applied Statistics student at Ton Duc Thang University exploring the intersection of quantitative research, data engineering, and resilient software architecture.
+            </p>
           </div>
 
-          {/* Description */}
-          <p className="max-w-xl text-base md:text-lg text-muted font-normal leading-relaxed">
-            Dedicated to clean architecture, data-driven decisions, and building resilient tools across modern web and cloud platforms.
-          </p>
-
           {/* Action CTAs */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="flex flex-wrap items-center gap-3 pt-1">
             <Link
               to="/#projects"
-              className="info-box info-box--compact info-box--interactive inline-flex min-h-11 items-center justify-center rounded-full px-8 font-mono text-xs font-bold uppercase tracking-[0.2em] text-foreground transition-all hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)]"
+              className="inline-flex min-h-10 items-center justify-center rounded-full bg-foreground px-6 font-mono text-xs font-bold uppercase tracking-wider text-background transition-all hover:scale-105 hover:bg-foreground/90 shadow-sm"
             >
               VIEW PROJECTS
             </Link>
             <Link
               to="/#connect"
-              className="inline-flex min-h-11 items-center justify-center rounded-full px-6 font-mono text-xs font-semibold uppercase tracking-[0.15em] text-muted hover:text-accent transition-colors"
+              className="inline-flex min-h-10 items-center justify-center rounded-full border border-border/80 bg-background/50 px-5 font-mono text-xs font-semibold uppercase tracking-wider text-muted hover:text-foreground hover:border-accent transition-all hover:scale-105 backdrop-blur-sm"
             >
               GET IN TOUCH →
             </Link>
