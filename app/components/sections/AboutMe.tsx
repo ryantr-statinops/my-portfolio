@@ -126,6 +126,27 @@ export default function AboutMe() {
           </div>
         </div>
 
+        {/* Organizations Section */}
+        <div className="space-y-4" aria-labelledby="organizations-title">
+          <div className="flex items-center justify-between">
+            <h3 id="organizations-title" className="text-base sm:text-lg font-semibold tracking-tight text-foreground">
+              Organizations
+            </h3>
+            <span className="text-xs font-mono uppercase tracking-wider text-muted">Community &amp; Involvement</span>
+          </div>
+          <div className="space-y-4">
+            {organizations.map((org) => (
+              <div key={org.name} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6 text-sm">
+                <div className="w-32 sm:w-36 shrink-0 text-xs font-mono text-muted">{org.period}</div>
+                <div className="min-w-0 flex-1 space-y-0.5">
+                  <h4 className="text-sm font-semibold text-foreground">{org.name}</h4>
+                  <p className="text-xs text-muted">{org.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Current Focus Grid */}
         <div className="space-y-4" aria-labelledby="current-focus-title">
           <div className="flex items-center justify-between">
