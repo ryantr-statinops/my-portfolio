@@ -18,13 +18,14 @@
 | **Stage 4** | [`stage-4-projects-showcase.md`](./stage-4-projects-showcase.md) | Big Featured Project showcase card, compact project card grid with tech stack badges | 4 commits | **Completed** |
 | **Stage 5** | [`stage-5-skills-and-lifestyle.md`](./stage-5-skills-and-lifestyle.md) | 3-row bidirectional infinite marquee with official vector brand icons, streamlined Connect footer | 8 commits | **Completed** |
 | **Stage 6** | [`stage-6-verification-and-tests.md`](./stage-6-verification-and-tests.md) | Local Chrome integration, smoke test alignment, visual regression snapshot baseline refresh | 4 commits | **Completed** |
+| **Stage 7** | [`stage-7-floating-contact.md`](./stage-7-floating-contact.md) | Interactive bottom-right floating contact widget with popup modal, Linux CI snapshot sync | 3 commits | **Completed** |
 
 ---
 
 ## Operating Protocol (`commit-workflow`)
 
 - **Branch**: All stages execute directly on `main`.
-- **Atomic Commits**: Exactly one distinct task per commit.
+- **Atomic Commits**: Exactly one distinct task per commit (total: 47 local commits).
 - **Verification between commits**: Run `npm run check` and task-specific tests before moving to the next task.
 - **Diff hygiene**: Inspect `git diff --cached` and `git diff --cached --check` before each commit; stage explicit paths only.
 - **Strictly Local**: All commits remain local on `main` (0 remote pushes).
