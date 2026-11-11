@@ -48,12 +48,36 @@ const organizations = [
 ];
 
 const focusAreas = [
-  { title: "Backend Engineering", description: "Python, FastAPI, Go, Traefik, APIs & system architecture" },
-  { title: "Data Engineering", description: "data pipelines, databases & data infrastructure" },
-  { title: "AI Infrastructure", description: "MCP, agents, harnesses, model routing & developer tooling" },
-  { title: "Infrastructure", description: "Linux, Docker, networking & service orchestration" },
-  { title: "Quantitative Analytics", description: "statistical modeling, quantitative research & trading systems" },
-  { title: "Statistics → Engineering", description: "applying quantitative thinking to software systems" },
+  {
+    title: "Backend Engineering",
+    description: "APIs & robust distributed system architecture",
+    tags: ["Python", "FastAPI", "Go", "Traefik", "REST", "System Design"],
+  },
+  {
+    title: "Data Engineering",
+    description: "Scalable data pipelines & database infrastructure",
+    tags: ["PostgreSQL", "Data Pipelines", "Databases", "ETL", "Supabase"],
+  },
+  {
+    title: "AI Infrastructure",
+    description: "Harnesses, model orchestration & autonomous agents",
+    tags: ["MCP", "AI Agents", "Model Routing", "Harnesses", "Dev Tooling"],
+  },
+  {
+    title: "Infrastructure",
+    description: "Containerization, networking & service orchestration",
+    tags: ["Linux", "Docker", "Networking", "Service Orchestration", "CI/CD"],
+  },
+  {
+    title: "Quantitative Analytics",
+    description: "Statistical modeling & data-driven algorithmic research",
+    tags: ["Statistical Modeling", "Quant Research", "Data Analysis", "Python"],
+  },
+  {
+    title: "Statistics → Engineering",
+    description: "Applying rigorous mathematical thinking to software",
+    tags: ["Mathematical Statistics", "Probability", "Algorithms", "Optimization"],
+  },
 ];
 
 const contacts = [
@@ -181,11 +205,34 @@ export default function AboutMe() {
             </h3>
             <span className="text-xs text-muted">Specialization Areas</span>
           </div>
-          <div data-focus-grid className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div data-focus-grid className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             {focusAreas.map((area) => (
-              <article data-focus-card key={area.title} className="info-box info-box--compact p-3 sm:p-4 rounded-xl border border-border/80 bg-surface/50 transition-all hover:border-accent/40">
-                <h4 className="text-sm font-semibold text-foreground">{area.title}</h4>
-                <p className="mt-1 text-xs text-muted leading-relaxed">{area.description}</p>
+              <article
+                data-focus-card
+                key={area.title}
+                className="group relative rounded-xl border border-border/80 bg-surface/50 p-4 transition-all duration-200 hover:border-accent/50 hover:bg-surface/80 hover:shadow-sm flex flex-col justify-between gap-3"
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs text-accent font-semibold select-none">›</span>
+                    <h4 className="text-sm font-semibold tracking-tight text-foreground transition-colors group-hover:text-foreground">
+                      {area.title}
+                    </h4>
+                  </div>
+                  <p className="text-xs text-muted leading-relaxed pl-3.5">
+                    {area.description}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-1.5 pt-1 pl-3.5">
+                  {area.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center rounded-md border border-border/70 bg-background/60 px-2 py-0.5 font-mono text-[11px] text-muted transition-colors group-hover:border-accent/40 group-hover:text-foreground"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </article>
             ))}
           </div>
