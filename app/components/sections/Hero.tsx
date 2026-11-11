@@ -8,9 +8,9 @@ export default function Hero() {
   return (
     <section
       id="main"
-      className="relative flex min-h-screen w-full items-center overflow-hidden bg-transparent px-6 pb-20 pt-28 md:px-12 md:pl-28 lg:pl-36"
+      className="relative w-full max-w-3xl mx-auto px-4 sm:px-6 pt-10 pb-8 sm:pt-16 sm:pb-12"
     >
-      <div className="relative z-10 flex min-h-[calc(70svh_-_5rem)] w-full max-w-3xl items-center">
+      <div className="relative z-10 w-full">
         <div className="space-y-8 md:space-y-10 reveal">
           {/* Eyebrow / Category Tag */}
           <div className="space-y-2">
