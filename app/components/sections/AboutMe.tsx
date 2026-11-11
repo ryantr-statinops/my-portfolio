@@ -1,6 +1,5 @@
 const experiences = [
   {
-    number: "01",
     company: "HUB Network",
     role: "Internal Developer – Startup Growth / HR",
     period: "Feb 2025 – May 2026",
@@ -12,7 +11,6 @@ const experiences = [
     ],
   },
   {
-    number: "02",
     company: "MINI HIPPO",
     role: "Business Tools Developer",
     period: "Sep 2025 – Feb 2026",
@@ -24,7 +22,6 @@ const experiences = [
     ],
   },
   {
-    number: "03",
     company: "Ho Chi Minh City Statistics Office",
     role: "Statistical Survey Assistant",
     period: "Jan 2026 – May 2026",
@@ -89,10 +86,7 @@ export default function AboutMe() {
             <div key={exp.company} className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 text-sm">
               <div className="w-32 sm:w-36 shrink-0 text-xs font-mono text-muted">{exp.period}</div>
               <div className="min-w-0 flex-1 space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-semibold text-accent">{exp.number}.</span>
-                  <h3 className="text-sm font-semibold text-foreground">{exp.company}</h3>
-                </div>
+                <h3 className="text-sm font-semibold text-foreground">{exp.company}</h3>
                 <div className="text-xs font-medium text-muted">{exp.role}</div>
                 <ul className="space-y-1 pt-1 text-xs sm:text-sm text-muted leading-relaxed list-disc list-inside">
                   {exp.highlights.map((item, i) => (
