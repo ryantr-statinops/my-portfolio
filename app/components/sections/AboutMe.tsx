@@ -37,6 +37,19 @@ const experiences = [
   },
 ];
 
+const organizations = [
+  {
+    name: "HUB Network",
+    role: "Startup Growth / HR",
+    period: "Feb 2025 – May 2026",
+  },
+  {
+    name: "Ton Duc Thang University Startup Club",
+    role: "Member / Contributor",
+    period: "Active",
+  },
+];
+
 const focusAreas = [
   { title: "Backend Engineering", description: "Python, FastAPI, Go, Traefik, APIs & system architecture" },
   { title: "Data Engineering", description: "data pipelines, databases & data infrastructure" },
