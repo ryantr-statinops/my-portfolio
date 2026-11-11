@@ -9,7 +9,7 @@ type Props = {
   menuButtonRef: RefObject<HTMLButtonElement | null>;
 };
 
-export default function Navbar({ onOpenMenu, menuOpen, menuButtonRef }: Props) {
+export default function Navbar({ onOpenMenu, onNavigateToSection, menuOpen, menuButtonRef }: Props) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -48,21 +48,46 @@ export default function Navbar({ onOpenMenu, menuOpen, menuButtonRef }: Props) {
             aria-label="Open menu"
             aria-controls="mobile-nav-overlay"
             aria-expanded={menuOpen}
-            className="group flex items-center gap-2.5 text-xs md:text-sm font-medium text-foreground tracking-wide transition-opacity hover:opacity-70 cursor-pointer"
+            className="group flex sm:hidden items-center gap-2 text-xs font-medium text-foreground tracking-wide transition-opacity hover:opacity-70 cursor-pointer"
           >
             <div className="flex flex-col gap-[5px] w-5">
               <span className="block h-[1.5px] w-full bg-foreground transition-transform group-hover:translate-x-0.5" />
               <span className="block h-[1.5px] w-3.5 bg-foreground transition-transform group-hover:translate-x-1" />
             </div>
-            <span className="font-sans font-medium text-xs md:text-sm">Menu</span>
+            <span className="font-sans font-medium text-xs">Menu</span>
           </button>
         </div>
 
-        {/* Center: Open & Empty Editorial Breathing Space */}
-        <div className="hidden md:block flex-1" />
+        {/* Center/Right: Inline Navigation Links & Controls */}
+        <div className="flex items-center gap-4 sm:gap-6">
+          <div className="hidden sm:flex items-center gap-4 md:gap-6 text-xs md:text-sm font-medium text-muted">
+            <Link
+              to="/#projects"
+              data-nav-section="projects"
+              onClick={(e) => onNavigateToSection?.(e, "projects")}
+              className="transition-colors hover:text-foreground"
+            >
+              Projects
+            </Link>
+            <Link
+              to="/#about-me"
+              data-nav-section="about-me"
+              onClick={(e) => onNavigateToSection?.(e, "about-me")}
+              className="transition-colors hover:text-foreground"
+            >
+              Experience
+            </Link>
+            <Link
+              to="/#connect"
+              data-nav-section="connect"
+              onClick={(e) => onNavigateToSection?.(e, "connect")}
+              className="transition-colors hover:text-foreground"
+            >
+              Contact
+            </Link>
+          </div>
 
-        {/* Right: Round Search & Theme Toggle Buttons */}
-        <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="hidden sm:block w-[1px] h-4 bg-border/80" />
           <button
             type="button"
             aria-label="Search catalog"
