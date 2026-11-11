@@ -46,6 +46,8 @@ function ProjectOverviewPanel({ project }: { project: ProjectOverview }) {
   );
 }
 
+const FEATURED_IDS = ["factorsbt", "lattice-terminal", "fundamental-ranking-lab"] as const;
+
 export default function ProjectHub({ projects, defaultExpanded = false }: Props) {
   const listRef = useRef<HTMLElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -55,7 +57,9 @@ export default function ProjectHub({ projects, defaultExpanded = false }: Props)
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const visible = projectsForCategory(projects, category);
   const selected = resolveSelectedProject(visible, selectedId);
-  const featured = projects.find((p) => p.id === "homematch") || projects[0];
+  const featuredProjects = FEATURED_IDS.map((id) => projects.find((p) => p.id === id)).filter((p): p is ProjectOverview => Boolean(p));
+  const primaryFeatured = featuredProjects[0] ?? projects[0];
+  const secondaryFeatured = featuredProjects.length > 1 ? featuredProjects.slice(1) : [];
 
   useEffect(() => {
     setReady(true);
@@ -116,50 +120,109 @@ export default function ProjectHub({ projects, defaultExpanded = false }: Props)
           </p>
         </header>
 
-        {/* Featured Project Showcase Banner */}
-        {featured && (
-          <div className="space-y-3">
+        {/* Featured Work Showcase - Option B Bento Hierarchy */}
+        {primaryFeatured && (
+          <div className="space-y-3.5">
             <div className="flex items-center justify-between">
               <h3 className="font-mono text-xs uppercase tracking-wider text-muted">
                 Featured Work
               </h3>
-              <span className="text-xs font-mono text-accent">Flagship Platform</span>
+              <span className="text-xs font-mono text-accent">Flagship Systems</span>
             </div>
-            <article className="group relative overflow-hidden rounded-2xl border border-border/80 bg-surface/50 p-5 sm:p-6 transition-all hover:border-accent/40">
+
+            {/* Primary Flagship Banner */}
+            <article className="group relative overflow-hidden rounded-2xl border border-border/80 bg-surface/50 p-5 sm:p-6 transition-all hover:border-accent/40 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <span className="font-mono text-xs uppercase tracking-widest text-muted">
-                  {CATEGORY_MAP[featured.category]}
-                </span>
-                <ProjectStatusBadge status={featured.status} />
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs uppercase tracking-widest text-muted">
+                    {CATEGORY_MAP[primaryFeatured.category]}
+                  </span>
+                  <span className="rounded-full bg-accent/10 border border-accent/20 px-2 py-0.5 font-mono text-[10px] text-accent font-medium">
+                    Primary Flagship
+                  </span>
+                </div>
+                <ProjectStatusBadge status={primaryFeatured.status} />
               </div>
               <h3 className="mt-3 text-xl sm:text-2xl font-bold tracking-tight text-foreground transition-colors group-hover:text-accent">
-                {featured.title}
+                {primaryFeatured.title}
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-muted leading-relaxed max-w-2xl">
-                {featured.description}
+                {primaryFeatured.description}
               </p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {featured.stack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded border border-border/70 bg-background/60 px-2.5 py-0.5 font-mono text-[11px] text-muted"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
+              {primaryFeatured.stack.length > 0 && (
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {primaryFeatured.stack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="rounded border border-border/70 bg-background/60 px-2.5 py-0.5 font-mono text-[11px] text-muted"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              )}
               <div className="mt-5 flex items-center justify-between border-t border-border/50 pt-4">
                 <a
-                  href={featured.links.github}
+                  href={primaryFeatured.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-foreground px-4 py-1.5 font-mono text-xs font-bold text-background transition-all hover:scale-105 hover:bg-foreground/90"
+                  className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-foreground px-4 py-1.5 font-mono text-xs font-bold text-background transition-all hover:scale-105 hover:bg-foreground/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                 >
                   View repository <span aria-hidden="true">↗</span>
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </div>
             </article>
+
+            {/* Secondary Flagships (2-Column Grid) */}
+            {secondaryFeatured.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                {secondaryFeatured.map((item) => (
+                  <article
+                    key={item.id}
+                    className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/80 bg-surface/40 p-4 sm:p-5 transition-all hover:border-accent/40 shadow-sm"
+                  >
+                    <div>
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <span className="font-mono text-[11px] uppercase tracking-widest text-muted">
+                          {CATEGORY_MAP[item.category]}
+                        </span>
+                        <ProjectStatusBadge status={item.status} />
+                      </div>
+                      <h4 className="mt-2.5 text-base sm:text-lg font-bold tracking-tight text-foreground transition-colors group-hover:text-accent">
+                        {item.title}
+                      </h4>
+                      <p className="mt-1.5 text-xs text-muted leading-relaxed line-clamp-3">
+                        {item.description}
+                      </p>
+                      {item.stack.length > 0 && (
+                        <div className="mt-3 flex flex-wrap gap-1">
+                          {item.stack.map((tech) => (
+                            <span
+                              key={tech}
+                              className="rounded border border-border/60 bg-background/50 px-2 py-0.5 font-mono text-[10px] text-muted"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div className="mt-4 pt-3 border-t border-border/40">
+                      <a
+                        href={item.links.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-border/80 bg-surface/60 px-3.5 py-1 font-mono text-xs font-medium text-foreground transition-all hover:border-accent hover:bg-surface-elevated hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                      >
+                        View repository <span aria-hidden="true">↗</span>
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
