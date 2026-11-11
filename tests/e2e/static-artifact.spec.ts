@@ -44,6 +44,6 @@ test("static homepage includes every published overview, status and repository",
     expect(html).toContain(project.links.github);
     expect(html).toContain(`data-project-status="${project.status}"`);
   }
-  expect(html.match(/data-project-overview/g)).toHaveLength(12);
+  expect(html.match(/data-project-overview/g)).toHaveLength(projects.length);
   expect(html).not.toContain("Projects are being prepared.");
 });

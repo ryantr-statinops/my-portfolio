@@ -34,23 +34,26 @@ describe("project overview catalog", () => {
 });
 
 describe("published catalog", () => {
-  it("contains the twelve selected projects in stable priority order", () => {
+  it("contains the eighteen selected projects in stable priority order", () => {
     expect(projectCatalogSchema.parse(projects)).toEqual(projects);
     expect(projects.map(p => p.id)).toEqual([
-      "homematch", "orbit-system-manager", "statistical-computing-lab", "infoboard",
-      "admissions-crm-automation", "csv-schema-alignment", "scrawlnews", "agent-skill-library",
-      "alpha-strategy-agent", "grap4prob", "poisson-process-analytics", "mean-reversion-analytics",
+      "factorsbt", "lattice-terminal", "orbit-system-manager", "statistical-computing-lab",
+      "infoboard", "fundamental-ranking-lab", "visuaslide", "admissions-crm-automation",
+      "csv-schema-alignment", "query-processing-agent", "qlab-policy", "indexpilot-us100",
+      "scrawlnews", "agent-skill-library", "alpha-strategy-agent", "grap4prob",
+      "poisson-process-analytics", "mean-reversion-analytics",
     ]);
-    expect(projects.map(p => p.priority)).toEqual(Array.from({ length: 12 }, (_, i) => (i + 1) * 10));
+    expect(projects.map(p => p.priority)).toEqual(Array.from({ length: 18 }, (_, i) => (i + 1) * 10));
     expect(projects.map(p => p.status)).toEqual([
-      "active", "active", "building", "building", "active", "building",
+      "active", "active", "active", "building", "building", "building",
+      "active", "active", "building", "active", "active", "building",
       "active", "active", "building", "active", "completed", "building",
     ]);
     expect(Object.fromEntries(["software-engineering", "data-engineering", "ai-engineering", "other"].map(
       category => [category, projects.filter(p => p.category === category).length],
-    ))).toEqual({ "software-engineering": 4, "data-engineering": 2, "ai-engineering": 3, other: 3 });
+    ))).toEqual({ "software-engineering": 5, "data-engineering": 4, "ai-engineering": 6, other: 3 });
     expect(projects.every(p => p.links.github.startsWith("https://github.com/ryantr-statinops/"))).toBe(true);
-    expect(new Set(projects.map(p => p.links.github)).size).toBe(12);
+    expect(new Set(projects.map(p => p.links.github)).size).toBe(18);
     expect(projects.find(p => p.id === "alpha-strategy-agent")?.links.github).toBe("https://github.com/ryantr-statinops/Alpha_Stratergy_Agent");
     expect(projects.find(p => p.id === "infoboard")?.stack).toEqual([]);
   });
