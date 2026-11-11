@@ -1,73 +1,104 @@
-# Stage 1: Foundation Layout Shell & Minimalist Navigation
+# Stage 1: Foundation Layout Shell & Minimalist Navigation (Fine-Grained Breakdown)
 
 > **File**: `docs/plan/refactor/stage-1-shell-and-navigation.md`
 > **Status**: Ready for execution
 > **Branch**: `main`
-> **Reference**: [renlenon.vercel.app](https://renlenon.vercel.app/)
+> **Push Destination**: Local only (do not push to remote)
+> **Commit Policy**: Strictly 1 single action per commit
 
 ---
 
 ## Objective
-Convert the current terminal/cyber layout into a clean, centered `max-w-3xl` document container. Replace the top heavy navbar and floating left vertical stepper with a sleek, sticky blurred header featuring a monogram logo `RT`, direct navigation links, and a theme toggle.
+Convert the current terminal/cyber layout into a clean, centered `max-w-3xl` document container. Replace the heavy header and floating left vertical stepper with a sleek, sticky blurred header featuring a monogram logo `RT`, direct navigation links, and a theme toggle.
 
 ---
 
-## Tasks & Commit Breakdown
+## Fine-Grained Atomic Commit Sequence
 
-### Task 1.1: Centralized Layout Container & Theme Design Tokens
-- **Scope**:
-  - Update `src/styles/boxes.css` and Tailwind CSS v4 variables for subtle border colors, soft card backgrounds, and clean backdrop blur (`backdrop-blur-xl`).
-  - Introduce layout tokens targeting `max-w-3xl` (approx 768px) centered column with `px-4 sm:px-6` responsive gutters.
-- **Files Modified**:
-  - `src/styles/boxes.css`
-  - `app/root.tsx` (if global body classes need adjustment)
+### Commit 1.1: Content Width Token
+- **Action**: Update `--desktop-content-width` to `48rem` (768px / `max-w-3xl`) in global CSS.
+- **File**: `src/styles/global.css`
 - **Commit Message**:
   ```
-  refactor(layout): introduce centralized max-w-3xl document layout and typography tokens
+  refactor(styles): configure desktop content width token to max-w-3xl
   ```
-- **Checks**:
-  - `npm run check`
+- **Check**: `npm run check`
 
 ---
 
-### Task 1.2: Minimalist Sticky Navbar
-- **Scope**:
-  - Rebuild `app/components/layout/Navbar.tsx`:
-    - Left: Monogram mark `RT` with subtle hover accent.
-    - Right: Inline navigation links (`Projects`, `Experience`, `Skills`, `Contact`), a vertical divider line, and a compact theme toggle (`ThemeToggle.tsx`).
-    - Responsive mobile menu trigger with minimal drawer/sheet for viewports under 640px.
-- **Files Modified**:
-  - `app/components/layout/Navbar.tsx`
-  - `app/components/layout/ThemeToggle.tsx` (if styling adjusted)
+### Commit 1.2: Surface & Border Style Tokens
+- **Action**: Refine `--box-radius`, border opacity, and add `.content-container` utility in `boxes.css`.
+- **File**: `src/styles/boxes.css`
 - **Commit Message**:
   ```
-  feat(nav): rebuild sticky header with minimal monogram and inline section links
+  refactor(styles): refine card surface and border tokens for minimalist aesthetic
   ```
-- **Checks**:
-  - `npm run check`
-  - `npm run test:unit`
+- **Check**: `npm run check`
 
 ---
 
-### Task 1.3: Shell Streamlining & Vertical Stepper Removal
-- **Scope**:
-  - In `app/components/layout/SiteShell.tsx`, decommission the fixed desktop `VerticalStepper` on the home route.
-  - Simplify the background: deactivate the intense homepage video loop on standard desktop flow, providing a clean, subtle ambient canvas.
-- **Files Modified**:
+### Commit 1.3: Unmount Left Vertical Stepper
+- **Action**: Remove `<VerticalStepper />` from `SiteShell.tsx` to eliminate sidebar collision on desktop.
+- **File**: `app/components/layout/SiteShell.tsx`
+- **Commit Message**:
+  ```
+  refactor(shell): unmount left vertical stepper from desktop layout
+  ```
+- **Check**: `npm run check && npm run test:unit`
+
+---
+
+### Commit 1.4: Streamline Background Canvas
+- **Action**: Deactivate homepage video class toggle on default home flow in `SiteShell.tsx` and `root.tsx` for a clean canvas.
+- **Files**:
   - `app/components/layout/SiteShell.tsx`
-  - `app/components/layout/VerticalStepper.tsx` (unmounted or removed from default flow)
+  - `app/root.tsx`
 - **Commit Message**:
   ```
-  refactor(shell): remove left vertical stepper and streamline background presentation
+  refactor(shell): streamline background presentation for minimalist document canvas
   ```
-- **Checks**:
-  - `npm run check`
-  - `npm run test:unit`
+- **Check**: `npm run check && npm run test:unit`
 
 ---
 
-## Stage 1 Completion Criteria
-- Page body is cleanly bounded at `max-w-3xl mx-auto`.
-- Top header stays sticky with minimal height, clean backdrop blur, monogram, and functional section jump links.
-- Left edge has no overlapping stepper widget.
-- `npm run check` passes with 0 errors.
+### Commit 1.5: RT Monogram Brand Logo
+- **Action**: In `Navbar.tsx`, replace the heavy `RYAN TRAN` text with the minimalist `RT` monogram link.
+- **File**: `app/components/layout/Navbar.tsx`
+- **Commit Message**:
+  ```
+  feat(nav): introduce minimal RT monogram brand logo in navbar
+  ```
+- **Check**: `npm run check`
+
+---
+
+### Commit 1.6: Inline Section Navigation Links
+- **Action**: In `Navbar.tsx`, add the inline desktop navigation links (`Projects`, `Experience`, `Contact`) with subtle divider.
+- **File**: `app/components/layout/Navbar.tsx`
+- **Commit Message**:
+  ```
+  feat(nav): add direct inline section navigation links in header
+  ```
+- **Check**: `npm run check && npm run test:unit`
+
+---
+
+### Commit 1.7: Sticky Blurred Header Container
+- **Action**: In `Navbar.tsx`, convert outer header to sticky, blurred backdrop bounded by `max-w-3xl mx-auto`.
+- **File**: `app/components/layout/Navbar.tsx`
+- **Commit Message**:
+  ```
+  feat(nav): convert navbar to sticky backdrop-blur header container
+  ```
+- **Check**: `npm run check && npm run test:unit`
+
+---
+
+## Stage 1 Verification & Quality Gate
+1. `npm run check` (TypeScript verification & typegen) passes with 0 errors.
+2. `npm run test:unit` passes 100%.
+3. Visual verification on `http://localhost:5173/my-portfolio/`:
+   - Header is sticky, blurred, with `RT`, inline links, and theme toggle.
+   - Stepper on the left is removed.
+   - Layout is cleanly centered at `max-w-3xl`.
+4. All commits remain strictly local on `main` (no push).
