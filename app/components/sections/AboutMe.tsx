@@ -1,3 +1,18 @@
+const experiences = [
+  {
+    number: "01",
+    company: "HUB Network",
+    role: "Internal Developer – Startup Growth / HR",
+    period: "Feb 2025 – May 2026",
+    highlights: [
+      "Workflow automation bằng Google Apps Script và Python.",
+      "Internal dashboards và mentor management tools.",
+      "Data processing và operational reporting.",
+      "Startup operations và event coordination.",
+    ],
+  },
+];
+
 const focusAreas = [
   { title: "Backend Engineering", description: "Python, FastAPI, Go, Traefik, APIs & system architecture" },
   { title: "Data Engineering", description: "data pipelines, databases & data infrastructure" },
@@ -32,28 +47,24 @@ export default function AboutMe() {
         </div>
 
         {/* Experience Timeline */}
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6 text-sm">
-            <div className="w-32 sm:w-36 shrink-0 text-xs font-mono text-muted">2024 – Present</div>
-            <div className="min-w-0 flex-1 space-y-1">
-              <div className="text-sm font-semibold text-foreground">AI Systems &amp; Service Architecture</div>
-              <div className="text-xs text-muted">Open Source &amp; Independent Systems</div>
-              <p className="text-xs sm:text-sm text-muted leading-relaxed">
-                Architecting agent harnesses, MCP servers, Docker orchestration, and high-performance FastAPI backends for real-time AI and data applications.
-              </p>
+        <div className="space-y-8">
+          {experiences.map((exp) => (
+            <div key={exp.company} className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 text-sm">
+              <div className="w-32 sm:w-36 shrink-0 text-xs font-mono text-muted">{exp.period}</div>
+              <div className="min-w-0 flex-1 space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs font-semibold text-accent">{exp.number}.</span>
+                  <h3 className="text-sm font-semibold text-foreground">{exp.company}</h3>
+                </div>
+                <div className="text-xs font-medium text-muted">{exp.role}</div>
+                <ul className="space-y-1 pt-1 text-xs sm:text-sm text-muted leading-relaxed list-disc list-inside">
+                  {exp.highlights.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6 text-sm">
-            <div className="w-32 sm:w-36 shrink-0 text-xs font-mono text-muted">2024 – Present</div>
-            <div className="min-w-0 flex-1 space-y-1">
-              <div className="text-sm font-semibold text-foreground">Applied Quantitative Research</div>
-              <div className="text-xs text-muted">Computational Modeling &amp; Analytics</div>
-              <p className="text-xs sm:text-sm text-muted leading-relaxed">
-                Developing statistical models and quantitative experiments in Python and R, bridging mathematical theory with scalable software systems.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Education Timeline */}
