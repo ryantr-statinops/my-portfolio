@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { useLocation } from "react-router";
 import { navigateToSection } from "../../../src/lib/sectionNavigation";
+import FloatingContact from "../interactive/FloatingContact";
 import Footer from "./Footer";
 import MobileOverlay from "./MobileOverlay";
 import Navbar from "./Navbar";
@@ -94,6 +95,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
       }} onNavigateToSection={navigateToHomeSection} />
       <main id="main-content" tabIndex={-1} className={isHomePage ? "relative z-10" : undefined}>{children}</main>
       <Footer transparentBackground={isHomePage} />
+      <FloatingContact />
     </>
   );
 }
