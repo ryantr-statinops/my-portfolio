@@ -11,6 +11,18 @@ const experiences = [
       "Startup operations và event coordination.",
     ],
   },
+  {
+    number: "02",
+    company: "MINI HIPPO",
+    role: "Business Tools Developer",
+    period: "Sep 2025 – Feb 2026",
+    highlights: [
+      "Xây dựng CRM trên Google Sheets và Apps Script.",
+      "Quản lý pipeline cho đội ngũ 8 người.",
+      "Develop and Manage Sales dashboards, heatmaps và commission tracking.",
+      "Automate reporting and data collection in Google Sheets.",
+    ],
+  },
 ];
 
 const focusAreas = [
