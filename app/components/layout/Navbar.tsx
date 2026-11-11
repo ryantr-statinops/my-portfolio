@@ -34,10 +34,10 @@ export default function Navbar({ onOpenMenu, menuOpen, menuButtonRef }: Props) {
         <div className="flex items-center gap-6 sm:gap-8 md:gap-10">
           <Link
             to="/"
-            className="font-mono text-lg md:text-xl font-bold uppercase tracking-tight text-foreground transition-opacity hover:opacity-80"
+            className="font-mono text-base sm:text-lg font-bold tracking-tight text-foreground transition-colors hover:text-accent"
             aria-label="Ryan Tran — Home"
           >
-            RYAN TRAN
+            RT
           </Link>
 
           <button
