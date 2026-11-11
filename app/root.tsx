@@ -2,6 +2,9 @@ import type { LinksFunction, MetaFunction } from "react-router";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import SiteShell from "./components/layout/SiteShell";
 import stylesheet from "../src/styles/global.css?url";
+if (import.meta.env.DEV && typeof window !== "undefined") {
+  void import("react-grab");
+}
 
 const siteBase = import.meta.env.BASE_URL;
 
