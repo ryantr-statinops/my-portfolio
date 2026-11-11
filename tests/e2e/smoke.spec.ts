@@ -38,7 +38,8 @@ test("mobile menu and keyboard navigation work without overflow", async ({ page 
   await expect(page).toHaveURL(/#projects$/);
   await expect(page.getByRole("button", { name: "Open menu" })).toHaveAttribute("aria-expanded", "false");
   const expandBtnMobile = page.getByRole("button", { name: /View All Projects/i });
-  if (await expandBtnMobile.isVisible()) await expandBtnMobile.click();
+  await expect(expandBtnMobile).toBeVisible();
+  await expandBtnMobile.click();
   await page.locator('[data-project-category="all"]').focus();
   await page.keyboard.press("Tab");
   await page.keyboard.press("Enter");
@@ -66,7 +67,8 @@ test("legacy Hub anchor and reduced motion remain supported", async ({ page }) =
 test("published projects expose matching status and repository in every category", async ({ page }) => {
   await page.goto("./");
   const expandBtn = page.getByRole("button", { name: /View All Projects/i });
-  if (await expandBtn.isVisible()) await expandBtn.click();
+  await expect(expandBtn).toBeVisible();
+  await expandBtn.click();
   for (const category of ["software-engineering", "data-engineering", "ai-engineering", "other"]) {
     await page.locator(`[data-project-category="${category}"]`).click();
     const entries = projects.filter(p => p.category === category);
