@@ -78,7 +78,7 @@ export default function Hero() {
               <span className="text-gradient">&amp; iterate.</span>
             </h1>
             <p className="max-w-2xl text-sm sm:text-base text-muted font-normal leading-relaxed">
-              Applied Statistics student at Ton Duc Thang University exploring the intersection of quantitative research, data engineering, and resilient software architecture.
+              Mathematics and Statistics student exploring different areas of technology, particularly quantitative finance, data, and AI.
             </p>
           </div>
 
