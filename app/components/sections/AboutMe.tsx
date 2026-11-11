@@ -5,10 +5,10 @@ const experiences = [
     role: "Internal Developer – Startup Growth / HR",
     period: "Feb 2025 – May 2026",
     highlights: [
-      "Workflow automation bằng Google Apps Script và Python.",
-      "Internal dashboards và mentor management tools.",
-      "Data processing và operational reporting.",
-      "Startup operations và event coordination.",
+      "Automated internal workflows using Google Apps Script and Python.",
+      "Engineered operational dashboards and mentor management tools.",
+      "Handled statistical data processing and recurring operational reporting.",
+      "Coordinated startup program operations and community events.",
     ],
   },
   {
@@ -17,10 +17,10 @@ const experiences = [
     role: "Business Tools Developer",
     period: "Sep 2025 – Feb 2026",
     highlights: [
-      "Xây dựng CRM trên Google Sheets và Apps Script.",
-      "Quản lý pipeline cho đội ngũ 8 người.",
-      "Develop and Manage Sales dashboards, heatmaps và commission tracking.",
-      "Automate reporting and data collection in Google Sheets.",
+      "Architected custom CRM system on Google Sheets and Apps Script.",
+      "Managed sales and operations pipeline for an 8-member team.",
+      "Developed and managed sales dashboards, heatmaps, and commission tracking.",
+      "Automated reporting workflows and data collection in Google Sheets.",
     ],
   },
   {
@@ -29,10 +29,10 @@ const experiences = [
     role: "Statistical Survey Assistant",
     period: "Jan 2026 – May 2026",
     highlights: [
-      "Statistical data collection.",
-      "Survey support và data handling.",
-      "Working with structured statistical information.",
-      "Analyze and verify financial statement reports.",
+      "Conducted statistical data collection across municipal sectors.",
+      "Assisted survey execution, sampling checks, and data handling.",
+      "Processed and analyzed structured statistical databases.",
+      "Analyzed and verified financial statement data reports.",
     ],
   },
 ];
