@@ -1,9 +1,9 @@
 /* Shared information surfaces. Layout and typography belong to the caller. */
 :root {
-  --box-radius: 1rem;
-  --box-border: var(--border);
+  --box-radius: 0.875rem;
+  --box-border: color-mix(in srgb, var(--border) 70%, transparent);
   --box-background: rgb(var(--background-rgb) / 0.7);
-  --box-blur: 12px;
+  --box-blur: 16px;
   --box-padding: 1.25rem;
   --box-padding-compact: 0.75rem;
   --box-padding-filter: 1rem;
@@ -11,6 +11,17 @@
 }
 
 @layer components {
+  .content-container {
+    max-width: 48rem;
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .content-container {
+      padding-inline: 1.5rem;
+    }
+  }
   .info-box {
     min-width: 0;
     border: 1px solid var(--box-border);
