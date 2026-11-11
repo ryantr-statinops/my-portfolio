@@ -11,5 +11,13 @@ export const PROJECT_STATUS = {
 
 export default function ProjectStatusBadge({ status }: { status: ProjectStatus }) {
   const { label, color } = PROJECT_STATUS[status];
-  return <span data-project-status={status} className={`inline-flex shrink-0 rounded-full border px-2 py-1 font-mono text-[10px] font-medium leading-tight ${color}`}><span className="sr-only">Status: </span>{label}</span>;
+  return (
+    <span
+      data-project-status={status}
+      className={`inline-flex shrink-0 items-center rounded-full border px-2.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider ${color}`}
+    >
+      <span className="sr-only">Status: </span>
+      {label}
+    </span>
+  );
 }
