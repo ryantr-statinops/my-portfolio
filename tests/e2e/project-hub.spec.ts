@@ -53,7 +53,7 @@ for (const theme of ["light", "dark"] as const) {
     await page.emulateMedia({ colorScheme: theme });
     await page.goto(fixtureUrl);
     await page.evaluate(selectedTheme => document.documentElement.classList.toggle("dark", selectedTheme === "dark"), theme);
-    const intro = page.locator("[data-project-hub] header p");
+    const intro = page.locator("[data-project-hub] header h2");
     await expect(intro).toBeVisible();
     await expect(intro).toHaveCSS("color", theme === "light" ? "rgb(10, 10, 10)" : "rgb(255, 255, 255)");
   });

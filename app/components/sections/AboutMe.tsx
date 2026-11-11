@@ -116,7 +116,12 @@ export default function AboutMe() {
                   className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-border/80 bg-background/60 px-3.5 py-1.5 text-xs text-muted hover:text-foreground hover:border-accent transition-all hover:scale-105"
                 >
                   <span className="break-all">{contact.label}</span>
-                  {contact.external && <span aria-hidden="true">↗</span>}
+                  {contact.external && (
+                    <>
+                      <span aria-hidden="true">↗</span>
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </>
+                  )}
                 </a>
               </li>
             ))}
