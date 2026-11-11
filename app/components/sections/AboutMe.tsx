@@ -67,6 +67,38 @@ export default function AboutMe() {
   return (
     <section id="about-me" aria-labelledby="about-me-title" className="relative w-full max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
       <div className="w-full space-y-12">
+        {/* Active Status & Contact Card */}
+        <article data-about-contact className="info-box p-4 sm:p-5 rounded-xl border border-border/80 bg-surface/50 space-y-3">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+            <span className="font-mono text-xs uppercase tracking-widest text-accent font-semibold">Active Status</span>
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold tracking-tight text-foreground">Open to work</h3>
+          <p className="text-xs sm:text-sm text-muted leading-relaxed">
+            Open to internship and entry-level opportunities in data, AI and software engineering.
+          </p>
+          <ul className="flex flex-wrap gap-2 pt-1">
+            {contacts.map((contact) => (
+              <li key={contact.href} className="min-w-0 max-w-full">
+                <a
+                  href={contact.href}
+                  target={contact.external ? "_blank" : undefined}
+                  rel={contact.external ? "noopener noreferrer" : undefined}
+                  className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-border/80 bg-background/60 px-3.5 py-1.5 text-xs text-muted hover:text-foreground hover:border-accent transition-all hover:scale-105"
+                >
+                  <span className="break-all">{contact.label}</span>
+                  {contact.external && (
+                    <>
+                      <span aria-hidden="true">↗</span>
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </>
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </article>
+
         {/* Section Header: Experience */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
@@ -158,38 +190,6 @@ export default function AboutMe() {
             ))}
           </div>
         </div>
-
-        {/* Active Status & Contact Card */}
-        <article data-about-contact className="info-box p-4 sm:p-5 rounded-xl border border-border/80 bg-surface/50 space-y-3">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
-            <span className="font-mono text-xs uppercase tracking-widest text-accent font-semibold">Active Status</span>
-          </div>
-          <h3 className="text-lg sm:text-xl font-bold tracking-tight text-foreground">Open to work</h3>
-          <p className="text-xs sm:text-sm text-muted leading-relaxed">
-            Open to internship and entry-level opportunities in data, AI and software engineering.
-          </p>
-          <ul className="flex flex-wrap gap-2 pt-1">
-            {contacts.map((contact) => (
-              <li key={contact.href} className="min-w-0 max-w-full">
-                <a
-                  href={contact.href}
-                  target={contact.external ? "_blank" : undefined}
-                  rel={contact.external ? "noopener noreferrer" : undefined}
-                  className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-border/80 bg-background/60 px-3.5 py-1.5 text-xs text-muted hover:text-foreground hover:border-accent transition-all hover:scale-105"
-                >
-                  <span className="break-all">{contact.label}</span>
-                  {contact.external && (
-                    <>
-                      <span aria-hidden="true">↗</span>
-                      <span className="sr-only"> (opens in a new tab)</span>
-                    </>
-                  )}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </article>
       </div>
     </section>
   );
