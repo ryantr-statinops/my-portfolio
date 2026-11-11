@@ -23,6 +23,18 @@ const experiences = [
       "Automate reporting and data collection in Google Sheets.",
     ],
   },
+  {
+    number: "03",
+    company: "Ho Chi Minh City Statistics Office",
+    role: "Statistical Survey Assistant",
+    period: "Jan 2026 – May 2026",
+    highlights: [
+      "Statistical data collection.",
+      "Survey support và data handling.",
+      "Working with structured statistical information.",
+      "Analyze and verify financial statement reports.",
+    ],
+  },
 ];
 
 const focusAreas = [
