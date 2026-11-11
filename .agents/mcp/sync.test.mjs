@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import test from "node:test";
@@ -50,6 +50,23 @@ test("renders HTTP transport and credential references for each client without r
   }
   assert.deepEqual(syncWorkspace(root), []);
   assert.deepEqual(syncWorkspace(root, { check: true }), []);
+});
+
+test("an empty manifest does not recreate removed client directories", (t) => {
+  const root = fixture(t, {});
+  write(root, ".agents/mcp/generated.json", { serverNames: ["stitch"] });
+  write(root, ".mcp.json", { mcpServers: { stitch: { type: "http", url: stitch.url } } });
+  write(root, ".vscode/mcp.json", { servers: { stitch: { type: "http", url: stitch.url } } });
+  assert.ok(syncWorkspace(root, { check: true }).includes(".mcp.json"));
+  syncWorkspace(root);
+  assert.deepEqual(document(root, ".mcp.json").mcpServers, {});
+  assert.deepEqual(document(root, ".vscode/mcp.json").servers, {});
+  assert.deepEqual(document(root, ".agents/mcp/generated.json").serverNames, []);
+  assert.deepEqual(syncWorkspace(root, { check: true }), []);
+  assert.deepEqual(syncWorkspace(root), []);
+  for (const path of [".codex", ".cursor", ".gemini"]) {
+    assert.equal(existsSync(join(root, path)), false);
+  }
 });
 
 test("migrates the existing Codex Stitch setup", (t) => {

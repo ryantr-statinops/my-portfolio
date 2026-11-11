@@ -102,9 +102,15 @@ export function syncWorkspace(root, { check = false } = {}) {
     throw new Error(`${statePath}: invalid managed server list.`);
   }
   // Plan every output before writing so a conflict cannot leave a partial sync.
-  const plan = [{ path: ".codex/config.toml", text: renderCodex(read(root, ".codex/config.toml"), manifest.servers) }];
+  const hasServers = Object.keys(manifest.servers).length > 0;
+  const codexText = read(root, ".codex/config.toml");
+  const plan = [];
+  if (hasServers || codexText) {
+    plan.push({ path: ".codex/config.toml", text: renderCodex(codexText, manifest.servers) });
+  }
   for (const target of targets) {
     const text = read(root, target.path);
+    if (!hasServers && !text) continue;
     const document = text ? parse(text, target.path) : {};
     const existing = object(document[target.key] ?? {}, `${target.path}: ${target.key}`);
     const next = { ...existing };
