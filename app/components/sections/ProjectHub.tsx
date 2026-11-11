@@ -10,6 +10,89 @@ type Props = {
   defaultExpanded?: boolean;
 };
 
+function ProjectMockWindow({ projectId }: { projectId: string }) {
+  if (projectId === "factorsbt") {
+    return (
+      <div className="w-full rounded-xl border border-border/80 bg-black/85 p-3.5 font-mono text-zinc-300 shadow-2xl backdrop-blur-sm">
+        <div className="flex items-center justify-between border-b border-zinc-800 pb-2 mb-2.5">
+          <div className="flex items-center gap-1.5">
+            <span className="h-2 w-2 rounded-full bg-red-500/80" />
+            <span className="h-2 w-2 rounded-full bg-yellow-500/80" />
+            <span className="h-2 w-2 rounded-full bg-green-500/80" />
+            <span className="ml-1 text-[10px] text-zinc-400">factorsbt ~ v0.4 (simd)</span>
+          </div>
+          <span className="text-[9px] text-accent font-semibold tracking-wider">ONLINE</span>
+        </div>
+        <div className="space-y-1.5 font-mono text-[10px] sm:text-[11px] leading-tight">
+          <div className="text-zinc-500">$ cargo run --release -- --ticks 12.4M</div>
+          <div className="text-emerald-400 flex items-center gap-1">
+            <span>✓</span> <span>Synchronized 500 assets in 38ms</span>
+          </div>
+          <div className="text-cyan-300 flex items-center justify-between pt-0.5">
+            <span>Sharpe Ratio: 2.41</span>
+            <span>Max DD: -4.2%</span>
+          </div>
+          <div className="text-zinc-400 text-[10px]">► Multi-model decision: converged</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (projectId === "lattice-terminal") {
+    return (
+      <div className="w-full rounded-xl border border-border/80 bg-black/85 p-3.5 font-mono text-zinc-300 shadow-2xl backdrop-blur-sm">
+        <div className="flex items-center justify-between border-b border-zinc-800 pb-2 mb-2.5">
+          <div className="flex items-center gap-1.5">
+            <span className="h-2 w-2 rounded-full bg-red-500/80" />
+            <span className="h-2 w-2 rounded-full bg-yellow-500/80" />
+            <span className="h-2 w-2 rounded-full bg-green-500/80" />
+            <span className="ml-1 text-[10px] text-zinc-400">lattice :: market-workspace</span>
+          </div>
+          <span className="text-[9px] text-emerald-400 font-semibold tracking-wider">STREAM</span>
+        </div>
+        <div className="space-y-1.5 font-mono text-[10px] sm:text-[11px] leading-tight">
+          <div className="flex items-center justify-between text-zinc-300">
+            <span>NVDA $138.25</span>
+            <span className="text-emerald-400 font-semibold">+2.45% ▲</span>
+          </div>
+          <div className="flex items-center justify-between text-zinc-300">
+            <span>AAPL $224.10</span>
+            <span className="text-emerald-400 font-semibold">+0.82% ▲</span>
+          </div>
+          <div className="text-zinc-500 text-[10px] truncate pt-0.5">News: FOMC economic projection updated</div>
+          <div className="text-accent text-[10px]">Active Portfolio: 8 Long / 3 Short</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full rounded-xl border border-border/80 bg-black/85 p-3.5 font-mono text-zinc-300 shadow-2xl backdrop-blur-sm">
+      <div className="flex items-center justify-between border-b border-zinc-800 pb-2 mb-2.5">
+        <div className="flex items-center gap-1.5">
+          <span className="h-2 w-2 rounded-full bg-red-500/80" />
+          <span className="h-2 w-2 rounded-full bg-yellow-500/80" />
+          <span className="h-2 w-2 rounded-full bg-green-500/80" />
+          <span className="ml-1 text-[10px] text-zinc-400">ranking-lab :: cross-sectional</span>
+        </div>
+        <span className="text-[9px] text-amber-400 font-semibold tracking-wider">EVAL</span>
+      </div>
+      <div className="space-y-1.5 font-mono text-[10px] sm:text-[11px] leading-tight">
+        <div className="text-zinc-400">Universe: S&P 500 + Russell 1000</div>
+        <div className="text-emerald-400 flex items-center justify-between">
+          <span>Rank IC: +0.089</span>
+          <span className="text-zinc-400 text-[10px]">t-stat 4.2</span>
+        </div>
+        <div className="text-cyan-300 flex items-center justify-between pt-0.5">
+          <span>Top Decile Spread: +14.8%</span>
+          <span className="text-zinc-400 text-[10px]">annualized</span>
+        </div>
+        <div className="text-zinc-500 text-[10px]">Turnover: 12.3% monthly | Winsorized</div>
+      </div>
+    </div>
+  );
+}
+
 function ProjectOverviewPanel({ project }: { project: ProjectOverview }) {
   return (
     <article data-project-overview className="min-w-0 space-y-4 break-words">
@@ -55,11 +138,16 @@ export default function ProjectHub({ projects, defaultExpanded = false }: Props)
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   const [category, setCategory] = useState<ProjectCategory>("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [featuredIndex, setFeaturedIndex] = useState(0);
   const visible = projectsForCategory(projects, category);
   const selected = resolveSelectedProject(visible, selectedId);
   const featuredProjects = FEATURED_IDS.map((id) => projects.find((p) => p.id === id)).filter((p): p is ProjectOverview => Boolean(p));
-  const primaryFeatured = featuredProjects[0] ?? projects[0];
-  const secondaryFeatured = featuredProjects.length > 1 ? featuredProjects.slice(1) : [];
+  const count = featuredProjects.length || 1;
+  const currentFeatured = featuredProjects[featuredIndex % count] ?? projects[0];
+  const prevIndex = (featuredIndex - 1 + count) % count;
+  const nextIndex = (featuredIndex + 1) % count;
+  const prevFeatured = featuredProjects[prevIndex] ?? currentFeatured;
+  const nextFeatured = featuredProjects[nextIndex] ?? currentFeatured;
 
   useEffect(() => {
     setReady(true);
@@ -105,7 +193,7 @@ export default function ProjectHub({ projects, defaultExpanded = false }: Props)
   }
 
   return (
-    <section id="projects" data-project-hub aria-labelledby="project-hub-title" className="relative w-full max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+    <section id="projects" data-project-hub aria-labelledby="project-hub-title" className="relative w-full max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
       <span id="intelligence-hub" aria-hidden="true" className="absolute left-0 top-0" />
       <div className="w-full space-y-6 sm:space-y-8">
         <header className="space-y-2">
@@ -120,109 +208,154 @@ export default function ProjectHub({ projects, defaultExpanded = false }: Props)
           </p>
         </header>
 
-        {/* Featured Work Showcase - Option B Bento Hierarchy */}
-        {primaryFeatured && (
+        {/* Featured Work Showcase - 3-Card Spotlight Carousel */}
+        {currentFeatured && (
           <div className="space-y-3.5">
             <div className="flex items-center justify-between">
               <h3 className="font-mono text-xs uppercase tracking-wider text-muted">
                 Featured Work
               </h3>
-              <span className="text-xs font-mono text-accent">Flagship Systems</span>
+              <span className="text-xs font-mono text-accent">Flagship Spotlight</span>
             </div>
 
-            {/* Primary Flagship Banner */}
-            <article className="group relative overflow-hidden rounded-2xl border border-border/80 bg-surface/50 p-5 sm:p-6 transition-all hover:border-accent/40 shadow-sm">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs uppercase tracking-widest text-muted">
-                    {CATEGORY_MAP[primaryFeatured.category]}
-                  </span>
-                  <span className="rounded-full bg-accent/10 border border-accent/20 px-2 py-0.5 font-mono text-[10px] text-accent font-medium">
-                    Primary Flagship
+            <div className="flex items-stretch justify-center gap-2 sm:gap-3.5">
+              {/* Left Wing (Previous) */}
+              <button
+                type="button"
+                onClick={() => setFeaturedIndex(prevIndex)}
+                aria-label={`Previous featured project: ${prevFeatured.title}`}
+                className="w-10 sm:w-24 md:w-32 shrink-0 rounded-2xl sm:rounded-3xl border border-border/70 bg-gradient-to-b from-surface/70 via-surface/30 to-surface/90 p-2 sm:p-4 flex flex-col justify-between items-center sm:items-start cursor-pointer hover:border-accent/60 transition-all hover:scale-[1.02] active:scale-95 group select-none relative overflow-hidden"
+              >
+                <div className="flex items-center justify-between w-full">
+                  <span className="font-mono text-[10px] text-muted group-hover:text-accent transition-colors">
+                    ← 0{prevIndex + 1}
                   </span>
                 </div>
-                <ProjectStatusBadge status={primaryFeatured.status} />
-              </div>
-              <h3 className="mt-3 text-xl sm:text-2xl font-bold tracking-tight text-foreground transition-colors group-hover:text-accent">
-                {primaryFeatured.title}
-              </h3>
-              <p className="mt-2 text-xs sm:text-sm text-muted leading-relaxed max-w-2xl">
-                {primaryFeatured.description}
-              </p>
-              {primaryFeatured.stack.length > 0 && (
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {primaryFeatured.stack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded border border-border/70 bg-background/60 px-2.5 py-0.5 font-mono text-[11px] text-muted"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                <div className="my-auto text-center sm:text-left w-full">
+                  <div className="hidden sm:block font-mono text-[9px] md:text-[10px] uppercase tracking-wider text-muted/70 truncate">
+                    {CATEGORY_MAP[prevFeatured.category]}
+                  </div>
+                  <div className="hidden sm:block font-bold text-xs md:text-sm text-foreground/80 group-hover:text-accent transition-colors truncate mt-0.5">
+                    {prevFeatured.title}
+                  </div>
+                  <div className="sm:hidden font-mono text-[9px] uppercase tracking-widest text-muted [writing-mode:vertical-rl] rotate-180 py-2">
+                    {prevFeatured.title.slice(0, 10)}
+                  </div>
                 </div>
-              )}
-              <div className="mt-5 flex items-center justify-between border-t border-border/50 pt-4">
-                <a
-                  href={primaryFeatured.links.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-foreground px-4 py-1.5 font-mono text-xs font-bold text-background transition-all hover:scale-105 hover:bg-foreground/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-                >
-                  View repository <span aria-hidden="true">↗</span>
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </div>
-            </article>
+                <div className="hidden sm:block font-mono text-[10px] text-accent/80 group-hover:text-accent">
+                  PREV
+                </div>
+              </button>
 
-            {/* Secondary Flagships (2-Column Grid) */}
-            {secondaryFeatured.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                {secondaryFeatured.map((item) => (
-                  <article
-                    key={item.id}
-                    className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/80 bg-surface/40 p-4 sm:p-5 transition-all hover:border-accent/40 shadow-sm"
-                  >
-                    <div>
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <span className="font-mono text-[11px] uppercase tracking-widest text-muted">
-                          {CATEGORY_MAP[item.category]}
-                        </span>
-                        <ProjectStatusBadge status={item.status} />
-                      </div>
-                      <h4 className="mt-2.5 text-base sm:text-lg font-bold tracking-tight text-foreground transition-colors group-hover:text-accent">
-                        {item.title}
-                      </h4>
-                      <p className="mt-1.5 text-xs text-muted leading-relaxed line-clamp-3">
-                        {item.description}
-                      </p>
-                      {item.stack.length > 0 && (
-                        <div className="mt-3 flex flex-wrap gap-1">
-                          {item.stack.map((tech) => (
-                            <span
-                              key={tech}
-                              className="rounded border border-border/60 bg-background/50 px-2 py-0.5 font-mono text-[10px] text-muted"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      )}
+              {/* Center Spotlight Card */}
+              <article className="flex-1 min-w-0 rounded-2xl sm:rounded-3xl border border-border/90 bg-gradient-to-br from-surface/95 via-surface/70 to-surface/95 p-4 sm:p-6 lg:p-7 shadow-xl relative overflow-hidden flex flex-col justify-between transition-all">
+                {/* Top Meta Header */}
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/40 pb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs uppercase tracking-widest text-muted">
+                      {CATEGORY_MAP[currentFeatured.category]}
+                    </span>
+                    <span className="rounded-full bg-accent/10 border border-accent/25 px-2 py-0.5 font-mono text-[10px] text-accent font-medium">
+                      FLAGSHIP 0{featuredIndex + 1}
+                    </span>
+                  </div>
+                  <ProjectStatusBadge status={currentFeatured.status} />
+                </div>
+
+                {/* Main Content: Info + Preview Window */}
+                <div className="py-4 sm:py-5 grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+                  <div className="lg:col-span-6 space-y-3">
+                    <div className="font-mono text-[11px] uppercase tracking-widest text-accent">
+                      PERSONAL BUILD
                     </div>
-                    <div className="mt-4 pt-3 border-t border-border/40">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-foreground">
+                      {currentFeatured.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-muted leading-relaxed">
+                      {currentFeatured.description}
+                    </p>
+                    {currentFeatured.stack.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {currentFeatured.stack.map((tech) => (
+                          <span
+                            key={tech}
+                            className="rounded border border-border/70 bg-background/60 px-2 py-0.5 font-mono text-[10px] sm:text-[11px] text-muted"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <div className="pt-2">
                       <a
-                        href={item.links.github}
+                        href={currentFeatured.links.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-border/80 bg-surface/60 px-3.5 py-1 font-mono text-xs font-medium text-foreground transition-all hover:border-accent hover:bg-surface-elevated hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                        className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-foreground px-4 py-1.5 font-mono text-xs font-bold text-background transition-all hover:scale-105 hover:bg-foreground/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                       >
                         View repository <span aria-hidden="true">↗</span>
                         <span className="sr-only"> (opens in a new tab)</span>
                       </a>
                     </div>
-                  </article>
-                ))}
-              </div>
-            )}
+                  </div>
+
+                  {/* Right Mock Window */}
+                  <div className="lg:col-span-6 w-full">
+                    <ProjectMockWindow projectId={currentFeatured.id} />
+                  </div>
+                </div>
+
+                {/* Bottom Bar: Ticker + Dot Pagination */}
+                <div className="flex items-center justify-between border-t border-border/40 pt-3">
+                  <span className="font-mono text-[10px] text-muted truncate max-w-[200px] sm:max-w-none">
+                    SYS: LIVE_WORKSPACE // {currentFeatured.id}
+                  </span>
+                  <div className="flex items-center gap-1.5" role="tablist" aria-label="Featured projects navigation">
+                    {featuredProjects.map((p, idx) => (
+                      <button
+                        key={p.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={idx === featuredIndex}
+                        aria-label={`Show ${p.title}`}
+                        onClick={() => setFeaturedIndex(idx)}
+                        className={`h-2 rounded-full transition-all cursor-pointer ${
+                          idx === featuredIndex ? "w-6 bg-accent" : "w-2 bg-border hover:bg-muted"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </article>
+
+              {/* Right Wing (Next) */}
+              <button
+                type="button"
+                onClick={() => setFeaturedIndex(nextIndex)}
+                aria-label={`Next featured project: ${nextFeatured.title}`}
+                className="w-10 sm:w-24 md:w-32 shrink-0 rounded-2xl sm:rounded-3xl border border-border/70 bg-gradient-to-b from-surface/70 via-surface/30 to-surface/90 p-2 sm:p-4 flex flex-col justify-between items-center sm:items-end cursor-pointer hover:border-accent/60 transition-all hover:scale-[1.02] active:scale-95 group select-none relative overflow-hidden"
+              >
+                <div className="flex items-center justify-between w-full justify-end">
+                  <span className="font-mono text-[10px] text-muted group-hover:text-accent transition-colors">
+                    0{nextIndex + 1} →
+                  </span>
+                </div>
+                <div className="my-auto text-center sm:text-right w-full">
+                  <div className="hidden sm:block font-mono text-[9px] md:text-[10px] uppercase tracking-wider text-muted/70 truncate">
+                    {CATEGORY_MAP[nextFeatured.category]}
+                  </div>
+                  <div className="hidden sm:block font-bold text-xs md:text-sm text-foreground/80 group-hover:text-accent transition-colors truncate mt-0.5">
+                    {nextFeatured.title}
+                  </div>
+                  <div className="sm:hidden font-mono text-[9px] uppercase tracking-widest text-muted [writing-mode:vertical-rl] py-2">
+                    {nextFeatured.title.slice(0, 10)}
+                  </div>
+                </div>
+                <div className="hidden sm:block font-mono text-[10px] text-accent/80 group-hover:text-accent">
+                  NEXT
+                </div>
+              </button>
+            </div>
           </div>
         )}
 
