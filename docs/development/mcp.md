@@ -27,9 +27,14 @@ and server entries while replacing entries managed by this setup. See the
 [canonical MCP guide](../../.agents/mcp/README.md) for the client mapping,
 supported fields, conflict handling and current adapter limitations.
 
-Only Google Stitch is configured. This setup does not install Playwright MCP,
-Context7 or shadcn/ui. MCP configuration and credentials are development-tool
-inputs; the static portfolio does not require them.
+No MCP servers are currently configured. The shared manifest and generated client
+configurations contain empty server lists. The synchronization helpers remain
+available for adding servers later. MCP configuration and credentials are
+development-tool inputs; the static portfolio does not require them.
+
+The local `.codex/`, `.cursor/` and `.gemini/` directories are removed and ignored
+by Git. While the manifest is empty, synchronization skips missing client files
+without recreating these directories.
 
 ## First-time setup
 
@@ -37,14 +42,16 @@ inputs; the static portfolio does not require them.
 2. Run `npm run mcp:check`. If generated files are missing or outdated, run
    `npm run mcp:sync`, then repeat the check. Neither command starts a server or
    verifies access to an external service.
-3. For Stitch, provide `STITCH_API_KEY` using the
+3. With an empty server list, no credentials are needed. If adding Stitch later,
+   provide `STITCH_API_KEY` using the
    [client-specific credential instructions](../../.agents/mcp/README.md#credentials).
    Local Codex supports the ignored root `.env` file as a fallback; do not assume
    all other clients load that file. Keep key values out of tracked files.
 4. Restart/reload the client and complete any required project trust or
    authentication step. In VS Code/Copilot, select the configuration source used
    by your harness so the same server is not connected twice.
-5. Verify a real tool call, such as asking the agent to list your Stitch projects.
+5. After adding a server, verify a real tool call, such as asking the agent to list
+   your Stitch projects if Stitch is configured.
    Passing `mcp:check` alone does not establish that the server is connected.
 
 ## Updating and verifying

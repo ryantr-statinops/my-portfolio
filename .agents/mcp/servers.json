@@ -1,12 +1,4 @@
 {
   "schemaVersion": 1,
-  "servers": {
-    "stitch": {
-      "type": "http",
-      "url": "https://stitch.googleapis.com/mcp",
-      "envHeaders": {
-        "X-Goog-Api-Key": "STITCH_API_KEY"
-      }
-    }
-  }
+  "servers": {}
 }

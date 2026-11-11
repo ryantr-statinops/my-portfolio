@@ -34,7 +34,7 @@ Thumbs.db
 # Note
 note.txt
 
-# agents configs
-.codex/
-.cursor/
-.gemini/
+# Local agent configuration (not stored in this repository)
+/.codex/
+/.cursor/
+/.gemini/

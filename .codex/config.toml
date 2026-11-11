@@ -1,7 +1,0 @@
-# BEGIN GENERATED PROJECT MCP
-# Edit .agents/mcp/servers.json, then run npm run mcp:sync.
-
-[mcp_servers.stitch]
-url = "https://stitch.googleapis.com/mcp"
-http_headers_helper = "node .agents/mcp/headers.mjs stitch"
-# END GENERATED PROJECT MCP

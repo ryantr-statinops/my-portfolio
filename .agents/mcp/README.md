@@ -7,9 +7,15 @@ This manifest is a repository convention, not a file that clients load directly.
 For an onboarding walkthrough from the main documentation, see
 [Shared MCP setup](../../docs/development/mcp.md).
 
-Only Google Stitch is configured at present. Playwright, Context7, shadcn/ui and
-React Grab are not added by this setup. MCP tools support development; they are
-not included in the portfolio's production bundle.
+No MCP servers are currently configured. The shared manifest and generated client
+configurations contain empty server lists. The synchronization helpers remain
+available for adding servers later. MCP tools support development; they are not
+included in the portfolio's production bundle.
+
+The local `.codex/`, `.cursor/` and `.gemini/` directories have been removed and
+are ignored by Git. With an empty manifest, sync/check skips missing client files
+and does not recreate these directories. Existing client files are still checked
+and updated to remove previously managed servers.
 
 ## Setup and synchronization
 
@@ -56,6 +62,10 @@ verify an actual tool call in each application you use. A configured server does
 not prove that the current agent has connected to it.
 
 ## Credentials
+
+No credentials are required while the server list is empty. The instructions
+below apply only if a server is added later; Stitch is an example, not an active
+configuration.
 
 Never put API keys or tokens in the manifest or generated files. HTTP header
 values are **environment variable names** in `envHeaders`:
