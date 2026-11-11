@@ -34,7 +34,7 @@
 }
 
 :root {
-  --desktop-content-width: 85rem; /* 1360px shared desktop content width */
+  --desktop-content-width: 48rem; /* 768px (max-w-3xl) clean editorial content width */
   --background: #ffffff;
   --foreground: #0a0a0a;
   --surface: #f5f5f5;
