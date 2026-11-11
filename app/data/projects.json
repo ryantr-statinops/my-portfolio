@@ -1,20 +1,39 @@
 [
   {
-    "id": "homematch",
-    "title": "HomeMatch",
-    "description": "A student-focused housing platform for discovering rental rooms and finding compatible roommates. Built with Next.js and Supabase.",
+    "id": "factorsbt",
+    "title": "Factors Backtest",
+    "description": "High-performance backtesting infrastructure in Rust for multi-asset strategies, multi-model decisions, and synchronized market data.",
     "category": "software-engineering",
     "status": "active",
     "priority": 10,
     "stack": [
-      "Next.js",
+      "Rust",
+      "Backtesting",
+      "Quantitative Finance",
+      "Time Series",
+      "Multi-Asset"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/factorsbt"
+    }
+  },
+  {
+    "id": "lattice-terminal",
+    "title": "Lattice Terminal",
+    "description": "A multi-market research workspace combining financial news, real-time price data, portfolio tracking, and statistical model experimentation.",
+    "category": "software-engineering",
+    "status": "active",
+    "priority": 20,
+    "stack": [
+      "Python",
+      "FastAPI",
       "React",
       "TypeScript",
       "Tailwind CSS",
-      "Supabase"
+      "Market Data"
     ],
     "links": {
-      "github": "https://github.com/ryantr-statinops/HomeMatch"
+      "github": "https://github.com/ryantr-statinops/lattice-terminal"
     }
   },
   {
@@ -23,8 +42,9 @@
     "description": "A desktop application for monitoring CPU, memory, GPU and network activity. It combines real-time system metrics with interactive visualizations and a 3D CPU topology view.",
     "category": "software-engineering",
     "status": "active",
-    "priority": 20,
+    "priority": 30,
     "stack": [
+      "Rust",
       "JavaScript",
       "Three.js",
       "Tauri",
@@ -42,7 +62,7 @@
     "description": "An educational workspace combining web development and statistical computing. It brings together web interfaces, a Python API and R learning materials.",
     "category": "software-engineering",
     "status": "building",
-    "priority": 30,
+    "priority": 40,
     "stack": [
       "Next.js",
       "React",
@@ -63,10 +83,46 @@
     "description": "A keyboard-first browser tab search tool under development. Its planned architecture pairs a browser extension with a local Go native host for tab indexing and search.",
     "category": "software-engineering",
     "status": "building",
-    "priority": 40,
+    "priority": 50,
     "stack": [],
     "links": {
       "github": "https://github.com/ryantr-statinops/InfoBoard"
+    }
+  },
+  {
+    "id": "fundamental-ranking-lab",
+    "title": "Fundamental Ranking Lab",
+    "description": "Quarterly fundamental stock and sector ranking research with statistical validation, portfolio construction, and machine learning reranking.",
+    "category": "data-engineering",
+    "status": "building",
+    "priority": 60,
+    "stack": [
+      "Python",
+      "pandas",
+      "NumPy",
+      "Statistical Validation",
+      "Portfolio Construction"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/fundamental-ranking-lab"
+    }
+  },
+  {
+    "id": "visuaslide",
+    "title": "VisuaSlide",
+    "description": "Python SDK for automated data reporting, presentation generation, and operational dashboards directly within the Google Workspace ecosystem.",
+    "category": "data-engineering",
+    "status": "active",
+    "priority": 70,
+    "stack": [
+      "Python",
+      "SDK",
+      "Google Workspace",
+      "Automation",
+      "Data Reporting"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/VisuaSlide"
     }
   },
   {
@@ -75,7 +131,7 @@
     "description": "A Google Sheets admissions workflow powered by Apps Script. It consolidates records, synchronizes updates and standardizes contact data while tracking source rows.",
     "category": "data-engineering",
     "status": "active",
-    "priority": 50,
+    "priority": 80,
     "stack": [
       "JavaScript",
       "Google Apps Script",
@@ -92,7 +148,7 @@
     "description": "A Python toolkit for matching corresponding columns across CSV datasets. It combines header normalization, data profiling and similarity scoring to support schema alignment.",
     "category": "data-engineering",
     "status": "building",
-    "priority": 60,
+    "priority": 90,
     "stack": [
       "Python"
     ],
@@ -101,12 +157,64 @@
     }
   },
   {
+    "id": "query-processing-agent",
+    "title": "Query Processing Agent",
+    "description": "An agent harness for text-to-query processing and schema understanding, optimized for automated analytical workflows and decision models.",
+    "category": "ai-engineering",
+    "status": "active",
+    "priority": 100,
+    "stack": [
+      "Python",
+      "AI Agents",
+      "LLM",
+      "Text-to-Query",
+      "Agent Harness"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/query-processing-agent"
+    }
+  },
+  {
+    "id": "qlab-policy",
+    "title": "QLab Policy",
+    "description": "A local LLM evaluated as an autonomous trading policy and benchmarked against buy-and-hold returns using stdlib Python.",
+    "category": "ai-engineering",
+    "status": "active",
+    "priority": 110,
+    "stack": [
+      "Python",
+      "LLM",
+      "Algorithmic Trading",
+      "Decision Models"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/qlab_policy"
+    }
+  },
+  {
+    "id": "indexpilot-us100",
+    "title": "IndexPilot US100",
+    "description": "Reinforcement learning framework for dynamic stage management and portfolio allocation across top 100 US equities.",
+    "category": "ai-engineering",
+    "status": "building",
+    "priority": 120,
+    "stack": [
+      "Python",
+      "Reinforcement Learning",
+      "PyTorch",
+      "Quantitative Finance"
+    ],
+    "links": {
+      "github": "https://github.com/ryantr-statinops/indexpilot-us100"
+    }
+  },
+  {
     "id": "scrawlnews",
     "title": "ScrawlNews",
     "description": "A news collection and summarization system with a local monitoring dashboard. It processes RSS feeds, extracts article content and integrates LLM summaries with optional Telegram delivery.",
     "category": "ai-engineering",
     "status": "active",
-    "priority": 70,
+    "priority": 130,
     "stack": [
       "Python",
       "FastAPI",
@@ -128,7 +236,7 @@
     "description": "A reusable library of skills and workflows for AI coding agents. Markdown-based instructions and synchronization tooling help share workflows across agent environments.",
     "category": "ai-engineering",
     "status": "active",
-    "priority": 80,
+    "priority": 140,
     "stack": [
       "Markdown",
       "Python"
@@ -143,7 +251,7 @@
     "description": "An agent-assisted workflow for quantitative strategy research. It supports strategy generation, framework validation and submission checks for a competition-specific research process.",
     "category": "ai-engineering",
     "status": "building",
-    "priority": 90,
+    "priority": 150,
     "stack": [
       "Python",
       "Markdown"
@@ -158,7 +266,7 @@
     "description": "An interactive probability learning website with simulations and visual explanations. Topics include the law of large numbers, the central limit theorem and classic probability experiments.",
     "category": "other",
     "status": "active",
-    "priority": 100,
+    "priority": 160,
     "stack": [
       "JavaScript",
       "HTML",
@@ -175,7 +283,7 @@
     "description": "A statistical study of simulated event arrivals using a Poisson process. It covers parameter estimation, goodness-of-fit checks and time-series visualization.",
     "category": "other",
     "status": "completed",
-    "priority": 110,
+    "priority": 170,
     "stack": [
       "Python",
       "pandas",
@@ -194,7 +302,7 @@
     "description": "A Python workspace for researching mean-reversion strategies with MetaTrader 5 integration. It combines technical indicators, market data utilities and strategy execution code.",
     "category": "other",
     "status": "building",
-    "priority": 120,
+    "priority": 180,
     "stack": [
       "Python",
       "MetaTrader 5",
