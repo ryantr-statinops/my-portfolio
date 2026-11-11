@@ -1,9 +1,10 @@
-# Stage 2: Hero Section & Personal Identity
+# Stage 2: Hero Section & Personal Identity (Fine-Grained Breakdown)
 
 > **File**: `docs/plan/refactor/stage-2-hero-and-identity.md`
-> **Status**: Planned (Dependencies: Stage 1)
+> **Status**: Ready for execution (Dependencies: Stage 1 complete)
 > **Branch**: `main`
-> **Reference**: [renlenon.vercel.app](https://renlenon.vercel.app/)
+> **Push Destination**: Local only (do not push to remote)
+> **Commit Policy**: Strictly 1 single action per commit
 
 ---
 
@@ -12,48 +13,76 @@ Establish Ryan Tran's personal brand identity immediately at the top of the page
 
 ---
 
-## Tasks & Commit Breakdown
+## Fine-Grained Atomic Commit Sequence
 
-### Task 2.1: Avatar, Verified Badge, Role & Social Icons
-- **Scope**:
-  - Rebuild `app/components/sections/Hero.tsx`:
-    - Top identity row: Circular avatar image (`/images/avt.webp`) with delicate border and hover interaction.
-    - Verified badge (blue check icon SVG) next to the full name **Ryan Tran**.
-    - Subtitle/Role: `Statistics Student · Data, AI & Software Engineering`.
-    - Minimal social links row: GitHub, LinkedIn, Email with crisp stroke icons.
-    - Catchphrase headline: `Precision in code, ` + accent gradient `clarity in systems.`
-    - Bio paragraph highlighting mathematics/statistics foundation combined with modern software engineering.
-    - Action CTAs: pill button `View Projects ↓` and `Get in touch →`.
-- **Files Modified**:
-  - `app/components/sections/Hero.tsx`
+### Commit 2.1: Section Container & Document Flow
+- **Action**: Streamline hero container padding and width to `max-w-3xl mx-auto px-4 sm:px-6 pt-10 pb-8 sm:pt-16 sm:pb-12`.
+- **File**: `app/components/sections/Hero.tsx`
 - **Commit Message**:
   ```
-  feat(hero): implement modern editorial hero with avatar, role tags, and quick socials
+  refactor(hero): streamline hero section container to centered document flow
   ```
-- **Checks**:
-  - `npm run check`
+- **Check**: `npm run check`
 
 ---
 
-### Task 2.2: 3-Column Summary Stats Cards
-- **Scope**:
-  - Add 3 concise metric/stat cards directly below the bio in `Hero.tsx`:
-    1. **BSc in Statistics** — Ton Duc Thang University (2024–Present)
-    2. **8+ Projects** — Open Source & Applied Systems
-    3. **Data & AI Infra** — Core Engineering Focus
-  - Cards feature clean rounded corners (`rounded-xl`), soft borders, high contrast numbers, and responsive 1-column (mobile) to 3-column (desktop) layout.
-- **Files Modified**:
-  - `app/components/sections/Hero.tsx`
+### Commit 2.2: Circular Avatar with Verified Badge
+- **Action**: Add top identity row with circular image (`images/avt.webp`), verified blue check badge SVG, and role subtitle.
+- **File**: `app/components/sections/Hero.tsx`
 - **Commit Message**:
   ```
-  feat(hero): add quick stats metric cards below hero description
+  feat(hero): add circular avatar with verified badge and role description
   ```
-- **Checks**:
-  - `npm run check`
-  - `npm run test:unit`
+- **Check**: `npm run check`
 
 ---
 
-## Stage 2 Completion Criteria
-- Hero section presents face, verified identity, social links, value proposition, and 3 key metrics within the first screen view.
-- Fully responsive on mobile (375px) without awkward text wraps.
+### Commit 2.3: Quick Social Links
+- **Action**: Add minimal SVG stroke icons for GitHub, LinkedIn, and Email in the identity row.
+- **File**: `app/components/sections/Hero.tsx`
+- **Commit Message**:
+  ```
+  feat(hero): integrate quick social link icons in identity row
+  ```
+- **Check**: `npm run check`
+
+---
+
+### Commit 2.4: Editorial Headline, Bio & Action Buttons
+- **Action**: Refine `h1` typography, update bio paragraph, and convert action buttons to clean pill format.
+- **File**: `app/components/sections/Hero.tsx`
+- **Commit Message**:
+  ```
+  feat(hero): refine hero headline, bio narrative, and call-to-action buttons
+  ```
+- **Check**: `npm run check && npm run test:unit`
+
+---
+
+### Commit 2.5: 3-Column Summary Metric Cards
+- **Action**: Add 3 metric cards (`BSc Statistics`, `8+ Projects`, `Data & AI`) below the bio.
+- **File**: `app/components/sections/Hero.tsx`
+- **Commit Message**:
+  ```
+  feat(hero): implement 3-column summary metric cards
+  ```
+- **Check**: `npm run check && npm run test:unit`
+
+---
+
+### Commit 2.6: Remove Legacy Floating Scroll Badge
+- **Action**: Remove the absolute-positioned "Scroll for more" button and its click handler.
+- **File**: `app/components/sections/Hero.tsx`
+- **Commit Message**:
+  ```
+  refactor(hero): remove legacy floating scroll badge
+  ```
+- **Check**: `npm run check && npm run test:unit`
+
+---
+
+## Stage 2 Verification & Quality Gate
+1. `npm run check` passes with 0 errors.
+2. `npm run test:unit` passes 100%.
+3. Visual confirmation on `http://localhost:5173/my-portfolio/`.
+4. All commits remain strictly local on `main`.
