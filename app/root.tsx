@@ -32,7 +32,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        <script dangerouslySetInnerHTML={{ __html: `(() => { const saved = localStorage.getItem("theme"); const theme = saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); document.documentElement.classList.toggle("dark", theme === "dark"); document.documentElement.classList.toggle("homepage-video", location.pathname === "${siteBase}" || location.pathname === "${siteBase.slice(0, -1)}"); })();` }} />
+        <script dangerouslySetInnerHTML={{ __html: `(() => { const saved = localStorage.getItem("theme"); const theme = saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); document.documentElement.classList.toggle("dark", theme === "dark"); })();` }} />
       </head>
       <body className="bg-background text-foreground selection:bg-primary/30 transition-colors duration-300 leading-relaxed antialiased">
         {children}

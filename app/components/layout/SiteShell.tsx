@@ -4,17 +4,12 @@ import { navigateToSection } from "../../../src/lib/sectionNavigation";
 import Footer from "./Footer";
 import MobileOverlay from "./MobileOverlay";
 import Navbar from "./Navbar";
-import VideoBackground from "../interactive/VideoBackground";
 
 export default function SiteShell({ children }: { children: React.ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("homepage-video", isHomePage);
-  }, [isHomePage]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -91,7 +86,6 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      {isHomePage && <VideoBackground />}
       <a href="#main-content" className="sr-only fixed left-2 top-2 z-[60] rounded-full bg-foreground px-3 py-1 text-background focus:not-sr-only">Skip to content</a>
       <Navbar menuOpen={menuOpen} menuButtonRef={menuButton} onOpenMenu={() => setMenuOpen(true)} onNavigateToSection={navigateToHomeSection} />
       <MobileOverlay open={menuOpen} onClose={(restoreFocus = true) => {
