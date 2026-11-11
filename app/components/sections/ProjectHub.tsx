@@ -31,6 +31,7 @@ export default function ProjectHub({ projects }: Props) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const visible = projectsForCategory(projects, category);
   const selected = resolveSelectedProject(visible, selectedId);
+  const featured = projects.find((p) => p.id === "homematch") || projects[0];
   useEffect(() => setReady(true), []);
 
   useEffect(() => {
@@ -75,6 +76,54 @@ export default function ProjectHub({ projects }: Props) {
             Explore projects by domain, read the overview and browse the source repository.
           </p>
         </header>
+
+        {/* Featured Project Showcase Banner */}
+        {featured && (
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="font-mono text-xs uppercase tracking-wider text-muted">
+                Featured Work
+              </h3>
+              <span className="text-xs font-mono text-accent">Flagship Platform</span>
+            </div>
+            <article className="group relative overflow-hidden rounded-2xl border border-border/80 bg-surface/50 p-5 sm:p-6 transition-all hover:border-accent/40">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span className="font-mono text-xs uppercase tracking-widest text-muted">
+                  {CATEGORY_MAP[featured.category]}
+                </span>
+                <ProjectStatusBadge status={featured.status} />
+              </div>
+              <h3 className="mt-3 text-xl sm:text-2xl font-bold tracking-tight text-foreground transition-colors group-hover:text-accent">
+                {featured.title}
+              </h3>
+              <p className="mt-2 text-xs sm:text-sm text-muted leading-relaxed max-w-2xl">
+                {featured.description}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                {featured.stack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded border border-border/70 bg-background/60 px-2.5 py-0.5 font-mono text-[11px] text-muted"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-5 flex items-center justify-between border-t border-border/50 pt-4">
+                <a
+                  href={featured.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-foreground px-4 py-1.5 font-mono text-xs font-bold text-background transition-all hover:scale-105 hover:bg-foreground/90"
+                >
+                  View repository <span aria-hidden="true">↗</span>
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </div>
+            </article>
+          </div>
+        )}
+
         {ready && <div role="group" aria-label="Project categories" className="mb-8 flex flex-wrap gap-2">
           {([['all', 'All'], ...Object.entries(CATEGORY_MAP)] as [ProjectCategory, string][]).map(([id, label]) => <button key={id} type="button" data-project-category={id} aria-pressed={category === id} onClick={() => selectCategory(id)} className="info-box info-box--filter info-box--interactive min-h-11 max-w-full text-left font-mono text-xs">{label}</button>)}
         </div>}
