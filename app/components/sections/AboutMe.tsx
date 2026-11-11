@@ -16,8 +16,8 @@ const contacts = [
 
 export default function AboutMe() {
   return (
-    <section id="about-me" aria-labelledby="about-me-title" className="relative w-full px-6 py-20 md:px-12 lg:px-8">
-      <div className="mx-auto grid max-w-6xl lg:max-w-[var(--desktop-content-width)] items-start gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+    <section id="about-me" aria-labelledby="about-me-title" className="relative w-full max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+      <div className="w-full space-y-10">
         <div className="min-w-0">
           <h2 id="about-me-title" className="mb-4 text-4xl font-bold uppercase tracking-tight md:text-6xl">About Me</h2>
           <h3 className="mb-6 text-[clamp(2rem,4vw,3.5rem)] font-bold uppercase leading-[1.05] tracking-tighter">
