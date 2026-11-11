@@ -230,3 +230,35 @@ test("desktop project list scrolls within its box and matches the overview heigh
   await expect(panel.getByRole("heading")).toHaveText(title);
   expect(await list.evaluate(el => el.scrollTop)).toBeGreaterThan(0);
 });
+
+test("Floating contact controls allow expanding and collapsing contact options modal", async ({ page }) => {
+  await page.goto("./");
+  const trigger = page.getByRole("button", { name: "Work with Ryan" });
+  await expect(trigger).toBeVisible();
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+
+  // Click to open panel
+  await trigger.click();
+  await expect(trigger).toHaveAttribute("aria-expanded", "true");
+  const panel = page.locator("#floating-contact-panel");
+  await expect(panel).toBeVisible();
+  await expect(panel.getByRole("heading", { name: "Work with Ryan" })).toBeVisible();
+  await expect(panel.getByRole("link", { name: /Send an Email/ })).toBeVisible();
+  await expect(panel.getByRole("link", { name: /Connect on LinkedIn/ })).toBeVisible();
+
+  // Press Escape to close
+  await page.keyboard.press("Escape");
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await expect(trigger).toBeFocused();
+
+  // Test responsive layout at 320px
+  await page.setViewportSize({ width: 320, height: 600 });
+  await trigger.click();
+  await expect(trigger).toHaveAttribute("aria-expanded", "true");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+
+  // Close via X button
+  const closeBtn = panel.getByRole("button", { name: "Close contact options" });
+  await closeBtn.click();
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+});

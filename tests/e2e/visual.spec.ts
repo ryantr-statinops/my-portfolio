@@ -13,7 +13,7 @@ async function stabilize(page: Page) {
     });
   });
   await page.addStyleTag({
-    content: "*, *::before, *::after { animation: none !important; transition: none !important; caret-color: transparent !important; } video { visibility: hidden !important; }",
+    content: "*, *::before, *::after { animation: none !important; transition: none !important; caret-color: transparent !important; } video { visibility: hidden !important; } .floating-controls { visibility: hidden !important; }",
   });
   await page.evaluate(() => {
     document.querySelectorAll(".reveal").forEach((element) => element.classList.add("active"));
