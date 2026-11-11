@@ -74,8 +74,7 @@ export default function Hero() {
           {/* Headline */}
           <div className="space-y-3">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-[1.15]">
-              Explore, develop<br />
-              <span className="text-gradient">&amp; iterate.</span>
+              Explore, develop <span className="text-gradient">&amp; iterate.</span>
             </h1>
             <p className="max-w-2xl text-sm sm:text-base text-muted font-normal leading-relaxed">
               Mathematics and Statistics student exploring different areas of technology, particularly quantitative finance, data, and AI.
