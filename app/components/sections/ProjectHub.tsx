@@ -5,7 +5,10 @@ import type { ProjectOverview } from "../../data/project-schema";
 
 import ProjectStatusBadge from "../ProjectStatusBadge";
 
-type Props = { projects: readonly ProjectOverview[] };
+type Props = {
+  projects: readonly ProjectOverview[];
+  defaultExpanded?: boolean;
+};
 
 function ProjectOverviewPanel({ project }: { project: ProjectOverview }) {
   return (
@@ -43,16 +46,32 @@ function ProjectOverviewPanel({ project }: { project: ProjectOverview }) {
   );
 }
 
-export default function ProjectHub({ projects }: Props) {
+export default function ProjectHub({ projects, defaultExpanded = false }: Props) {
   const listRef = useRef<HTMLElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   const [category, setCategory] = useState<ProjectCategory>("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const visible = projectsForCategory(projects, category);
   const selected = resolveSelectedProject(visible, selectedId);
   const featured = projects.find((p) => p.id === "homematch") || projects[0];
-  useEffect(() => setReady(true), []);
+
+  useEffect(() => {
+    setReady(true);
+    const checkHash = () => {
+      if (typeof window !== "undefined" && window.location.hash === "#projects") {
+        setIsExpanded(true);
+      }
+    };
+    checkHash();
+    window.addEventListener("hashchange", checkHash);
+    window.addEventListener("popstate", checkHash);
+    return () => {
+      window.removeEventListener("hashchange", checkHash);
+      window.removeEventListener("popstate", checkHash);
+    };
+  }, []);
 
   useEffect(() => {
     const list = listRef.current;
@@ -144,90 +163,146 @@ export default function ProjectHub({ projects }: Props) {
           </div>
         )}
 
-        {ready && (
-          <div role="group" aria-label="Project categories" className="flex flex-wrap gap-2 pt-1">
-            {([['all', 'All'], ...Object.entries(CATEGORY_MAP)] as [ProjectCategory, string][]).map(([id, label]) => (
-              <button
-                key={id}
-                type="button"
-                data-project-category={id}
-                aria-pressed={category === id}
-                onClick={() => selectCategory(id)}
-                className={`min-h-9 max-w-full rounded-full border px-3.5 py-1 text-left font-mono text-xs transition-all hover:scale-105 cursor-pointer ${
-                  category === id
-                    ? "border-foreground bg-foreground text-background font-bold shadow-sm"
-                    : "border-border/80 bg-surface/50 text-muted hover:border-accent hover:text-foreground"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {visible.length === 0 ? (
-          <p
-            data-project-empty
-            role="status"
-            className="rounded-2xl border border-border/80 bg-surface/50 p-6 text-sm text-muted"
-          >
-            {projects.length === 0 ? "Projects are being prepared." : "No projects in this category yet."}
-          </p>
-        ) : ready ? (
-          <div className="grid min-w-0 items-start gap-4 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
-            <nav
-              ref={listRef}
-              aria-label="Choose a project"
-              className="rounded-2xl border border-border/80 bg-surface/40 p-2 sm:p-3 h-[min(280px,45svh)] lg:h-[min(460px,58svh)] overflow-y-auto scrollbar-thin [scrollbar-width:thin] [scrollbar-color:var(--border)_transparent]"
-            >
-              <ul className="space-y-1.5">
-                {visible.map((project) => {
-                  const isCurrent = selected?.id === project.id;
-                  return (
-                    <li key={project.id}>
-                      <button
-                        type="button"
-                        data-project-select={project.id}
-                        aria-pressed={isCurrent}
-                        aria-controls="project-overview-panel"
-                        onClick={() => selectProject(project.id)}
-                        className={`w-full rounded-xl border px-3.5 py-2.5 text-left transition-all cursor-pointer ${
-                          isCurrent
-                            ? "border-accent/60 bg-surface shadow-sm"
-                            : "border-transparent hover:border-border/60 hover:bg-surface/50"
-                        }`}
-                      >
-                        <span className="flex flex-wrap items-center justify-between gap-2">
-                          <span data-project-title className="text-xs sm:text-sm font-medium text-foreground">
-                            {project.title}
-                          </span>
-                          <ProjectStatusBadge status={project.status} />
-                        </span>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
-            <div
-              ref={panelRef}
-              id="project-overview-panel"
-              aria-live="polite"
-              aria-atomic="true"
-              className="rounded-2xl border border-border/80 bg-surface/50 p-5 sm:p-6 scroll-mt-24 lg:h-[min(460px,58svh)] lg:overflow-y-auto [scrollbar-width:thin] [scrollbar-color:var(--border)_transparent]"
-            >
-              {selected && <ProjectOverviewPanel project={selected} />}
+        {/* Project Catalog Archive & Explorer Header */}
+        <div className="space-y-4 pt-2">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-dashed border-border/80 pt-6">
+            <div>
+              <h3 className="text-base sm:text-lg font-semibold tracking-tight text-foreground">
+                All Projects Archive
+              </h3>
+              <p className="text-xs sm:text-sm text-muted">
+                {isExpanded
+                  ? `Exploring all ${projects.length} repositories across engineering domains`
+                  : `Browse ${projects.length} repositories in software, data, and AI`}
+              </p>
             </div>
+            {ready && (
+              <button
+                type="button"
+                aria-expanded={isExpanded}
+                aria-controls="all-projects-explorer"
+                onClick={() => setIsExpanded((prev) => !prev)}
+                className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-border/80 bg-surface/50 px-4 py-2 font-mono text-xs font-medium text-foreground transition-all hover:border-accent hover:bg-surface-elevated active:scale-95 cursor-pointer shadow-sm"
+              >
+                <span>{isExpanded ? "Collapse Archive" : `View All Projects (${projects.length})`}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={`transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
+                  aria-hidden="true"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+            )}
           </div>
-        ) : (
-          <div data-project-fallback className="space-y-4">
-            {visible.map((project) => (
-              <div key={project.id} className="rounded-2xl border border-border/80 bg-surface/50 p-5 sm:p-6">
-                <ProjectOverviewPanel project={project} />
+
+          {ready && isExpanded && (
+            <div id="all-projects-explorer" className="space-y-6 pt-2">
+              <div role="group" aria-label="Project categories" className="flex flex-wrap gap-2 pt-1">
+                {([['all', 'All'], ...Object.entries(CATEGORY_MAP)] as [ProjectCategory, string][]).map(([id, label]) => (
+                  <button
+                    key={id}
+                    type="button"
+                    data-project-category={id}
+                    aria-pressed={category === id}
+                    onClick={() => selectCategory(id)}
+                    className={`min-h-9 max-w-full rounded-full border px-3.5 py-1 text-left font-mono text-xs transition-all hover:scale-105 cursor-pointer ${
+                      category === id
+                        ? "border-foreground bg-foreground text-background font-bold shadow-sm"
+                        : "border-border/80 bg-surface/50 text-muted hover:border-accent hover:text-foreground"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
               </div>
-            ))}
-          </div>
-        )}
+
+              {visible.length === 0 ? (
+                <p
+                  data-project-empty
+                  role="status"
+                  className="rounded-2xl border border-border/80 bg-surface/50 p-6 text-sm text-muted"
+                >
+                  {projects.length === 0 ? "Projects are being prepared." : "No projects in this category yet."}
+                </p>
+              ) : (
+                <div className="grid min-w-0 items-start gap-4 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
+                  <nav
+                    ref={listRef}
+                    aria-label="Choose a project"
+                    className="rounded-2xl border border-border/80 bg-surface/40 p-2 sm:p-3 h-[min(280px,45svh)] lg:h-[min(460px,58svh)] overflow-y-auto scrollbar-thin [scrollbar-width:thin] [scrollbar-color:var(--border)_transparent]"
+                  >
+                    <ul className="space-y-1.5">
+                      {visible.map((project) => {
+                        const isCurrent = selected?.id === project.id;
+                        return (
+                          <li key={project.id}>
+                            <button
+                              type="button"
+                              data-project-select={project.id}
+                              aria-pressed={isCurrent}
+                              aria-controls="project-overview-panel"
+                              onClick={() => selectProject(project.id)}
+                              className={`w-full rounded-xl border px-3.5 py-2.5 text-left transition-all cursor-pointer ${
+                                isCurrent
+                                  ? "border-accent/60 bg-surface shadow-sm"
+                                  : "border-transparent hover:border-border/60 hover:bg-surface/50"
+                              }`}
+                            >
+                              <span className="flex flex-wrap items-center justify-between gap-2">
+                                <span data-project-title className="text-xs sm:text-sm font-medium text-foreground">
+                                  {project.title}
+                                </span>
+                                <ProjectStatusBadge status={project.status} />
+                              </span>
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </nav>
+                  <div
+                    ref={panelRef}
+                    id="project-overview-panel"
+                    aria-live="polite"
+                    aria-atomic="true"
+                    className="rounded-2xl border border-border/80 bg-surface/50 p-5 sm:p-6 scroll-mt-24 lg:h-[min(460px,58svh)] lg:overflow-y-auto [scrollbar-width:thin] [scrollbar-color:var(--border)_transparent]"
+                  >
+                    {selected && <ProjectOverviewPanel project={selected} />}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {!ready && (
+            visible.length === 0 ? (
+              <p
+                data-project-empty
+                role="status"
+                className="rounded-2xl border border-border/80 bg-surface/50 p-6 text-sm text-muted"
+              >
+                {projects.length === 0 ? "Projects are being prepared." : "No projects in this category yet."}
+              </p>
+            ) : (
+              <div data-project-fallback className="space-y-4">
+                {visible.map((project) => (
+                  <div key={project.id} className="rounded-2xl border border-border/80 bg-surface/50 p-5 sm:p-6">
+                    <ProjectOverviewPanel project={project} />
+                  </div>
+                ))}
+              </div>
+            )
+          )}
+        </div>
       </div>
     </section>
   );
